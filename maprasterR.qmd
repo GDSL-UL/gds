@@ -440,35 +440,58 @@ Let's have a first look at our result.
 # this time instead of merging the rows, we append the columns using cbind
 df <- cbind(tza_ken, ex)
 
-# Create a map object for "mean.NL1992"
+# Custom palette: dark blue to light yellow
+blue_yellow <- c("#08306B", "#FFFFB2")
+
+# Map for "mean.NL1992"
 map1992 <- tm_shape(df) +
-  tm_fill(col = "mean.NL1992", palette = "seq", title = "Mean 1992") +
-  tm_layout(aes.palette = list(seq = "-YlGnBu"))
+  tm_polygons(
+    fill = "mean.NL1992",
+    col = "grey", lwd = 0.5,
+    fill.scale = tm_scale(values = blue_yellow),
+    fill.legend = tm_legend(title = "Mean 1992")
+  )
 
-# Create a map object for "mean.NL2013"
+# Map for "mean.NL2013"
 map2013 <- tm_shape(df) +
-  tm_fill(col = "mean.NL2013", palette = "seq", title = "Mean 2013") +
-  tm_layout(aes.palette = list(seq = "-YlGnBu"))
+  tm_polygons(
+    fill = "mean.NL2013",
+    col = "grey", lwd = 0.5,
+    fill.scale = tm_scale(values = blue_yellow),
+    fill.legend = tm_legend(title = "Mean 2013")
+  )
 
-# Plot both maps side by side
+# Arrange maps side by side
 tmap_arrange(map1992, map2013)
-
 ```
 
 Most of the Kenya and Tanzania have really low values. To make the maps tell a story, we can use fixed breaks and make the maps interactive using the `tmap` package:
 
-```{r prettymap}
+```{r prettymap, message=FALSE}
 tmap_mode("view") # switch to other mode: ttm()
 
+# define custom palette
+blue_yellow <- c("#08306B", "#FFFFB2")
+
 tm_shape(df) +
-  tm_fill(c("mean.NL1992", "mean.NL2013"), title=c("Average nightlights"), style="fixed", palette = "seq", breaks=c(0, 0.05, 0.1, 2, 63)) +
-  tm_layout(aes.palette = list(seq = "-YlGnBu"), legend.outside = TRUE, legend.outside.position = "right") +
+  tm_polygons(
+    fill = c("mean.NL1992", "mean.NL2013"),
+    col = "grey", lwd = 0.5,   # white polygon borders
+    fill.scale = tm_scale(
+      values = blue_yellow,
+      breaks = c(0, 0.05, 0.1, 2, 63),
+      style = "fixed"
+    ),
+    fill.legend = tm_legend(title = "Average nightlights")
+  ) +
   tm_facets(sync = TRUE, ncol = 2) +
-  tm_borders()
+  tm_layout(legend.outside = TRUE, legend.outside.position = "right")
 
 ```
 
+::: callout-tip
 Have a think about what the data is telling you. What's the story?
+:::
 
 # Resources
 

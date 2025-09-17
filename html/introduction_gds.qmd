@@ -1,7 +1,7 @@
 ---
 title: "Geographic Data Science"
 subtitle: "Introduction"
-author: "Elisabetta Pietrostefani & Carmen Cabrera-Arnau"
+author: "Elisabetta Pietrostefani & Carmen Cabrera"
 format: 
     revealjs:
         navigation-mode: grid
