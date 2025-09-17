@@ -1,0 +1,31 @@
+# Syllabus {.unnumbered}
+
+## Part 1
+
+**Week 1 -** Introduction and Open Science
+
+**Week 2 -** Spatial Data
+
+**Week 3 -** Mapping Vector Data
+
+**Week 4** - Mapping Raster Data
+
+**Week 5** - Points
+
+**Week 6** - No Lecture & Clinic
+
+`Assignment I`: Programmed Map (40% of Final Grade)
+
+## Part 2
+
+**Week 7 -** Spatial Weights
+
+**Week 8** - ESDA
+
+**Week 9** - Clustering
+
+**Week 10** - Spatial Network Analysis
+
+**Week 11** - No lecture & Clinic
+
+`Assignment II`: A computational essay (60% of Final Grade)
