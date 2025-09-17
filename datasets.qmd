@@ -1,2 +1,24 @@
 # Data sets {.unnumbered}
 
+The datasets can all be downloaded here:  
+[GitHub Repository - Data Folder](https://github.com/GDSL-UL/gds/tree/main/data).
+
+Each folder corresponds to a lab session and contains the relevant datasets.  
+
+- **Lab 1: Open Science**  
+  Folder: `census2021_ethn`  
+  Data source: UK 2021 Census (ethnicity data)  
+
+- **Lab 2: Spatial Data**  
+  Folder: `London`  
+  Data source: Spatial and non-spatial data on London  
+  
+- **Lab 3: Mapping Vector Data**  
+  Folder: `MENA`  
+  Data source: Data on countries in the Middle East and North Africa 
+
+- **Lab 4: Mapping Raster Data**  
+  Folder: `Lebanon` and `Kenya & Tanzania`
+  
+- **Lab 5: Points**  
+  Folder: `Buenos Aires`  
