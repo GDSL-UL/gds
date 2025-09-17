@@ -323,5 +323,241 @@
       "Environment",
       "Download data from github"
     ]
+  },
+  {
+    "objectID": "intro.html",
+    "href": "intro.html",
+    "title": "1 Introduction",
+    "section": "",
+    "text": "From Geographic Information Systems to Geographic Data Science\nIn this section we introduce what Geographic Data Science is. We top it up with a few (optional) further readings for the interested and curious mind.\nSlides can be downloaded “here”\nGeographic Information holds a pivotal position within our modern societies, permeating various aspects of our daily lives. It underpins essential sectors such as housing, transportation, insurance, banking, telecommunications, logistics, energy, retail, agriculture, healthcare, and urban planning. Its significance lies in the capacity to analyze and derive invaluable insights from geo-spatial data, enabling us to make informed decisions and address complex challenges. Proficiency in this field equips individuals with the ability to work with real-world data across multiple domains and tackle diverse problems. Furthermore, it provides the opportunity to acquire essential data science skills and utilize important tools for answering spatial questions. Given its wide-ranging applications and the increasing reliance on location-based information, there is a substantial demand for experts in the geographic information industry, making it a highly sought-after skill set in today’s workforce.\nWhat information does GIS use?\nFrom the real-world to the GIS world\nGeographic Data Science\nA GIS person typically produces cartographic and analytical products using desktop software. A geospatial data scientist creates code and runs pipelines that produce analytical products and cartographic representations.\nThis entails working with real-world data from various domains and tackling a wide range of complex problems. Through this process geospatial data science includes both data science and GIS tools that lead to the analysos of intricate spatial questions effectively. The synergy between CyberGIS and Geographic Data Science is unmistakable, with coding playing a pivotal role in enabling the seamless development of interactive data analysis. By leveraging cutting-edge technologies and innovative methodologies, this symbiotic relationship enhances the accessibility, scalability, and interactivity of geospatial data analysis. Consequently, it opens up new vistas for collaborative research and decision-making processes.\nThis multifaceted approach equips them with the knowledge and expertise to navigate the intricate world of spatial data analysis and contribute meaningfully to diverse fields where location-based insights are invaluable.",
+    "crumbs": [
+      "1 Introduction"
+    ]
+  },
+  {
+    "objectID": "intro.html#from-geographic-information-systems-to-geographic-data-science",
+    "href": "intro.html#from-geographic-information-systems-to-geographic-data-science",
+    "title": "1 Introduction",
+    "section": "",
+    "text": "Data that defines geographical features like roads, rivers\nSoil types, land use, elevation\nDemographics, socioeconomic attributes\nEnvironmental, climate, air-quality\nAnnotations that label features and places",
+    "crumbs": [
+      "1 Introduction"
+    ]
+  },
+  {
+    "objectID": "intro.html#what-is-geographic-data-science",
+    "href": "intro.html#what-is-geographic-data-science",
+    "title": "1 Introduction",
+    "section": "What is Geographic Data Science?",
+    "text": "What is Geographic Data Science?\nStatistician George Box :\nAll models are wrong, but some are useful In a similar fashion.\nGeographer Keith Ord :\nAll maps are wrong, but some are useful.",
+    "crumbs": [
+      "1 Introduction"
+    ]
+  },
+  {
+    "objectID": "intro.html#open-source-gis",
+    "href": "intro.html#open-source-gis",
+    "title": "1 Introduction",
+    "section": "Open Source GIS",
+    "text": "Open Source GIS\nOpen source Geographic Information Systems (GIS), such as QGIS, have made geographic analysis accessible worldwide. GIS programs tend to emphasize graphical user interfaces (GUIs), with the unintended consequence of discouraging reproducibility (although many can be used from the command line Python + QGIS). R and Python by contrast, emphasizes the command line interface (CLI).\nThe ‘geodata revolution’ drives demand for high performance computer hardware and efficient, scalable software to handle and extract signal from the noise, to understand and perhaps change the world. Spatial databases enable storage and generation of manageable subsets from the vast geographic data stores, making interfaces for gaining knowledge from them vital tools for the future.\nR and Python are both tools with advanced modeling and visualization capabilities.",
+    "crumbs": [
+      "1 Introduction"
+    ]
+  },
+  {
+    "objectID": "intro.html#open-science",
+    "href": "intro.html#open-science",
+    "title": "1 Introduction",
+    "section": "Open Science",
+    "text": "Open Science\nWhy do we care about the processes and tools we use when we do computational work? Where do the current paradigm come from? Are we on the verge of a new model? For all of this, we we have two reads to set the tone. Make sure to get those in first thing before moving on to the next bits.\n\nFirst half of Chapter 1 in “Geographic Data Science with Python” Geographic Thinking for Data Scientists.\nThe 2018 Atlantic piece “The scientific paper is obsolete” on computational notebooks, by James Somers.",
+    "crumbs": [
+      "1 Introduction"
+    ]
+  },
+  {
+    "objectID": "intro.html#modern-scientific-tools",
+    "href": "intro.html#modern-scientific-tools",
+    "title": "1 Introduction",
+    "section": "Modern Scientific Tools",
+    "text": "Modern Scientific Tools\nOnce we know a bit more about why we should care about the tools we use, let’s dig into those that will underpin much of this course. This part is interesting in itself, but will also valuable to better understand the practical aspects of the course. Again, we have two reads here to set the tone and complement the practical introduction we saw in the Hands-on and DIY parts of the previous block. We are closing the circle here:\n\nSecond half of Chapter 1 in “Geographic Data Science with Python” Geographic Thinking for Data Scientists.",
+    "crumbs": [
+      "1 Introduction"
+    ]
+  },
+  {
+    "objectID": "openscienceR.html",
+    "href": "openscienceR.html",
+    "title": "OpenScience in R",
+    "section": "",
+    "text": "Data wrangling\nNow that you know what computational notebooks are and why we should care about them, let’s start using them! This section introduces you to using R for manipulating tabular data. Please read through it carefully and pay attention to how ideas about manipulating data are translated into code. For this part, you can read directly from the course website, although it is recommended you follow the section interactively by running the code on your own.\nOnce you have read through, jump on the Do-It-Yourself section, which will provide you with a challenge that you should complete on your own, and will allow you to put what you have already learnt into practice.\nReal world datasets tend to be messy. There is no way around it: datasets have “holes” (missing data), the amount of formats in which data can be stored is endless, and the best structure to share data is not always the optimum to analyze them, hence the need to wrangle (manipulate, transform and structure) them. As has been correctly pointed out in many outlets (e.g.), much of the time spent in what is called (Geo-)Data Science is related not only to sophisticated modeling and insight, but to more basic and less exotic tasks such as obtaining data, processing, turning them into a shape that makes analysis possible, and exploring it to get to know their basic properties.\nIn this session, you will use a few real world datasets and learn how to process them in R so they can be transformed and manipulated, if necessary, and analyzed. For this, we will introduce some of the fundamental tools of data analysis and scientific computing. We use a prepared dataset that saves us much of the more intricate processing that goes beyond the introductory level the session is aimed at.\nIn this notebook, we discuss several patterns to clean and structure data properly, including tidying, subsetting, and aggregating; and we finish with some basic visualization. An additional extension presents more advanced tricks to manipulate tabular data.\nBefore we get our hands data-dirty, let us import all the additional libraries we will need to run the code:",
+    "crumbs": [
+      "1 Introduction",
+      "OpenScience in R"
+    ]
+  },
+  {
+    "objectID": "openscienceR.html#loading-packages",
+    "href": "openscienceR.html#loading-packages",
+    "title": "OpenScience in R",
+    "section": "Loading packages",
+    "text": "Loading packages\nWe will start by loading core packages for working with geographic vector and attribute data.\n\nlibrary(tidyverse) # a structure of data manipulation including several packages \nlibrary(data.table) # load the data.table package",
+    "crumbs": [
+      "1 Introduction",
+      "OpenScience in R"
+    ]
+  },
+  {
+    "objectID": "openscienceR.html#datasets",
+    "href": "openscienceR.html#datasets",
+    "title": "OpenScience in R",
+    "section": "Datasets",
+    "text": "Datasets\nWe will be exploring some demographic characteristics in Liverpool. To do that, we will use a dataset that contains population counts, split by ethnic origin. These counts are aggregated at the Lower Layer Super Output Area (LSOA from now on). LSOAs are an official Census geography defined by the Office of National Statistics. You can think of them, more or less, as neighbourhoods. Many data products (Census, deprivation indices, etc.) use LSOAs as one of their main geographies.\nTo do this, we will download a data folder from github called census2021_ethn. You should place this in a data folder you will use throughout the course.\nImport housesales data from csv\n\ncensus2021 &lt;- read.csv(\"data/census2021_ethn/liv_pop.csv\", row.names = \"GeographyCode\")\n\nLet us stop for a minute to learn how we have read the file. Here are the main aspects to keep in mind:\n\nWe are using the method read.csv from base R, you could also use read_csv from library(\"readr\").\nHere the csv is based on a data file but it could also be a web address or sometimes you find data in packages.\nThe argument row.names is not strictly necessary but allows us to choose one of the columns as the index of the table. More on indices below.\nWe are using read.csv because the file we want to read is in the csv format. However, many more formats can be read into an R environment. A full list of formats supported may be found here.\nTo ensure we can access the data we have read, we store it in an object that we call census2021. We will see more on what we can do with it below but, for now, just keep in mind that allows us to save the result of read.csv.\n\n\n\n\n\n\n\nImportant\n\n\n\nYou need to store the data file on your computer, and read it locally. To do that, you can follow these steps:\n\nDownload the census2021_ethn file by right-clicking on this link and saving the file\nPlace the file in a data folder you have created where you intend to read it.\nYour folder should have the following structure a. a gds folder (where you will save your quarto .qmd documents) b. a data folder c. the census2021_ethn folder inside your data folder.\n\n\n\n\n\n\n\n\n\nDownload a folder on github\n\n\n\n\nFirst go to https://download-directory.github.io/\nThen go to the folder you need to today. So for example copy: https://github.com/pietrostefani/gds/tree/main/data/London\nPaste it in the green box… give it a few minutes\nCheck your downloads file and unzip",
+    "crumbs": [
+      "1 Introduction",
+      "OpenScience in R"
+    ]
+  },
+  {
+    "objectID": "openscienceR.html#data-sliced-and-diced",
+    "href": "openscienceR.html#data-sliced-and-diced",
+    "title": "OpenScience in R",
+    "section": "Data, sliced and diced",
+    "text": "Data, sliced and diced\nNow we are ready to start playing with and interrogating the dataset! What we have at our fingertips is a table that summarizes, for each of the LSOAs in Liverpool, how many people live in each, by the region of the world where they were born. We call these tables DataFrame objects, and they have a lot of functionality built-in to explore and manipulate the data they contain.\nStructure\nLet’s start by exploring the structure of a DataFrame. We can print it by simply typing its name:\n\nview(census2021)\n\nSince they represent a table of data, DataFrame objects have two dimensions: rows and columns. Each of these is automatically assigned a name in what we will call its index. When printing, the index of each dimension is rendered in bold, as opposed to the standard rendering for the content. In the example above, we can see how the column index is automatically picked up from the .csv file’s column names. For rows, we have specified when reading the file we wanted the column GeographyCode, so that is used. If we hadn’t specified any, tidyverse in R will automatically generate a sequence starting in 0 and going all the way to the number of rows minus one. This is the standard structure of a DataFrame object, so we will come to it over and over. Importantly, even when we move to spatial data, our datasets will have a similar structure.\nOne further feature of these tables is that they can hold columns with different types of data. In our example, this is not used as we have counts (or int, for integer, types) for each column. But it is useful to keep in mind we can combine this with columns that hold other type of data such as categories, text (str, for string), dates or, as we will see later in the course, geographic features.\nInspecting\nWe can check the top (bottom) X lines of the table by passing X to the method head (tail). For example, for the top/bottom five lines:\n\nhead(census2021) # read first 5 rows\n\n          Europe Africa Middle.East.and.Asia The.Americas.and.the.Caribbean\nE01006512    910    106                  840                             24\nE01006513   2225     61                  595                             53\nE01006514   1786     63                  193                             61\nE01006515    974     29                  185                             18\nE01006518   1531     69                   73                             19\nE01006519   1238      7                   24                             14\n          Antarctica.and.Oceania\nE01006512                      0\nE01006513                      7\nE01006514                      5\nE01006515                      2\nE01006518                      4\nE01006519                      3\n\ntail(census2021)\n\n          Europe Africa Middle.East.and.Asia The.Americas.and.the.Caribbean\nE01033763   1302     68                  142                             11\nE01033764   2106     32                   49                             15\nE01033765   1277     21                   33                             17\nE01033766   1028     12                   20                              8\nE01033767   1003     29                   29                              5\nE01033768   1016     69                  111                             21\n          Antarctica.and.Oceania\nE01033763                      4\nE01033764                      0\nE01033765                      3\nE01033766                      7\nE01033767                      1\nE01033768                      6\n\n\nSummarise\nWe can get an overview of the values of the table:\n\nsummary(census2021)\n\n     Europe         Africa       Middle.East.and.Asia\n Min.   : 731   Min.   :  0.00   Min.   :  1.00      \n 1st Qu.:1331   1st Qu.:  7.00   1st Qu.: 16.00      \n Median :1446   Median : 14.00   Median : 33.50      \n Mean   :1462   Mean   : 29.82   Mean   : 62.91      \n 3rd Qu.:1580   3rd Qu.: 30.00   3rd Qu.: 62.75      \n Max.   :2551   Max.   :484.00   Max.   :840.00      \n The.Americas.and.the.Caribbean Antarctica.and.Oceania\n Min.   : 0.000                 Min.   : 0.00         \n 1st Qu.: 2.000                 1st Qu.: 0.00         \n Median : 5.000                 Median : 1.00         \n Mean   : 8.087                 Mean   : 1.95         \n 3rd Qu.:10.000                 3rd Qu.: 3.00         \n Max.   :61.000                 Max.   :11.00         \n\n\nNote how the output is also a DataFrame object, so you can do with it the same things you would with the original table (e.g. writing it to a file).\nIn this case, the summary might be better presented if the table is “transposed”:\n\nt(summary(census2021))\n\n                                                                \n    Europe                     Min.   : 731     1st Qu.:1331    \n    Africa                     Min.   :  0.00   1st Qu.:  7.00  \nMiddle.East.and.Asia           Min.   :  1.00   1st Qu.: 16.00  \nThe.Americas.and.the.Caribbean Min.   : 0.000   1st Qu.: 2.000  \nAntarctica.and.Oceania         Min.   : 0.00    1st Qu.: 0.00   \n                                                                \n    Europe                     Median :1446     Mean   :1462    \n    Africa                     Median : 14.00   Mean   : 29.82  \nMiddle.East.and.Asia           Median : 33.50   Mean   : 62.91  \nThe.Americas.and.the.Caribbean Median : 5.000   Mean   : 8.087  \nAntarctica.and.Oceania         Median : 1.00    Mean   : 1.95   \n                                                                \n    Europe                     3rd Qu.:1580     Max.   :2551    \n    Africa                     3rd Qu.: 30.00   Max.   :484.00  \nMiddle.East.and.Asia           3rd Qu.: 62.75   Max.   :840.00  \nThe.Americas.and.the.Caribbean 3rd Qu.:10.000   Max.   :61.000  \nAntarctica.and.Oceania         3rd Qu.: 3.00    Max.   :11.00",
+    "crumbs": [
+      "1 Introduction",
+      "OpenScience in R"
+    ]
+  },
+  {
+    "objectID": "openscienceR.html#columns",
+    "href": "openscienceR.html#columns",
+    "title": "OpenScience in R",
+    "section": "Columns",
+    "text": "Columns\nCreate new columns\nWe can generate new variables by applying operations on existing ones. For example, we can calculate the total population by area. Here is a couple of ways to do it:\nUsing the package dplyr. More info can be found here. dplyr is a part of the tidyverse!\n\ncensus2021 &lt;- census2021 %&gt;%\n  mutate(Total_Pop = rowSums(select(., Africa, Middle.East.and.Asia, Europe, The.Americas.and.the.Caribbean, Antarctica.and.Oceania)))\n\nhead(census2021)\n\n          Europe Africa Middle.East.and.Asia The.Americas.and.the.Caribbean\nE01006512    910    106                  840                             24\nE01006513   2225     61                  595                             53\nE01006514   1786     63                  193                             61\nE01006515    974     29                  185                             18\nE01006518   1531     69                   73                             19\nE01006519   1238      7                   24                             14\n          Antarctica.and.Oceania Total_Pop\nE01006512                      0      1880\nE01006513                      7      2941\nE01006514                      5      2108\nE01006515                      2      1208\nE01006518                      4      1696\nE01006519                      3      1286\n\n\nA different spin on this is assigning new values: we can generate new variables with scalars, and modify those:\n\ncensus2021$new_column &lt;- 1\nhead(census2021)\n\n          Europe Africa Middle.East.and.Asia The.Americas.and.the.Caribbean\nE01006512    910    106                  840                             24\nE01006513   2225     61                  595                             53\nE01006514   1786     63                  193                             61\nE01006515    974     29                  185                             18\nE01006518   1531     69                   73                             19\nE01006519   1238      7                   24                             14\n          Antarctica.and.Oceania Total_Pop new_column\nE01006512                      0      1880          1\nE01006513                      7      2941          1\nE01006514                      5      2108          1\nE01006515                      2      1208          1\nE01006518                      4      1696          1\nE01006519                      3      1286          1\n\n\ndplyr is an immensely useful package in R because it streamlines and simplifies the process of data manipulation and transformation. With its intuitive and consistent syntax, dplyr provides a set of powerful and efficient functions that make tasks like filtering, summarizing, grouping, and joining datasets much more straightforward. Whether you’re working with small or large datasets, dplyr’s optimized code execution ensures fast and efficient operations. Its ability to chain functions together using the pipe operator (%&gt;%) allows for a clean and readable code structure, enhancing code reproducibility and collaboration. Overall, dplyr is an indispensable tool for data analysts and scientists working in R, enabling them to focus on their data insights rather than wrestling with complex data manipulation code.\nDelete columns\nPermanently deleting variables is also within reach of one command:\ndplyr\n\ncensus2021 &lt;- census2021 %&gt;%\n  mutate(new_column = 1)\n\n\ncensus2021 &lt;- census2021 %&gt;%\n  select(-new_column)",
+    "crumbs": [
+      "1 Introduction",
+      "OpenScience in R"
+    ]
+  },
+  {
+    "objectID": "openscienceR.html#queries",
+    "href": "openscienceR.html#queries",
+    "title": "OpenScience in R",
+    "section": "Queries",
+    "text": "Queries\nIndex-based queries\nHere we explore how we can subset parts of a DataFrame if we know exactly which bits we want. For example, if we want to extract the total and European population of the first four areas in the table:\nWe can select with c(). If this structure is new to you have a look here.\n\neu_tot_first4 &lt;- census2021 %&gt;%\n  filter(rownames(census2021) %in% c('E01006512', 'E01006513', 'E01006514', 'E01006515')) %&gt;%\n  select(Total_Pop, Europe)\n\neu_tot_first4\n\n          Total_Pop Europe\nE01006512      1880    910\nE01006513      2941   2225\nE01006514      2108   1786\nE01006515      1208    974\n\n\nCondition-based queries\nHowever, sometimes, we do not know exactly which observations we want, but we do know what conditions they need to satisfy (e.g. areas with more than 2,000 inhabitants). For these cases, DataFrames support selection based on conditions. Let us see a few examples. Suppose we want to select…\nAreas with more than 900 people in Total:\n\npop900 &lt;- census2021 %&gt;%\n  filter(Total_Pop &gt; 900)\n\nAreas where there are no more than 750 Europeans:\n\neuro750 &lt;- census2021 %&gt;%\n  filter(Europe &lt; 750)\n\nAreas with exactly ten person from Antarctica and Oceania:\n\noneOA &lt;- census2021 %&gt;%\n  filter(`Antarctica.and.Oceania` == 10)\n\n\n\n\n\n\n\nTip with Title\n\n\n\nThese queries can grow in sophistication with almost no limits.\n\n\nCombining queries\nNow all of these queries can be combined with each other, for further flexibility. For example, imagine we want areas with more than 25 people from the Americas and Caribbean, but less than 1,500 in total:\n\nac25_l500 &lt;- census2021 %&gt;%\n  filter(The.Americas.and.the.Caribbean &gt; 25, Total_Pop &lt; 1500)\nac25_l500\n\n          Europe Africa Middle.East.and.Asia The.Americas.and.the.Caribbean\nE01033750   1235     53                  129                             26\nE01033752   1024     19                  114                             33\nE01033754   1262     37                  112                             32\nE01033756    886     31                  221                             42\nE01033757    731     39                  223                             29\nE01033761   1138     52                  138                             33\n          Antarctica.and.Oceania Total_Pop\nE01033750                      5      1448\nE01033752                      6      1196\nE01033754                      9      1452\nE01033756                      5      1185\nE01033757                      3      1025\nE01033761                     11      1372",
+    "crumbs": [
+      "1 Introduction",
+      "OpenScience in R"
+    ]
+  },
+  {
+    "objectID": "openscienceR.html#sorting",
+    "href": "openscienceR.html#sorting",
+    "title": "OpenScience in R",
+    "section": "Sorting",
+    "text": "Sorting\nAmong the many operations DataFrame objects support, one of the most useful ones is to sort a table based on a given column. For example, imagine we want to sort the table by total population:\n\ndb_pop_sorted &lt;- census2021 %&gt;%\n  arrange(desc(Total_Pop)) #sorts the dataframe by the \"Total_Pop\" column in descending order \n\nhead(db_pop_sorted)\n\n          Europe Africa Middle.East.and.Asia The.Americas.and.the.Caribbean\nE01006747   2551    163                  812                             24\nE01006513   2225     61                  595                             53\nE01006751   1843    139                  568                             21\nE01006524   2235     36                  125                             24\nE01006787   2187     53                   75                             13\nE01006537   2180     23                   46                              6\n          Antarctica.and.Oceania Total_Pop\nE01006747                      2      3552\nE01006513                      7      2941\nE01006751                      1      2572\nE01006524                     11      2431\nE01006787                      2      2330\nE01006537                      2      2257",
+    "crumbs": [
+      "1 Introduction",
+      "OpenScience in R"
+    ]
+  },
+  {
+    "objectID": "openscienceR.html#additional-resources",
+    "href": "openscienceR.html#additional-resources",
+    "title": "OpenScience in R",
+    "section": "Additional resources",
+    "text": "Additional resources\n\nA good introduction to data manipulation in R is the “Data wrangling” chapter in R for Data Science.\nA good extension is Hadley Wickham’ “Tidy data” paper which presents a very popular way of organising tabular data for efficient manipulation.",
+    "crumbs": [
+      "1 Introduction",
+      "OpenScience in R"
+    ]
+  },
+  {
+    "objectID": "opensciencePy.html",
+    "href": "opensciencePy.html",
+    "title": "OpenScience in Python",
+    "section": "",
+    "text": "Data wrangling\nNow that you know what computational notebooks are and why we should care about them, let’s start using them! This section introduces you to using Python for manipulating tabular data. Please read through it carefully and pay attention to how ideas about manipulating data are translated into code. For this part, you can read directly from the course website, although it is recommended you follow the section interactively by running the code on your own.\nOnce you have read through, jump on the Do-It-Yourself section, which will provide you with a challenge that you should complete on your own, and will allow you to put what you have already learnt into practice.\nReal world datasets tend to be messy. There is no way around it: datasets have “holes” (missing data), the amount of formats in which data can be stored is endless, and the best structure to share data is not always the optimum to analyze them, hence the need to wrangle (manipulate, transform and structure) them. As has been correctly pointed out in many outlets (e.g.), much of the time spent in what is called (Geo-)Data Science is related not only to sophisticated modeling and insight, but to more basic and less exotic tasks such as obtaining data, processing, turning them into a shape that makes analysis possible, and exploring it to get to know their basic properties.\nIn this session, you will use a few real world datasets and learn how to process them in Python so they can be transformed and manipulated, if necessary, and analyzed. For this, we will introduce some of the fundamental tools of data analysis and scientific computing. We use a prepared dataset that saves us much of the more intricate processing that goes beyond the introductory level the session is aimed at.\nIn this notebook, we discuss several patterns to clean and structure data properly, including tidying, subsetting, and aggregating; and we finish with some basic visualization. An additional extension presents more advanced tricks to manipulate tabular data.\nBefore we get our hands data-dirty, let us import all the additional libraries we will need to run the code:",
+    "crumbs": [
+      "1 Introduction",
+      "OpenScience in Python"
+    ]
+  },
+  {
+    "objectID": "opensciencePy.html#loading-packages",
+    "href": "opensciencePy.html#loading-packages",
+    "title": "OpenScience in Python",
+    "section": "Loading packages",
+    "text": "Loading packages\nWe will start by loading core packages for working with geographic vector and attribute data.\n\n# This ensures visualizations are plotted inside the notebook\n\nimport os              # This provides several system utilities\nimport pandas as pd    # This is the workhorse of data munging in Python",
+    "crumbs": [
+      "1 Introduction",
+      "OpenScience in Python"
+    ]
+  },
+  {
+    "objectID": "opensciencePy.html#datasets",
+    "href": "opensciencePy.html#datasets",
+    "title": "OpenScience in Python",
+    "section": "Datasets",
+    "text": "Datasets\nWe will be exploring some demographic characteristics in Liverpool. To do that, we will use a dataset that contains population counts, split by ethnic origin. These counts are aggregated at the Lower Layer Super Output Area (LSOA from now on). LSOAs are an official Census geography defined by the Office of National Statistics. You can think of them, more or less, as neighbourhoods. Many data products (Census, deprivation indices, etc.) use LSOAs as one of their main geographies.\nTo do this, we will download a data folder from github called census2021_ethn. You should place this in a data folder you will use throughout the course.\nImport housesales data from csv\n\ncensus2021 = pd.read_csv(\"data/census2021_ethn/liv_pop.csv\", index_col='GeographyCode')\n\nLet us stop for a minute to learn how we have read the file. Here are the main aspects to keep in mind:\n\nWe are using the method read_csv from the pandas library, which we have imported with the alias pd.\nHere the csv is based on a data file but it could also be a web address or sometimes you find data in packages.\nThe argument index_col is not strictly necessary but allows us to choose one of the columns as the index of the table. More on indices below.\nWe are using read_csv because the file we want to read is in the csv format. However, pandas allows for many more formats to be read and write. A full list of formats supported may be found here.\nTo ensure we can access the data we have read, we store it in an object that we call census2021. We will see more on what we can do with it below but, for now, just keep in mind that allows us to save the result of read_csv.\n\n\n\n\n\n\n\nImportant\n\n\n\nYou need to store the data file on your computer, and read it locally. To do that, you can follow these steps:\n\nDownload the census2021_ethn file by right-clicking on this link and saving the file\nPlace the file in a data folder you have created where you intend to read it.\nYour folder should have the following structure a. a gds folder (where you will save your quarto .qmd documents) b. a data folder c. the census2021_ethn folder inside your data folder.\n\n\n\n\n\n\n\n\n\nDownload a folder on github\n\n\n\n\nFirst go to https://download-directory.github.io/\nThen go to the folder you need to today. So for example copy: https://github.com/pietrostefani/gds/tree/main/data/London\nPaste it in the green box… give it a few minutes\nCheck your downloads file and unzip",
+    "crumbs": [
+      "1 Introduction",
+      "OpenScience in Python"
+    ]
+  },
+  {
+    "objectID": "opensciencePy.html#data-sliced-and-diced",
+    "href": "opensciencePy.html#data-sliced-and-diced",
+    "title": "OpenScience in Python",
+    "section": "Data, sliced and diced",
+    "text": "Data, sliced and diced\nNow we are ready to start playing with and interrogating the dataset! What we have at our fingertips is a table that summarizes, for each of the LSOAs in Liverpool, how many people live in each, by the region of the world where they were born. We call these tables DataFrame objects, and they have a lot of functionality built-in to explore and manipulate the data they contain.\nStructure\nLet’s start by exploring the structure of a DataFrame. We can print it by simply typing its name:\n\ncensus2021\n\n\n\n\n\n\n\n\nEurope\nAfrica\nMiddle East and Asia\nThe Americas and the Caribbean\nAntarctica and Oceania\n\n\nGeographyCode\n\n\n\n\n\n\n\n\n\nE01006512\n910\n106\n840\n24\n0\n\n\nE01006513\n2225\n61\n595\n53\n7\n\n\nE01006514\n1786\n63\n193\n61\n5\n\n\nE01006515\n974\n29\n185\n18\n2\n\n\nE01006518\n1531\n69\n73\n19\n4\n\n\n...\n...\n...\n...\n...\n...\n\n\nE01033764\n2106\n32\n49\n15\n0\n\n\nE01033765\n1277\n21\n33\n17\n3\n\n\nE01033766\n1028\n12\n20\n8\n7\n\n\nE01033767\n1003\n29\n29\n5\n1\n\n\nE01033768\n1016\n69\n111\n21\n6\n\n\n\n\n298 rows × 5 columns\n\n\n\nSince they represent a table of data, DataFrame objects have two dimensions: rows and columns. Each of these is automatically assigned a name in what we will call its index. When printing, the index of each dimension is rendered in bold, as opposed to the standard rendering for the content. In the example above, we can see how the column index is automatically picked up from the .csv file’s column names. For rows, we have specified when reading the file we wanted the column GeographyCode, so that is used. If we hadn’t specified any, pandas will automatically generate a sequence starting in 0 and going all the way to the number of rows minus one. This is the standard structure of a DataFrame object, so we will come to it over and over. Importantly, even when we move to spatial data, our datasets will have a similar structure.\nOne further feature of these tables is that they can hold columns with different types of data. In our example, this is not used as we have counts (or int, for integer, types) for each column. But it is useful to keep in mind we can combine this with columns that hold other type of data such as categories, text (str, for string), dates or, as we will see later in the course, geographic features.\nInspecting\nWe can check the top (bottom) X lines of the table by passing X to the method head (tail). For example, for the top/bottom five lines:\n\ncensus2021.head() # read first 5 rows\ncensus2021.tail() # read last 5 rows\n\n\n\n\n\n\n\n\nEurope\nAfrica\nMiddle East and Asia\nThe Americas and the Caribbean\nAntarctica and Oceania\n\n\nGeographyCode\n\n\n\n\n\n\n\n\n\nE01033764\n2106\n32\n49\n15\n0\n\n\nE01033765\n1277\n21\n33\n17\n3\n\n\nE01033766\n1028\n12\n20\n8\n7\n\n\nE01033767\n1003\n29\n29\n5\n1\n\n\nE01033768\n1016\n69\n111\n21\n6\n\n\n\n\n\n\n\nSummarise\nWe can get an overview of the values of the table:\n\ncensus2021.describe()\n\n\n\n\n\n\n\n\nEurope\nAfrica\nMiddle East and Asia\nThe Americas and the Caribbean\nAntarctica and Oceania\n\n\n\n\ncount\n298.00000\n298.000000\n298.000000\n298.000000\n298.000000\n\n\nmean\n1462.38255\n29.818792\n62.909396\n8.087248\n1.949664\n\n\nstd\n248.67329\n51.606065\n102.519614\n9.397638\n2.168216\n\n\nmin\n731.00000\n0.000000\n1.000000\n0.000000\n0.000000\n\n\n25%\n1331.25000\n7.000000\n16.000000\n2.000000\n0.000000\n\n\n50%\n1446.00000\n14.000000\n33.500000\n5.000000\n1.000000\n\n\n75%\n1579.75000\n30.000000\n62.750000\n10.000000\n3.000000\n\n\nmax\n2551.00000\n484.000000\n840.000000\n61.000000\n11.000000\n\n\n\n\n\n\n\nNote how the output is also a DataFrame object, so you can do with it the same things you would with the original table (e.g. writing it to a file).\nIn this case, the summary might be better presented if the table is “transposed”:\n\ncensus2021.describe().T\n\n\n\n\n\n\n\n\ncount\nmean\nstd\nmin\n25%\n50%\n75%\nmax\n\n\n\n\nEurope\n298.0\n1462.382550\n248.673290\n731.0\n1331.25\n1446.0\n1579.75\n2551.0\n\n\nAfrica\n298.0\n29.818792\n51.606065\n0.0\n7.00\n14.0\n30.00\n484.0\n\n\nMiddle East and Asia\n298.0\n62.909396\n102.519614\n1.0\n16.00\n33.5\n62.75\n840.0\n\n\nThe Americas and the Caribbean\n298.0\n8.087248\n9.397638\n0.0\n2.00\n5.0\n10.00\n61.0\n\n\nAntarctica and Oceania\n298.0\n1.949664\n2.168216\n0.0\n0.00\n1.0\n3.00\n11.0",
+    "crumbs": [
+      "1 Introduction",
+      "OpenScience in Python"
+    ]
+  },
+  {
+    "objectID": "opensciencePy.html#columns",
+    "href": "opensciencePy.html#columns",
+    "title": "OpenScience in Python",
+    "section": "Columns",
+    "text": "Columns\nCreate new columns\nWe can generate new variables by applying operations on existing ones. For example, we can calculate the total population by area. Here is a couple of ways to do it:\nLonger, hardcoded:\n\ntotal = census2021['Europe'] + census2021['Africa'] + census2021['Middle East and Asia'] + census2021['The Americas and the Caribbean'] + census2021['Antarctica and Oceania']\n# Print the top of the variable\ntotal.head()\n\nGeographyCode\nE01006512    1880\nE01006513    2941\nE01006514    2108\nE01006515    1208\nE01006518    1696\ndtype: int64\n\n\nOne shot:\n\ncensus2021['Total_Population'] = census2021.sum(axis=1)\n# Print the top of the variable\ncensus2021.head()\n\n\n\n\n\n\n\n\nEurope\nAfrica\nMiddle East and Asia\nThe Americas and the Caribbean\nAntarctica and Oceania\nTotal_Population\n\n\nGeographyCode\n\n\n\n\n\n\n\n\n\n\nE01006512\n910\n106\n840\n24\n0\n1880\n\n\nE01006513\n2225\n61\n595\n53\n7\n2941\n\n\nE01006514\n1786\n63\n193\n61\n5\n2108\n\n\nE01006515\n974\n29\n185\n18\n2\n1208\n\n\nE01006518\n1531\n69\n73\n19\n4\n1696\n\n\n\n\n\n\n\nNote that we are summing over “axis=1”. In a DataFrame object, “axis 0” and “axis 1” represent the rows and columns respectively.\nA different spin on this is assigning new values: we can generate new variables with scalars, and modify those:\n\n# New variable with all ones\ncensus2021['ones'] = 1\ncensus2021.head()\n\n\n\n\n\n\n\n\nEurope\nAfrica\nMiddle East and Asia\nThe Americas and the Caribbean\nAntarctica and Oceania\nTotal_Population\nones\n\n\nGeographyCode\n\n\n\n\n\n\n\n\n\n\n\nE01006512\n910\n106\n840\n24\n0\n1880\n1\n\n\nE01006513\n2225\n61\n595\n53\n7\n2941\n1\n\n\nE01006514\n1786\n63\n193\n61\n5\n2108\n1\n\n\nE01006515\n974\n29\n185\n18\n2\n1208\n1\n\n\nE01006518\n1531\n69\n73\n19\n4\n1696\n1\n\n\n\n\n\n\n\nDelete columns\nPermanently deleting variables is also within reach of one command:\n\ndel census2021['ones']\ncensus2021.head()\n\n\n\n\n\n\n\n\nEurope\nAfrica\nMiddle East and Asia\nThe Americas and the Caribbean\nAntarctica and Oceania\nTotal_Population\n\n\nGeographyCode\n\n\n\n\n\n\n\n\n\n\nE01006512\n910\n106\n840\n24\n0\n1880\n\n\nE01006513\n2225\n61\n595\n53\n7\n2941\n\n\nE01006514\n1786\n63\n193\n61\n5\n2108\n\n\nE01006515\n974\n29\n185\n18\n2\n1208\n\n\nE01006518\n1531\n69\n73\n19\n4\n1696",
+    "crumbs": [
+      "1 Introduction",
+      "OpenScience in Python"
+    ]
+  },
+  {
+    "objectID": "opensciencePy.html#queries",
+    "href": "opensciencePy.html#queries",
+    "title": "OpenScience in Python",
+    "section": "Queries",
+    "text": "Queries\nIndex-based queries\nHere we explore how we can subset parts of a DataFrame if we know exactly which bits we want. For example, if we want to extract the total and European population of the first four areas in the table:\nWe use loc with lists:\n\neu_tot_first4 = census2021.loc[['E01006512', 'E01006513', 'E01006514', 'E01006515'], ['Total_Population', 'Europe']]\n\neu_tot_first4\n\n\n\n\n\n\n\n\nTotal_Population\nEurope\n\n\nGeographyCode\n\n\n\n\n\n\nE01006512\n1880\n910\n\n\nE01006513\n2941\n2225\n\n\nE01006514\n2108\n1786\n\n\nE01006515\n1208\n974\n\n\n\n\n\n\n\nCondition-based queries\nHowever, sometimes, we do not know exactly which observations we want, but we do know what conditions they need to satisfy (e.g. areas with more than 2,000 inhabitants). For these cases, DataFrames support selection based on conditions. Let us see a few examples. Suppose we want to select…\nAreas with more than 900 people in Total:\n\npop900 = census2021.loc[census2021['Total_Population'] &gt; 900, :]\npop900\n\n\n\n\n\n\n\n\nEurope\nAfrica\nMiddle East and Asia\nThe Americas and the Caribbean\nAntarctica and Oceania\nTotal_Population\n\n\nGeographyCode\n\n\n\n\n\n\n\n\n\n\nE01006512\n910\n106\n840\n24\n0\n1880\n\n\nE01006513\n2225\n61\n595\n53\n7\n2941\n\n\nE01006514\n1786\n63\n193\n61\n5\n2108\n\n\nE01006515\n974\n29\n185\n18\n2\n1208\n\n\nE01006518\n1531\n69\n73\n19\n4\n1696\n\n\n...\n...\n...\n...\n...\n...\n...\n\n\nE01033764\n2106\n32\n49\n15\n0\n2202\n\n\nE01033765\n1277\n21\n33\n17\n3\n1351\n\n\nE01033766\n1028\n12\n20\n8\n7\n1075\n\n\nE01033767\n1003\n29\n29\n5\n1\n1067\n\n\nE01033768\n1016\n69\n111\n21\n6\n1223\n\n\n\n\n298 rows × 6 columns\n\n\n\nAreas where there are no more than 750 Europeans:\n\neuro750 = census2021.loc[census2021['Europe'] &lt; 750, :]\neuro750\n\n\n\n\n\n\n\n\nEurope\nAfrica\nMiddle East and Asia\nThe Americas and the Caribbean\nAntarctica and Oceania\nTotal_Population\n\n\nGeographyCode\n\n\n\n\n\n\n\n\n\n\nE01033757\n731\n39\n223\n29\n3\n1025\n\n\n\n\n\n\n\nAreas with exactly ten person from Antarctica and Oceania:\n\noneOA = census2021.loc[census2021['Antarctica and Oceania'] == 10, :]\noneOA\n\n\n\n\n\n\n\n\nEurope\nAfrica\nMiddle East and Asia\nThe Americas and the Caribbean\nAntarctica and Oceania\nTotal_Population\n\n\nGeographyCode\n\n\n\n\n\n\n\n\n\n\nE01006679\n1353\n484\n354\n31\n10\n2232\n\n\n\n\n\n\n\nPro-tip: These queries can grow in sophistication with almost no limits.\nCombining queries\nNow all of these queries can be combined with each other, for further flexibility. For example, imagine we want areas with more than 25 people from the Americas and Caribbean, but less than 1,500 in total:\n\nac25_l500 = census2021.loc[(census2021['The Americas and the Caribbean'] &gt; 25) &                    (census2021['Total_Population'] &lt; 1500), :]\nac25_l500\n\n\n\n\n\n\n\n\nEurope\nAfrica\nMiddle East and Asia\nThe Americas and the Caribbean\nAntarctica and Oceania\nTotal_Population\n\n\nGeographyCode\n\n\n\n\n\n\n\n\n\n\nE01033750\n1235\n53\n129\n26\n5\n1448\n\n\nE01033752\n1024\n19\n114\n33\n6\n1196\n\n\nE01033754\n1262\n37\n112\n32\n9\n1452\n\n\nE01033756\n886\n31\n221\n42\n5\n1185\n\n\nE01033757\n731\n39\n223\n29\n3\n1025\n\n\nE01033761\n1138\n52\n138\n33\n11\n1372",
+    "crumbs": [
+      "1 Introduction",
+      "OpenScience in Python"
+    ]
+  },
+  {
+    "objectID": "opensciencePy.html#sorting",
+    "href": "opensciencePy.html#sorting",
+    "title": "OpenScience in Python",
+    "section": "Sorting",
+    "text": "Sorting\nAmong the many operations DataFrame objects support, one of the most useful ones is to sort a table based on a given column. For example, imagine we want to sort the table by total population:\n\ndb_pop_sorted = census2021.sort_values('Total_Population', ascending=False)\ndb_pop_sorted.head()\n\n\n\n\n\n\n\n\nEurope\nAfrica\nMiddle East and Asia\nThe Americas and the Caribbean\nAntarctica and Oceania\nTotal_Population\n\n\nGeographyCode\n\n\n\n\n\n\n\n\n\n\nE01006747\n2551\n163\n812\n24\n2\n3552\n\n\nE01006513\n2225\n61\n595\n53\n7\n2941\n\n\nE01006751\n1843\n139\n568\n21\n1\n2572\n\n\nE01006524\n2235\n36\n125\n24\n11\n2431\n\n\nE01006787\n2187\n53\n75\n13\n2\n2330",
+    "crumbs": [
+      "1 Introduction",
+      "OpenScience in Python"
+    ]
+  },
+  {
+    "objectID": "opensciencePy.html#additional-resources",
+    "href": "opensciencePy.html#additional-resources",
+    "title": "OpenScience in Python",
+    "section": "Additional resources",
+    "text": "Additional resources\n\nA good introduction to data manipulation in Python is Wes McKinney’s “Python for Data Analysis”",
+    "crumbs": [
+      "1 Introduction",
+      "OpenScience in Python"
+    ]
   }
 ]
