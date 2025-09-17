@@ -1,0 +1,502 @@
+# Lab in Python {#sec-map-raster-Python .unnumbered}
+
+In this session, we will further explore the world of geographic data visualization by building upon our understanding of both raster data and choropleths. Raster data, consisting of gridded cells, allows us to represent continuous geographic phenomena such as temperature, elevation, or satellite imagery. Choropleths, on the other hand, are an effective way to visualize spatial patterns through the use of color-coded regions, making them invaluable for displaying discrete data like population density or election results. By combining these techniques, we will gain a comprehensive toolkit for conveying complex geographical information in a visually compelling manner.
+
+## Importing Modules
+
+```{python}
+# Importing rasterio for handling raster data
+import rasterio
+from rasterio.warp import reproject, Resampling, calculate_default_transform
+from rasterio.mask import mask
+from rasterio.plot import show
+from rasterio import features
+
+# For converting Shapely geometries to GeoJSON format
+from shapely.geometry import mapping
+
+# For plotting and visualizing data using Matplotlib
+import matplotlib.pyplot as plt
+import matplotlib.patches as mpatches
+from matplotlib.patches import Patch
+import matplotlib.colorbar as colorbar
+import matplotlib.colors as mcolors
+from matplotlib.colors import ListedColormap, BoundaryNorm
+
+# For working with geospatial data
+import geopandas as gpd
+
+# For numerical operations and handling arrays
+import numpy as np
+import pandas as pd
+
+# These imports are for file and directory operations
+import os
+import zipfile
+import shutil
+
+#import rioxarray as rxr
+from rasterstats import zonal_stats
+```
+
+## Terrain data
+
+### **Import raster data**
+
+Raster **terrain** data consists of gridded elevation values that represent the topography of a geographic area. You can download this from the [relevant github folder](https://github.com/pietrostefani/gds/tree/main/data/Lebanon). A good place to download elevation data is [Earth Explorer](https://earthexplorer.usgs.gov/). This [video](https://www.youtube.com/watch?v=NQg0g9ObhXE) takes you through the download process if you want to try this out yourself.
+
+We first import a raster file for elevation.
+
+```{python}
+# Load the raster data
+elevation = rasterio.open("data/Lebanon/LBN_elevation_w_bathymetry.tif")
+```
+
+Plot it.
+
+```{python}
+plt.figure(figsize=(8, 8))
+plt.imshow(elevation.read(1), cmap='viridis')
+plt.colorbar(label='Elevation')
+plt.title('Elevation with Bathymetry')
+plt.show()
+```
+
+This information is typically accessed and updated via the .profile.
+
+```{python}
+print(elevation.profile)
+```
+
+Have a look at the CRS.
+
+```{python}
+# Check the CRS of the raster
+crs = elevation.crs
+print(crs)
+```
+
+### **Import the Lebanon shapefile**
+
+Import the Lebanon shapefile, plot it, and verify its Coordinate Reference System (CRS). Is it the same as the raster's CRS?
+
+```{python}
+# Load the shapefile data
+Lebanon_adm1 = gpd.read_file("data/Lebanon/LBN_adm1.shp")
+
+# Plot the geometry
+Lebanon_adm1.plot(edgecolor='grey', facecolor='none')
+plt.title('Lebanon Administrative Boundaries')
+plt.show()
+```
+
+```{python}
+# Check the CRS of the shapefile
+crs = Lebanon_adm1.crs
+print(crs)
+```
+
+### **Reproject the Raster**
+
+```{python}
+# Define the desired destination CRS
+dst_crs = "EPSG:22770"  # For example, WGS84
+
+# Calculate the transform matrix, width, and height for the output raster
+dst_transform, width, height = calculate_default_transform(
+    elevation.crs,  # source CRS from the raster
+    dst_crs,        # destination CRS
+    elevation.width,  # column count
+    elevation.height, # row count
+    *elevation.bounds  # outer boundaries (left, bottom, right, top)
+)
+
+# Print the source and destination transforms
+print("Source Transform:\n", elevation.transform, '\n')
+print("Destination Transform:\n", dst_transform)
+
+# Define the metadata for the output raster
+dst_meta = elevation.meta.copy()
+dst_meta.update({
+    'crs': dst_crs,
+    'transform': dst_transform,
+    'width': width,
+    'height': height
+})
+
+# Reproject and write the output raster
+with rasterio.open("data/Lebanon/reprojected_elevation.tif", "w", **dst_meta) as dst:
+    for i in range(1, elevation.count + 1):
+        reproject(
+            source=rasterio.band(elevation, i),
+            destination=rasterio.band(dst, i),
+            src_transform=elevation.transform,
+            src_crs=elevation.crs,
+            dst_transform=dst_transform,
+            dst_crs=dst_crs,
+            resampling=Resampling.nearest
+        )
+```
+
+### **Cropping and Masking**
+
+**Cropping**:
+
+-   Purpose: Cropping a raster involves changing the extent of the raster dataset by specifying a new bounding box or geographic area of interest. The result is a new raster that covers only the specified region.
+
+-   Typical Use: Cropping is commonly used when you want to reduce the size of a raster dataset to focus on a smaller geographic area of interest while retaining all the original data values within that area.
+
+**Masking**:
+
+-   Purpose: Applying a binary mask to the dataset. The mask is typically a separate raster or polygon layer where certain areas are designated as "masked" (1) or "unmasked" (0).
+
+-   Typical Use: Masking is used when you want to extract or isolate specific areas or features within a raster dataset. For example, you might use a mask to extract land cover information within the boundaries of a protected national park.
+
+In many cases, these cropping and masking are executed one after the other because it is computationally easier to crop when dealing with large datasets, and then masking.
+
+```{python}
+elevation_22770 = rasterio.open("data/Lebanon/reprojected_elevation.tif")
+
+# Use unary_union method to combine the geometries
+lebanon_union = Lebanon_adm1.geometry.unary_union
+
+# Crop the elevation data to the extent of Lebanon
+elevation_lebanon, elevation_lebanon_transform = mask(elevation_22770, [mapping(lebanon_union)], crop=True)
+```
+
+### **Plot elevation**
+
+```{python}
+# Assuming elevation_lebanon contains the cropped elevation data and Lebanon_adm1 is the GeoDataFrame
+fig, ax = plt.subplots(figsize=(8, 8))
+# Plot the elevation data
+show(elevation_lebanon, transform=elevation_lebanon_transform, ax=ax, cmap='terrain')
+# Plot the Lebanon boundaries on top, with no fill color
+Lebanon_adm1.boundary.plot(ax=ax, edgecolor='black')
+
+plt.show()
+```
+
+Let's improve this a bit. Remember that there is a lot we can do with [Cmap](https://www.analyticsvidhya.com/blog/2020/09/colormaps-matplotlib/#:~:text=Colormaps%20or%20Cmap%20in%20python%20colormaps%20is%20a%20very%20useful,custom%20ones%20using%20python%20colormaps).
+
+```{python}
+# Define the reversed 6 shades of orange
+orange_shades_reversed = ['#ef3b2c', '#fb6a4a', '#fc9272', '#fcbba1', '#fee0d2', '#fff5eb']
+
+# Define the breaks
+boundaries = [-100, 0, 700, 1200, 1800, 3300]
+
+# Define the color map and normalization
+cmap = ListedColormap(orange_shades_reversed)
+norm = BoundaryNorm(boundaries=boundaries, ncolors=len(orange_shades_reversed))
+
+fig, ax = plt.subplots(figsize=(8, 8))
+
+# Plot the elevation data with the custom color map
+im = show(elevation_lebanon, transform=elevation_lebanon_transform, ax=ax, cmap=cmap, norm=norm)
+
+# Plot the Lebanon boundaries on top, with no fill color
+Lebanon_adm1.boundary.plot(ax=ax, edgecolor='black')
+
+# Remove the axes
+ax.axis('off')
+
+# Manually create a legend
+legend_labels = ['< 0 m', '0 - 700 m', '700 - 1200 m', '1200 - 1800 m', '1800 - 3300 m', '> 3300 m']
+legend_patches = [Patch(color=orange_shades_reversed[i], label=legend_labels[i]) for i in range(len(orange_shades_reversed))]
+
+# Add the legend to the right of the plot
+ax.legend(handles=legend_patches, loc='center left', bbox_to_anchor=(1, 0.5), title='Elevation (m)', frameon=False)
+
+
+plt.show()
+```
+
+Questions to ask yourself about how you can improve these maps, going back to [geo-visualisation and choropleths](https://pietrostefani.github.io/gds/mapvector.html).
+
+-   What are the logical breaks for elevation data?
+
+-   Should the colours be changed to standard elevation pallettes?
+
+### **Spatial join with vector data**
+
+You might want to extract values from a raster data set, and then map them within a vector framework or extract them to analyse them statistically. If it therefore very useful to know how to extract:
+
+```{python}
+# Load some geo-localized survey data
+households = gpd.read_file("data/Lebanon/random_survey_LBN.shp")
+
+# Open the elevation raster file
+with rasterio.open("data/Lebanon/LBN_elevation_w_bathymetry.tif") as src:
+    # Reproject households coordinates to the CRS of the raster
+    households = households.to_crs(src.crs)
+    
+    # Extract elevation values at the coordinates of the points
+    housesales_elevation = [
+        val[0] if val is not None else None
+        for val in src.sample([(geom.x, geom.y) for geom in households.geometry])
+    ]
+
+# Attach elevation at each point to the original households GeoDataFrame
+households['elevation'] = housesales_elevation
+
+# Check out the data
+print(households.head())
+
+```
+
+-   *Handling CRS (Coordinate Reference System)*: The household data CRS is transformed to match the raster’s CRS before extracting elevation values.
+-   *Extracting Elevation*: Elevation values are extracted at each household location using rasterio’s sample method.
+-   *Attaching Elevation Data*: The elevation data is added as a new column to the households `GeoDataFrame`.
+
+::: callout-important
+Make sure all your data is in the same CRS, otherwise the `rasterio`’s sample will not work properly.
+:::
+
+## Night Lights
+
+This section is a bit more advanced, there are hints along the way to make it simpler.
+
+### **Download data**
+
+::: {.callout-note title="Download the Data"}
+We need to download some raster data. NOAA has made nighttime lights data available for 1992 to 2013. It is called the Version 4 DMSP-OLS Nighttime Lights Time Series. The files are cloud-free composites made using all the available archived DMSP-OLS smooth resolution data for calendar years. In cases where two satellites were collecting data - two composites were produced. The products are 30 arc-second grids, spanning -180 to 180 degrees longitude and -65 to 75 degrees latitude. We can download the [Average, Visible, Stable Lights, & Cloud Free Coverages for 1992 and 2013](https://www.ngdc.noaa.gov/eog/data/web_data/v4composites/) and put them in the `data/Kenya_Tanzania` folder.
+:::
+
+::: callout-important
+You can also download the data [here](https://theuniversityofliverpool-my.sharepoint.com/:u:/g/personal/pietrost_liverpool_ac_uk/EX85foAh7ZBBtSZ64pxbFmsBStf8UX2uaLXE5MBYJt6PeQ?e=LMYu7d) in *tar* format.
+
+The downloaded files are going to be in a **"TAR" format**. A TAR file is an archive created by tar, a Unix-based utility used to package files together for backup or distribution purposes. It contains multiple files stored in an uncompressed format along with metadata about the archive. Tars files are also used to reduce files' size. TAR archives compressed with GNU Zip compression may become GZ, .TAR.GZ, or .TGZ files. We need to decompress them before using them.
+
+If you want to simplify further, you can download the data directly as **TIFs**: Here for [1992](https://theuniversityofliverpool-my.sharepoint.com/my?login_hint=pietrost%40liverpool%2Eac%2Euk&id=%2Fpersonal%2Fpietrost%5Fliverpool%5Fac%5Fuk%2FDocuments%2Fgds%5FENVS363%5F563%2FF101992%2Ev4b%5Fweb%2Estable%5Flights%2Eavg%5Fvis%2Etif&parent=%2Fpersonal%2Fpietrost%5Fliverpool%5Fac%5Fuk%2FDocuments%2Fgds%5FENVS363%5F563) and here for [2013](https://theuniversityofliverpool-my.sharepoint.com/my?login_hint=pietrost%40liverpool%2Eac%2Euk&id=%2Fpersonal%2Fpietrost%5Fliverpool%5Fac%5Fuk%2FDocuments%2Fgds%5FENVS363%5F563%2FF182013%2Ev4c%5Fweb%2Estable%5Flights%2Eavg%5Fvis%2Etif&parent=%2Fpersonal%2Fpietrost%5Fliverpool%5Fac%5Fuk%2FDocuments%2Fgds%5FENVS363%5F563). You will need to be logged into your UoL account.
+:::
+
+It is also good practice to create a scratch folder where you do all your unzipping.
+
+```{python}
+# Load the raster files
+raster1_path = 'data/Kenya_Tanzania/F101992.v4b_web.stable_lights.avg_vis.tif'
+raster2_path = 'data/Kenya_Tanzania/F182013.v4c_web.stable_lights.avg_vis.tif'
+
+# Open the raster files
+with rasterio.open(raster1_path) as src1:
+    raster1 = src1.read(1)  # Read the first (and only) band
+
+with rasterio.open(raster2_path) as src2:
+    raster2 = src2.read(1)  # Read the first (and only) band
+    
+    # Stack the rasters along a new axis (depth axis)
+stacked_rasters = np.stack([raster1, raster2], axis=0)
+
+```
+
+```{python}
+# Create a plot
+fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(8, 8))
+
+# Plot the first raster
+ax1.imshow(stacked_rasters[0], cmap='cividis')
+ax1.set_title('1992')
+ax1.axis('off')
+
+# Plot the second raster
+ax2.imshow(stacked_rasters[1], cmap='cividis')
+ax2.set_title('2013')
+ax2.axis('off')
+
+# Show the plot
+plt.tight_layout()
+plt.show()
+
+```
+
+Why can’t you see much? Discuss with the person next to you.
+
+### **Country shapefiles**
+
+The second step is to download the shapefiles for Kenya and Tanzania. GADM has made available national and subnational shapefiles for the world. The zips you download, such as *gadm36_KEN_shp.zip* from GADM should be placed in the **Kenya_Tanzania** folder. This is the link [gadm](https://gadm.org/formats.html).
+
+```{python}
+# Set the data folder path
+datafolder = 'data'
+
+# List the country shapefiles downloaded from the GADM website
+files = [os.path.join(root, file)
+         for root, dirs, files in os.walk(os.path.join(datafolder, "Kenya_Tanzania"))
+         for file in files if file.endswith("_shp.zip")]
+
+print(files)
+
+# Create a scratch folder
+scratch_folder = os.path.join(datafolder, "Kenya_Tanzania", "scratch")
+os.makedirs(scratch_folder, exist_ok=True)
+
+# Unzip the files
+for file in files:
+    with zipfile.ZipFile(file, 'r') as zip_ref:
+        zip_ref.extractall(scratch_folder)
+
+# List GADM shapefiles
+gadm_files = [os.path.join(root, file)
+              for root, dirs, files in os.walk(os.path.join(datafolder, "Kenya_Tanzania"))
+              for file in files if file.startswith("gadm")]
+
+print(gadm_files)
+
+# Select regional level 2 files
+gadm_files_level2 = [file for file in gadm_files if "2.shp" in file]
+print(gadm_files_level2)
+
+# Load the shapefiles
+shps = [gpd.read_file(shp) for shp in gadm_files_level2]
+print(shps)
+
+# Delete the scratch folder with the data we don't need
+#shutil.rmtree(scratch_folder)
+```
+
+### **Merge Shapefiles**
+
+Even though it is not necessary here, we can merge the shapefile to visualize all the regions at once.
+
+When doing zonal statistics, it is faster and easier to process one country at a time and then combine the resulting tables. If you have access to a computer with multiple cores, it is also possible to do "parallel processing" to process each chunk at the same time in parallel.
+
+```{python}
+# Merge all shapefiles into one GeoDataFrame
+merged_countries = gpd.GeoDataFrame(pd.concat(shps, ignore_index=True))
+
+# Optionally, reset index if needed
+merged_countries = merged_countries.reset_index(drop=True)
+```
+
+We can then plot Kenya and Tanzania at Regional Level 2:
+
+```{python}
+# Plot all shapefiles
+fig, ax = plt.subplots(figsize=(10, 10))
+
+merged_countries.plot(ax=ax, edgecolor='k', facecolor='none', linewidth=1)  # No fill color
+
+#for gdf in shps:
+#    gdf.plot(ax=ax, edgecolor='k', facecolor='none', alpha=0.5)  # Adjust alpha and edgecolor as needed
+
+# Set plot title and labels
+ax.set_title('Regional Level 2 Shapefiles')
+ax.set_xlabel('Longitude')
+ax.set_ylabel('Latitude')
+
+# Show plot
+plt.show()
+```
+
+### **Zonal statistics**
+
+We use the module `rasterstats` to calculate the sum and average nighttime for each region. The nighttime lights rasters are quite large, but as we do not need to do any operations on them (e.g. calculations using the overlay function, cropping or masking to the shapefiles extent), the process should be relatively fast.
+
+```{python}
+# Calculate zonal statistics for the first raster (1992)
+stats_1992 = zonal_stats(merged_countries, raster1_path, stats=['sum', 'mean'], nodata=-9999, geojson_out=True)
+
+# Calculate zonal statistics for the second raster (2013)
+stats_2013 = zonal_stats(merged_countries, raster2_path, stats=['sum', 'mean'], nodata=-9999, geojson_out=True)
+
+# Convert the zonal stats results to GeoDataFrames, retaining geometry and attributes
+stats_1992_gdf = gpd.GeoDataFrame.from_features(stats_1992)
+stats_2013_gdf = gpd.GeoDataFrame.from_features(stats_2013)
+
+# Optionally, add a year column to distinguish between them
+stats_1992_gdf['year'] = 1992
+stats_1992_gdf['year'] = 2013
+
+# Combine the results into a single DataFrame
+combined_stats_gdf = pd.concat([stats_1992_gdf, stats_2013_gdf], ignore_index=True)
+
+# Display the results
+print(combined_stats_gdf.head())
+```
+
+More on zonal stats in python [here](https://pythonhosted.org/rasterstats/manual.html#zonal-statistics).
+
+### **Visualize**
+
+Let's have a first look at our result.
+
+```{python}
+# Create a figure with two subplots side by side
+fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(8, 6))
+
+# Plot for 1992 with inverted colormap
+stats_1992_gdf.plot(column='mean', cmap='YlGnBu_r', legend=True, ax=ax1)
+ax1.set_title("Mean 1992")
+ax1.axis('off')
+
+# Plot for 2013 with inverted colormap
+stats_2013_gdf.plot(column='mean', cmap='YlGnBu_r', legend=True, ax=ax2)
+ax2.set_title("Mean 2013")
+ax2.axis('off')
+
+# Adjust layout
+plt.tight_layout()
+
+# Show the plots
+plt.show()
+```
+
+Most of the Kenya and Tanzania have really low values. To make the maps tell a story, we can use fixed breaks.
+
+```{python}
+# Define breaks and labels
+breaks = [0, 0.05, 0.1, 2, 63]
+labels = ['0-0.05', '0.05-0.1', '0.1-2', '2-63']
+
+# Create a custom colormap and normalization
+cmap = plt.get_cmap('YlGnBu_r')
+norm = mcolors.BoundaryNorm(breaks, cmap.N)
+
+# Create a figure with two subplots side by side
+fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(8, 6))
+
+# Plot for 1992 with custom colormap and breaks
+stats_1992_gdf.plot(column='mean', cmap=cmap, norm=norm, legend=False, ax=ax1)
+ax1.set_title("Mean 1992")
+ax1.axis('off')
+
+# Plot for 2013 with custom colormap and breaks
+stats_2013_gdf.plot(column='mean', cmap=cmap, norm=norm, legend=False, ax=ax2)
+ax2.set_title("Mean 2013")
+ax2.axis('off')
+
+# Add a colorbar to the figure
+cbar = fig.colorbar(plt.cm.ScalarMappable(norm=norm, cmap=cmap), ax=[ax1, ax2], orientation='horizontal', fraction=0.05, pad=0.18, aspect=12)
+
+# Set ticks and labels to match the breaks
+#cbar.set_ticks(breaks)
+#cbar.set_ticklabels(labels)
+
+# Adjust layout
+plt.tight_layout()
+
+# Show the plots
+plt.show()
+
+```
+
+Have a think about what the data is telling you. What's the story?
+
+We can also make it interactive with `folium` and `folium.plugins` `DualMap` but this is a bit more complicated in `python` and will be covered in [Web Mapping and Visualiation](https://gdsl-ul.github.io/wma/labs/w04_interactive.html).
+
+## Resources
+
+-   [Python Open Source Spatial Programming & Remote Sensing](https://pygis.io/docs/e_interpolation.html)
+
+-   [Remote Sensing with Python](https://worldbank.github.io/OpenNightLights/welcome.html)
+
+-   [Black Marble in Python](https://blogs.worldbank.org/en/opendata/illuminating-insights-harnessing-nasas-black-marble-r-and-python-packages)
+
+```{=html}
+<!--
+problem installing richdem
+
+https://www.earthdatascience.org/tutorials/get-slope-aspect-from-digital-elevation-model/
+-->
+```
