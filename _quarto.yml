@@ -4,7 +4,7 @@ project:
 
 book:
   title: "A course in Geographic Data Science"
-  author: "Dr. Elisabetta Pietrostefani & Dr. Carmen Cabrera-Arnau"
+  author: "Dr. Elisabetta Pietrostefani & Dr. Carmen Cabrera"
   date: today
   chapters:
     - index.qmd
