@@ -158,5 +158,170 @@
     "crumbs": [
       "Environment"
     ]
+  },
+  {
+    "objectID": "environR.html",
+    "href": "environR.html",
+    "title": "R",
+    "section": "",
+    "text": "R Basics\nTo run the analysis and reproduce the code in R, you need the following software:\nTo install and update:\nTo check your version of:",
+    "crumbs": [
+      "Environment",
+      "R"
+    ]
+  },
+  {
+    "objectID": "environR.html#r-basics",
+    "href": "environR.html#r-basics",
+    "title": "R",
+    "section": "",
+    "text": "Starting a session\nUpon startup, RStudio will look something like this. Note: the Pane Layout and Appearance settings can be altered e.g. on Mac OS by clicking RStudio&gt;Preferences&gt;Appearance and RStudio&gt;Preferences&gt;Pane Layout. I personally like to have my Console in the top right corner and Environment in the bottom left and keep the Source and Environment panes wider than Console and Files for easier readability. Default settings will probably have the Console in the bottom left and Environment in the top right. You will also have a standard white background; but you can chose specific themes.\n\n\n\n\n\n\n\n\n\nAt the start of a session, it’s good practice clearing your R environment:\n\nrm(list = ls())\n\nIn R, we are going to be working with relative paths. With the command getwd(), you can see where your working directory is currently set. You should have set this following the pre-recorded video.\n\ngetwd() \n\nIf the directory is not set yet, type in setwd(\"~/pathtodirectory\") to set it. It is crucial to perform this step at the beginning of your R script, so that relative paths can be used in the subsequent parts.\n\nsetwd(\"~/Dropbox/Github/gds\")\n\nIf you have set your directory correctly, you can check it with getwd()\n\n\n\n\n\n\n\n\n\nImportant: You do not need to set your working directory if you are using an R-markdown or Quarto document and you have it saved in the right location. The pathway will start from where your document is saved.\n\n\nUsing the console\nTry to use the console to perform a few operations. For example type in:\n\n1+1\n\n[1] 2\n\n\nSlightly more complicated:\n\nprint(\"hello world\")\n\n[1] \"hello world\"\n\n\nIf you are unsure about what a command does, use the “Help” panel in your Files pane or type ?function in the console. For example, to see how the dplyr::rename() function works, type in ?dplyr::rename. When you see the double colon syntax like in the previous command, it’s a call to a package without loading its library.\n\n\nR Objects\nEverything in R is an object. R possesses a simple generic function mechanism which can be used for an object-oriented style of programming. Indeed, everything that happens in R is the result of a function call (John M. Chambers). Method dispatch takes place based on the class of the first argument to the generic function.\nAll R statements where you create objects – “assignments” – have this form: object_name &lt;- value. Assignment can also be performed using = instead of &lt;-, but the standard advice is to use the latter syntax (see e.g. The R Inferno, ch. 8.2.26). In RStudio, the standard shortcut for the assignment operator &lt;- is Alt + - (in Windows) or option + - (in Mac OS).\nA mock assignment of the value 30 to the name age is reported below. In order to inspect the content of the newly created variable, it is sufficient to type the name into the console. Within R, the hash symbol # is used to write comments and create collapsible code sections.\n\nage &lt;- 30 # Assign the number 30 to the name \"age\"\nage # print the variable \"age\" to the console\n\n[1] 30\n\n\n\n\nA small note on variable types\nThe function class() is used to inspect the type of an object.\nThere are four main types of variables:\n\nLogical: boolean/binary, can either be TRUE or FALSE\n\n\nclass(TRUE)\n\n[1] \"logical\"\n\n\n\nCharacter (or string): simple text, including symbols and numbers. It can be wrapped in single or double quotation, which usually highlights text in a different colour in RStudio\n\n\nclass(\"I am a city\")\n\n[1] \"character\"\n\n\n\nNumeric: Numbers. Mathematical operators can be used here.\n\n\nclass(2022)\n\n[1] \"numeric\"\n\n\n\nFactor: Characters or strings, but ordered in categories.\n\n\nclass(as.factor(c(\"I\", \"am\", \"a\", \"factor\")))\n\n[1] \"factor\"\n\n\nAnother important value to know is NA. It stands for “Not Available” and simply denotes a missing value.\n\nvector_with_missing &lt;- c(NA, 1, 2, NA)\nvector_with_missing\n\n[1] NA  1  2 NA\n\n\n\n\nLogical operators and expressions\n\n== asks whether two values are the same or equal (“is equal to”)\n!= asks whether two values are the not the same or unequal (“is not equal to”)\n&gt; greater than\n&gt;= greater or equal to\n&lt;= smaller or equal to\n& stands for “and” (unsurprisingly)\n| stands for “or”\n! stands for “not",
+    "crumbs": [
+      "Environment",
+      "R"
+    ]
+  },
+  {
+    "objectID": "environR.html#installing-packages",
+    "href": "environR.html#installing-packages",
+    "title": "R",
+    "section": "Installing packages",
+    "text": "Installing packages\nIn R, packages are collections of functions, compiled code and sample data. They functionally act as “extensions” to the base R language, and can help you accomplish all operations you might want to perform in R (if no package serves your purpose, you may want to write an entirely new one!). Now, we will install the R package tidyverse. Look at the link to see what tidyverse includes, and directly load a .csv file (comma-separated values) into R from your computer.\n\nif(!require(\"tidyverse\")) install.packages(\"tidyverse\")\n\nLoading required package: tidyverse\n\n\n── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──\n✔ dplyr     1.1.4     ✔ readr     2.1.5\n✔ forcats   1.0.0     ✔ stringr   1.5.1\n✔ ggplot2   3.5.2     ✔ tibble    3.2.1\n✔ lubridate 1.9.4     ✔ tidyr     1.3.1\n✔ purrr     1.0.4     \n── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──\n✖ dplyr::filter() masks stats::filter()\n✖ dplyr::lag()    masks stats::lag()\nℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors\n\nlibrary(tidyverse)",
+    "crumbs": [
+      "Environment",
+      "R"
+    ]
+  },
+  {
+    "objectID": "environR.html#examples",
+    "href": "environR.html#examples",
+    "title": "R",
+    "section": "Examples",
+    "text": "Examples\nLet’s create some random R objects:\n\n## Entering random \nLondon  &lt;- 8982000 # population\nBristol &lt;- 467099 # population\nLondon_area &lt;-1572 # area km2\nBristol_area &lt;-110 # area km2\n\nLondon\n\n[1] 8982000\n\n\nCalculate Population Density in London:\n\nLondon_pop_dens &lt;- London/London_area\nBristol_pop_dens &lt;- Bristol/Bristol_area\n\nLondon_pop_dens\n\n[1] 5713.74\n\n\nThe function c(), which you will use extensively if you keep coding in R, means “concatenate”. In this case, we use it to create a vector of population densities for London and Bristol:\n\nc(London_pop_dens, Bristol_pop_dens)\n\n[1] 5713.740 4246.355\n\npop_density &lt;- c(London_pop_dens, Bristol_pop_dens) # In order to create a vector in R we make use of c() (which stands for concatenate)\n\nCreate a character variable:\n\nx &lt;- \"a city\"\nclass(x)\n\n[1] \"character\"\n\ntypeof(x)\n\n[1] \"character\"\n\nlength(x)\n\n[1] 1",
+    "crumbs": [
+      "Environment",
+      "R"
+    ]
+  },
+  {
+    "objectID": "environR.html#data-structures",
+    "href": "environR.html#data-structures",
+    "title": "R",
+    "section": "Data Structures",
+    "text": "Data Structures\nObjects in R are typically stored in data structures. There are multiple types of data structures:\n\nVectors\nIn R, a vector is a sequence of elements which share the same data type. A vector supports logical, integer, double, character, complex, or raw data types.\n\n# first vector y\ny &lt;- 1:10\nas.numeric(y)\n\n [1]  1  2  3  4  5  6  7  8  9 10\n\nclass(y)\n\n[1] \"integer\"\n\nlength(y)\n\n[1] 10\n\n# another vector z\nz &lt;- c(2, 4, 56, 4)\nz\n\n[1]  2  4 56  4\n\n# and another one called cities\ncities &lt;- c(\"London\", \"Bristol\", \"Bath\")\ncities\n\n[1] \"London\"  \"Bristol\" \"Bath\"   \n\n\n\n\nMatrices\nTwo-dimensional, rectangular, and homogeneous data structures. They are similar to vectors, with the additional attribute of having two dimensions: the number of rows and columns.\n\nm &lt;- matrix(nrow = 2, ncol = 2)\nm\n\n     [,1] [,2]\n[1,]   NA   NA\n[2,]   NA   NA\n\nn &lt;- matrix(c(4, 5, 78, 56), nrow = 2, ncol = 2 )\nn\n\n     [,1] [,2]\n[1,]    4   78\n[2,]    5   56\n\n\n\n\nLists\nLists are containers which can store elements of different types and sizes. A list can contain vectors, matrices, dataframes, another list, functions which can be accessed, unlisted, and assigned to other objects.\n\nlist_data &lt;- list(\"Red\", \"Green\", c(21,32,11), TRUE, 51.23, 119.1)\nprint(list_data)\n\n[[1]]\n[1] \"Red\"\n\n[[2]]\n[1] \"Green\"\n\n[[3]]\n[1] 21 32 11\n\n[[4]]\n[1] TRUE\n\n[[5]]\n[1] 51.23\n\n[[6]]\n[1] 119.1\n\n\n\n\nData frames\nThey are the most common way of storing data in R and are the most used data structure for statistical analysis. Data frames are “rectangular lists”, i.e. tabular structures in which every element has the same length, and can also be thought of as lists of equal length vectors.\n\n## Here is a data frame of 3 columns named id, x, y and 10 rows\ndat &lt;- data.frame(id = letters[1:10], x = 1:10, y = 11:20)\ndat\n\n   id  x  y\n1   a  1 11\n2   b  2 12\n3   c  3 13\n4   d  4 14\n5   e  5 15\n6   f  6 16\n7   g  7 17\n8   h  8 18\n9   i  9 19\n10  j 10 20\n\nhead(dat) # read first 5 rows\n\n  id x  y\n1  a 1 11\n2  b 2 12\n3  c 3 13\n4  d 4 14\n5  e 5 15\n6  f 6 16\n\ntail(dat)\n\n   id  x  y\n5   e  5 15\n6   f  6 16\n7   g  7 17\n8   h  8 18\n9   i  9 19\n10  j 10 20\n\nnames(dat)\n\n[1] \"id\" \"x\"  \"y\" \n\n\nDataframes in R are indexed by rows and columns numbers using the [rows,cols] syntax. The $ operator allows you to access columns in the dataframe, or to create new columns in the dataframe.\n\ndat[1,] # read first row and all colum ns\n\n  id x  y\n1  a 1 11\n\ndat[,1] # read all rows and the first column\n\n [1] \"a\" \"b\" \"c\" \"d\" \"e\" \"f\" \"g\" \"h\" \"i\" \"j\"\n\ndat[6,3] # read 6th row, third column\n\n[1] 16\n\ndat[c(2:4),] # read rows 2 to 4 and all columns\n\n  id x  y\n2  b 2 12\n3  c 3 13\n4  d 4 14\n\ndat$y # read column y\n\n [1] 11 12 13 14 15 16 17 18 19 20\n\ndat[dat$x&lt;7,] # read rows that have a x value less than 7\n\n  id x  y\n1  a 1 11\n2  b 2 12\n3  c 3 13\n4  d 4 14\n5  e 5 15\n6  f 6 16\n\ndat$new_column &lt;- runif(10, 0, 1) # create a new variable called \"new_column\"\n\ndat\n\n   id  x  y new_column\n1   a  1 11 0.12057209\n2   b  2 12 0.16461165\n3   c  3 13 0.10111758\n4   d  4 14 0.16387671\n5   e  5 15 0.57811083\n6   f  6 16 0.06151680\n7   g  7 17 0.70395518\n8   h  8 18 0.04066187\n9   i  9 19 0.33875033\n10  j 10 20 0.66096785",
+    "crumbs": [
+      "Environment",
+      "R"
+    ]
+  },
+  {
+    "objectID": "environR.html#exercises",
+    "href": "environR.html#exercises",
+    "title": "R",
+    "section": "Exercises",
+    "text": "Exercises\n\n1. Vectors\n\nAssign the first 10 elements of the Fibonacci sequence to a numeric vector called fibonacci_vector.\n\n\n\nShow the code\nfibonacci_vector &lt;- c(0, 1, 1, 2, 3, 5, 8, 13, 21, 34)\n\n\n\nAssign the names of the people sitting at your table to a character vector.\n\n\n\nShow the code\npeople_vector &lt;- c(\"Elisabetta\", \"Carmen\", \"Habib\")\n\n\n\nInspect the length and class of your numeric and character vectors.\n\n\n\nShow the code\nlength(fibonacci_vector)\n\n\n[1] 10\n\n\nShow the code\nlength(people_vector)\n\n\n[1] 3\n\n\nShow the code\nclass(fibonacci_vector)\n\n\n[1] \"numeric\"\n\n\nShow the code\nclass(people_vector)\n\n\n[1] \"character\"\n\n\n\nConstruct a numeric vector containing 10 numbers generated at random from the Uniform distribution with interval [0,1] (Hint: runif()).\n\n\n\nShow the code\nrandom_uniform &lt;- runif(10, 0, 1)\n\n\n\nMultiply this vector by a scalar.\n\n\n\nShow the code\nrandom_uniform*3\n\n\n [1] 2.5494715 1.3127550 2.4584536 0.6895074 2.2425527 1.3976348 0.7799749\n [8] 1.4578196 0.2121431 2.2033858\n\n\n\nConstruct a numeric vector by multiplying fibonacci_vector by the vector constructed at step 4.\n\n\n\nShow the code\nnew_numeric_vector &lt;- fibonacci_vector*random_uniform\n\n\n\n\n2. Matrices\n\nConstruct a 3x3 matrix containing fibonacci_vector, the vector of random draws from the uniform distribution, and their multiplication.\n\n\n\nShow the code\nnew_matrix &lt;-  matrix(c(fibonacci_vector, random_uniform, new_numeric_vector), ncol =3)\n\n\n\nConvert the matrix to a dataframe (Hint: as.data.frame())\n\n\n\nShow the code\nnew_df &lt;-  as.data.frame(new_matrix)\n\n\n\nName the dataframe columns (Hint: dplyr::rename())\n\n\n\nShow the code\nnew_df &lt;-  new_df %&gt;%\n  dplyr::rename(fibonacci_vector = V1,\n                random_uniform = V2,\n                new_numeric_vector = V3)\n\n\n\n\n3. Data Frames\n\nConstruct a Data Frame with 5 columns with an ID, City Name, Population, Area and Population density of 3 cities in the UK. You can use London, Bristol and other cities in the UK.\n\n\n\nShow the code\nUK_cities = data.frame(\n  id = c(1,2,3),\n  city_name = c(\"London\", \"Bristol\", \"Liverpool\"),\n  population = c(8982000, 467099, 864122),\n  area = c(1572, 110, 200)\n)\n\nUK_cities$pop_density = UK_cities$population/UK_cities$area\n\n# or the tidy way\nUK_cities_tidy = UK_cities %&gt;%\n  mutate(pop_density = population/area)\n\n# Get the structure of the data frame\nstr(UK_cities)\n\n\n'data.frame':   3 obs. of  5 variables:\n $ id         : num  1 2 3\n $ city_name  : chr  \"London\" \"Bristol\" \"Liverpool\"\n $ population : num  8982000 467099 864122\n $ area       : num  1572 110 200\n $ pop_density: num  5714 4246 4321\n\n\nShow the code\n# Print the summary\nprint(summary(UK_cities))\n\n\n       id       city_name           population           area       \n Min.   :1.0   Length:3           Min.   : 467099   Min.   : 110.0  \n 1st Qu.:1.5   Class :character   1st Qu.: 665610   1st Qu.: 155.0  \n Median :2.0   Mode  :character   Median : 864122   Median : 200.0  \n Mean   :2.0                      Mean   :3437740   Mean   : 627.3  \n 3rd Qu.:2.5                      3rd Qu.:4923061   3rd Qu.: 886.0  \n Max.   :3.0                      Max.   :8982000   Max.   :1572.0  \n  pop_density  \n Min.   :4246  \n 1st Qu.:4283  \n Median :4321  \n Mean   :4760  \n 3rd Qu.:5017  \n Max.   :5714",
+    "crumbs": [
+      "Environment",
+      "R"
+    ]
+  },
+  {
+    "objectID": "environR.html#import-data-from-csv",
+    "href": "environR.html#import-data-from-csv",
+    "title": "R",
+    "section": "Import data from csv",
+    "text": "Import data from csv\n\nDensities_UK_cities &lt;- read_csv(\"data/London/Tables/Densities_UK_cities.csv\")\n\nRows: 76 Columns: 5\n── Column specification ────────────────────────────────────────────────────────\nDelimiter: \",\"\nchr (2): city, pop\ndbl (1): n\nnum (2): area, density\n\nℹ Use `spec()` to retrieve the full column specification for this data.\nℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.\n\nDensities_UK_cities\n\n# A tibble: 76 × 5\n       n city               pop        area density\n   &lt;dbl&gt; &lt;chr&gt;              &lt;chr&gt;     &lt;dbl&gt;   &lt;dbl&gt;\n 1     1 Greater London     9,787,426 1738.    5630\n 2     2 Greater Manchester 2,553,379  630.    4051\n 3     3 West Midlands      2,440,986  599.    4076\n 4     4 West Yorkshire     1,777,934  488.    3645\n 5     5 Greater Glasgow    957,620    368.    3390\n 6     6 Liverpool          864,122    200.    4329\n 7     7 South Hampshire    855,569    192     4455\n 8     8 Tyneside           774,891    180.    4292\n 9     9 Nottingham         729,977    176.    4139\n10    10 Sheffield          685,368    168.    4092\n# ℹ 66 more rows\n\n\nYou can also view the data set with:\n\nglimpse(Densities_UK_cities)\n\nRows: 76\nColumns: 5\n$ n       &lt;dbl&gt; 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18,…\n$ city    &lt;chr&gt; \"Greater London\", \"Greater Manchester\", \"West Midlands\", \"West…\n$ pop     &lt;chr&gt; \"9,787,426\", \"2,553,379\", \"2,440,986\", \"1,777,934\", \"957,620\",…\n$ area    &lt;dbl&gt; 1737.9, 630.3, 598.9, 487.8, 368.5, 199.6, 192.0, 180.5, 176.4…\n$ density &lt;dbl&gt; 5630, 4051, 4076, 3645, 3390, 4329, 4455, 4292, 4139, 4092, 42…\n\ntable(Densities_UK_cities$city)\n\n\n               Aberdeen  Accrington/ Rossendale Barnsley/ Dearne Valley \n                      1                       1                       1 \n               Basildon             Basingstoke                 Bedford \n                      1                       1                       1 \n                Belfast              Birkenhead               Blackburn \n                      1                       1                       1 \n              Blackpool      Bournemouth/ Poole       Brighton and Hove \n                      1                       1                       1 \n                Bristol                 Burnley       Burton-upon-Trent \n                      1                       1                       1 \n              Cambridge                 Cardiff              Chelmsford \n                      1                       1                       1 \n             Cheltenham            Chesterfield              Colchester \n                      1                       1                       1 \n               Coventry                 Crawley                   Derby \n                      1                       1                       1 \n              Doncaster                  Dundee              Eastbourne \n                      1                       1                       1 \n              Edinburgh                  Exeter  Farnborough/ Aldershot \n                      1                       1                       1 \n             Gloucester         Greater Glasgow          Greater London \n                      1                       1                       1 \n     Greater Manchester                 Grimsby                Hastings \n                      1                       1                       1 \n           High Wycombe                 Ipswich      Kingston upon Hull \n                      1                       1                       1 \n              Leicester                 Lincoln               Liverpool \n                      1                       1                       1 \n                  Luton               Maidstone               Mansfield \n                      1                       1                       1 \n           Medway Towns           Milton Keynes              Motherwell \n                      1                       1                       1 \n                Newport             Northampton                 Norwich \n                      1                       1                       1 \n             Nottingham                  Oxford       Paignton/ Torquay \n                      1                       1                       1 \n           Peterborough                Plymouth                 Preston \n                      1                       1                       1 \n                Reading               Sheffield                  Slough \n                      1                       1                       1 \n        South Hampshire         Southend-on-Sea          Stoke-on-Trent \n                      1                       1                       1 \n             Sunderland                 Swansea                 Swindon \n                      1                       1                       1 \n               Teesside                 Telford                  Thanet \n                      1                       1                       1 \n               Tyneside              Warrington           West Midlands \n                      1                       1                       1 \n         West Yorkshire                   Wigan               Worcester \n                      1                       1                       1 \n                   York \n                      1",
+    "crumbs": [
+      "Environment",
+      "R"
+    ]
+  },
+  {
+    "objectID": "environR.html#r-list-of-libraries",
+    "href": "environR.html#r-list-of-libraries",
+    "title": "R",
+    "section": "R List of libraries",
+    "text": "R List of libraries\nThe list of libraries used in this book is provided below:\n\ntidyverse\ndata.table\nsf\ntmap\nreadr\ngeojsonsf\nosmdata\nbasemapR\nRColorBrewer\nclassInt\nR.utils\ndplyr\nggplot2\nviridis\nraster\nterra\nexactextractr\ntidyterra\nspdep\ntibble\npatchwork\nrosm\ntidyr\nGGally\ncluster\nrgeoda\nmapview\nggspatial\ncolorspace\ngstat\nspatstat\ndbscan\nfpc\neks\nigraph\ntidygraph\n\nYou need to ensure you have installed the list of libraries used in this book, running the following code:\n\n# package names\npackages &lt;- c(\n  \"tmap\", \"readr\", \"geojsonsf\", \"osmdata\", \"basemapR\", \"sf\", \"tidyverse\", \n  \"RColorBrewer\", \"classInt\", \"R.utils\", \"dplyr\", \"ggplot2\", \"viridis\", \n  \"raster\", \"terra\", \"exactextractr\", \"tidyterra\", \"spdep\", \"tibble\", \n  \"patchwork\", \"rosm\", \"tidyr\", \"GGally\", \"cluster\", \"rgeoda\", \"mapview\", \n  \"ggspatial\", \"colorspace\", \"gstat\", \"spatstat\", \"dbscan\", \"fpc\", \"eks\", \n  \"igraph\", \"tidygraph\"\n)\n\n# Function to check and install missing packages\ninstall_if_missing &lt;- function(p) {\n  if (!requireNamespace(p, quietly = TRUE)) {\n    install.packages(p)\n  }\n}\n\n# Apply the function to each package\ninvisible(sapply(packages, install_if_missing))",
+    "crumbs": [
+      "Environment",
+      "R"
+    ]
+  },
+  {
+    "objectID": "environR.html#resources",
+    "href": "environR.html#resources",
+    "title": "R",
+    "section": "Resources",
+    "text": "Resources\nSome help along the way with:\n\nR for Data Science. R4DS teaches you how to do data science with R: You’ll learn how to get your data into R, get it into the most useful structure, transform it, visualise it and model it.\nSpatial Data Science by Edzer Pebesma and Roger Bivand introduces and explains the concepts underlying spatial data.\nGeo-computation with R by Robin Lovelace, Jakub Nowosad and Jannes Muenchow.",
+    "crumbs": [
+      "Environment",
+      "R"
+    ]
+  },
+  {
+    "objectID": "environPy.html",
+    "href": "environPy.html",
+    "title": "Python",
+    "section": "",
+    "text": "Set up Miniconda (and Python) on Ms Windows\nTo run the analysis and reproduce the code in Python, you will need to set up the Python environment to:\nWe will use Miniconda to handle our working environment.",
+    "crumbs": [
+      "Environment",
+      "Python"
+    ]
+  },
+  {
+    "objectID": "environPy.html#set-up-miniconda-and-python-on-ms-windows",
+    "href": "environPy.html#set-up-miniconda-and-python-on-ms-windows",
+    "title": "Python",
+    "section": "",
+    "text": "Installation\n\nInstall Miniconda:\n\nOption 1: On a UoL Machine: Anaconda is installed on many university machines. Please check whether it is installed. If not, download and install Anaconda through from Install University Applications, type and choose Anaconda.\nOption 2: Recommended - Install Miniconda on your personal Laptop: Follow the instructions here.\n\nDuring the installation, leave the default settings. In particular, when asked whom to “Install Miniconda for”, choose “Just for me”.\n\n\n\n\n\n\n\nUniversity Machines\n\n\n\nIf you do choose to work on University Machines\n\nChose a machine where Anaconda has been pre-installed.\nAlways use the same machine. For example if on the first day you are using CT60 Station 17 - Orange Zone, continue using this machine for the rest of the course. If you change machine you will need to re-install the environment every time.\n\n\n\n\n\nSet up the Directories\n\nCreate a folder where you want to keep your work conducted throughout this course. For example, call it envs363_563. You can save it wherever you want. If you are working on a university machine, it could be worth creating it in M:/, which is your “virtual” hard-disk.\n\n\n\nDownload the data to run and render the jupyter notebooks. To learn how to download folders from github see here.\nUnzip the folders and move the nested folders into the folder envs363_563.\nCreate another folder called labs\n\nThe folder structure should look like:\nenvs363_563/\n├── data/\n└── labs/\n\n\nSet up the Python Environment\n\nDownload the envs363_563.yml from GitHub by cliciking Download raw file, top right at this page\nSave it in the folder envs363_563 created before.\nType in the search bar and find the Anaconda Powershell Prompt if working on University Machine or Anaconda Prompt (miniconda 3) if on your personal. Launch it. The terminal should appear.\n\n\n\nIn the Anaconda Terminal write: conda env create -n envs363_563 --file M:\\envs363\\envs363_563.yml and press Enter; if the file is located elsewhere you’ll need to use the corresponding file path.\nIf you are prompted any questions, press y. This process will install all the packages necessary to carry out the lab sessions.\nIn the Anaconda Terminal write conda activate envs363_563 and press Enter. This activates your working environment.\n\n\n\n\nNecessary on University machines, otherwise Optional: Configuration of Jupyter Notebooks\n\nIn the Anaconda Terminal, write jupyter server --generate-config and press enter. This, at least in Windows, should create a file to: C:\\Users\\username\\.jupyter\\jupyter_server_config.py.\nOpen the file with a text editor (e.g. Notepad++), do a ctrl-f search for: c.ServerApp.root_dir, uncomment it by removing the # and change it to c.ServerApp.notebook_dir = 'M:\\\\your\\\\new\\\\path, for example the directory where you created the envs363_563 folder. In the University Machines, it is advised to work on the directory M:\\.\nSave the file and close it.\n\n\n\n\n\nStart a Lab Session\n\nDownload the Jupyter Notebook of the session in your folder. Choose one jupyter notebook and click Dowload raw file as shown below.\n\n\n\nSave the file in the labs folder within your envs363_563 folder on your machine.\nType in the search bar, find and open the Anaconda Prompt (miniconda 3).\nIn the Anaconda Terminal write and run conda activate envs363_563.\nIn the Anaconda Terminal write and run jupyter notebook. This should open Jupyter Notebook in your default browser.\n\n\n\nNavigate to your course folder in and double click on the notebook downloaded in step 1.\nYou can now work on your copy of the notebook.\n\nFollow these instructions and test your installation prior to the first Lab Session. If you experience any issues, write a message on the Ms Teams channel of the module. Setting up the Python environment is necessary for:\n\nExecuting the Jupyter Notebooks of the Lab sessions of the course.\nPreparing your own Jupyter Notebooks for the assignments (one each).",
+    "crumbs": [
+      "Environment",
+      "Python"
+    ]
+  },
+  {
+    "objectID": "environPy.html#set-up-miniconda-and-python-on-mac",
+    "href": "environPy.html#set-up-miniconda-and-python-on-mac",
+    "title": "Python",
+    "section": "Set up Miniconda (and Python) on MAC",
+    "text": "Set up Miniconda (and Python) on MAC\n\nInstallation\nTo install Miniconda on your personal laptop, Follow the instructions here. During the installation, leave the default settings. In particular, when asked whom to “Install Miniconda for”, choose “Just for me”.\n\n\nSet up the Directories\n\nCreate a folder where you want to keep your work conducted throughout this course. For example, call it envs363_563. You can save it wherever you want. For example, Elisabetta has named her folder envs363_563 and it’s in her Dropbox in Users/PIETROST/Library/CloudStorage/Dropbox/envs363_563\nDownload the data to run and render the jupyter notebooks. To learn how to download folders from github see here.\nUnzip the folders and move the nested folders into the folder envs363_563.\nCreate another folder called labs\n\nThe folder structure should look like:\nenvs363_563/ ├── data/ └── labs/\n\n\n\nSet up the Python Environment\n\nDownload the envs363_563.yml from GitHub by clicking Download raw file, top right at this page\nSave it in the folder envs363_563 created before.\nType in the search bar and open the Terminal.\nIn the Terminal write conda env create -n envs363 --file envs363_563.yml and press Enter. This will need to be modified according to where you placed the envs363_563 folder. For example, Elisabetta has named her folder envs363_563 and it’s in her Dropbox in Users/PIETROST/Library/CloudStorage/Dropbox/envs363_563/envs363_563.yml. If you created the envs363_563 folder on your desktop, the path would be Desktop/envs363_563.\n\n\n\nIf you are prompted any questions, press y. This process will install all the packages necessary to carry out the lab sessions.\nYou should then see this\n\n\n\n\nStart a Lab Session\n\nDownload the Jupyter Notebook of the session in your folder. Choose one jupyter notebook and click Dowload raw file as shown below\n\n\n\nSave the file in the labs folder within your envs363 folder on your machine.\nType in the search bar, find and open the Terminal.\nIn the Terminal write and run conda activate envs363.\nIn the Terminal write and run jupyter notebook.\n\n\n\nThis should open Jupyter Notebook in your default browser. You should see something like this:\n\n\n\nNavigate to your folder. You can now work on your copy of the notebook.",
+    "crumbs": [
+      "Environment",
+      "Python"
+    ]
+  },
+  {
+    "objectID": "environPy.html#py-basics",
+    "href": "environPy.html#py-basics",
+    "title": "Python",
+    "section": "Py Basics",
+    "text": "Py Basics\nPlease refer to the tutorials from learnpython.org for an introduction to coding in Python. We particularly recommend the tutorials listed under the “Learn the Basics” section.",
+    "crumbs": [
+      "Environment",
+      "Python"
+    ]
+  },
+  {
+    "objectID": "environPy.html#resources",
+    "href": "environPy.html#resources",
+    "title": "Python",
+    "section": "Resources",
+    "text": "Resources\nSome help along the way with:\n\nGeographic Data Science with Python.\nPython for Geographic Data Analysis",
+    "crumbs": [
+      "Environment",
+      "Python"
+    ]
+  },
+  {
+    "objectID": "download.html",
+    "href": "download.html",
+    "title": "Download data from github",
+    "section": "",
+    "text": "Go to https://download-directory.github.io\n\n\n\nGo to the folder you need for your Lab. For example copy: https://github.com/pietrostefani/gds/tree/main/data/London\n\n\n\nPaste it in the green box… give it a few minutes\nCheck your downloads file and unzip",
+    "crumbs": [
+      "Environment",
+      "Download data from github"
+    ]
   }
 ]
