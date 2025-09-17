@@ -84,7 +84,6 @@ A choropleth for categorical variables simply assigns a different color to every
 In `R`, creating categorical choropleths is possible with one line of code. To demonstrate this, we can plot the the income level of countries in the MENA region (coded in our table as the income_group variable). The code below uses `ggplot` and `tmap` to plot.
 
 ::: {.panel-tabset group="data"}
-
 ## `tmap`
 
 `tmap` provides another option using the function `tm_fill` and `tm_shape`. A line has been added to to start editing the placement of the legend as well with `tm_layout`.
@@ -232,11 +231,9 @@ ggplot() +
 It is important to understand that **equal intervals** can first and foremost be visualised on the data distribution. We have already created these intervals with the function `classIntervals` in Step 3 of the `ggplot` tab above. Here we need a couple of extra steps to collect the break values and plot them in histogram form.
 
 ::: callout-tip
-
 ## Class Interval styles
 
 The function `classIntervals` has the following styles: "fixed", "sd", "equal", "pretty", "quantile", "kmeans", "hclust", "bclust", "fisher", "jenks", "dpih", "headtails", "maximum", or "box".
-
 :::
 
 ```{r}
@@ -286,7 +283,7 @@ As in our previous example, the coding is a bit simpler if we use `tmap`.
 ```{r}
 tm_basemap() +
   tm_shape(world_dev_filtered) +
-  tm_polygons("v_2015", palette = "YlGn", id = "WARD_NAME", n = 4, style= "quantile")   
+  tm_polygons("v_2015", palette = "YlGn", id = "Country.Name", n = 4, style= "quantile")   
 ```
 
 # `ggplot`
@@ -364,7 +361,7 @@ As in our previous example, the coding is a bit simpler if we use `tmap`.
 ```{r}
 tm_basemap() +
   tm_shape(world_dev_filtered) +
-  tm_polygons("v_2015", palette = "YlGn", id = "WARD_NAME", n = 7, style= "fisher")   
+  tm_polygons("v_2015", palette = "YlGn", id = "Country.Name", n = 7, style= "fisher")   
 ```
 
 # `ggplot`
