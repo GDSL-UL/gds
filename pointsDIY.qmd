@@ -1,7 +1,6 @@
 # Do-It-Yourself {#sec-pointsdiy .unnumbered}
 
 ::: {.panel-tabset group="language"}
-
 ## R
 
 ```{r message=FALSE}
@@ -20,7 +19,6 @@ import geopandas as gpd
 import contextily as cx
 import matplotlib.pyplot as plt
 ```
-
 :::
 
 ## Task I: Photographs in Tokyo
@@ -30,7 +28,6 @@ In this task, you will explore patterns in the distribution of the location of p
 ### Photos
 
 ::: {.panel-tabset group="language"}
-
 ## R
 
 ```{r}
@@ -47,13 +44,11 @@ tokyo = pd.read_csv("https://geographicdata.science/book/_downloads/7fb86b605af1
 tokyo.info()
 
 ```
-
 :::
 
 ### Administrative areas
 
 ::: {.panel-tabset group="language"}
-
 ## R
 
 ```{r}
@@ -70,9 +65,7 @@ tokyo = gpd.read_file("https://darribas.org/gds_course/content/data/tokyo_admin_
 # Display the first few rows of the GeoDataFrame
 print(tokyo.head())
 ```
-
 :::
-
 
 With these at hand, get to work with the following challenges:
 
@@ -93,8 +86,8 @@ With these at hand, get to work with the following challenges:
 For this one, we are going to use a dataset on the location of populated places in India provided by http://geojson.xyz. The original table covers the entire world so, to get it ready for you to work on it, we need to prepare it:
 
 ::: {.panel-tabset group="language"}
-
 ## R
+
 ```{r warning=FALSE}
 url <- "https://d2ad6b4ur7yvpq.cloudfront.net/naturalearth-3.3.0/ne_50m_populated_places_simple.geojson"
 
@@ -123,13 +116,11 @@ ax.set_title('Populated Places of the World')
 plt.show()
 
 ```
-
 :::
 
 Note the code cell above requires internet connectivity.
 
 ::: {.panel-tabset group="language"}
-
 ## R
 
 ```{r}
@@ -147,7 +138,6 @@ places = gpd.read_file("https://d2ad6b4ur7yvpq.cloudfront.net/naturalearth-3.3.0
 By default, place locations come expressed in longitude and latitude. Because you will be working with distances, it makes sense to convert the table into a system expressed in metres. For India, this can be the "Kalianpur 1975 / India zone I" (EPSG:24378) projection.
 
 ::: {.panel-tabset group="language"}
-
 ## R
 
 ```{r}
@@ -160,13 +150,11 @@ places_m <- st_transform(places, crs = 24378)
 places_m = places.to_crs(epsg=24378)
 
 ```
-
 :::
 
 This is what we have to work with then:
 
 ::: {.panel-tabset group="language"}
-
 ## R
 
 ```{r warning=FALSE}
@@ -190,7 +178,6 @@ cx.add_basemap(
 )
 plt.show()
 ```
-
 :::
 
 With this at hand, get to work:

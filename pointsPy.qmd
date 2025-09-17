@@ -593,6 +593,7 @@ Two Python packages that can be used for kriging include `scikit-learn` and `pyk
 
 -->
 ```
+
 ## Resources
 
 -   [DBSCAN (Density-Based Spatial Clustering of Applications with Noise) Clearly Explained with Coding in Python](https://medium.com/@satpatishrimanta/clustering-by-dbscan-density-based-spatial-clustering-of-applications-with-noise-clearly-f93c5c72f706)
