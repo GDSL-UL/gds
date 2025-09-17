@@ -483,7 +483,7 @@ plt.show()
 
 Have a think about what the data is telling you. What's the story?
 
-We can also make it interactive with `folium` and `folium.plugins` `DualMap` but this is a bit more complicated in `python` and will be covered in [Web Mapping and Visualiation](https://gdsl-ul.github.io/wma/labs/w04_interactive.html).
+We can also make it interactive with `folium` and `folium.plugins` `DualMap` but this is a bit more complicated in `python` and will be covered in [Web Mapping and Visualiation](https://gdsl-ul.github.io/wma/labs/w05_interactive.html).
 
 ## Resources
 

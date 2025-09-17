@@ -61,7 +61,6 @@ library(raster)     # Raster data manipulation
 library(colorspace)  # Color manipulation and palettes
 
 # Spatial and Spatio-Temporal Geostatistical Modelling, Prediction, and Simulation
-library(gstat)      # Geostatistical modeling
 library(spatstat)   # Spatial point pattern analysis
 
 # Clustering and Dimensionality Reduction
@@ -663,85 +662,6 @@ abline(h=0.15,lty = 2,col=rainbow(1),main="eps optimal value")
 ```
 
 The optimal value of eps is around 0.10 from the chart above.
-
-````{=html}
-<!--
-## Interpolation
-
-::: callout-warning
-Please keep in mind this final section of the tutorial is OPTIONAL, so
-do not feel forced to complete it. This will not be covered in the
-assignment and you will still be able to get a good mark without
-completing it (also, including any of the following in the assignment
-does NOT guarantee a better mark).
-:::
-
-Inverse Distance Weighting (IDW) is an interpolation technique where we
-assume that an outcome varies smoothly across space: the closer points
-are, the more likely they are to have the same outcome. To predict
-values across space, IDW uses neighbours values. There are two main
-variables: the number of neighbours to consider and the speed of the
-spatial decay. For example, if we were to model the likelihood of a
-household to shop at the neighbouring local groceries store, we would
-need to set a decay such as the probability would be close to 0 as we
-reach 15 minutes walking distance from home.
-
-The typical problem is a missing value problem: we observe a property of
-a phenomenon $Z(s)$ at a limited number of sample locations, and are
-interested in the property value at all locations covering an area of
-interest, so we have to predict it for unobserved locations. This is
-also called kriging, or Gaussian Process prediction.
-
-### Ordinary Kriging
-
-We can create geostatistical prediction using a ordinary Kriging and the
-package `gstat`.
-
-```{r krig}
-gs <- gstat(formula = price~1, # formula that defines the dependent variable as a linear model of independent variables
-            data = listings_proj, # housesales data 
-            nmax = 500, # the number of nearest observations that should be used
-            set=list(idp = 0.2)) # set inverse distance power  
-```
-
-Create a blank raster using district extent and crs
-
-```{r}
-r <- raster(BA_proj, resolution=200) # output cell size 
-```
-
-Create the interpolated raster using the prediction from the model and
-the blank raster
-
-```{r}
-# Interpolated raster using the prediction from the model 
-idw <- interpolate(r, gs)
-
-# Mask values outside Buenos Aires
-idwr <- mask(idw, BA_proj)
-```
-
-Plot the results
-
-```{r}
-plot(idwr, col = rev(heat.colors(100)))
-plot(BA_proj$geometry, fill = NA, add=T)
-```
-
-This would need a lot more work.
-
-::: {.callout-tip title="Try this"}
-In the `gstat` formula, you can then play around with:
-
-1.  Number of nearest observations
-2.  Inverse distance power
-3.  Output cell size 250
-
-and decide how to best interpolate your data.
-:::
-
--->
-````
 
 ## Resources
 
