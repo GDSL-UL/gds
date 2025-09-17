@@ -1016,5 +1016,15 @@
       "4 Mapping Raster Data",
       "Do-It-Yourself"
     ]
+  },
+  {
+    "objectID": "datasets.html",
+    "href": "datasets.html",
+    "title": "Data sets",
+    "section": "",
+    "text": "The datasets can all be downloaded here:\nGitHub Repository - Data Folder.\nEach folder corresponds to a lab session and contains the relevant datasets.\n\nLab 1: Open Science\nFolder: census2021_ethn\nData source: UK 2021 Census (ethnicity data)\nLab 2: Spatial Data\nFolder: London\nData source: Spatial and non-spatial data on London\nLab 3: Mapping Vector Data\nFolder: MENA\nData source: Data on countries in the Middle East and North Africa\nLab 4: Mapping Raster Data\nFolder: Lebanon and Kenya & Tanzania\nLab 5: Points\nFolder: Buenos Aires",
+    "crumbs": [
+      "Data sets"
+    ]
   }
 ]
