@@ -191,8 +191,8 @@ Command Line Interfaces (CLIs) offer a solution to the reproducibility challenge
 ## Sessions
 
 -   Lectures *and* labs
--   **Mondays 3-4pm** (Lecture 1h)
--   **Tuesday 3-5pm** (Lab 2h approx)
+-   **Monday 12-1pm** (Lecture 1h)
+-   **Monday 3-5pm** (Lab 2h approx)
 -   Keep in touch on Teams!
 
 ## Canvas
@@ -211,7 +211,7 @@ Command Line Interfaces (CLIs) offer a solution to the reproducibility challenge
 
 <center>
 
-<CENTER>[`https://pietrostefani.github.io/gds/`](https://pietrostefani.github.io/gds/)</CENTER>
+<CENTER>[`https://gdsl-ul.github.io/gds/`](https://gdsl-ul.github.io/gds/teams.png)</CENTER>
 
 ## Teams
 
@@ -269,7 +269,7 @@ Command Line Interfaces (CLIs) offer a solution to the reproducibility challenge
 
 <center>
 
-<mark> [Let's have a look](https://pietrostefani.github.io/gds/) </mark>
+<mark> [Let's have a look](https://gdsl-ul.github.io/gds/) </mark>
 
 <center>
 
@@ -279,7 +279,7 @@ Command Line Interfaces (CLIs) offer a solution to the reproducibility challenge
 
 Title: Programmed Map
 
-Due date: 4th November 2024 (week 7)
+Due date: 30th October 2025 (week 6)
 
 40% of the final mark
 
@@ -289,7 +289,7 @@ Due date: 4th November 2024 (week 7)
 
 Title: Computational Essay
 
-Due date: 5th December 2024 (week 11)
+Due date: 4th December 2025 (week 11)
 
 60% of the final mark
 
