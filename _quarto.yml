@@ -1,0 +1,92 @@
+project:
+  type: book
+  output-dir: docs
+
+book:
+  title: "A course in Geographic Data Science"
+  author: "Dr. Elisabetta Pietrostefani & Dr. Carmen Cabrera-Arnau"
+  date: today
+  chapters:
+    - index.qmd
+    - syllabus.qmd
+    - overview.qmd
+    - assess.qmd
+    - part: environ.qmd
+      chapters:
+        - environR.qmd
+        - environPy.qmd
+        - download.qmd
+    - part: intro.qmd
+      chapters:
+        - openscienceR.qmd
+        - opensciencePy.qmd
+        - openscienceDIY.qmd
+    - part: spatialdata.qmd
+      chapters:
+        - spatialdataR.qmd
+        - spatialdataPy.qmd
+        - spatialdataDIY.qmd
+    - part: mapvector.qmd
+      chapters:
+        - mapvectorR.qmd
+        - mapvectorPy.qmd
+        - mapvectorDIY.qmd
+    - part: mapraster.qmd
+      chapters:
+        - maprasterR.qmd
+        - maprasterPy.qmd
+        - maprasterDIY.qmd    
+    - part: points.qmd
+      chapters:
+        - pointsR.qmd
+        - pointsPy.qmd
+        - pointsDIY.qmd   
+    - part: spatialw.qmd
+      chapters:
+        - spatialwR.qmd
+        - spatialwPy.qmd
+        - spatialwDIY.qmd
+    - part: esda.qmd
+      chapters:
+        - esdaR.qmd
+        - esdaPy.qmd
+        - esdaDIY.qmd
+    - part: clustering.qmd
+      chapters:
+        - clusteringR.qmd
+        - clusteringPy.qmd
+        - clusteringDIY.qmd
+    - part: spatialnetworks.qmd
+      chapters:
+        - spatialnetworksR.qmd
+        - spatialnetworksPy.qmd
+    - datasets.qmd
+    - references.qmd
+
+  page-footer:
+    left: |
+      Geographic Data Science by Elisabetta Pietrostefani and Carmen Cabrera-Arnau.
+    right: |
+      This book was built with <a href="https://quarto.org/">Quarto</a>.
+  site-url:  https://pietrostefani.github.io/wma
+  repo-url: https://github.com/pietrostefani/gds
+  repo-actions: [edit]
+  sharing: [twitter, facebook]
+  cover-image: density_africa.jpg
+  cover-image-alt: |
+    Alternative text describing the book cover
+  twitter-card:
+    creator: "@EPietrostefani"
+
+bibliography: references.bib
+
+format:
+  html:
+    theme: 
+    - cosmo
+    - r4gds.scss
+  pdf:
+    documentclass: scrreprt
+
+editor: visual
+
