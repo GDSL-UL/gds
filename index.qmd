@@ -8,8 +8,8 @@ Core to the set of employable skills to be taught in this course is an introduct
 
 The website is **free to use** and is licensed under the [Attribution-NonCommercial-NoDerivatives 4.0 International](https://creativecommons.org/licenses/by-nc-nd/4.0/). A compilation of this web course is hosted as a GitHub repository that you can access:
 
--   As an [html website](https://pietrostefani.github.io/gds/).
--   As a [GitHub repository](https://github.com/pietrostefani/gds).
+-   As an [html website](https://gdsl-ul.github.io/gds/).
+-   As a [GitHub repository](https://github.com/GDSL-UL/gds).
 
 ## Contact {.unnumbered}
 
