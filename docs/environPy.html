@@ -460,14 +460,27 @@ University Machines
 </section>
 <section id="set-up-the-python-environment" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="set-up-the-python-environment">Set up the Python Environment</h3>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Naming is important
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The way you name your folders and files really matters—using clear, consistent names helps you stay organized and avoid easy mistakes.</p>
+</div>
+</div>
 <ol type="1">
-<li>Download the <code>envs363_563.yml</code> from GitHub by cliciking <code>Download raw file</code>, top right <a href="https://github.com/pietrostefani/gds/blob/main/envs363-563.yml">at this page</a></li>
+<li>Download the <code>envs363-563.yml</code> from GitHub by cliciking <code>Download raw file</code>, top right <a href="https://github.com/pietrostefani/gds/blob/main/envs363-563.yml">at this page</a></li>
 <li>Save it in the folder <code>envs363_563</code> created before.</li>
 <li>Type in the search bar and find the <code>Anaconda Powershell Prompt</code> if working on University Machine or <code>Anaconda Prompt (miniconda 3)</code> if on your personal. Launch it. The terminal should appear.</li>
 </ol>
 <p><img src="./img/Step2_py.jpeg" width="60%"></p>
 <ol start="3" type="1">
-<li>In the <strong>Anaconda Terminal</strong> write: <code>conda env create -n envs363_563 --file M:\envs363\envs363_563.yml</code> and press <code>Enter</code>; if the file is located elsewhere you’ll need to use the corresponding file path.</li>
+<li>In the <strong>Anaconda Terminal</strong> write: <code>conda env create -n envs363_563 --file M:\``envs363_563``\envs363-563.yml</code> and press <code>Enter</code>; if the file is located elsewhere you’ll need to use the corresponding file path.</li>
 <li>If you are prompted any questions, press <code>y</code>. This process will install all the packages necessary to carry out the lab sessions.</li>
 <li>In the <strong>Anaconda Terminal</strong> write <code>conda activate envs363_563</code> and press <code>Enter</code>. This activates your working environment.</li>
 </ol>
@@ -994,7 +1007,7 @@ University Machines
 <footer class="footer">
   <div class="nav-footer">
     <div class="nav-footer-left">
-<p>Geographic Data Science by Elisabetta Pietrostefani and Carmen Cabrera-Arnau.</p>
+<p>Geographic Data Science by Elisabetta Pietrostefani and Carmen Cabrera</p>
 </div>   
     <div class="nav-footer-center">
       &nbsp;

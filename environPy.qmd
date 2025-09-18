@@ -58,13 +58,21 @@ envs363_563/
 
 ### Set up the Python Environment {.unnumbered}
 
-1.  Download the `envs363_563.yml` from GitHub by cliciking `Download raw file`, top right [at this page](https://github.com/pietrostefani/gds/blob/main/envs363-563.yml)
+:::{.callout-important}
+## Naming is important
+
+The way you name your folders and files really matters—using clear, consistent names helps you stay organized and avoid easy mistakes.
+
+:::
+
+
+1.  Download the `envs363-563.yml` from GitHub by cliciking `Download raw file`, top right [at this page](https://github.com/pietrostefani/gds/blob/main/envs363-563.yml)
 2.  Save it in the folder `envs363_563` created before.
 3.  Type in the search bar and find the `Anaconda Powershell Prompt` if working on University Machine or `Anaconda Prompt (miniconda 3)` if on your personal. Launch it. The terminal should appear.
 
 <img src="./img/Step2_py.jpeg" width="60%"/>
 
-3.  In the **Anaconda Terminal** write: `conda env create -n envs363_563 --file M:\envs363\envs363_563.yml` and press `Enter`; if the file is located elsewhere you'll need to use the corresponding file path.
+3.  In the **Anaconda Terminal** write: `conda env create -n envs363_563 --file M:\``envs363_563``\envs363-563.yml` and press `Enter`; if the file is located elsewhere you'll need to use the corresponding file path.
 4.  If you are prompted any questions, press `y`. This process will install all the packages necessary to carry out the lab sessions.
 5.  In the **Anaconda Terminal** write `conda activate envs363_563` and press `Enter`. This activates your working environment.
 
