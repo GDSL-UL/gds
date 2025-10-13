@@ -13,19 +13,19 @@ This assignment will be evaluated on technical data processing, map design abili
 
 Once you have created your map, you will need to present it. Write up to 500 about the choices you made to create the map.
 
--   Full Assignment details to come
+-   Full Assignment details [here](https://theuniversityofliverpool-my.sharepoint.com/:b:/g/personal/pietrost_liverpool_ac_uk/ETf-H6RlcPNMoRMmeCCmqCEBQ_rPFZFGzfiDjVuFM66Vjw?e=WLx2b3)
 
 You will submit an `.html` file obtained by rendering your `.qmd` in `R` or `.ipynb` Jupyter Notebook in `Python`.
 
--   If you are doing the assignment in `R`: You can start from this [**.qmd file**](https://theuniversityofliverpool-my.sharepoint.com/:u:/g/personal/pietrost_liverpool_ac_uk/EfRYCY5AuLNEsmEtT5lBbKgBF2Q5gTcYvRia13gLdzlNLA?e=fNzdf3) to render the `html`. Other file formats will not be accepted.
+-   If you are doing the assignment in `R`: You can start from this [**.qmd file**](https://theuniversityofliverpool-my.sharepoint.com/:u:/g/personal/pietrost_liverpool_ac_uk/ESgyxiH1-cRMuIBgk7H9qsUB-a2DRqmKDYpOC6-1du0xww?e=XRpSCB) to render the `html`. Other file formats will not be accepted.
 
--   If you are doing the assignment in `Python`: To do so, in your `.ipynb` file, follow these steps: `File –> Save and Export as.. –> HTML`. Prior to this step, the notebook needs to be rendered (i.e. all the cells should be executed). Other file formats will not be accepted.
+-   If you are doing the assignment in `Python`: To do so, in your `.ipynb` file, follow these steps: `File –> Save and Export as.. –> HTML`. Prior to this step, the notebook needs to be rendered (i.e. all the cells should be executed). Other file formats will not be accepted. You can start from this [**.ipynb**](https://theuniversityofliverpool-my.sharepoint.com/:u:/g/personal/pietrost_liverpool_ac_uk/EZ_ygsv_puJDlw36FytiGvsBamRawQRV6QFMNgUkzUglvg?e=HDhqWV)
 
 ### Submit
 
 Once completed, you will need to submit the following:
 
-**An html version of an .qmd document with R integrated code.**
+**An html version of a .qmd document with R integrated code. OR and html version of jupyter notebook with Python code.**
 
 The assignment will be evaluated based on three main pillars, on which you will have to be successful to achieve a good mark:
 
