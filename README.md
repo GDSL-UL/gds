@@ -1,2 +1,4 @@
 # gds
 Bilingual module (R &amp; Python) introducing students to the field of Geographic Data Science (GDS)
+
+URL: https://gdsl-ul.github.io/gds/
