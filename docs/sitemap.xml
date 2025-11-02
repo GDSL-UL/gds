@@ -18,7 +18,7 @@
   </url>
   <url>
     <loc>https://pietrostefani.github.io/wma/environ.html</loc>
-    <lastmod>2025-09-17T13:53:47.480Z</lastmod>
+    <lastmod>2025-11-02T07:11:38.634Z</lastmod>
   </url>
   <url>
     <loc>https://pietrostefani.github.io/wma/environR.html</loc>
@@ -34,7 +34,7 @@
   </url>
   <url>
     <loc>https://pietrostefani.github.io/wma/intro.html</loc>
-    <lastmod>2025-09-17T20:13:21.545Z</lastmod>
+    <lastmod>2025-11-02T07:11:39.176Z</lastmod>
   </url>
   <url>
     <loc>https://pietrostefani.github.io/wma/openscienceR.html</loc>
@@ -46,7 +46,7 @@
   </url>
   <url>
     <loc>https://pietrostefani.github.io/wma/spatialdata.html</loc>
-    <lastmod>2024-08-20T15:08:57.502Z</lastmod>
+    <lastmod>2025-11-02T07:11:39.202Z</lastmod>
   </url>
   <url>
     <loc>https://pietrostefani.github.io/wma/spatialdataR.html</loc>
@@ -54,7 +54,7 @@
   </url>
   <url>
     <loc>https://pietrostefani.github.io/wma/mapvector.html</loc>
-    <lastmod>2024-08-19T11:01:41.285Z</lastmod>
+    <lastmod>2025-11-02T07:11:39.199Z</lastmod>
   </url>
   <url>
     <loc>https://pietrostefani.github.io/wma/mapvectorR.html</loc>
@@ -62,11 +62,11 @@
   </url>
   <url>
     <loc>https://pietrostefani.github.io/wma/mapraster.html</loc>
-    <lastmod>2024-09-05T22:01:04.909Z</lastmod>
+    <lastmod>2025-11-02T07:11:39.190Z</lastmod>
   </url>
   <url>
     <loc>https://pietrostefani.github.io/wma/maprasterR.html</loc>
-    <lastmod>2025-09-17T19:44:49.289Z</lastmod>
+    <lastmod>2025-11-02T07:38:10.019Z</lastmod>
   </url>
   <url>
     <loc>https://pietrostefani.github.io/wma/maprasterDIY.html</loc>
@@ -78,11 +78,11 @@
   </url>
   <url>
     <loc>https://pietrostefani.github.io/wma/references.html</loc>
-    <lastmod>2024-08-19T11:01:41.298Z</lastmod>
+    <lastmod>2025-11-02T07:11:39.202Z</lastmod>
   </url>
   <url>
     <loc>https://pietrostefani.github.io/wma/points.html</loc>
-    <lastmod>2024-09-10T14:38:17.244Z</lastmod>
+    <lastmod>2025-11-02T07:11:39.201Z</lastmod>
   </url>
   <url>
     <loc>https://pietrostefani.github.io/wma/pointsDIY.html</loc>
@@ -99,5 +99,53 @@
   <url>
     <loc>https://pietrostefani.github.io/wma/pointsPy.html</loc>
     <lastmod>2025-09-17T16:14:30.132Z</lastmod>
+  </url>
+  <url>
+    <loc>https://pietrostefani.github.io/wma/spatialwDIY.html</loc>
+    <lastmod>2025-11-02T08:34:38.473Z</lastmod>
+  </url>
+  <url>
+    <loc>https://pietrostefani.github.io/wma/clusteringPy.html</loc>
+    <lastmod>2025-11-02T16:43:42.808Z</lastmod>
+  </url>
+  <url>
+    <loc>https://pietrostefani.github.io/wma/clusteringDIY.html</loc>
+    <lastmod>2024-10-03T17:39:23.718Z</lastmod>
+  </url>
+  <url>
+    <loc>https://pietrostefani.github.io/wma/spatialnetworksR.html</loc>
+    <lastmod>2024-11-24T18:16:05.803Z</lastmod>
+  </url>
+  <url>
+    <loc>https://pietrostefani.github.io/wma/spatialnetworksPy.html</loc>
+    <lastmod>2024-11-24T18:30:06.275Z</lastmod>
+  </url>
+  <url>
+    <loc>https://pietrostefani.github.io/wma/spatialw.html</loc>
+    <lastmod>2024-10-03T17:39:26.364Z</lastmod>
+  </url>
+  <url>
+    <loc>https://pietrostefani.github.io/wma/esda.html</loc>
+    <lastmod>2024-10-03T17:39:25.876Z</lastmod>
+  </url>
+  <url>
+    <loc>https://pietrostefani.github.io/wma/clustering.html</loc>
+    <lastmod>2024-10-03T17:39:23.718Z</lastmod>
+  </url>
+  <url>
+    <loc>https://pietrostefani.github.io/wma/spatialnetworks.html</loc>
+    <lastmod>2024-11-24T18:37:42.318Z</lastmod>
+  </url>
+  <url>
+    <loc>https://pietrostefani.github.io/wma/esdaR.html</loc>
+    <lastmod>2024-10-03T17:39:25.876Z</lastmod>
+  </url>
+  <url>
+    <loc>https://pietrostefani.github.io/wma/clusteringR.html</loc>
+    <lastmod>2024-11-12T01:01:15.492Z</lastmod>
+  </url>
+  <url>
+    <loc>https://pietrostefani.github.io/wma/spatialnetworksDIY.html</loc>
+    <lastmod>2024-10-03T17:39:26.362Z</lastmod>
   </url>
 </urlset>

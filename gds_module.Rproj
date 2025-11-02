@@ -14,4 +14,4 @@ LaTeX: pdfLaTeX
 
 PythonType: conda
 PythonVersion: 3.10.9
-PythonPath: ~/anaconda3/envs/geo-env-new/bin/python3.10
+PythonPath: ~/anaconda3/envs/geo-env-new-clone/bin/python3.10
