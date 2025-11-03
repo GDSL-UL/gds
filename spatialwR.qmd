@@ -139,29 +139,35 @@ We then create a map this using different colors with the `tmap` package, which 
 
 ```{r}
 
-# Create a map for all the units in mistyrose3 
-rest_map <- tm_shape(df) +  
-  tm_borders(col = "black", lwd = 0.5) +  
-  tm_fill(col = "mistyrose3")  
+# Base layers with per-layer legends
+rest_map <- tm_shape(df) +
+  tm_polygons(
+    fill = "mistyrose3", col = "black", lwd = 0.5,
+    fill.legend = tm_legend(labels = "Rest of LSOAs", title = "")
+  )
 
-# Create a map for neighbors in steelblue4
 neighbors_map <- tm_shape(obs1_nb_q) +
-  tm_borders(col = "black", lwd = 0.5) +  
-  tm_fill(col = "steelblue4")  
+  tm_polygons(
+    fill = "steelblue4", col = "black", lwd = 0.5,
+    fill.legend = tm_legend(labels = "Distance neighbourhood", title = "")
+  )
 
-# Create a map for observation 1 in red2
 obs1_map <- tm_shape(obs1) +
-  tm_borders(col = "black", lwd = 0.5) + 
-  tm_fill(col = "red2")  
+  tm_polygons(
+    fill = "red2", col = "black", lwd = 0.5,
+    fill.legend = tm_legend(labels = "Observation 1", title = "")
+  )
 
-# Combine all the maps, add compass, scale bar, and legend
+# Compose map
 final_map_q <- rest_map + neighbors_map + obs1_map +
-  tm_compass(position = c("right", "top")) + 
-  tm_scale_bar(position = c("right", "bottom")) + 
-  tm_add_legend(type = "fill", col = c("red2", "steelblue4","mistyrose3"), 
-                labels = c("Observation 1", "Queen neighbourhood", "Rest of LSOAs"), title = "") + 
-  tm_layout(legend.text.size = 0.55, inner.margins = c(0.01, 0.1, 0.01, 0.05), 
-            legend.position = c(0.03,0.03), legend.width=0.55)
+  tm_compass(position = c("right", "top")) +
+  tm_scalebar(position = c("right", "bottom")) +
+  tm_layout(
+    legend.text.size = 0.55,
+    inner.margins = c(0.01, 0.1, 0.01, 0.05),
+    legend.position = c(0.3, 0.3),
+    legend.width = 0.55
+  )
 
 ```
 
@@ -217,29 +223,35 @@ obs1_nb_knn <- df[c(w_knn[[1]]),]
 ```
 
 ```{r}
-# Create a map for all the units in mistyrose3 
-rest_map <- tm_shape(df) +  
-  tm_borders(col = "black", lwd = 0.5) +  
-  tm_fill(col = "mistyrose3")  
+# Base layers with per-layer legends
+rest_map <- tm_shape(df) +
+  tm_polygons(
+    fill = "mistyrose3", col = "black", lwd = 0.5,
+    fill.legend = tm_legend(labels = "Rest of LSOAs", title = "")
+  )
 
-# Create a map for neighbors in steelblue4
 neighbors_map <- tm_shape(obs1_nb_knn) +
-  tm_borders(col = "black", lwd = 0.5) +  
-  tm_fill(col = "steelblue4")  
+  tm_polygons(
+    fill = "steelblue4", col = "black", lwd = 0.5,
+    fill.legend = tm_legend(labels = "Distance neighbourhood", title = "")
+  )
 
-# Create a map for observation 1 in red2
 obs1_map <- tm_shape(obs1) +
-  tm_borders(col = "black", lwd = 0.5) + 
-  tm_fill(col = "red2")  
+  tm_polygons(
+    fill = "red2", col = "black", lwd = 0.5,
+    fill.legend = tm_legend(labels = "Observation 1", title = "")
+  )
 
-# Combine all the maps, add compass, scale bar, and legend
+# Compose map
 final_map_knn <- rest_map + neighbors_map + obs1_map +
-  tm_compass(position = c("right", "top")) + 
-  tm_scale_bar(position = c("right", "bottom")) + 
-  tm_add_legend(type = "fill", col = c("red2", "steelblue4","mistyrose3"), 
-                labels = c("Observation 1", "k=5 nearest neighbours", "Rest of LSOAs"), title = "") + 
-  tm_layout(legend.text.size = 0.55, inner.margins = c(0.01, 0.1, 0.01, 0.05), 
-            legend.position = c(0.03,0.03), legend.width=0.55)
+  tm_compass(position = c("right", "top")) +
+  tm_scalebar(position = c("right", "bottom")) +
+  tm_layout(
+    legend.text.size = 0.55,
+    inner.margins = c(0.01, 0.1, 0.01, 0.05),
+    legend.position = c(0.3, 0.3),
+    legend.width = 0.55
+  )
 ```
 
 -   **Distance band**
@@ -268,31 +280,38 @@ obs1_nb_d <- df[c(nb_d[[1]]),]
 ```
 
 ```{r}
-# Create a map for all the units in mistyrose3 
-rest_map <- tm_shape(df) +  
-  tm_borders(col = "black", lwd = 0.5) +  
-  tm_fill(col = "mistyrose3")  
+# Base layers with per-layer legends
+rest_map <- tm_shape(df) +
+  tm_polygons(
+    fill = "mistyrose3", col = "black", lwd = 0.5,
+    fill.legend = tm_legend(labels = "Rest of LSOAs", title = "Rest of LSOAs")
+  )
 
-# Create a map for neighbors in steelblue4
 neighbors_map <- tm_shape(obs1_nb_d) +
-  tm_borders(col = "black", lwd = 0.5) +  
-  tm_fill(col = "steelblue4")  
+  tm_polygons(
+    fill = "steelblue4", col = "black", lwd = 0.5,
+    fill.legend = tm_legend(labels = "Distance neighbourhood", title = "Distance neighbourhood")
+  )
 
-# Create a map for observation 1 in red2
 obs1_map <- tm_shape(obs1) +
-  tm_borders(col = "black", lwd = 0.5) + 
-  tm_fill(col = "red2")  
+  tm_polygons(
+    fill = "red2", col = "black", lwd = 0.5,
+    fill.legend = tm_legend(labels = "Observation 1", title = "Observation 1")
+  )
 
-# Combine all the maps, add compass, scale bar, and legend
+# Compose map
 final_map_d <- rest_map + neighbors_map + obs1_map +
-  tm_compass(position = c("right", "top")) + 
-  tm_scale_bar(position = c("right", "bottom")) + 
-  tm_add_legend(type = "fill", col = c("red2", "steelblue4","mistyrose3"), 
-                labels = c("Observation 1", "Distance neighbourhood", "Rest of LSOAs"), title = "") + 
-  tm_layout(legend.text.size = 0.55, inner.margins = c(0.01, 0.1, 0.01, 0.05), 
-            legend.position = c(0.03,0.03), legend.width=0.55)
+  tm_compass(position = c("right", "top")) +
+  tm_scalebar(position = c("right", "bottom")) +
+  tm_layout(
+    legend.text.size = 0.55,
+    inner.margins = c(0.01, 0.1, 0.01, 0.05),
+    legend.position = c(0.03, 0.03),
+    legend.width = 0.55
+  )
 
 ```
+
 
 We are now ready to plot the three maps we created side to side and compare the different neighbourhoods:
 
@@ -365,29 +384,35 @@ obs1_nb_block <- df[c(w_block[[1]]),]
 ```
 
 ```{r}
-# Create a map for the rest of the units in mistyrose3
-rest_map <- tm_shape(df) +  
-  tm_borders(col = "black", lwd = 0.5) +  
-  tm_fill(col = "mistyrose3") 
+# Base layers with per-layer legends
+rest_map <- tm_shape(df) +
+  tm_polygons(
+    fill = "mistyrose3", col = "black", lwd = 0.5,
+    fill.legend = tm_legend(labels = "Rest of LSOAs", title = "")
+  )
 
-# Create a map for block neighbors in steelblue4
 neighbors_map <- tm_shape(obs1_nb_block) +
-  tm_borders(col = "black", lwd = 0.5) +  
-  tm_fill(col = "steelblue4")
+  tm_polygons(
+    fill = "steelblue4", col = "black", lwd = 0.5,
+    fill.legend = tm_legend(labels = "Distance neighbourhood", title = "")
+  )
 
-# Create a map for observation 1 in red2
 obs1_map <- tm_shape(obs1) +
-  tm_borders(col = "black", lwd = 0.5) +  
-  tm_fill(col = "red2")  
+  tm_polygons(
+    fill = "red2", col = "black", lwd = 0.5,
+    fill.legend = tm_legend(labels = "Observation 1", title = "")
+  )
 
-# Combine all the maps, add compass, scale bar, and legend
+# Compose map
 final_map_block <- rest_map + neighbors_map + obs1_map +
-  tm_compass(position = c("right", "top")) + 
-  tm_scale_bar(position = c("right", "bottom")) + 
-  tm_add_legend(type = "fill", col = c("red2", "steelblue4","mistyrose3"), 
-                labels = c("Observation 1", "Block neighbourhood (same MSOA)", "Rest of LSOAs"), title = "") + 
-  tm_layout(legend.text.size = 0.65, inner.margins = c(0.1, 0.1, 0.02, 0.05), 
-            legend.position = c(0.03,0.03), legend.width=0.55)
+  tm_compass(position = c("right", "top")) +
+  tm_scalebar(position = c("right", "bottom")) +
+  tm_layout(
+    legend.text.size = 0.55,
+    inner.margins = c(0.01, 0.1, 0.01, 0.05),
+    legend.position = c(0.3, 0.3),
+    legend.width = 0.55
+  )
 
 ```
 
@@ -499,18 +524,34 @@ We can create two choropleth maps, side to side, showing the values of the varia
 ```{r}
 # Create a map displaying the 'area' variable
 area_map <- tm_shape(df) +
-  tm_borders(col = "black", lwd = 0.5) +
-  tm_fill("area", n=10, style = "quantile", title = "Area", palette = "YlGn") +
+  tm_polygons(
+    fill = "area",
+    fill.scale = tm_scale(
+      n = 10,
+      style = "quantile",
+      palette = "brewer.yl_gn",
+      legend = tm_legend(title = "Area")),
+    col = "black",
+    lwd = 0.5
+  ) +
   tm_compass(position = c("right", "top")) + 
-  tm_scale_bar(position = c("right", "bottom")) + 
+  tm_scalebar(position = c("right", "bottom")) + 
   tm_layout(legend.text.size = 0.55, inner.margins = c(0.1, 0.1, 0.02, 0.05), legend.position = c(0.03,0.03), legend.width=0.55)
 
 # Create a map displaying the spatially lagged 'area' variable
 w_area_map <- tm_shape(df) +
-  tm_borders(col = "black", lwd = 0.5) +
-  tm_fill("w_area", n=10, style = "quantile", title = "Lagged area", palette = "YlGn") +
+  tm_polygons(
+    fill = "w_area",
+    fill.scale = tm_scale(
+      n = 10,
+      style = "quantile",
+      palette = "brewer.yl_gn",
+      legend = tm_legend(title = "Lagged area")),
+    col = "black",
+    lwd = 0.5
+  ) +
   tm_compass(position = c("right", "top")) + 
-  tm_scale_bar(position = c("right", "bottom")) + 
+  tm_scalebar(position = c("right", "bottom")) + 
   tm_layout(legend.text.size = 0.55, inner.margins = c(0.1, 0.1, 0.02, 0.05), legend.position = c(0.03,0.03), legend.width=0.55)
 
 # Arrange both maps side by side
