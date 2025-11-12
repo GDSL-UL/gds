@@ -46,13 +46,15 @@ The assignment will be evaluated based on three main pillars, on which you will 
 
 A 4,000 word computational essay on a geographic data set which they have explored and analysed using the skills and techniques developed during the course. Students will complete an essay which combines both code, data visualisation and prose supported by references in order to demonstrate sound understanding of all learning outcomes.
 
--   Full Assignment details to come
+-   Full Assignment details [here](https://theuniversityofliverpool-my.sharepoint.com/:b:/g/personal/pietrost_liverpool_ac_uk/EXWCcOCQnulAjHPc3GAOsGIBOybfr5-DcNHyp0vCwI6UKA?e=4uOFTi)
+
+- [Some data about race in csv format if you are not using API](https://github.com/GDSL-UL/gds/blob/main/data/ACS_austin_2018_2022_vars.csv)
 
 Important information about data access through the US Census API:
 
--   In R: [**ENVS2425-363-563.2.qmd**]()
+-   If you are doing the assignment in `R`: You can start from this [**ENVS2526-363-563.2.qmd file**](https://theuniversityofliverpool-my.sharepoint.com/:u:/g/personal/pietrost_liverpool_ac_uk/EVV0BaXbyHxEj7sKFnDJWPoBFfUEXJbIbzfs3UPcZc8ZFA?e=OvwNYZ) to render the `html`. Other file formats will not be accepted.
 
--   In Python: [**ENVS2425-363-563.2.ipynb**]()
+-   In Python: [**ENVS2526-363-563.2.ipynb**]()
 
 **Overview**
 
