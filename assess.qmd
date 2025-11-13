@@ -54,7 +54,7 @@ Important information about data access through the US Census API:
 
 -   If you are doing the assignment in `R`: You can start from this [**ENVS2526-363-563.2.qmd file**](https://theuniversityofliverpool-my.sharepoint.com/:u:/g/personal/pietrost_liverpool_ac_uk/EVV0BaXbyHxEj7sKFnDJWPoBFfUEXJbIbzfs3UPcZc8ZFA?e=OvwNYZ) to render the `html`. Other file formats will not be accepted.
 
--   In Python: [**ENVS2526-363-563.2.ipynb**]()
+-   In Python, you can start from this [**ENVS2526-363-563.2.ipynb**](https://theuniversityofliverpool-my.sharepoint.com/:u:/g/personal/pietrost_liverpool_ac_uk/EUf0AUpaY4lGvRoBjfcNPxEBQOSKAR8TnOSUylyM-cH7_A?e=UeRi94)
 
 **Overview**
 
