@@ -79,11 +79,6 @@ Since we have many variables to plot, we will create a loop that generates each 
 
 ```{r}
 
-library(ggplot2)
-library(ggspatial)
-library(patchwork)
-library(sf)
-
 map_list <- vector("list", length(ratings))
 
 for (i in seq_along(ratings)) {
