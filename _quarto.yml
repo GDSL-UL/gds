@@ -69,8 +69,8 @@ book:
       Geographic Data Science by Elisabetta Pietrostefani and Carmen Cabrera
     right: |
       This book was built with <a href="https://quarto.org/">Quarto</a>.
-  site-url:  https://pietrostefani.github.io/wma
-  repo-url: https://github.com/pietrostefani/gds
+  site-url:  https://gdsl-ul.github.io/gds/
+  repo-url: https://github.com/GDSL-UL/gds
   repo-actions: [edit]
   sharing: [twitter, facebook]
   cover-image: density_africa.jpg
