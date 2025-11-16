@@ -487,7 +487,7 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./clusteringPy.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">My Analysis</span></span></a>
+ <span class="menu-text">Lab in Python</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -517,6 +517,12 @@ window.Quarto = {
   <div class="sidebar-item-container"> 
   <a href="./spatialnetworksPy.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Lab in Python</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./spatialnetworksDIY.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Do-It-Yourself</span></a>
   </div>
 </li>
       </ul>
@@ -607,42 +613,14 @@ window.Quarto = {
 <h2 class="anchored" data-anchor-id="preparing-the-data">Preparing the data</h2>
 <p>Let’s get a first view of the data:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>base <span class="ot">=</span> <span class="fu">osm.raster</span>(br)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-  |                                                                            
-  |                                                                      |   0%
-  |                                                                            
-  |======                                                                |   8%
-  |                                                                            
-  |============                                                          |  17%
-  |                                                                            
-  |==================                                                    |  25%
-  |                                                                            
-  |=======================                                               |  33%
-  |                                                                            
-  |=============================                                         |  42%
-  |                                                                            
-  |===================================                                   |  50%
-  |                                                                            
-  |=========================================                             |  58%
-  |                                                                            
-  |===============================================                       |  67%
-  |                                                                            
-  |====================================================                  |  75%
-  |                                                                            
-  |==========================================================            |  83%
-  |                                                                            
-  |================================================================      |  92%
-  |                                                                            
-  |======================================================================| 100%</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tm_shape</span>(base) <span class="sc">+</span> <span class="fu">tm_rgb</span>() <span class="sc">+</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_shape</span>(br) <span class="sc">+</span>  </span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_borders</span>(<span class="at">col =</span> <span class="st">"white"</span>, <span class="at">lwd =</span> <span class="fl">0.5</span>) <span class="sc">+</span>  </span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_fill</span>(<span class="at">col =</span> <span class="st">"coral1"</span>, <span class="at">alpha=</span><span class="fl">0.5</span>) <span class="sc">+</span></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_compass</span>(<span class="at">position =</span> <span class="fu">c</span>(<span class="st">"left"</span>, <span class="st">"top"</span>)) <span class="sc">+</span> </span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_scale_bar</span>(<span class="at">position =</span> <span class="fu">c</span>(<span class="st">"right"</span>, <span class="st">"bottom"</span>)) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>base <span class="ot">=</span> <span class="fu">osm.raster</span>(br)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">tm_shape</span>(base) <span class="sc">+</span> <span class="fu">tm_rgb</span>() <span class="sc">+</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_shape</span>(br) <span class="sc">+</span>  </span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_borders</span>(<span class="at">col =</span> <span class="st">"white"</span>, <span class="at">lwd =</span> <span class="fl">0.5</span>) <span class="sc">+</span>  </span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_fill</span>(<span class="at">col =</span> <span class="st">"coral1"</span>, <span class="at">alpha=</span><span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_compass</span>(<span class="at">position =</span> <span class="fu">c</span>(<span class="st">"left"</span>, <span class="st">"top"</span>)) <span class="sc">+</span> </span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_scale_bar</span>(<span class="at">position =</span> <span class="fu">c</span>(<span class="st">"right"</span>, <span class="st">"bottom"</span>)) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -657,8 +635,8 @@ window.Quarto = {
 <p>For this example, we will show how to build a queen contiguity matrix, which considers two observations as neighbors if they share at least one point of their boundary. In other words, for a pair of local authorities in the dataset to be considered neighbours under this <span class="math inline">\(W\)</span>, they will need to be sharing border or, in other words, “touching” each other to some degree.</p>
 <p>Technically speaking, we will approach building the contiguity matrix in the same way we did in the previous lab. We will begin with a dataframe and pass it on to the queen contiguity weights builder from the <code>spdep</code> package.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># list all adjacent polygons for each polygon</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>nb_q <span class="ot">&lt;-</span> <span class="fu">poly2nb</span>(br, <span class="at">queen =</span> <span class="cn">TRUE</span>) <span class="co"># Construct neighbours list from polygon list</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># list all adjacent polygons for each polygon</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>nb_q <span class="ot">&lt;-</span> <span class="fu">poly2nb</span>(br, <span class="at">queen =</span> <span class="cn">TRUE</span>) <span class="co"># Construct neighbours list from polygon list</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning in poly2nb(br, queen = TRUE): some observations have no neighbours;
 if this seems unexpected, try increasing the snap argument.</code></pre>
@@ -669,27 +647,27 @@ if this sub-graph count seems unexpected, try increasing the snap argument.</cod
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>w_queen <span class="ot">&lt;-</span> <span class="fu">nb2listw</span>(nb_q, <span class="at">style =</span> <span class="st">"B"</span>) <span class="co"># Create a spatial weights matrix using queen contiguity</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>w_queen <span class="ot">&lt;-</span> <span class="fu">nb2listw</span>(nb_q, <span class="at">style =</span> <span class="st">"B"</span>) <span class="co"># Create a spatial weights matrix using queen contiguity</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-error">
 <pre><code>Error in nb2listw(nb_q, style = "B"): Empty neighbour sets found (zero.policy: FALSE)</code></pre>
 </div>
 </div>
 <p>You will likely obtain an error message when running the cell above since the <code>nb2listw()</code> function doesn’t like when some polygons don’t have neighbours. These neighbourless polygons are called islands and they literally are islands. We can explicitly ask the function to still compute the spatial weights matrix even when some observations might not have neighbours. We do this by adding the <code>zero.policy=TRUE</code> argument:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>w_queen <span class="ot">&lt;-</span> <span class="fu">nb2listw</span>(nb_q, <span class="at">style =</span> <span class="st">"B"</span>, <span class="at">zero.policy=</span><span class="cn">TRUE</span>) <span class="co"># Create a spatial weights matrix using queen contiguity</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>w_queen <span class="ot">&lt;-</span> <span class="fu">nb2listw</span>(nb_q, <span class="at">style =</span> <span class="st">"B"</span>, <span class="at">zero.policy=</span><span class="cn">TRUE</span>) <span class="co"># Create a spatial weights matrix using queen contiguity</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>However, observations with zero neighbours can sometimes create issues in the analysis and distort the results. There are several solutions to this situation such as connecting the islands to other observations through a different criterion (e.g.&nbsp;nearest neighbor), and then combining both spatial weights matrices. For convenience, this time we will just remove them from the dataset because they are a small sample and their removal is likely not going to have a large impact in the calculations.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>isolates <span class="ot">&lt;-</span> <span class="fu">which</span>(w_queen<span class="sc">$</span>neighbours <span class="sc">==</span> <span class="st">"0"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>isolates <span class="ot">&lt;-</span> <span class="fu">which</span>(w_queen<span class="sc">$</span>neighbours <span class="sc">==</span> <span class="st">"0"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>br <span class="ot">&lt;-</span> br[<span class="sc">-</span><span class="fu">c</span>(isolates),]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>br <span class="ot">&lt;-</span> br[<span class="sc">-</span><span class="fu">c</span>(isolates),]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Once we have the set of local authorities that are not an island, we need to re-calculate the weights matrix. We will create it so that it is row-standardised (so setting style to <code>W</code>:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># list all adjacent polygons for each polygon</span></span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>nb_q <span class="ot">&lt;-</span> <span class="fu">poly2nb</span>(br, <span class="at">queen =</span> <span class="cn">TRUE</span>) <span class="co"># Construct neighbours list from </span></span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>w_queen_std <span class="ot">&lt;-</span> <span class="fu">nb2listw</span>(nb_q, <span class="at">style =</span> <span class="st">"W"</span>) <span class="co"># Create a spatial weights matrix using queen contiguity and row-standardardised weights</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># list all adjacent polygons for each polygon</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>nb_q <span class="ot">&lt;-</span> <span class="fu">poly2nb</span>(br, <span class="at">queen =</span> <span class="cn">TRUE</span>) <span class="co"># Construct neighbours list from </span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>w_queen_std <span class="ot">&lt;-</span> <span class="fu">nb2listw</span>(nb_q, <span class="at">style =</span> <span class="st">"W"</span>) <span class="co"># Create a spatial weights matrix using queen contiguity and row-standardardised weights</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="spatial-lag" class="level3">
@@ -697,51 +675,51 @@ if this sub-graph count seems unexpected, try increasing the snap argument.</cod
 <p>Once we have the data and the spatial weights matrix ready, we can start by computing the spatial lag of the percentage of votes that went to leave the EU. Remember the spatial lag is the product of the spatial weights matrix and a given variable and that, if <span class="math inline">\(W\)</span> is row-standardized, the result amounts to the average value of the variable in the neighborhood of each observation.</p>
 <p>We can calculate the spatial lag for the variable <code>Pct_Leave</code> (percentage that voted leave) and store it directly in the main table with the following line of code:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>br<span class="sc">$</span>w_Pct_Leave <span class="ot">&lt;-</span> <span class="fu">lag.listw</span>(w_queen_std, br<span class="sc">$</span>Pct_Leave)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>br<span class="sc">$</span>w_Pct_Leave <span class="ot">&lt;-</span> <span class="fu">lag.listw</span>(w_queen_std, br<span class="sc">$</span>Pct_Leave)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Let us have a quick look at the resulting variable, as compared to the original one:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(br<span class="sc">$</span>Pct_Leave)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(br<span class="sc">$</span>Pct_Leave)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 69.57 65.48 66.19 61.73 56.18 57.42</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(br<span class="sc">$</span>w_Pct_Leave)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(br<span class="sc">$</span>w_Pct_Leave)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 59.64000 60.52667 60.37667 60.48800 57.43000 51.26800</code></pre>
 </div>
 </div>
 <p>The way to interpret the spatial lag (w_Pct_Leave) for the first observation is as follows: LAD with code <code>E06000001</code> (Hartlepool), where 69,6% of the electorate voted to leave is surrounded by neighbouring local authorities where, on average, almost 60% of the electorate also voted to leave the EU. For the purpose of illustration, we can in fact check this is correct by querying the spatial weights matrix to find out Hartepool’s neighbors:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>w_queen_std<span class="sc">$</span>neighbours[[<span class="dv">1</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>w_queen_std<span class="sc">$</span>neighbours[[<span class="dv">1</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1]  4 46</code></pre>
 </div>
 </div>
 <p>And then checking their values:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>br<span class="sc">$</span>Pct_Leave[[<span class="dv">4</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>br<span class="sc">$</span>Pct_Leave[[<span class="dv">4</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 61.73</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>br<span class="sc">$</span>Pct_Leave[[<span class="dv">46</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>br<span class="sc">$</span>Pct_Leave[[<span class="dv">46</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 57.55</code></pre>
 </div>
 </div>
 <p>The average value, which we saw in the spatial lag is 59.64, can be verified as follows:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(<span class="fu">c</span>(br<span class="sc">$</span>Pct_Leave[[<span class="dv">4</span>]], br<span class="sc">$</span>Pct_Leave[[<span class="dv">46</span>]]))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(<span class="fu">c</span>(br<span class="sc">$</span>Pct_Leave[[<span class="dv">4</span>]], br<span class="sc">$</span>Pct_Leave[[<span class="dv">46</span>]]))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 59.64</code></pre>
 </div>
 </div>
 <p>For some of the techniques we will be seeing below, it makes more sense to operate with the standardised version of a variable, rather than with the raw one. Standardising means to subtract the average value to each observation of a variable and divide this by the standard deviation of the variable. This can be done easily with a bit of basic algebra:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>br<span class="sc">$</span>Pct_Leave_std <span class="ot">&lt;-</span> (br<span class="sc">$</span>Pct_Leave <span class="sc">-</span> <span class="fu">mean</span>(br<span class="sc">$</span>Pct_Leave))<span class="sc">/</span><span class="fu">sd</span>(br<span class="sc">$</span>Pct_Leave)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>br<span class="sc">$</span>Pct_Leave_std <span class="ot">&lt;-</span> (br<span class="sc">$</span>Pct_Leave <span class="sc">-</span> <span class="fu">mean</span>(br<span class="sc">$</span>Pct_Leave))<span class="sc">/</span><span class="fu">sd</span>(br<span class="sc">$</span>Pct_Leave)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Finally, to be able to explore the spatial patterns of the standardised values, also called sometimes <span class="math inline">\(z\)</span> values, we need to create its spatial lag:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>br<span class="sc">$</span>w_Pct_Leave_std <span class="ot">&lt;-</span> <span class="fu">lag.listw</span>(w_queen_std, br<span class="sc">$</span>Pct_Leave_std)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>br<span class="sc">$</span>w_Pct_Leave_std <span class="ot">&lt;-</span> <span class="fu">lag.listw</span>(w_queen_std, br<span class="sc">$</span>Pct_Leave_std)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 </section>
@@ -753,16 +731,16 @@ if this sub-graph count seems unexpected, try increasing the snap argument.</cod
 <p>The moran plot is a way of visualising a spatial dataset to explore the nature and strength of spatial autocorrelation. It is essentially a traditional scatter plot in which the variable of interest is displayed against its spatial lag. In order to be able to interpret values as above or below the mean, and their quantities in terms of standard deviations, the variable of interest is usually standardised by substracting its mean and dividing it by its standard deviation.</p>
 <p>As we saw in the previous lab, creating a Moran Plot is very similar to creating any other scatter plot in R, provided we have standardised the variable and calculated its spatial lag beforehand:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a standardized Moran plot using ggplot2</span></span>
-<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>moran_plot_z <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(br, <span class="fu">aes</span>(<span class="at">x=</span>Pct_Leave_std, <span class="at">y=</span>w_Pct_Leave_std)) <span class="sc">+</span> </span>
-<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method=</span>lm) <span class="sc">+</span></span>
-<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="fu">aes</span>(<span class="at">yintercept =</span> <span class="dv">0</span>)) <span class="sc">+</span></span>
-<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="fu">aes</span>(<span class="at">xintercept =</span> <span class="dv">0</span>)) <span class="sc">+</span></span>
-<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title=</span><span class="st">"Standardised Moran plot"</span>, <span class="at">x=</span><span class="st">"% Leave z-score"</span>, <span class="at">y =</span> <span class="st">"Lagged % leave"</span>)</span>
-<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-9"><a href="#cb30-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Apply a minimal theme to the standardized Moran plot</span></span>
-<span id="cb30-10"><a href="#cb30-10" aria-hidden="true" tabindex="-1"></a>moran_plot_z <span class="sc">+</span> <span class="fu">theme_minimal</span>()  </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a standardized Moran plot using ggplot2</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>moran_plot_z <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(br, <span class="fu">aes</span>(<span class="at">x=</span>Pct_Leave_std, <span class="at">y=</span>w_Pct_Leave_std)) <span class="sc">+</span> </span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method=</span>lm) <span class="sc">+</span></span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="fu">aes</span>(<span class="at">yintercept =</span> <span class="dv">0</span>)) <span class="sc">+</span></span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="fu">aes</span>(<span class="at">xintercept =</span> <span class="dv">0</span>)) <span class="sc">+</span></span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title=</span><span class="st">"Standardised Moran plot"</span>, <span class="at">x=</span><span class="st">"% Leave z-score"</span>, <span class="at">y =</span> <span class="st">"Lagged % leave"</span>)</span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Apply a minimal theme to the standardized Moran plot</span></span>
+<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a>moran_plot_z <span class="sc">+</span> <span class="fu">theme_minimal</span>()  </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -781,7 +759,7 @@ if this sub-graph count seems unexpected, try increasing the snap argument.</cod
 <p>Very much in the same way the mean summarises a distribution of values in a non-spatial setting, so does Moran’s I for a spatial dataset. Continuing the comparison, we can think of the mean as a single numerical value summarising a histogram or a kernel density plot. Similarly, Moran’s I captures much of the essence of the Moran Plot. In fact, there is a close connection between the two: the value of Moran’s I corresponds with the slope of the linear fit overlayed on top of the Moran Plot for the standardised variable and its lagged counterpart. Hence Morans’I takes values between -1 and 1, where a value of 0 would correspond to a random allocation of values of a variable across the possible locations. A value of 1 would correspond to a situation where the values of the variable of interest are optimally allocated in the map so that two neighbouring spatial units have as similar values as possible. Conversely, if Moran’s I is -1, this would correspond to a situation where neighbouring spatial units have as different values as possible.</p>
 <p>In order to calculate Moran’s I in our dataset, we can call the <code>moran.mc</code> function in R:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">moran.mc</span>(br<span class="sc">$</span>Pct_Leave, w_queen_std, <span class="at">nsim=</span><span class="dv">1000</span>, <span class="at">alternative=</span><span class="st">"two.sided"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">moran.mc</span>(br<span class="sc">$</span>Pct_Leave, w_queen_std, <span class="at">nsim=</span><span class="dv">1000</span>, <span class="at">alternative=</span><span class="st">"two.sided"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     Monte-Carlo simulation of Moran I
@@ -805,20 +783,20 @@ alternative hypothesis: two.sided</code></pre>
 <p>Moran’s I is a good tool to summarise a dataset into a single value that informs about its degree of clustering. However, it is not an appropriate measure to identify areas within the map where specific values are located. In other words, Moran’s I can tell us if values are clustered overall, but it will not inform us about where the clusters are. For that purpose, we need to use a local measure of spatial autocorrelation. Instead of operating on the overall dataset as global measures do, local measures consider each single observation in a dataset and operate on them. Because of that, they are not good a summarising a map, but they allow us to obtain further insights.</p>
 <p>We will consider Local Indicators of Spatial Association (LISAs), a local counter-part of global measures like Moran’s I. Essentially, this method consists in classifying the observations in a dataset into four groups derived from the Moran Plot: high values surrounded by high values (HH), low values nearby other low values (LL), high values among low values (HL), and low values among high values (LH). Each of these groups are typically called “quadrants”. An illustration of where each of these groups fall into the Moran Plot can be seen below:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a standardized Moran plot using ggplot2</span></span>
-<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>moran_plot_z <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(br, <span class="fu">aes</span>(<span class="at">x=</span>Pct_Leave_std, <span class="at">y=</span>w_Pct_Leave_std)) <span class="sc">+</span> </span>
-<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method=</span>lm) <span class="sc">+</span></span>
-<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="fu">aes</span>(<span class="at">yintercept =</span> <span class="dv">0</span>)) <span class="sc">+</span></span>
-<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="fu">aes</span>(<span class="at">xintercept =</span> <span class="dv">0</span>)) <span class="sc">+</span></span>
-<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title=</span><span class="st">"Standardised Moran plot"</span>, <span class="at">x=</span><span class="st">"% Leave z-score"</span>, <span class="at">y =</span> <span class="st">"Lagged % leave"</span>) <span class="sc">+</span></span>
-<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_label</span>(<span class="fu">aes</span>(<span class="at">x=</span><span class="fl">2.0</span>, <span class="at">y=</span><span class="fl">0.5</span>, <span class="at">label=</span><span class="st">"HH"</span>)) <span class="sc">+</span> </span>
-<span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_label</span>(<span class="fu">aes</span>(<span class="at">x=</span><span class="fl">1.5</span>, <span class="at">y=</span><span class="sc">-</span><span class="fl">1.5</span>, <span class="at">label=</span><span class="st">"HL"</span>)) <span class="sc">+</span> </span>
-<span id="cb33-10"><a href="#cb33-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_label</span>(<span class="fu">aes</span>(<span class="at">x=</span><span class="sc">-</span><span class="dv">2</span>, <span class="at">y=</span><span class="fl">1.0</span>, <span class="at">label=</span><span class="st">"LH"</span>)) <span class="sc">+</span> </span>
-<span id="cb33-11"><a href="#cb33-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_label</span>(<span class="fu">aes</span>(<span class="at">x=</span><span class="sc">-</span><span class="fl">1.5</span>, <span class="at">y=</span><span class="sc">-</span><span class="fl">2.5</span>, <span class="at">label=</span><span class="st">"LL"</span>)) </span>
-<span id="cb33-12"><a href="#cb33-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-13"><a href="#cb33-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Apply a minimal theme to the standardized Moran plot</span></span>
-<span id="cb33-14"><a href="#cb33-14" aria-hidden="true" tabindex="-1"></a>moran_plot_z <span class="sc">+</span> <span class="fu">theme_minimal</span>()  </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a standardized Moran plot using ggplot2</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>moran_plot_z <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(br, <span class="fu">aes</span>(<span class="at">x=</span>Pct_Leave_std, <span class="at">y=</span>w_Pct_Leave_std)) <span class="sc">+</span> </span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method=</span>lm) <span class="sc">+</span></span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="fu">aes</span>(<span class="at">yintercept =</span> <span class="dv">0</span>)) <span class="sc">+</span></span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="fu">aes</span>(<span class="at">xintercept =</span> <span class="dv">0</span>)) <span class="sc">+</span></span>
+<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title=</span><span class="st">"Standardised Moran plot"</span>, <span class="at">x=</span><span class="st">"% Leave z-score"</span>, <span class="at">y =</span> <span class="st">"Lagged % leave"</span>) <span class="sc">+</span></span>
+<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_label</span>(<span class="fu">aes</span>(<span class="at">x=</span><span class="fl">2.0</span>, <span class="at">y=</span><span class="fl">0.5</span>, <span class="at">label=</span><span class="st">"HH"</span>)) <span class="sc">+</span> </span>
+<span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_label</span>(<span class="fu">aes</span>(<span class="at">x=</span><span class="fl">1.5</span>, <span class="at">y=</span><span class="sc">-</span><span class="fl">1.5</span>, <span class="at">label=</span><span class="st">"HL"</span>)) <span class="sc">+</span> </span>
+<span id="cb31-10"><a href="#cb31-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_label</span>(<span class="fu">aes</span>(<span class="at">x=</span><span class="sc">-</span><span class="dv">2</span>, <span class="at">y=</span><span class="fl">1.0</span>, <span class="at">label=</span><span class="st">"LH"</span>)) <span class="sc">+</span> </span>
+<span id="cb31-11"><a href="#cb31-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_label</span>(<span class="fu">aes</span>(<span class="at">x=</span><span class="sc">-</span><span class="fl">1.5</span>, <span class="at">y=</span><span class="sc">-</span><span class="fl">2.5</span>, <span class="at">label=</span><span class="st">"LL"</span>)) </span>
+<span id="cb31-12"><a href="#cb31-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-13"><a href="#cb31-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Apply a minimal theme to the standardized Moran plot</span></span>
+<span id="cb31-14"><a href="#cb31-14" aria-hidden="true" tabindex="-1"></a>moran_plot_z <span class="sc">+</span> <span class="fu">theme_minimal</span>()  </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning in geom_label(aes(x = 2, y = 0.5, label = "HH")): All aesthetics have length 1, but the data has 374 rows.
 ℹ Please consider using `annotate()` or provide this layer with data containing
@@ -852,30 +830,30 @@ alternative hypothesis: two.sided</code></pre>
 <p>LISAs are widely used in many fields to identify clusters of values in space. They are a very useful tool that can quickly return areas in which values are concentrated and provide suggestive evidence about the processes that might be at work. For that, they have a prime place in the exploratory toolbox. Examples of contexts where LISAs can be useful include: identification of spatial clusters of poverty in regions, detection of ethnic enclaves, delineation of areas of particularly high/low activity of any phenomenon, etc.</p>
 <p>In R we can calculate LISAs in a very streamlined way thanks to the <code>localmoran_perm()</code> function in the <code>spdep</code> package. We just need to input the variable of interest, the spatial weights and the number of simulations so that the function knows how many times to shuffle the data in order to compute the p-values. Furthermore, we include another argument, <code>alternative="two.sided"</code> which is also related to how the p-value is computed. Once again, understanding this bit is beyond the scope of this lecture. If you want to learn more about it, we recommend this reading <span class="citation" data-cites="Sauer22NullMoran">(<a href="references.html#ref-Sauer22NullMoran" role="doc-biblioref">Sauer et al. 2022</a>)</span> by Sauer et al., although it is quite advanced! Below is the outcome of the <code>local_perm</code> function:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>lisa_perm <span class="ot">&lt;-</span> <span class="fu">localmoran_perm</span>(br<span class="sc">$</span>Pct_Leave, w_queen_std, <span class="at">nsim=</span><span class="dv">1000</span>, <span class="at">alternative=</span><span class="st">"two.sided"</span>)</span>
-<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(lisa_perm)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>lisa_perm <span class="ot">&lt;-</span> <span class="fu">localmoran_perm</span>(br<span class="sc">$</span>Pct_Leave, w_queen_std, <span class="at">nsim=</span><span class="dv">1000</span>, <span class="at">alternative=</span><span class="st">"two.sided"</span>)</span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(lisa_perm)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>           Ii         E.Ii     Var.Ii       Z.Ii Pr(z != E(Ii))
-1  0.96481855  0.010205161 1.22659305  0.8619405      0.3887203
-2  0.82335963  0.014593236 0.47806061  1.1697192      0.2421140
-3  0.85318791  0.039773435 0.57256850  1.0749745      0.2823861
-4  0.56806645 -0.005155997 0.12947654  1.5930435      0.1111504
-5  0.11370566  0.006936751 0.02011480  0.7528127      0.4515625
-6 -0.07610997  0.006948065 0.03004555 -0.4791722      0.6318161
+1  0.96481855 -0.020632394 1.19157749  0.9027632      0.3666516
+2  0.82335963 -0.023160835 0.45673359  1.2525815      0.2103581
+3  0.85318791 -0.005134261 0.50260716  1.2106985      0.2260110
+4  0.56806645  0.005818880 0.13486544  1.5310073      0.1257676
+5  0.11370566  0.002871003 0.01845719  0.8158171      0.4146047
+6 -0.07610997 -0.009531943 0.03250594 -0.3692748      0.7119229
   Pr(z != E(Ii)) Sim Pr(folded) Sim   Skewness    Kurtosis
-1          0.4095904     0.20479520 -0.3973085 -0.08873741
-2          0.2237762     0.11188811 -0.4499468 -0.07988417
-3          0.2717283     0.13586414 -0.3459634  0.17186766
-4          0.0959041     0.04795205 -0.3481825  0.12517645
-5          0.4675325     0.23376623 -0.2491269 -0.09030991
-6          0.5974026     0.29870130 -0.3208792  0.20933196</code></pre>
+1          0.3636364     0.18181818 -0.5048966  0.23886597
+2          0.2037962     0.10189810 -0.3174229 -0.26612277
+3          0.2157842     0.10789211 -0.3912581  0.09402566
+4          0.1078921     0.05394605 -0.2325010 -0.18027665
+5          0.4515485     0.22577423 -0.2625753 -0.08196386
+6          0.6493506     0.32467532 -0.4498051  0.36687312</code></pre>
 </div>
 </div>
 <p>Because of their very nature, looking at the numerical result of LISAs is not always the most useful way to exploit all the information they can provide. Remember that we are calculating a statistic for every single observation in the data so, if we have many of them, it will be difficult to extract any meaningful pattern. Instead, typically a cluster map is created to reflect the significant observations (those that are highly unlikely to have happened by pure chance), which are plotted with a specific color depending on their quadrant category.</p>
 <p>All of the needed pieces are contained inside the LISA object called <code>lisa_perm</code> that we have created above. But to make the creation of the cluster map more straightforward, it is convenient to pull them out and insert them in the main data table, <code>br</code>, in a new column called <code>quadrant</code>. To do this, we use the <code>hotspot</code> function to identify the observations with a siginificant value of the Local Moran’s I, setting the significance cutoff to 0.1. Note that we need to tell the function, what column of the <code>lisa_perm</code> object to look at for p-values smaller than 0.1. In our case, the p-values for the Local Moran’s I are stored in the column named <code>"Pr(z != E(Ii)) Sim"</code>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>quadrants <span class="ot">&lt;-</span> <span class="fu">hotspot</span>(lisa_perm, <span class="at">Prname=</span><span class="st">"Pr(z != E(Ii)) Sim"</span>, <span class="at">cutoff=</span><span class="fl">0.1</span>)</span>
-<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>quadrants</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>quadrants <span class="ot">&lt;-</span> <span class="fu">hotspot</span>(lisa_perm, <span class="at">Prname=</span><span class="st">"Pr(z != E(Ii)) Sim"</span>, <span class="at">cutoff=</span><span class="fl">0.1</span>)</span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>quadrants</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  [1] &lt;NA&gt;      &lt;NA&gt;      &lt;NA&gt;      &lt;NA&gt;      &lt;NA&gt;      &lt;NA&gt;      &lt;NA&gt;     
   [8] &lt;NA&gt;      &lt;NA&gt;      &lt;NA&gt;      &lt;NA&gt;      High-High High-High &lt;NA&gt;     
@@ -886,26 +864,26 @@ alternative hypothesis: two.sided</code></pre>
  [43] &lt;NA&gt;      &lt;NA&gt;      &lt;NA&gt;      &lt;NA&gt;      &lt;NA&gt;      &lt;NA&gt;      &lt;NA&gt;     
  [50] &lt;NA&gt;      &lt;NA&gt;      &lt;NA&gt;      &lt;NA&gt;      &lt;NA&gt;      &lt;NA&gt;      &lt;NA&gt;     
  [57] &lt;NA&gt;      &lt;NA&gt;      &lt;NA&gt;      &lt;NA&gt;      &lt;NA&gt;      &lt;NA&gt;      &lt;NA&gt;     
- [64] &lt;NA&gt;      &lt;NA&gt;      &lt;NA&gt;      &lt;NA&gt;      &lt;NA&gt;      &lt;NA&gt;      &lt;NA&gt;     
+ [64] &lt;NA&gt;      &lt;NA&gt;      &lt;NA&gt;      &lt;NA&gt;      &lt;NA&gt;      &lt;NA&gt;      High-High
  [71] High-High &lt;NA&gt;      &lt;NA&gt;      &lt;NA&gt;      &lt;NA&gt;      &lt;NA&gt;      &lt;NA&gt;     
  [78] &lt;NA&gt;      &lt;NA&gt;      &lt;NA&gt;      &lt;NA&gt;      &lt;NA&gt;      &lt;NA&gt;      &lt;NA&gt;     
  [85] &lt;NA&gt;      &lt;NA&gt;      &lt;NA&gt;      &lt;NA&gt;      &lt;NA&gt;      &lt;NA&gt;      &lt;NA&gt;     
  [92] &lt;NA&gt;      &lt;NA&gt;      &lt;NA&gt;      &lt;NA&gt;      &lt;NA&gt;      High-High &lt;NA&gt;     
- [99] High-High &lt;NA&gt;      &lt;NA&gt;      &lt;NA&gt;      &lt;NA&gt;      &lt;NA&gt;      &lt;NA&gt;     
+ [99] High-High &lt;NA&gt;      Low-High  &lt;NA&gt;      &lt;NA&gt;      &lt;NA&gt;      &lt;NA&gt;     
 [106] &lt;NA&gt;      &lt;NA&gt;      &lt;NA&gt;      &lt;NA&gt;      &lt;NA&gt;      &lt;NA&gt;      &lt;NA&gt;     
 [113] &lt;NA&gt;      &lt;NA&gt;      &lt;NA&gt;      &lt;NA&gt;      &lt;NA&gt;      &lt;NA&gt;      &lt;NA&gt;     
 [120] &lt;NA&gt;      &lt;NA&gt;      &lt;NA&gt;      &lt;NA&gt;      &lt;NA&gt;      &lt;NA&gt;      &lt;NA&gt;     
-[127] &lt;NA&gt;      &lt;NA&gt;      &lt;NA&gt;      &lt;NA&gt;      &lt;NA&gt;      &lt;NA&gt;      Low-High 
+[127] &lt;NA&gt;      &lt;NA&gt;      &lt;NA&gt;      &lt;NA&gt;      &lt;NA&gt;      &lt;NA&gt;      &lt;NA&gt;     
 [134] &lt;NA&gt;      &lt;NA&gt;      &lt;NA&gt;      &lt;NA&gt;      &lt;NA&gt;      &lt;NA&gt;      &lt;NA&gt;     
 [141] &lt;NA&gt;      &lt;NA&gt;      &lt;NA&gt;      &lt;NA&gt;      &lt;NA&gt;      &lt;NA&gt;      &lt;NA&gt;     
 [148] &lt;NA&gt;      &lt;NA&gt;      &lt;NA&gt;      &lt;NA&gt;      &lt;NA&gt;      &lt;NA&gt;      &lt;NA&gt;     
 [155] &lt;NA&gt;      &lt;NA&gt;      &lt;NA&gt;      &lt;NA&gt;      &lt;NA&gt;      &lt;NA&gt;      &lt;NA&gt;     
 [162] &lt;NA&gt;      High-High High-High &lt;NA&gt;      High-High High-High &lt;NA&gt;     
-[169] High-High &lt;NA&gt;      &lt;NA&gt;      &lt;NA&gt;      High-High &lt;NA&gt;      &lt;NA&gt;     
+[169] High-High &lt;NA&gt;      &lt;NA&gt;      &lt;NA&gt;      High-High High-High &lt;NA&gt;     
 [176] &lt;NA&gt;      &lt;NA&gt;      &lt;NA&gt;      &lt;NA&gt;      &lt;NA&gt;      &lt;NA&gt;      &lt;NA&gt;     
 [183] &lt;NA&gt;      &lt;NA&gt;      &lt;NA&gt;      &lt;NA&gt;      &lt;NA&gt;      &lt;NA&gt;      &lt;NA&gt;     
 [190] &lt;NA&gt;      &lt;NA&gt;      High-High &lt;NA&gt;      &lt;NA&gt;      High-High High-High
-[197] &lt;NA&gt;      &lt;NA&gt;      &lt;NA&gt;      Low-Low   &lt;NA&gt;      &lt;NA&gt;      &lt;NA&gt;     
+[197] &lt;NA&gt;      &lt;NA&gt;      &lt;NA&gt;      &lt;NA&gt;      &lt;NA&gt;      &lt;NA&gt;      &lt;NA&gt;     
 [204] &lt;NA&gt;      &lt;NA&gt;      &lt;NA&gt;      &lt;NA&gt;      &lt;NA&gt;      &lt;NA&gt;      High-High
 [211] &lt;NA&gt;      High-High High-High &lt;NA&gt;      &lt;NA&gt;      &lt;NA&gt;      &lt;NA&gt;     
 [218] &lt;NA&gt;      &lt;NA&gt;      &lt;NA&gt;      &lt;NA&gt;      &lt;NA&gt;      &lt;NA&gt;      &lt;NA&gt;     
@@ -924,9 +902,9 @@ alternative hypothesis: two.sided</code></pre>
 [309] &lt;NA&gt;      Low-Low   Low-Low   Low-Low   Low-Low   &lt;NA&gt;      Low-Low  
 [316] Low-Low   &lt;NA&gt;      &lt;NA&gt;      Low-Low   &lt;NA&gt;      Low-Low   Low-Low  
 [323] Low-Low   Low-Low   &lt;NA&gt;      &lt;NA&gt;      Low-Low   Low-Low   Low-Low  
-[330] Low-Low   &lt;NA&gt;      &lt;NA&gt;      &lt;NA&gt;      Low-Low   &lt;NA&gt;      Low-Low  
+[330] &lt;NA&gt;      &lt;NA&gt;      &lt;NA&gt;      &lt;NA&gt;      Low-Low   &lt;NA&gt;      Low-Low  
 [337] Low-Low   Low-Low   &lt;NA&gt;      Low-Low   Low-Low   &lt;NA&gt;      &lt;NA&gt;     
-[344] &lt;NA&gt;      Low-Low   Low-Low   Low-Low   Low-Low   &lt;NA&gt;      &lt;NA&gt;     
+[344] Low-Low   &lt;NA&gt;      Low-Low   Low-Low   Low-Low   &lt;NA&gt;      &lt;NA&gt;     
 [351] Low-Low   Low-Low   Low-Low   &lt;NA&gt;      &lt;NA&gt;      &lt;NA&gt;      &lt;NA&gt;     
 [358] &lt;NA&gt;      &lt;NA&gt;      &lt;NA&gt;      &lt;NA&gt;      &lt;NA&gt;      &lt;NA&gt;      &lt;NA&gt;     
 [365] &lt;NA&gt;      &lt;NA&gt;      &lt;NA&gt;      &lt;NA&gt;      &lt;NA&gt;      &lt;NA&gt;      &lt;NA&gt;     
@@ -936,11 +914,11 @@ Levels: Low-Low Low-High High-High</code></pre>
 </div>
 <p>Then, we stor these results in a new column of <code>br</code> as characters, and replacing the NA values by <code>"Not significant"</code>:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>br<span class="sc">$</span>quadrant <span class="ot">&lt;-</span> <span class="fu">as.character</span>(quadrants)  <span class="sc">%&gt;%</span> <span class="fu">replace_na</span>(<span class="st">"Not significant"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>br<span class="sc">$</span>quadrant <span class="ot">&lt;-</span> <span class="fu">as.character</span>(quadrants)  <span class="sc">%&gt;%</span> <span class="fu">replace_na</span>(<span class="st">"Not significant"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Let’s check that the new column was added by inspecting the first few lines of <code>br</code>:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(br)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(br)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Simple feature collection with 6 features and 8 fields
 Geometry type: MULTIPOLYGON
@@ -962,52 +940,52 @@ Geodetic CRS:  WGS 84
 </div>
 <p>And how many different types of clusters do we have that are significant?</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="fu">unique</span>(br<span class="sc">$</span>quadrant)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu">unique</span>(br<span class="sc">$</span>quadrant)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "Not significant" "High-High"       "Low-High"        "Low-Low"        </code></pre>
 </div>
 </div>
 <p>Just three: High-High, Low-High and Low-Low. No significant High-Low cluters were detected. We can now plot the map of percentage of people that voted leave in each Local Authority Districts, and next to it, the cluster map from the LISA analysis:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>map_pct <span class="ot">&lt;-</span> tmap<span class="sc">::</span><span class="fu">tm_shape</span>(br) <span class="sc">+</span></span>
-<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>  tmap<span class="sc">::</span><span class="fu">tm_fill</span>(<span class="at">col =</span> <span class="st">"Pct_Leave"</span>, <span class="at">palette =</span> viridisLite<span class="sc">::</span><span class="fu">viridis</span>(<span class="dv">6</span>), <span class="at">title=</span><span class="st">"% Leave voters"</span>) <span class="sc">+</span></span>
-<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_borders</span>(<span class="at">col =</span> <span class="st">"black"</span>, <span class="at">lwd =</span> <span class="fl">0.3</span>)<span class="sc">+</span></span>
-<span id="cb47-4"><a href="#cb47-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"% Leave voters"</span>)<span class="sc">+</span></span>
-<span id="cb47-5"><a href="#cb47-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_compass</span>(<span class="at">position =</span> <span class="fu">c</span>(<span class="fl">0.01</span>, <span class="fl">0.03</span>)) <span class="sc">+</span> </span>
-<span id="cb47-6"><a href="#cb47-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_scale_bar</span>(<span class="at">position =</span> <span class="fu">c</span>(<span class="fl">0.6</span>, <span class="fl">0.03</span>)) <span class="sc">+</span> </span>
-<span id="cb47-7"><a href="#cb47-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_layout</span>(<span class="at">legend.text.size =</span> <span class="fl">0.5</span>, <span class="at">inner.margins =</span> <span class="fu">c</span>(<span class="fl">0.1</span>, <span class="fl">0.1</span>, <span class="fl">0.02</span>, <span class="fl">0.05</span>), <span class="at">legend.position =</span> <span class="fu">c</span>(<span class="fl">0.65</span>,<span class="fl">0.76</span>), <span class="at">legend.width=</span><span class="fl">0.5</span>, <span class="at">bg.color=</span><span class="st">"aliceblue"</span>) </span>
-<span id="cb47-8"><a href="#cb47-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb47-9"><a href="#cb47-9" aria-hidden="true" tabindex="-1"></a>borders <span class="ot">&lt;-</span> <span class="fu">tm_shape</span>(br) <span class="sc">+</span> </span>
-<span id="cb47-10"><a href="#cb47-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_fill</span>() <span class="sc">+</span></span>
-<span id="cb47-11"><a href="#cb47-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_borders</span>(<span class="at">col =</span> <span class="st">"black"</span>, <span class="at">lwd =</span> <span class="fl">0.3</span>)</span>
-<span id="cb47-12"><a href="#cb47-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb47-13"><a href="#cb47-13" aria-hidden="true" tabindex="-1"></a>hh <span class="ot">&lt;-</span> br <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">filter</span>(quadrant <span class="sc">==</span> <span class="st">"High-High"</span>)</span>
-<span id="cb47-14"><a href="#cb47-14" aria-hidden="true" tabindex="-1"></a>hh_map <span class="ot">&lt;-</span> <span class="fu">tm_shape</span>(hh) <span class="sc">+</span>  </span>
-<span id="cb47-15"><a href="#cb47-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_fill</span>(<span class="at">col =</span> <span class="st">"royalblue2"</span>, <span class="at">alpha=</span><span class="fl">0.8</span>)</span>
-<span id="cb47-16"><a href="#cb47-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb47-17"><a href="#cb47-17" aria-hidden="true" tabindex="-1"></a>ll <span class="ot">&lt;-</span> br <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">filter</span>(quadrant <span class="sc">==</span> <span class="st">"Low-Low"</span>)</span>
-<span id="cb47-18"><a href="#cb47-18" aria-hidden="true" tabindex="-1"></a>ll_map <span class="ot">&lt;-</span> <span class="fu">tm_shape</span>(ll) <span class="sc">+</span>  </span>
-<span id="cb47-19"><a href="#cb47-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_fill</span>(<span class="at">col =</span> <span class="st">"red2"</span>, <span class="at">alpha=</span><span class="fl">0.8</span>)</span>
-<span id="cb47-20"><a href="#cb47-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb47-21"><a href="#cb47-21" aria-hidden="true" tabindex="-1"></a>lh <span class="ot">&lt;-</span> br <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">filter</span>(quadrant <span class="sc">==</span> <span class="st">"Low-High"</span>)</span>
-<span id="cb47-22"><a href="#cb47-22" aria-hidden="true" tabindex="-1"></a>lh_map <span class="ot">&lt;-</span> <span class="fu">tm_shape</span>(lh) <span class="sc">+</span>  </span>
-<span id="cb47-23"><a href="#cb47-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_fill</span>(<span class="at">col =</span> <span class="st">"gold"</span>, <span class="at">alpha=</span><span class="fl">0.8</span>)</span>
-<span id="cb47-24"><a href="#cb47-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb47-25"><a href="#cb47-25" aria-hidden="true" tabindex="-1"></a>ns <span class="ot">&lt;-</span> br <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">filter</span>(quadrant <span class="sc">==</span> <span class="st">"Not significant"</span>)</span>
-<span id="cb47-26"><a href="#cb47-26" aria-hidden="true" tabindex="-1"></a>ns_map <span class="ot">&lt;-</span> <span class="fu">tm_shape</span>(ns) <span class="sc">+</span>  </span>
-<span id="cb47-27"><a href="#cb47-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_fill</span>(<span class="at">col =</span> <span class="st">"lightgrey"</span>, <span class="at">alpha=</span><span class="fl">0.8</span>)</span>
-<span id="cb47-28"><a href="#cb47-28" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb47-29"><a href="#cb47-29" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb47-30"><a href="#cb47-30" aria-hidden="true" tabindex="-1"></a><span class="co"># Combine all the maps, add compass, scale bar, and legend</span></span>
-<span id="cb47-31"><a href="#cb47-31" aria-hidden="true" tabindex="-1"></a>final_map_cluster <span class="ot">&lt;-</span> borders <span class="sc">+</span></span>
-<span id="cb47-32"><a href="#cb47-32" aria-hidden="true" tabindex="-1"></a>  hh_map <span class="sc">+</span> ll_map <span class="sc">+</span> lh_map <span class="sc">+</span> ns_map <span class="sc">+</span></span>
-<span id="cb47-33"><a href="#cb47-33" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_compass</span>(<span class="at">position =</span> <span class="fu">c</span>(<span class="fl">0.01</span>, <span class="fl">0.03</span>)) <span class="sc">+</span> </span>
-<span id="cb47-34"><a href="#cb47-34" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_scale_bar</span>(<span class="at">position =</span> <span class="fu">c</span>(<span class="fl">0.6</span>, <span class="fl">0.03</span>)) <span class="sc">+</span> </span>
-<span id="cb47-35"><a href="#cb47-35" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_add_legend</span>(<span class="at">type =</span> <span class="st">"fill"</span>, <span class="at">col =</span> <span class="fu">c</span>(<span class="st">"royalblue2"</span>, <span class="st">"red2"</span>, <span class="st">"darkgreen"</span>, <span class="st">"gold"</span>, <span class="st">"lightgrey"</span>), </span>
-<span id="cb47-36"><a href="#cb47-36" aria-hidden="true" tabindex="-1"></a>                <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"High-High"</span>, <span class="st">"Low-Low"</span>, <span class="st">"High-Low"</span>, <span class="st">"Low-High"</span>, <span class="st">"Not significant"</span>), <span class="at">title =</span> <span class="st">"LISA cluster"</span>) <span class="sc">+</span></span>
-<span id="cb47-37"><a href="#cb47-37" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_layout</span>(<span class="at">legend.text.size =</span> <span class="fl">0.5</span>, <span class="at">inner.margins =</span> <span class="fu">c</span>(<span class="fl">0.1</span>, <span class="fl">0.1</span>, <span class="fl">0.02</span>, <span class="fl">0.05</span>), <span class="at">legend.position =</span> <span class="fu">c</span>(<span class="fl">0.65</span>,<span class="fl">0.75</span>), <span class="at">legend.width=</span><span class="fl">0.5</span>, <span class="at">bg.color=</span><span class="st">"aliceblue"</span>)</span>
-<span id="cb47-38"><a href="#cb47-38" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb47-39"><a href="#cb47-39" aria-hidden="true" tabindex="-1"></a><span class="fu">tmap_arrange</span>(map_pct, final_map_cluster)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>map_pct <span class="ot">&lt;-</span> tmap<span class="sc">::</span><span class="fu">tm_shape</span>(br) <span class="sc">+</span></span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>  tmap<span class="sc">::</span><span class="fu">tm_fill</span>(<span class="at">col =</span> <span class="st">"Pct_Leave"</span>, <span class="at">palette =</span> viridisLite<span class="sc">::</span><span class="fu">viridis</span>(<span class="dv">6</span>), <span class="at">title=</span><span class="st">"% Leave voters"</span>) <span class="sc">+</span></span>
+<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_borders</span>(<span class="at">col =</span> <span class="st">"black"</span>, <span class="at">lwd =</span> <span class="fl">0.3</span>)<span class="sc">+</span></span>
+<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"% Leave voters"</span>)<span class="sc">+</span></span>
+<span id="cb45-5"><a href="#cb45-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_compass</span>(<span class="at">position =</span> <span class="fu">c</span>(<span class="fl">0.01</span>, <span class="fl">0.03</span>)) <span class="sc">+</span> </span>
+<span id="cb45-6"><a href="#cb45-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_scale_bar</span>(<span class="at">position =</span> <span class="fu">c</span>(<span class="fl">0.6</span>, <span class="fl">0.03</span>)) <span class="sc">+</span> </span>
+<span id="cb45-7"><a href="#cb45-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_layout</span>(<span class="at">legend.text.size =</span> <span class="fl">0.5</span>, <span class="at">inner.margins =</span> <span class="fu">c</span>(<span class="fl">0.1</span>, <span class="fl">0.1</span>, <span class="fl">0.02</span>, <span class="fl">0.05</span>), <span class="at">legend.position =</span> <span class="fu">c</span>(<span class="fl">0.65</span>,<span class="fl">0.76</span>), <span class="at">legend.width=</span><span class="fl">0.5</span>, <span class="at">bg.color=</span><span class="st">"aliceblue"</span>) </span>
+<span id="cb45-8"><a href="#cb45-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-9"><a href="#cb45-9" aria-hidden="true" tabindex="-1"></a>borders <span class="ot">&lt;-</span> <span class="fu">tm_shape</span>(br) <span class="sc">+</span> </span>
+<span id="cb45-10"><a href="#cb45-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_fill</span>() <span class="sc">+</span></span>
+<span id="cb45-11"><a href="#cb45-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_borders</span>(<span class="at">col =</span> <span class="st">"black"</span>, <span class="at">lwd =</span> <span class="fl">0.3</span>)</span>
+<span id="cb45-12"><a href="#cb45-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-13"><a href="#cb45-13" aria-hidden="true" tabindex="-1"></a>hh <span class="ot">&lt;-</span> br <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">filter</span>(quadrant <span class="sc">==</span> <span class="st">"High-High"</span>)</span>
+<span id="cb45-14"><a href="#cb45-14" aria-hidden="true" tabindex="-1"></a>hh_map <span class="ot">&lt;-</span> <span class="fu">tm_shape</span>(hh) <span class="sc">+</span>  </span>
+<span id="cb45-15"><a href="#cb45-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_fill</span>(<span class="at">col =</span> <span class="st">"royalblue2"</span>, <span class="at">alpha=</span><span class="fl">0.8</span>)</span>
+<span id="cb45-16"><a href="#cb45-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-17"><a href="#cb45-17" aria-hidden="true" tabindex="-1"></a>ll <span class="ot">&lt;-</span> br <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">filter</span>(quadrant <span class="sc">==</span> <span class="st">"Low-Low"</span>)</span>
+<span id="cb45-18"><a href="#cb45-18" aria-hidden="true" tabindex="-1"></a>ll_map <span class="ot">&lt;-</span> <span class="fu">tm_shape</span>(ll) <span class="sc">+</span>  </span>
+<span id="cb45-19"><a href="#cb45-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_fill</span>(<span class="at">col =</span> <span class="st">"red2"</span>, <span class="at">alpha=</span><span class="fl">0.8</span>)</span>
+<span id="cb45-20"><a href="#cb45-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-21"><a href="#cb45-21" aria-hidden="true" tabindex="-1"></a>lh <span class="ot">&lt;-</span> br <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">filter</span>(quadrant <span class="sc">==</span> <span class="st">"Low-High"</span>)</span>
+<span id="cb45-22"><a href="#cb45-22" aria-hidden="true" tabindex="-1"></a>lh_map <span class="ot">&lt;-</span> <span class="fu">tm_shape</span>(lh) <span class="sc">+</span>  </span>
+<span id="cb45-23"><a href="#cb45-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_fill</span>(<span class="at">col =</span> <span class="st">"gold"</span>, <span class="at">alpha=</span><span class="fl">0.8</span>)</span>
+<span id="cb45-24"><a href="#cb45-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-25"><a href="#cb45-25" aria-hidden="true" tabindex="-1"></a>ns <span class="ot">&lt;-</span> br <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">filter</span>(quadrant <span class="sc">==</span> <span class="st">"Not significant"</span>)</span>
+<span id="cb45-26"><a href="#cb45-26" aria-hidden="true" tabindex="-1"></a>ns_map <span class="ot">&lt;-</span> <span class="fu">tm_shape</span>(ns) <span class="sc">+</span>  </span>
+<span id="cb45-27"><a href="#cb45-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_fill</span>(<span class="at">col =</span> <span class="st">"lightgrey"</span>, <span class="at">alpha=</span><span class="fl">0.8</span>)</span>
+<span id="cb45-28"><a href="#cb45-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-29"><a href="#cb45-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-30"><a href="#cb45-30" aria-hidden="true" tabindex="-1"></a><span class="co"># Combine all the maps, add compass, scale bar, and legend</span></span>
+<span id="cb45-31"><a href="#cb45-31" aria-hidden="true" tabindex="-1"></a>final_map_cluster <span class="ot">&lt;-</span> borders <span class="sc">+</span></span>
+<span id="cb45-32"><a href="#cb45-32" aria-hidden="true" tabindex="-1"></a>  hh_map <span class="sc">+</span> ll_map <span class="sc">+</span> lh_map <span class="sc">+</span> ns_map <span class="sc">+</span></span>
+<span id="cb45-33"><a href="#cb45-33" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_compass</span>(<span class="at">position =</span> <span class="fu">c</span>(<span class="fl">0.01</span>, <span class="fl">0.03</span>)) <span class="sc">+</span> </span>
+<span id="cb45-34"><a href="#cb45-34" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_scale_bar</span>(<span class="at">position =</span> <span class="fu">c</span>(<span class="fl">0.6</span>, <span class="fl">0.03</span>)) <span class="sc">+</span> </span>
+<span id="cb45-35"><a href="#cb45-35" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_add_legend</span>(<span class="at">type =</span> <span class="st">"fill"</span>, <span class="at">col =</span> <span class="fu">c</span>(<span class="st">"royalblue2"</span>, <span class="st">"red2"</span>, <span class="st">"darkgreen"</span>, <span class="st">"gold"</span>, <span class="st">"lightgrey"</span>), </span>
+<span id="cb45-36"><a href="#cb45-36" aria-hidden="true" tabindex="-1"></a>                <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"High-High"</span>, <span class="st">"Low-Low"</span>, <span class="st">"High-Low"</span>, <span class="st">"Low-High"</span>, <span class="st">"Not significant"</span>), <span class="at">title =</span> <span class="st">"LISA cluster"</span>) <span class="sc">+</span></span>
+<span id="cb45-37"><a href="#cb45-37" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_layout</span>(<span class="at">legend.text.size =</span> <span class="fl">0.5</span>, <span class="at">inner.margins =</span> <span class="fu">c</span>(<span class="fl">0.1</span>, <span class="fl">0.1</span>, <span class="fl">0.02</span>, <span class="fl">0.05</span>), <span class="at">legend.position =</span> <span class="fu">c</span>(<span class="fl">0.65</span>,<span class="fl">0.75</span>), <span class="at">legend.width=</span><span class="fl">0.5</span>, <span class="at">bg.color=</span><span class="st">"aliceblue"</span>)</span>
+<span id="cb45-38"><a href="#cb45-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-39"><a href="#cb45-39" aria-hidden="true" tabindex="-1"></a><span class="fu">tmap_arrange</span>(map_pct, final_map_cluster)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -1033,26 +1011,26 @@ Note
 </div>
 <p>Finally, the results from the LISA statistics can be connected to the Moran plot to visualise where in the scatter plot polygon from different clusters fall:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a>color_values <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">`</span><span class="at">High-High</span><span class="st">`</span> <span class="ot">=</span> <span class="st">"royalblue2"</span>, </span>
-<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a>                  <span class="st">`</span><span class="at">Low-Low</span><span class="st">`</span> <span class="ot">=</span> <span class="st">"red2"</span>, </span>
-<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a>                  <span class="st">`</span><span class="at">High-Low</span><span class="st">`</span> <span class="ot">=</span> <span class="st">"darkgreen"</span>,</span>
-<span id="cb48-4"><a href="#cb48-4" aria-hidden="true" tabindex="-1"></a>                  <span class="st">`</span><span class="at">Low-High</span><span class="st">`</span> <span class="ot">=</span> <span class="st">"gold"</span>, </span>
-<span id="cb48-5"><a href="#cb48-5" aria-hidden="true" tabindex="-1"></a>                  <span class="st">`</span><span class="at">Not significant</span><span class="st">`</span> <span class="ot">=</span> <span class="st">"lightgrey"</span>)</span>
-<span id="cb48-6"><a href="#cb48-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-7"><a href="#cb48-7" aria-hidden="true" tabindex="-1"></a>moranLISA <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(br, <span class="fu">aes</span>(<span class="at">x=</span>Pct_Leave_std, </span>
-<span id="cb48-8"><a href="#cb48-8" aria-hidden="true" tabindex="-1"></a>               <span class="at">y=</span>w_Pct_Leave_std,</span>
-<span id="cb48-9"><a href="#cb48-9" aria-hidden="true" tabindex="-1"></a>               <span class="at">fill =</span> quadrant)) <span class="sc">+</span> </span>
-<span id="cb48-10"><a href="#cb48-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">color =</span> <span class="st">"black"</span>, <span class="at">shape =</span> <span class="dv">21</span>, <span class="at">size =</span> <span class="dv">2</span>) <span class="sc">+</span> </span>
-<span id="cb48-11"><a href="#cb48-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
-<span id="cb48-12"><a href="#cb48-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">0</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>) <span class="sc">+</span> </span>
-<span id="cb48-13"><a href="#cb48-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="dv">0</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>) <span class="sc">+</span> </span>
-<span id="cb48-14"><a href="#cb48-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values=</span>color_values) <span class="sc">+</span></span>
-<span id="cb48-15"><a href="#cb48-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title=</span><span class="st">"Standardised Moran plot"</span>,</span>
-<span id="cb48-16"><a href="#cb48-16" aria-hidden="true" tabindex="-1"></a>        <span class="at">x=</span><span class="st">"% Leave z-score"</span>, </span>
-<span id="cb48-17"><a href="#cb48-17" aria-hidden="true" tabindex="-1"></a>        <span class="at">y =</span> <span class="st">"Lagged % leave"</span>,</span>
-<span id="cb48-18"><a href="#cb48-18" aria-hidden="true" tabindex="-1"></a>        <span class="at">fill =</span> <span class="st">"Cluster type"</span>)</span>
-<span id="cb48-19"><a href="#cb48-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-20"><a href="#cb48-20" aria-hidden="true" tabindex="-1"></a>moranLISA</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>color_values <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">`</span><span class="at">High-High</span><span class="st">`</span> <span class="ot">=</span> <span class="st">"royalblue2"</span>, </span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>                  <span class="st">`</span><span class="at">Low-Low</span><span class="st">`</span> <span class="ot">=</span> <span class="st">"red2"</span>, </span>
+<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a>                  <span class="st">`</span><span class="at">High-Low</span><span class="st">`</span> <span class="ot">=</span> <span class="st">"darkgreen"</span>,</span>
+<span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a>                  <span class="st">`</span><span class="at">Low-High</span><span class="st">`</span> <span class="ot">=</span> <span class="st">"gold"</span>, </span>
+<span id="cb46-5"><a href="#cb46-5" aria-hidden="true" tabindex="-1"></a>                  <span class="st">`</span><span class="at">Not significant</span><span class="st">`</span> <span class="ot">=</span> <span class="st">"lightgrey"</span>)</span>
+<span id="cb46-6"><a href="#cb46-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb46-7"><a href="#cb46-7" aria-hidden="true" tabindex="-1"></a>moranLISA <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(br, <span class="fu">aes</span>(<span class="at">x=</span>Pct_Leave_std, </span>
+<span id="cb46-8"><a href="#cb46-8" aria-hidden="true" tabindex="-1"></a>               <span class="at">y=</span>w_Pct_Leave_std,</span>
+<span id="cb46-9"><a href="#cb46-9" aria-hidden="true" tabindex="-1"></a>               <span class="at">fill =</span> quadrant)) <span class="sc">+</span> </span>
+<span id="cb46-10"><a href="#cb46-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">color =</span> <span class="st">"black"</span>, <span class="at">shape =</span> <span class="dv">21</span>, <span class="at">size =</span> <span class="dv">2</span>) <span class="sc">+</span> </span>
+<span id="cb46-11"><a href="#cb46-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb46-12"><a href="#cb46-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">0</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>) <span class="sc">+</span> </span>
+<span id="cb46-13"><a href="#cb46-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="dv">0</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>) <span class="sc">+</span> </span>
+<span id="cb46-14"><a href="#cb46-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values=</span>color_values) <span class="sc">+</span></span>
+<span id="cb46-15"><a href="#cb46-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title=</span><span class="st">"Standardised Moran plot"</span>,</span>
+<span id="cb46-16"><a href="#cb46-16" aria-hidden="true" tabindex="-1"></a>        <span class="at">x=</span><span class="st">"% Leave z-score"</span>, </span>
+<span id="cb46-17"><a href="#cb46-17" aria-hidden="true" tabindex="-1"></a>        <span class="at">y =</span> <span class="st">"Lagged % leave"</span>,</span>
+<span id="cb46-18"><a href="#cb46-18" aria-hidden="true" tabindex="-1"></a>        <span class="at">fill =</span> <span class="st">"Cluster type"</span>)</span>
+<span id="cb46-19"><a href="#cb46-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb46-20"><a href="#cb46-20" aria-hidden="true" tabindex="-1"></a>moranLISA</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
