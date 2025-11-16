@@ -12,7 +12,10 @@ library(GGally)   # Loads 'GGally' for extending 'ggplot2' with tools for explor
 library(cluster)  # Imports 'cluster', a package for clustering methods used in data analysis.
 library(tidyverse) # Loads the 'tidyverse' collection of packages (including 'dplyr', 'ggplot2', 'tidyr', etc.) for data manipulation and visualization.
 library(spdep)    # Imports 'spdep' for spatial econometrics and spatial statistics.
-# library(rgeoda)   # Loads 'rgeoda' for spatial analysis using Geoda functions in R.
+library(ggspatial) # for scale bar & north arrow
+library(patchwork) # for arranging plots in a grid
+library(ggmap)
+
 ```
 
 ## Data
@@ -73,33 +76,67 @@ The best way to start exploring the geography of AirBnb ratings is by plotting e
 
 Since we have many variables to plot, we will create a loop that generates each map for us and places it on a "subplot" of the main figure. Given that before we saved the names of the variables of interest as a vector called `ratings`, we can now make use of this to write a simpler for-loop:
 
-```{r}
-# Create an empty list to store the maps
-map_list <- list()
 
-# Start the loop over all the variables of interest
-for (i in 1:length(ratings)) {
-  # Plot the map for each column
-  map <- tm_shape(abb) +
-    tm_fill(col = ratings[i], 
-            style = "quantile", 
-            palette = "Blues", 
-            alpha = 0.75) +
-    tm_compass(position = c(0.02, 0.7), size=1) + 
-    tm_scale_bar(position = c(0.02, 0.001), text.size=.8, breaks = c(0,2,4,6,8,10)) +
-    tm_layout(main.title = ratings_names[i], 
-              main.title.size = 1, 
-              legend.show = FALSE, 
-              #legend.text.size = 0.5, legend.title.size=1, 
-              #legend.position = c(0.70,0.3), 
-              inner.margins = c(0.1, 0.1, 0.1, 0.))  # Set the title of each map
+```{r}
+
+library(ggplot2)
+library(ggspatial)
+library(patchwork)
+library(sf)
+
+map_list <- vector("list", length(ratings))
+
+for (i in seq_along(ratings)) {
+  var   <- ratings[i]
+  title <- ratings_names[i]
   
-  # Append the map to the list
-  map_list[[i]] <- map
+  p <- ggplot(abb) +
+    geom_sf(aes(fill = .data[[var]]),
+            color = NA,
+            alpha = 1) +
+    scale_fill_distiller(palette = "Blues", direction = 1) +
+    
+    annotation_north_arrow(
+      location = "tr",
+      which_north = "true",
+      style = north_arrow_fancy_orienteering,
+      height = unit(0.6, "cm"),
+      width  = unit(0.6, "cm")
+    ) +
+    annotation_scale(
+      location = "br",
+      height = unit(0.15, "cm"),
+      text_cex = 0.4
+    ) +
+    
+    labs(
+      title = title,
+      fill  = NULL
+    ) +
+    theme_minimal() +
+    theme(
+      axis.text  = element_blank(),
+      axis.ticks = element_blank(),
+      panel.grid = element_blank(),
+      panel.border = element_rect(fill = NA, colour = "grey80"),
+      
+      # make legend smaller 
+      legend.key.height = unit(0.25, "cm"),
+      legend.key.width  = unit(0.25, "cm"),
+      legend.text       = element_text(size = 6),
+      legend.title      = element_text(size = 7),
+      
+      plot.title = element_text(size = 10)
+    )
+  
+  map_list[[i]] <- p
 }
 
-# Plotting the grid of maps
-tmap_arrange(maps = map_list, nrow = 3, ncol = 3)
+# Bigger overall maps in the grid
+wrap_plots(map_list, nrow = 3, ncol = 3) &
+  theme(plot.margin = margin(3, 3, 3, 3, "mm"))
+
+
 ```
 
 As we can see, there is substantial variation in how the ratings for different aspects are distributed over space. While variables like the overall rating or the communication with the host tend to higher in peripheral areas, others like the location score are more concentrated in the city centre.
@@ -150,13 +187,39 @@ abb$k5cls <- k5cls$cluster
 To get a better understanding of the classification we have just performed, it is useful to display the categories created on a map. For this, we will use a unique values choropleth, which will automatically assign a different color to each category:
 
 ```{r}
-map_cluster = tm_shape(abb) +
-  tm_fill(col = "k5cls", title = "Clusters", palette = viridis(256), style = "cont") + # add fill
-  tm_borders(col = "white", lwd = .01)  + # add borders
-  tm_layout(legend.position = c(0.88, 0.75)) +
-  tm_compass(type = "arrow", position = c("left", "top") , size = 1) + # add compass
-  tm_scale_bar(breaks = c(0,1,2,3), text.size = 0.5, position =  c("left", "bottom")) # add scale bar
-map_cluster
+
+# Ensure k5cls is categorical (factor)
+abb$k5cls <- factor(abb$k5cls)
+
+map_cluster_gg <- ggplot(abb) +
+  geom_sf(aes(fill = k5cls), color = "white", linewidth = 0.01) +
+  
+  # ---- DISCRETE viridis palette ----
+  scale_fill_viridis_d(option = "viridis", name = "Clusters") +
+  
+  annotation_north_arrow(
+    location = "tl",
+    which_north = "true",
+    style = north_arrow_orienteering,
+    height = unit(1, "cm"),
+    width  = unit(1, "cm")
+  ) +
+  annotation_scale(
+    location = "bl",
+    text_cex = 0.5
+  ) +
+  
+  theme_minimal() +
+  theme(
+    legend.position = c(0.88, 0.75),
+    axis.text  = element_blank(),
+    axis.title = element_blank(),
+    panel.grid = element_blank()
+  )
+
+map_cluster_gg
+
+
 ```
 
 The map above represents the geographical distribution of the five categories created by the K-means algorithm. A quick glance shows a strong spatial structure in the distribution of the colors.
@@ -250,13 +313,42 @@ abb$regionalisation <- skater_results$groups
 At this point, the column `regionalisation` is no different than `k5cls`: a categorical variable that can be mapped into a unique values choropleth. In fact the following code snippett is exactly the same as before, only replacing the name of the variable to be mapped and the title:
 
 ```{r}
-map_cluster = tm_shape(abb) +
-  tm_fill(col = "regionalisation", title = "Clusters", palette = viridis(256), style = "cont") + # add fill
-  tm_borders(col = "white", lwd = .01)  + # add borders
-  tm_layout(legend.position = c(0.88, 0.75)) +
-  tm_compass(type = "arrow", position = c("left", "top") , size = 1) + # add compass
-  tm_scale_bar(breaks = c(0,1,2,3), text.size = 0.5, position =  c("left", "bottom")) # add scale bar
-map_cluster
+# Make sure it's categorical
+abb$regionalisation <- factor(abb$regionalisation)
+
+map_cluster_gg <- ggplot(abb) +
+  geom_sf(aes(fill = regionalisation),
+          color = "white",
+          linewidth = 0.01) +
+  
+  # discrete viridis palette 
+  scale_fill_viridis_d(option = "viridis", name = "Clusters") +
+  
+  # compass
+  annotation_north_arrow(
+    location = "tl",
+    which_north = "true",
+    style = north_arrow_orienteering,
+    height = unit(1, "cm"),
+    width  = unit(1, "cm")
+  ) +
+  
+  # scale bar
+  annotation_scale(
+    location = "bl",
+    text_cex = 0.5,   
+  ) +
+  
+  theme_minimal() +
+  theme(
+    legend.position = c(0.88, 0.75),
+    axis.text  = element_blank(),
+    axis.title = element_blank(),
+    panel.grid = element_blank()
+  )
+
+map_cluster_gg
+
 ```
 
 ### Comparing organic and administrative delineations
@@ -280,16 +372,72 @@ map_regions = tm_shape(abb_regions) +
   tm_scale_bar(breaks = c(0,1,2,3), text.size = 0.5, position =  c("left", "bottom")) # add scale bar
 map_regions
 ```
+```{r}
+
+# ggmap requires WGS84
+abb_regions <- st_transform(abb_regions, 4326)
+
+bb <- st_bbox(abb_regions)
+
+map_regions_ggmap <- ggplot(abb_regions) +
+  # borders only (no fill)
+  geom_sf(fill = NA, color = "red", linewidth = 1.5) +
+  
+  annotation_north_arrow(
+    location = "tl",
+    style = north_arrow_orienteering
+  ) +
+  
+  annotation_scale(
+    location = "bl",
+    text_cex = 0.5
+  ) +
+  
+  theme_void()
+
+map_regions_ggmap
+
+```
 
 To compare with the original divisions, we can overlay the map above with the one corresponding to the administrative boundaries:
 
 ```{r}
-map_boroughs = tm_shape(boroughs) +
-  tm_borders(col = "green", lwd = 1)  + # add borders
-  tm_compass(type = "arrow", position = c("left", "top") , size = 1) + # add compass
-  tm_scale_bar(breaks = c(0,1,2,3), text.size = 0.5, position =  c("left", "bottom")) # add scale bar
+map_regions_boroughs_gg <- ggplot() +
+  # regions in red
+  geom_sf(data = abb_regions,
+          fill = NA,
+          color = "red",
+          linewidth = 1.5) +
+  # boroughs in green
+  geom_sf(data = boroughs,
+          fill = NA,
+          color = "blue",
+          linewidth = 0.5) +
+  
+  
+  # compass
+  annotation_north_arrow(
+    location    = "tl",
+    which_north = "true",
+    style       = north_arrow_orienteering,
+    height      = unit(1, "cm"),
+    width       = unit(1, "cm")
+  ) +
+  
+  # scale bar
+  annotation_scale(
+    location = "bl",
+    text_cex = 0.5
+  ) +
+  
+  theme_minimal() +
+  theme(
+    axis.text  = element_blank(),
+    axis.title = element_blank(),
+    panel.grid = element_blank()
+  )
 
-map_regions + map_boroughs
+map_regions_boroughs_gg
 ```
 
 Looking at the figure, there are several differences between the two maps. The clearest one is that, while the administrative boundaries have a very balanced size (with the exception of the city of London), the regions created with the spatial agglomerative algorithm are very different in terms of size between each other. This is a consequence of both the nature of the underlying data and the algorithm itself. Substantively, this shows how, based on AirBnb, we can observe large areas that are similar and hence are grouped into the same region, while there also exist pockets with characteristics different enough to be assigned into a different region.
