@@ -76,7 +76,6 @@ The best way to start exploring the geography of AirBnb ratings is by plotting e
 
 Since we have many variables to plot, we will create a loop that generates each map for us and places it on a "subplot" of the main figure. Given that before we saved the names of the variables of interest as a vector called `ratings`, we can now make use of this to write a simpler for-loop:
 
-
 ```{r}
 
 map_list <- vector("list", length(ratings))
@@ -360,13 +359,6 @@ abb_regions <- dplyr::summarise(abb_regions)
 
 And we can map the result:
 
-```{r}
-map_regions = tm_shape(abb_regions) +
-  tm_borders(col = "red", lwd = 1)  + # add borders
-  tm_compass(type = "arrow", position = c("left", "top") , size = 1) + # add compass
-  tm_scale_bar(breaks = c(0,1,2,3), text.size = 0.5, position =  c("left", "bottom")) # add scale bar
-map_regions
-```
 ```{r}
 
 # ggmap requires WGS84
