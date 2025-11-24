@@ -579,3 +579,7 @@ plt.show()
 ```
 
 While other community detection algorithms are available, the Louvain method is particularly suitable for large graphs. Other options are walktrap, Girvan-Newman, spectral clusterint, etc. For an overview, you can check [@fortunato2010].
+
+## Resources
+
+A more extensive introduction to spatial networks (in R) can be found in [@cabrera2025].

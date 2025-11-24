@@ -185,7 +185,7 @@ window.Quarto = {
     <div class="sidebar-title mb-0 py-0">
       <a href="./">A course in Geographic Data Science</a> 
         <div class="sidebar-tools-main">
-    <a href="https://github.com/pietrostefani/gds" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+    <a href="https://github.com/GDSL-UL/gds" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
     <div class="dropdown">
       <a href="" title="Share" id="quarto-navigation-tool-dropdown-0" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" role="link" aria-label="Share"><i class="bi bi-share"></i></a>
       <ul class="dropdown-menu" aria-labelledby="quarto-navigation-tool-dropdown-0">
@@ -569,8 +569,9 @@ window.Quarto = {
   </ul></li>
   <li><a href="#centrality" id="toc-centrality" class="nav-link" data-scroll-target="#centrality">Centrality</a></li>
   <li><a href="#community-detection" id="toc-community-detection" class="nav-link" data-scroll-target="#community-detection">Community detection</a></li>
+  <li><a href="#resources" id="toc-resources" class="nav-link" data-scroll-target="#resources">Resources</a></li>
   </ul>
-<div class="toc-actions"><ul><li><a href="https://github.com/pietrostefani/gds/edit/main/spatialnetworksR.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></nav>
+<div class="toc-actions"><ul><li><a href="https://github.com/GDSL-UL/gds/edit/main/spatialnetworksR.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -715,7 +716,7 @@ Note
 <div class="cell">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">V</span>(network_isolated)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>+ 6/6 vertices, named, from 05fefb1:
+<pre><code>+ 6/6 vertices, named, from bee61d0:
 [1] City 1 City 2 City 3 City 5 City 4 City 6</code></pre>
 </div>
 </div>
@@ -734,7 +735,7 @@ Note
 <div class="cell">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">E</span>(network_isolated)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>+ 7/7 edges from 05fefb1 (vertex names):
+<pre><code>+ 7/7 edges from bee61d0 (vertex names):
 [1] City 1-&gt;City 2 City 2-&gt;City 3 City 2-&gt;City 5 City 3-&gt;City 1 City 3-&gt;City 4
 [6] City 4-&gt;City 5 City 5-&gt;City 1</code></pre>
 </div>
@@ -1096,7 +1097,11 @@ Note
 </div>
 </div>
 </div>
-<p>While other community detection algorithms are available, the Louvain method is particularly suitable for large graphs. Other options are walktrap, Girvan-Newman, spectral clusterint, etc. For an overview, you can check <span class="citation" data-cites="fortunato2010">(<a href="references.html#ref-fortunato2010" role="doc-biblioref">Fortunato 2010</a>)</span>.</p>
+<p>While other community detection algorithms are available, the Louvain method is particularly suitable for large graphs. Other options are walktrap, Girvan-Newman, spectral clustering, etc. For an overview, you can check <span class="citation" data-cites="fortunato2010">(<a href="references.html#ref-fortunato2010" role="doc-biblioref">Fortunato 2010</a>)</span>.</p>
+</section>
+<section id="resources" class="level2">
+<h2 class="anchored" data-anchor-id="resources">Resources</h2>
+<p>A more extensive introduction to spatial networks can be found in <a href="https://region.wu.ac.at/ojs/index.php/region/article/view/562">this article</a>.</p>
 
 
 <div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
@@ -1214,7 +1219,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   }
     var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
     var mailtoRegex = new RegExp(/^mailto:/);
-      var filterRegex = new RegExp("https:\/\/pietrostefani\.github\.io\/wma");
+      var filterRegex = new RegExp("https:\/\/gdsl-ul\.github\.io\/gds\/");
     var isInternal = (href) => {
         return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
     }
@@ -1562,7 +1567,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </div>   
     <div class="nav-footer-center">
       &nbsp;
-    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/pietrostefani/gds/edit/main/spatialnetworksR.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></div>
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/GDSL-UL/gds/edit/main/spatialnetworksR.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></div>
     <div class="nav-footer-right">
 <p>This book was built with <a href="https://quarto.org/">Quarto</a>.</p>
 </div>
