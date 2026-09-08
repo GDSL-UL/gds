@@ -2,24 +2,24 @@
 
 ## Assignment I
 
--   **Title:** Programmed Map
--   **Type:** Coursework
--   Due date: 30th October 2025 (week 6)
--   40% of the final mark
--   Chance to be reassessed
--   Electronic submission only
+- **Title:** Programmed Map
+- **Type:** Coursework
+- Due date: 5th November 2026 (week 6)
+- 40% of the final mark
+- Chance to be reassessed
+- Electronic submission only
 
 This assignment will be evaluated on technical data processing, map design abilities (assemblage), and design overall narrative.
 
 Once you have created your map, you will need to present it. Write up to 500 about the choices you made to create the map.
 
--   Full Assignment details [here](https://theuniversityofliverpool-my.sharepoint.com/:b:/g/personal/pietrost_liverpool_ac_uk/ETf-H6RlcPNMoRMmeCCmqCEBQ_rPFZFGzfiDjVuFM66Vjw?e=WLx2b3)
+- Full Assignment details [coming soon]()
 
 You will submit an `.html` file obtained by rendering your `.qmd` in `R` or `.ipynb` Jupyter Notebook in `Python`.
 
--   If you are doing the assignment in `R`: You can start from this [**.qmd file**](https://theuniversityofliverpool-my.sharepoint.com/:u:/g/personal/pietrost_liverpool_ac_uk/ESgyxiH1-cRMuIBgk7H9qsUB-a2DRqmKDYpOC6-1du0xww?e=XRpSCB) to render the `html`. Other file formats will not be accepted.
+- If you are doing the assignment in `R`: You can start from this [**.qmd file**]() to render the `html`. Other file formats will not be accepted.
 
--   If you are doing the assignment in `Python`: To do so, in your `.ipynb` file, follow these steps: `File –> Save and Export as.. –> HTML`. Prior to this step, the notebook needs to be rendered (i.e. all the cells should be executed). Other file formats will not be accepted. You can start from this [**.ipynb**](https://theuniversityofliverpool-my.sharepoint.com/:u:/g/personal/pietrost_liverpool_ac_uk/EZ_ygsv_puJDlw36FytiGvsBamRawQRV6QFMNgUkzUglvg?e=HDhqWV)
+- If you are doing the assignment in `Python`: To do so, in your `.ipynb` file, follow these steps: `File –> Save and Export as.. –> HTML`. Prior to this step, the notebook needs to be rendered (i.e. all the cells should be executed). Other file formats will not be accepted. You can start from this [**.ipynb**]()
 
 ### Submit
 
@@ -37,38 +37,24 @@ The assignment will be evaluated based on three main pillars, on which you will 
 
 ## Assignment II
 
--   **Title:** Computational Essay
--   **Type:** Coursework
--   Due date: 4th December 2025 (week 11)
--   60% of the final mark
--   Chance to be reassessed
--   Electronic submission only
+- **Title:** Computational Essay
+- **Type:** Coursework
+- Due date: 10th December 2026 (week 11)
+- 60% of the final mark
+- Chance to be reassessed
+- Electronic submission only
 
 A 4,000 word computational essay on a geographic data set which they have explored and analysed using the skills and techniques developed during the course. Students will complete an essay which combines both code, data visualisation and prose supported by references in order to demonstrate sound understanding of all learning outcomes.
 
--   Full Assignment details [here](https://theuniversityofliverpool-my.sharepoint.com/:b:/g/personal/pietrost_liverpool_ac_uk/EXWCcOCQnulAjHPc3GAOsGIBOybfr5-DcNHyp0vCwI6UKA?e=4uOFTi)
+- Full Assignment details [coming soon]()
 
-- [Some data about race in csv format if you are not using API](https://github.com/GDSL-UL/gds/blob/main/data/ACS_austin_2018_2022_vars.csv)
+- [Some data about race in csv format if you are not using API]()
 
 Important information about data access through the US Census API:
 
--   If you are doing the assignment in `R`: You can start from this [**ENVS2526-363-563.2.qmd file**](https://theuniversityofliverpool-my.sharepoint.com/:u:/g/personal/pietrost_liverpool_ac_uk/EVV0BaXbyHxEj7sKFnDJWPoBFfUEXJbIbzfs3UPcZc8ZFA?e=OvwNYZ) to render the `html`. Other file formats will not be accepted.
+- If you are doing the assignment in `R`: You can start from this [**ENVS2526-363-563.2.qmd file**]() to render the `html`. Other file formats will not be accepted.
 
--   In Python, you can start from this [**ENVS2526-363-563.2.ipynb**](https://theuniversityofliverpool-my.sharepoint.com/:u:/g/personal/pietrost_liverpool_ac_uk/EUf0AUpaY4lGvRoBjfcNPxEBQOSKAR8TnOSUylyM-cH7_A?e=UeRi94)
-
-**Overview**
-
-Here’s the premise. You will take the role of a real-world geographic data scientist tasked to explore datasets on Austin (Texas) and find useful insights for a variety of city decision-makers. It does not matter if you have never been to the Austin (Texas). In fact, this will help you focus on what you can learn about the city through the data, without the influence of prior knowledge. Furthermore, the assessment will not be marked based on how much you know about Austin (Texas) but instead about how much you can show you have learned through analysing data. You will need contextualise your project by highlighting the opportunities and limitations of ‘old’ and ‘new’ forms of spatial data and reference relevant literature.
-
-**What is a Computational Essay?**
-
-A computational essay is an essay whose narrative is supported by code and computational results that are included in the essay itself. This piece of assessment is equivalent to 4,000 word. However, this is the overall weight. Since you will need to create not only narrative but also code and figures, here are the requirements:
-
--   Maximum of 1,000 words of ordinary text (references do not contribute to the word count). You should answer the specified questions within the narrative. The questions should be included within a wider analysis.
-
--   Up to four maps or figures (a figure may include more than one map and will only count as one but needs to be integrated in the same overall output)
-
--   Up to one table
+- In Python, you can start from this [**ENVS2526-363-563.2.ipynb**]()
 
 **There are three kinds of elements in a computational essay:**
 
@@ -84,18 +70,147 @@ These three elements all work together to express what's being communicated.
 
 This course follows the standard marking criteria (the general ones and those relating to GIS assignments in particular) set by the School of Environmental Sciences. Please make sure to check the student handbook and familiarise with them. In addition to these generic criteria, the following specific criteria will be used in cases where computer code is part of the work being assessed:
 
--   0-15: the code does not run and there is no documentation to follow it.
--   16-39: the code does not run, or runs but it does not produce the expected outcome. There is some documentation explaining its logic.
--   40-49: the code runs and produces the expected output. There is some documentation explaining its logic.
--   50-59: the code runs and produces the expected output. There is extensive documentation explaining its logic.
--   60-69: the code runs and produces the expected output. There is extensive documentation, properly formatted, explaining its logic.
--   70-79: all as above, plus the code design includes clear evidence of skills presented in advanced sections of the course (e.g. custom methods, list comprehensions, etc.).
--   80-100: all as above, plus the code contains novel contributions that extend/improve the functionality the student was provided with (e.g. algorithm optimizations, novel methods to perform the task, etc.).
+- 0-15: the code does not run and there is no documentation to follow it.
+- 16-39: the code does not run, or runs but it does not produce the expected outcome. There is some documentation explaining its logic.
+- 40-49: the code runs and produces the expected output. There is some documentation explaining its logic.
+- 50-59: the code runs and produces the expected output. There is extensive documentation explaining its logic.
+- 60-69: the code runs and produces the expected output. There is extensive documentation, properly formatted, explaining its logic.
+- 70-79: all as above, plus the code design includes clear evidence of skills presented in advanced sections of the course (e.g. custom methods, list comprehensions, etc.).
+- 80-100: all as above, plus the code contains novel contributions that extend/improve the functionality the student was provided with (e.g. algorithm optimizations, novel methods to perform the task, etc.).
 
 ## Generative Artificial Intelligence
 
-• You are reminded that the inappropriate use of Generative Artificial Intelligence Tools in the preparation of assignments is strictly prohibited.
+::: {.callout-warning}
+## Prohibited use
 
-• Assignments should be prepared using your own words. All use of AI translation tools should be properly acknowledged. Extensive use of AI proof-reading tools is prohibited. Whilst you may use spelling/grammar checks typically found in word-processing packages, using AI tools to change words/sentence structure may incur an Academic Integrity penalty.
+You are reminded that **inappropriate use of Generative AI tools** (e.g. ChatGPT, GitHub Copilot) in the preparation of this assignment is **prohibited**. Submitting code, analysis, or narrative that **you cannot explain or justify yourself** will be treated as an **Academic Integrity concern** — regardless of whether AI was involved.
+:::
 
-• If your assessment is referred for an Academic Integrity Investigation, you may be asked to demonstrate that the work you have submitted is your own. Therefore, it is advised that you keep hold of earlier files, drafts, notes and other relevant preparatory materials that you have used.
+::: {.callout-important}
+## Declaration required
+
+You **must submit a short declaration** with your assignment stating:
+
+- **Which** AI tools you used
+- **For which parts** of the work (narrative text and/or code)
+- **How** you used them (e.g. debugging support, syntax lookup, translation, proof-reading) — versus what you produced yourself
+
+**Undisclosed use discovered later will be treated as an Academic Integrity penalty**, not merely a missing declaration.
+:::
+
+::: {.callout-note}
+## Narrative sections
+
+Narrative sections should be prepared **substantially in your own words**.
+
+- Ordinary spelling/grammar checks in word-processing packages **do not** need declaring.
+- AI proof-reading that **materially changes wording or sentence structure does** need declaring — and **extensive use of it may still incur a penalty even when declared**.
+:::
+
+::: {.callout-tip}
+## Code
+
+AI coding assistants **may be used for support**, but every part of your submitted code must be **something you can explain and justify in your own words**.
+:::
+
+---
+
+### Declaration form
+
+Please complete this declaration and submit it alongside your assignment. Tick all boxes that apply.
+
+::: {.declaration-form}
+
+**1. Which AI tool(s) did you use?**
+
+<div class="ai-checklist">
+<label><input type="checkbox"> ChatGPT</label>
+<label><input type="checkbox"> GitHub Copilot</label>
+<label><input type="checkbox"> Claude</label>
+<label><input type="checkbox"> Other AI tool — please specify: <input type="text" class="ai-inline-text" placeholder="tool name"></label>
+<label><input type="checkbox" id="none-used"> I did not use any Generative AI tool in this assignment</label>
+</div>
+
+**2. Which parts of the work did you use it for?**
+
+<div class="ai-checklist">
+<label><input type="checkbox"> Narrative / written text</label>
+<label><input type="checkbox"> Code</label>
+<label><input type="checkbox"> Both narrative and code</label>
+</div>
+
+**3. How did you use it?**
+
+<div class="ai-checklist">
+<label><input type="checkbox"> Debugging support</label>
+<label><input type="checkbox"> Syntax lookup / reference</label>
+<label><input type="checkbox"> Translation</label>
+<label><input type="checkbox"> Proof-reading</label>
+<label><input type="checkbox"> Idea generation / brainstorming</label>
+<label><input type="checkbox"> Other — please specify: <input type="text" class="ai-inline-text" placeholder="describe use"></label>
+</div>
+
+**4. Confirmation**
+
+<div class="ai-checklist">
+<label><input type="checkbox"> I confirm that I can explain and justify every part of the narrative and/or code submitted in this assignment in my own words.</label>
+<label><input type="checkbox"> I understand that undisclosed use of Generative AI discovered after submission will be treated as an Academic Integrity concern, not merely a missing declaration.</label>
+</div>
+
+**Student ID:** _______________________  **Date:** _______________________
+
+:::
+
+<style>
+.ai-checklist {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin: 0.75rem 0 1.25rem 0;
+}
+.ai-checklist label {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+  font-weight: normal;
+}
+.ai-checklist input[type="checkbox"] {
+  margin-top: 0.2rem;
+  flex-shrink: 0;
+  width: 1.05rem;
+  height: 1.05rem;
+}
+.ai-inline-text {
+  border: none;
+  border-bottom: 1px solid #999;
+  background: transparent;
+  flex: 1;
+  min-width: 160px;
+  font-family: inherit;
+  font-size: inherit;
+}
+.declaration-form {
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  padding: 1.25rem 1.5rem;
+  background: #fafafa;
+}
+</style>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  var noneBox = document.getElementById("none-used");
+  if (!noneBox) return;
+  var otherBoxes = document.querySelectorAll(".ai-checklist input[type='checkbox']:not(#none-used)");
+  var otherTexts = document.querySelectorAll(".ai-inline-text");
+  noneBox.addEventListener("change", function () {
+    if (noneBox.checked) {
+      otherBoxes.forEach(function (b) { b.checked = false; b.disabled = true; });
+      otherTexts.forEach(function (t) { t.value = ""; t.disabled = true; });
+    } else {
+      otherBoxes.forEach(function (b) { b.disabled = false; });
+      otherTexts.forEach(function (t) { t.disabled = false; });
+    }
+  });
+});
+</script>
