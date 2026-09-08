@@ -9,7 +9,7 @@ jupyter: python3
 
 Now that you know what computational notebooks are and why we should care about them, let's start using them! This section introduces you to using Python for manipulating tabular data. Please read through it carefully and pay attention to how ideas about manipulating data are translated into code. For this part, you can read directly from the course website, although it is recommended you follow the section interactively by running the code on your own.
 
-Once you have read through, jump on the [Do-It-Yourself](https://pietrostefani.github.io/gds/openscienceDIY.html) section, which will provide you with a challenge that you should complete on your own, and will allow you to put what you have already learnt into practice.
+Once you have read through, jump on the [Do-It-Yourself](openscienceDIY.html) section, which will provide you with a challenge that you should complete on your own, and will allow you to put what you have already learnt into practice.
 
 ## Data wrangling
 
@@ -23,14 +23,10 @@ Before we get our hands data-dirty, let us import all the additional libraries w
 
 ## Loading packages
 
-We will start by loading core packages for working with geographic vector and attribute data.
+We will start by loading the core package we need for data wrangling.
 
 ```{python}
-# This ensures visualizations are plotted inside the notebook
-
-import os              # This provides several system utilities
 import pandas as pd    # This is the workhorse of data munging in Python
-
 ```
 
 ## Datasets
@@ -39,7 +35,7 @@ We will be exploring some demographic characteristics in Liverpool. To do that, 
 
 To do this, we will download a data folder from github called `census2021_ethn`. You should place this in a data folder you will use throughout the course.
 
-**Import housesales data from csv**
+**Import census data from csv**
 
 ```{python}
 census2021 = pd.read_csv("data/census2021_ethn/liv_pop.csv", index_col='GeographyCode')
@@ -47,20 +43,20 @@ census2021 = pd.read_csv("data/census2021_ethn/liv_pop.csv", index_col='Geograph
 
 Let us stop for a minute to learn how we have read the file. Here are the main aspects to keep in mind:
 
--   We are using the method `read_csv` from the `pandas` library, which we have imported with the alias `pd`.
+- We are using the method `read_csv` from the `pandas` library, which we have imported with the alias `pd`.
 
--   Here the csv is based on a data file but it could also be a web address or sometimes you find data in packages.
+- Here the csv is based on a data file but it could also be a web address or sometimes you find data in packages.
 
--   The argument `index_col` is not strictly necessary but allows us to choose one of the columns as the index of the table. More on indices below.
+- The argument `index_col` is not strictly necessary but allows us to choose one of the columns as the index of the table. More on indices below.
 
--   We are using `read_csv` because the file we want to read is in the csv format. However, `pandas` allows for many more formats to be read and write. A full list of formats supported may be found [here](https://www.datacamp.com/tutorial/r-data-import-tutorial).
+- We are using `read_csv` because the file we want to read is in the csv format. However, `pandas` allows for many more formats to be read and write. A full list of formats supported may be found [here](https://www.datacamp.com/tutorial/r-data-import-tutorial).
 
--   To ensure we can access the data we have read, we store it in an object that we call `census2021`. We will see more on what we can do with it below but, for now, just keep in mind that allows us to save the result of `read_csv`.
+- To ensure we can access the data we have read, we store it in an object that we call `census2021`. We will see more on what we can do with it below but, for now, just keep in mind that allows us to save the result of `read_csv`.
 
 ::: callout-important
 You need to store the data file on your computer, and read it locally. To do that, you can follow these steps:
 
-1.  Download the `census2021_ethn` file by right-clicking [on this link](https://github.com/pietrostefani/gds/tree/main/data) and saving the file
+1.  Download the `census2021_ethn` file by right-clicking [on this link](https://github.com/GDSL-UL/gds/tree/main/data) and saving the file
 
 2.  Place the file in a data folder you have created where you intend to read it.
 
@@ -72,7 +68,7 @@ You need to store the data file on your computer, and read it locally. To do tha
 
 1.  First go to <https://download-directory.github.io/>
 
-2.  Then go to the folder you need to today. So for example copy: https://github.com/pietrostefani/gds/tree/main/data/London
+2.  Then go to the folder you need to today. So for example copy: https://github.com/GDSL-UL/gds/tree/main/data/London
 
 3.  Paste it in the green box... give it a few minutes
 
@@ -97,12 +93,21 @@ One further feature of these tables is that they can hold columns with different
 
 **Inspecting**
 
-We can check the top (bottom) X lines of the table by passing X to the method head (tail). For example, for the top/bottom five lines:
+We can check the top (bottom) X lines of the table by passing X to the method head (tail). For example, for the top five lines:
 
 ```{python}
 census2021.head() # read first 5 rows
+```
+
+And the bottom five lines:
+
+```{python}
 census2021.tail() # read last 5 rows
 ```
+
+::: callout-tip
+Jupyter (and Quarto) only display the result of the *last* expression in a code cell, so `head()` and `tail()` need separate cells if you want to see both outputs — unlike R, which prints every top-level visible expression in a chunk.
+:::
 
 **Summarise**
 
@@ -207,7 +212,7 @@ oneOA
 Now all of these queries can be combined with each other, for further flexibility. For example, imagine we want areas with more than 25 people from the Americas and Caribbean, but less than 1,500 in total:
 
 ```{python}
-ac25_l500 = census2021.loc[(census2021['The Americas and the Caribbean'] > 25) &                    (census2021['Total_Population'] < 1500), :]
+ac25_l500 = census2021.loc[(census2021['The Americas and the Caribbean'] > 25) & (census2021['Total_Population'] < 1500), :]
 ac25_l500
 ```
 
@@ -222,4 +227,4 @@ db_pop_sorted.head()
 
 ## Additional resources
 
--   A good introduction to data manipulation in Python is Wes McKinney's ["Python for Data Analysis"](https://wesmckinney.com/book/)
+- A good introduction to data manipulation in Python is Wes McKinney's ["Python for Data Analysis"](https://wesmckinney.com/book/)

@@ -1,8 +1,14 @@
+---
+format:
+  html:
+    code-fold: false
+---
+
 # OpenScience in R {#sec-open-science-R .unnumbered}
 
 Now that you know what computational notebooks are and why we should care about them, let's start using them! This section introduces you to using R for manipulating tabular data. Please read through it carefully and pay attention to how ideas about manipulating data are translated into code. For this part, you can read directly from the course website, although it is recommended you follow the section interactively by running the code on your own.
 
-Once you have read through, jump on the [Do-It-Yourself](https://pietrostefani.github.io/gds/openscienceDIY.html) section, which will provide you with a challenge that you should complete on your own, and will allow you to put what you have already learnt into practice.
+Once you have read through, jump on the [Do-It-Yourself](openscienceDIY.html) section, which will provide you with a challenge that you should complete on your own, and will allow you to put what you have already learnt into practice.
 
 ## Data wrangling
 
@@ -16,11 +22,10 @@ Before we get our hands data-dirty, let us import all the additional libraries w
 
 ## Loading packages
 
-We will start by loading core packages for working with geographic vector and attribute data.
+We will start by loading the core package we need for data wrangling.
 
 ```{r message=FALSE}
-library(tidyverse) # a structure of data manipulation including several packages 
-library(data.table) # load the data.table package
+library(tidyverse) # core package for data manipulation, including dplyr, readr, and more
 ```
 
 ## Datasets
@@ -29,7 +34,7 @@ We will be exploring some demographic characteristics in Liverpool. To do that, 
 
 To do this, we will download a data folder from github called `census2021_ethn`. You should place this in a data folder you will use throughout the course.
 
-**Import housesales data from csv**
+**Import census data from csv**
 
 ```{r}
 census2021 <- read.csv("data/census2021_ethn/liv_pop.csv", row.names = "GeographyCode")
@@ -37,20 +42,20 @@ census2021 <- read.csv("data/census2021_ethn/liv_pop.csv", row.names = "Geograph
 
 Let us stop for a minute to learn how we have read the file. Here are the main aspects to keep in mind:
 
--   We are using the method `read.csv` from base R, you could also use `read_csv` from `library("readr")`.
+- We are using the method `read.csv` from base R, you could also use `read_csv` from `library("readr")`.
 
--   Here the csv is based on a data file but it could also be a web address or sometimes you find data in packages.
+- Here the csv is based on a data file but it could also be a web address or sometimes you find data in packages.
 
--   The argument row.names is not strictly necessary but allows us to choose one of the columns as the index of the table. More on indices below.
+- The argument row.names is not strictly necessary but allows us to choose one of the columns as the index of the table. More on indices below.
 
--   We are using `read.csv` because the file we want to read is in the csv format. However, many more formats can be read into an R environment. A full list of formats supported may be found [here](https://www.datacamp.com/tutorial/r-data-import-tutorial).
+- We are using `read.csv` because the file we want to read is in the csv format. However, many more formats can be read into an R environment. A full list of formats supported may be found [here](https://www.datacamp.com/tutorial/r-data-import-tutorial).
 
--   To ensure we can access the data we have read, we store it in an object that we call `census2021`. We will see more on what we can do with it below but, for now, just keep in mind that allows us to save the result of `read.csv`.
+- To ensure we can access the data we have read, we store it in an object that we call `census2021`. We will see more on what we can do with it below but, for now, just keep in mind that allows us to save the result of `read.csv`.
 
 ::: callout-important
 You need to store the data file on your computer, and read it locally. To do that, you can follow these steps:
 
-1.  Download the `census2021_ethn` file by right-clicking [on this link](https://github.com/pietrostefani/gds/tree/main/data) and saving the file
+1.  Download the `census2021_ethn` file by right-clicking [on this link](https://github.com/GDSL-UL/gds/tree/main/data) and saving the file
 
 2.  Place the file in a data folder you have created where you intend to read it.
 
@@ -62,7 +67,7 @@ You need to store the data file on your computer, and read it locally. To do tha
 
 1.  First go to <https://download-directory.github.io/>
 
-2.  Then go to the folder you need to today. So for example copy: https://github.com/pietrostefani/gds/tree/main/data/London
+2.  Then go to the folder you need to today. So for example copy: https://github.com/GDSL-UL/gds/tree/main/data/London
 
 3.  Paste it in the green box... give it a few minutes
 
@@ -78,10 +83,10 @@ Now we are ready to start playing with and interrogating the dataset! What we ha
 Let's start by exploring the structure of a `DataFrame`. We can print it by simply typing its name:
 
 ```{r}
-view(census2021)
+census2021
 ```
 
-Since they represent a table of data, `DataFrame` objects have two dimensions: rows and columns. Each of these is automatically assigned a name in what we will call its index. When printing, the index of each dimension is rendered in bold, as opposed to the standard rendering for the content. In the example above, we can see how the column index is automatically picked up from the .csv file's column names. For rows, we have specified when reading the file we wanted the column GeographyCode, so that is used. If we hadn't specified any, `tidyverse` in R will automatically generate a sequence starting in 0 and going all the way to the number of rows minus one. This is the standard structure of a `DataFrame` object, so we will come to it over and over. Importantly, even when we move to spatial data, our datasets will have a similar structure.
+Since they represent a table of data, `DataFrame` objects have two dimensions: rows and columns. Each of these is automatically assigned a name in what we will call its index. When printing, the index of each dimension is rendered in bold, as opposed to the standard rendering for the content. In the example above, we can see how the column index is automatically picked up from the .csv file's column names. For rows, we have specified when reading the file we wanted the column GeographyCode, so that is used. If we hadn't specified any, base R will automatically generate row names as a sequence of integers starting at `1` and going all the way to the number of rows (note this is one difference with Python, where the default sequence starts at `0`). This is the standard structure of a `DataFrame` object, so we will come to it over and over. Importantly, even when we move to spatial data, our datasets will have a similar structure.
 
 One further feature of these tables is that they can hold columns with different types of data. In our example, this is not used as we have counts (or int, for integer, types) for each column. But it is useful to keep in mind we can combine this with columns that hold other type of data such as categories, text (str, for string), dates or, as we will see later in the course, geographic features.
 
@@ -91,8 +96,12 @@ We can check the top (bottom) X lines of the table by passing X to the method he
 
 ```{r}
 head(census2021) # read first 5 rows
-tail(census2021)
+tail(census2021) # read last 5 rows
 ```
+
+::: callout-tip
+Unlike Python/Jupyter, R prints every top-level visible expression in a chunk, so `head()` and `tail()` can safely sit in the same code cell and both will display.
+:::
 
 **Summarise**
 
@@ -116,38 +125,42 @@ t(summary(census2021))
 
 We can generate new variables by applying operations on existing ones. For example, we can calculate the total population by area. Here is a couple of ways to do it:
 
-Using the package [`dplyr`](https://www.tidyverse.org/packages/). More info can be found [here](https://dplyr.tidyverse.org/). dplyr is a part of the tidyverse!
+Longer, hardcoded:
+
+```{r}
+total <- census2021$Africa + census2021$Middle.East.and.Asia + census2021$Europe + census2021$The.Americas.and.the.Caribbean + census2021$Antarctica.and.Oceania
+# Print the top of the variable
+head(total)
+```
+
+One shot, using the package [`dplyr`](https://www.tidyverse.org/packages/) (part of the tidyverse!). More info can be found [here](https://dplyr.tidyverse.org/):
 
 ```{r}
 census2021 <- census2021 %>%
-  mutate(Total_Pop = rowSums(select(., Africa, Middle.East.and.Asia, Europe, The.Americas.and.the.Caribbean, Antarctica.and.Oceania)))
+  mutate(Total_Population = rowSums(select(., Africa, Middle.East.and.Asia, Europe, The.Americas.and.the.Caribbean, Antarctica.and.Oceania)))
 
-head(census2021)
-```
-
-A different spin on this is assigning new values: we can generate new variables with scalars, and modify those:
-
-```{r}
-census2021$new_column <- 1
 head(census2021)
 ```
 
 `dplyr` is an immensely useful package in R because it streamlines and simplifies the process of data manipulation and transformation. With its intuitive and consistent syntax, dplyr provides a set of powerful and efficient functions that make tasks like filtering, summarizing, grouping, and joining datasets much more straightforward. Whether you're working with small or large datasets, `dplyr`'s optimized code execution ensures fast and efficient operations. Its ability to chain functions together using the pipe operator (`%>%`) allows for a clean and readable code structure, enhancing code reproducibility and collaboration. Overall, `dplyr` is an indispensable tool for data analysts and scientists working in R, enabling them to focus on their data insights rather than wrestling with complex data manipulation code.
 
-**Delete columns**
-
-Permanently deleting variables is also within reach of one command:
-
-`dplyr`
+A different spin on this is assigning new values: we can generate new variables with scalars, and modify those:
 
 ```{r}
-census2021 <- census2021 %>%
-  mutate(new_column = 1)
+# New variable with all ones
+census2021$ones <- 1
+head(census2021)
 ```
 
+**Delete columns**
+
+Permanently deleting variables is also within reach of one command. Using `dplyr`:
+
 ```{r}
 census2021 <- census2021 %>%
-  select(-new_column)
+  select(-ones)
+
+head(census2021)
 ```
 
 ## Queries
@@ -156,12 +169,12 @@ census2021 <- census2021 %>%
 
 Here we explore how we can subset parts of a `DataFrame` if we know exactly which bits we want. For example, if we want to extract the total and European population of the first four areas in the table:
 
-We can select with `c()`. If this structure is new to you have a look [here](https://pietrostefani.github.io/gds/environR.html).
+We can select with `c()`. If this structure is new to you have a look [here](environR.html).
 
 ```{r}
 eu_tot_first4 <- census2021 %>%
   filter(rownames(census2021) %in% c('E01006512', 'E01006513', 'E01006514', 'E01006515')) %>%
-  select(Total_Pop, Europe)
+  select(Total_Population, Europe)
 
 eu_tot_first4
 ```
@@ -174,7 +187,9 @@ Areas with more than 900 people in Total:
 
 ```{r}
 pop900 <- census2021 %>%
-  filter(Total_Pop > 900)
+  filter(Total_Population > 900)
+
+pop900
 ```
 
 Areas where there are no more than 750 Europeans:
@@ -182,6 +197,8 @@ Areas where there are no more than 750 Europeans:
 ```{r}
 euro750 <- census2021 %>%
   filter(Europe < 750)
+
+euro750
 ```
 
 Areas with exactly ten person from Antarctica and Oceania:
@@ -189,6 +206,8 @@ Areas with exactly ten person from Antarctica and Oceania:
 ```{r}
 oneOA <- census2021 %>%
   filter(`Antarctica.and.Oceania` == 10)
+
+oneOA
 ```
 
 ::: callout-tip
@@ -203,9 +222,8 @@ Now all of these queries can be combined with each other, for further flexibilit
 
 ```{r}
 ac25_l500 <- census2021 %>%
-  filter(The.Americas.and.the.Caribbean > 25, Total_Pop < 1500)
+  filter(The.Americas.and.the.Caribbean > 25, Total_Population < 1500)
 ac25_l500
-
 ```
 
 ## Sorting
@@ -214,13 +232,13 @@ Among the many operations `DataFrame` objects support, one of the most useful on
 
 ```{r}
 db_pop_sorted <- census2021 %>%
-  arrange(desc(Total_Pop)) #sorts the dataframe by the "Total_Pop" column in descending order 
+  arrange(desc(Total_Population)) #sorts the dataframe by the "Total_Population" column in descending order 
 
 head(db_pop_sorted)
 ```
 
 ## Additional resources
 
--   A good introduction to data manipulation in R is the ["Data wrangling"](https://r4ds.had.co.nz/wrangle-intro.html) chapter in R for Data Science.
+- A good introduction to data manipulation in R is the ["Data wrangling"](https://r4ds.had.co.nz/wrangle-intro.html) chapter in R for Data Science.
 
--   A good extension is Hadley Wickham' ["Tidy data"](https://vita.had.co.nz/papers/tidy-data.pdf) paper which presents a very popular way of organising tabular data for efficient manipulation.
+- A good extension is Hadley Wickham' ["Tidy data"](https://vita.had.co.nz/papers/tidy-data.pdf) paper which presents a very popular way of organising tabular data for efficient manipulation.

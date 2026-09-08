@@ -2,7 +2,7 @@
 
 In this section we introduce what Geographic Data Science is. We top it up with a few (optional) further readings for the interested and curious mind.
 
-Slides can be downloaded ["here"](/html/introduction_gds.pdf)
+Slides can be downloaded ["here"](/html/introduction_gds_363_563.pdf)
 
 ## From Geographic Information Systems to Geographic Data Science
 
@@ -10,11 +10,11 @@ Geographic Information holds a pivotal position within our modern societies, per
 
 **What information does GIS use?**
 
--   Data that defines geographical features like roads, rivers
--   Soil types, land use, elevation
--   Demographics, socioeconomic attributes
--   Environmental, climate, air-quality
--   Annotations that label features and places
+- Data that defines geographical features like roads, rivers
+- Soil types, land use, elevation
+- Demographics, socioeconomic attributes
+- Environmental, climate, air-quality
+- Annotations that label features and places
 
 From the real-world to the GIS world
 
@@ -52,15 +52,15 @@ The **'geodata revolution'** drives demand for high performance computer hardwar
 
 Why do we care about the processes and tools we use when we do computational work? Where do the current paradigm come from? Are we on the verge of a new model? For all of this, we we have two reads to set the tone. Make sure to get those in first thing before moving on to the next bits.
 
--   First half of Chapter 1 in "Geographic Data Science with Python" [Geographic Thinking for Data Scientists](https://geographicdata.science/book/notebooks/01_geo_thinking.html).
+- First half of Chapter 1 in "Geographic Data Science with Python" [Geographic Thinking for Data Scientists](https://geographicdata.science/book/notebooks/01_geo_thinking.html).
 
--   The 2018 Atlantic piece ["The scientific paper is obsolete"](https://juliacomputing.com/docs/press_pdfs/april5.pdf) on computational notebooks, by James Somers.
+- The 2018 Atlantic piece ["The scientific paper is obsolete"](https://juliacomputing.com/docs/press_pdfs/april5.pdf) on computational notebooks, by James Somers.
 
 ## **Modern Scientific Tools**
 
 Once we know a bit more about why we should care about the tools we use, let's dig into those that will underpin much of this course. This part is interesting in itself, but will also valuable to better understand the practical aspects of the course. Again, we have two reads here to set the tone and complement the practical introduction we saw in the Hands-on and DIY parts of the previous block. We are closing the circle here:
 
--   Second half of Chapter 1 in "Geographic Data Science with Python" [Geographic Thinking for Data Scientists](https://geographicdata.science/book/notebooks/01_geo_thinking.html).
+- Second half of Chapter 1 in "Geographic Data Science with Python" [Geographic Thinking for Data Scientists](https://geographicdata.science/book/notebooks/01_geo_thinking.html).
 
 # **Further readings**
 
