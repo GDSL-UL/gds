@@ -4,13 +4,13 @@
 
 In this session, we will build on all we have learnt so far about loading and manipulating (spatial) data and apply it to one of the most commonly used forms of spatial analysis: choropleths. Remember these are maps that display the spatial distribution of a variable encoded in a color scheme, also called palette. Although there are many ways in which you can convert the values of a variable into a specific color, we will focus in this context only on a handful of them, in particular:
 
--   Unique values
+- Unique values
 
--   Equal interval
+- Equal interval
 
--   Quantiles
+- Quantiles
 
--   Fisher-Jenks
+- Fisher-Jenks
 
 ## Installing Packages
 
@@ -27,14 +27,35 @@ import seaborn as sns
 
 ## Data
 
-We will be using World Bank data for this section, looking at World Development Indicators and Education Statistics. We will be focusing on the Middle East and North Africa (MENA). We start by loading the relevant geometries:
+We will be using data from the [**Imago Data Service**](https://data.imago.ac.uk) for this section — specifically the **Sun Probability Framework (SPF)**, a UK-wide dataset of annual cloud probability estimates for every small area in the country. Higher values mean cloudier conditions (a lower probability of direct sunlight); lower values mean clearer conditions. We'll be using the 2025 release.
+
+::: callout-note
+## Download the data
+
+Download the SPF 2025 GeoPackage from the Imago Data Service:
+
+<https://data.imago.ac.uk/datasets/cloud-probability-statistics-per-small-area-in-2025-version-2-0>
+
+Place it inside a `data/` directory. Unlike the polygon/table pairs you've joined before, this file already contains both the small-area geometries *and* the SPF value in one GeoPackage — no separate join needed to get started.
+:::
 
 ```{python}
-# Load the GeoJSON file into a GeoDataFrame
-mena_sf = gpd.read_file("data/MENA/MENA.geojson")
+# A GeoPackage can bundle multiple layers/tables -- check what's actually
+# in the file before reading, since gpd.read_file() silently picks the
+# first layer if you don't specify one, which may not be the spatial layer
+import fiona
+fiona.listlayers("data/Imago_spf/Cloud probability statistics per small area in 2025 (GeoPackage).gpkg")
+```
+
+```{python}
+# Load the GeoPackage into a GeoDataFrame
+spf_25 = gpd.read_file(
+    "data/Imago_spf/Cloud probability statistics per small area in 2025 (GeoPackage).gpkg",
+    layer="SPF_LSOA_level",  # replace with the actual layer name from listlayers() above
+)
 
 # Plot the geometry to make sure it looks correct
-mena_sf.plot()
+spf_25.plot()
 plt.show()
 ```
 
@@ -45,37 +66,34 @@ Don't forget that before you go further, you want to check the `CRS` of the `sf`
 
 ```{python}
 # Check the CRS of the GeoDataFrame
-print(mena_sf.crs)
+print(spf_25.crs)
 
 # Display the first few rows of the GeoDataFrame
-print(mena_sf.head())
+print(spf_25.head())
 ```
 :::
 
-We then load the `csv` with some World Development Indicators data.
+The principal variables we'll use throughout are:
+
+- `data_zone_code`: a unique small-area identifier, harmonised across England, Wales, Scotland and Northern Ireland — the first letter tells you which nation an area belongs to (`E` = England, `W` = Wales, `S` = Scotland, `N` = Northern Ireland)
+- `cloud_probability`: the annual average SPF value
+- `geometry`: the small-area boundary
+
+Since our "Unique values" example needs a genuinely categorical variable, and SPF itself is continuous, we'll derive one from the `data_zone_code` prefix — which UK nation each small area belongs to:
 
 ```{python}
-world_dev = pd.read_csv("data/MENA/mena_worlddevelop.csv")
-```
+def get_nation(code):
+    if code.startswith("E"):
+        return "England"
+    elif code.startswith("W"):
+        return "Wales"
+    elif code.startswith("S"):
+        return "Scotland"
+    elif code.startswith("N"):
+        return "Northern Ireland"
+    return "Unknown"
 
-And join the two objects using the relevant codes.
-
-```{python}
-# Join check that the code you are joining the data on is the same.
-# First check the GeoDataFrame
-mena_sf.head()
-
-# Then the DataFrame
-world_dev.head()
-
-## rename code columns so they match
-mena_sf.rename(columns={'code_a3': 'Country Code'}, inplace=True)
-```
-
-Merge `GeoDataFrame` and `DataFrame`
-
-```{python}
-world_dev_gdf = mena_sf.merge(world_dev, on='Country Code')
+spf_25["nation"] = spf_25["data_zone_code"].apply(get_nation)
 ```
 
 Now we are fully ready to map!
@@ -88,13 +106,13 @@ A choropleth for categorical variables simply assigns a different color to every
 
 **Ordinal** : Ordinal variables represent categories or labels with a meaningful *order* or *ranking*. The relative order or hierarchy among the categories is significant, indicating a clear progression from lower to higher values, such as "low," "medium," and "high" for satisfaction levels.
 
-In Python, creating categorical choropleths is possible with one line of code.
+In Python, creating categorical choropleths is possible with one line of code. `nation` is nominal — there's no inherent ranking between England, Scotland, Wales and Northern Ireland.
 
 ```{python}
-world_dev_gdf.plot(
-    column="income_group",  # Specifies the column "income_group" to color the plot based on categories
-    categorical=True,       # Indicates that the "income_group" column is categorical (not continuous)
-    legend=True             # Adds a legend to the plot, showing the different categories of "income_group"
+spf_25.plot(
+    column="nation",  # Specifies the column "nation" to color the plot based on categories
+    categorical=True,       # Indicates that the "nation" column is categorical (not continuous)
+    legend=True             # Adds a legend to the plot, showing the different categories of "nation"
 )
 # Show the plot
 plt.show()
@@ -108,49 +126,42 @@ These maps are all a bit rough a need **quite a bit** more work. They are *just*
 
 If, instead of categorical variables, we want to display the geographical distribution of a continuous phenomenon, we need to select a way to encode each value into a color. One potential solution is applying what is usually called "equal intervals". The intuition of this method is to split the range of the distribution, the difference between the minimum and maximum value, into equally large segments and to assign a different color to each of them according to a palette that reflects the fact that values are ordered.
 
-Creating the choropleth is relatively straightforward in `Python`. For example, to create an equal interval of GDP per capita in 2015 (v_2015).
+Creating the choropleth is relatively straightforward in `Python`. For example, to create an equal interval map of `cloud_probability`.
 
-First we need to prepare the data, going back to our [data wrangling](https://pietrostefani.github.io/gds/openscience.html).
+First we need to prepare the data, going back to our [data wrangling](opensciencePy.html).
 
 ```{python}
-# Step 1: Filter rows where Series.Name is "GDP per capita, PPP (current international $)"
-filtered_data = world_dev_gdf[world_dev_gdf["Series Name"] == "GDP per capita, PPP (current international $)"]
+# Step 1: Remove rows where 'cloud_probability' is missing (i.e., remove NA values)
+spf_filtered = spf_25.dropna(subset=["cloud_probability"])
 
-# Step 2: Remove rows where 'v_2015' is missing (i.e., remove NA values)
-filtered_data = filtered_data.dropna(subset=["v_2015"])
-
-# Step 3
-filtered_data["v_2015"] = pd.to_numeric(filtered_data["v_2015"], errors='coerce').round()
-filtered_data = filtered_data.dropna(subset=["v_2015"])  # Remove rows with NaN in 'v_2015'
-filtered_data["v_2015"] = filtered_data["v_2015"].astype(int)
-
-# Step 4: Store the final result in world_dev_filtered
-world_dev_filtered = filtered_data
-
+# Step 2: Round to whole numbers for a cleaner legend
+spf_filtered["cloud_probability"] = spf_filtered["cloud_probability"].round().astype(int)
 ```
 
 An equal interval classification scheme produces a map of 5 classes where each class size is equal, so that each class has an equal range in between the low and high possible value. This allows for the legend to be easily understood by the viewer, since the legend entries are all the same size. However, this scheme does not show data which are skewed towards one side all that well.
 
 ```{python}
 
-fig, ax = plt.subplots(figsize=(15, 5))  # Increase the map size
+fig, ax = plt.subplots(figsize=(9, 11))  # Increase the map size
 
-# Plotting the GeoDataFrame `world_dev_filtered` on the `ax` axes
-world_dev_filtered.plot(
-    column="v_2015",  # Specify the column to be visualized; `v_2015` represents data for the year 2015
+# Plotting the GeoDataFrame `spf_filtered` on the `ax` axes
+spf_filtered.plot(
+    column="cloud_probability",  # Specify the column to be visualized
     legend=True,  # Add a legend to the map
     scheme="equal_interval",  # Use equal interval classification for the color scheme
     k=7,  # Divide the data into 7 intervals
-    cmap="YlGn",  # Use the Yellow-Green colormap for coloring the map
+    cmap="Blues",  # Use the Blues colormap for coloring the map -- matches spf_1.qmd's convention
     legend_kwds={
         'loc': 'center left',  # Position the legend in the center left of the map
         'bbox_to_anchor': (1.00, 0.2),  # Anchor the legend at this position (right of the plot)
         'fontsize': 10  # Set the font size of the legend text
     },
     edgecolor='grey',  # Add grey contours around each geographical feature
-    linewidth=0.5,  # Adjust the thickness of the contours (optional)
+    linewidth=0.1,  # Adjust the thickness of the contours (optional)
     ax=ax  # Specify the axes object to plot on
 )
+ax.set_axis_off()
+ax.set_title("SPF 2025: Equal Interval Classification", fontweight="bold")
 
 # Adjust the subplot parameters to give more space for the legend
 plt.subplots_adjust(right=0.70)  # Increase right space to accommodate a larger map
@@ -162,11 +173,11 @@ plt.show()
 
 Pay attention to the key differences:
 
--   Instead of specifyig `categorical` as `True`, we replace it by the argument scheme, which we will use for all choropleths that require a continuous classification scheme. In this case, we set it to `equal_interval`.
+- Instead of specifyig `categorical` as `True`, we replace it by the argument scheme, which we will use for all choropleths that require a continuous classification scheme. In this case, we set it to `equal_interval`.
 
--   As above, we set the number of colors to 7. Note that we need not pass the bins we calculated above, the plotting method does it itself under the hood for us.
+- As above, we set the number of colors to 7. Note that we need not pass the bins we calculated above, the plotting method does it itself under the hood for us.
 
--   As optional arguments, we can change the colourmap to a yellow to green gradient, which is one of the recommended ones by `ColorBrewer` for a sequential palette.
+- As optional arguments, we can change the colourmap to a blue gradient, which reflects the "cloudier = darker" intuition of the SPF variable.
 
 ::: callout-tip
 ## Mapclassify
@@ -183,7 +194,7 @@ See the mapclassify documentation for further details about these [map classific
 It is important to understand that equal intervals can first and foremost be visualised on the data distribution.
 
 ```{python}
-classi = mapclassify.EqualInterval(world_dev_filtered["v_2015"], k=7)
+classi = mapclassify.EqualInterval(spf_filtered["cloud_probability"], k=7)
 classi
 ```
 
@@ -197,18 +208,19 @@ classi.bins
 # Set up the figure
 f, ax = plt.subplots(1)
 # Plot the kernel density estimation (KDE)
-sns.kdeplot(world_dev_filtered["v_2015"], fill=True)
+sns.kdeplot(spf_filtered["cloud_probability"], fill=True)
 # Add a blue tick for every value at the bottom of the plot (rugs)
-sns.rugplot(world_dev_filtered["v_2015"], alpha=0.5)
+sns.rugplot(spf_filtered["cloud_probability"], alpha=0.5)
 # Loop over each break point and plot a vertical red line
 for cut in classi.bins:
-    plt.axvline(cut, color='lightgreen', linewidth=1.25)
+    plt.axvline(cut, color='darkorange', linewidth=1.25)
+ax.set_xlabel("SPF (cloud probability)")
 # Display image
 plt.show()
 
 ```
 
-Technically speaking, the figure is created by overlaying a KDE plot with vertical bars for each of the break points. This makes much more explicit the issue highlighted by which the first two bin contain a large amount of observations while the one with top values only encompasses a handful of them.
+Technically speaking, the figure is created by overlaying a KDE plot with vertical bars for each of the break points. This makes much more explicit the issue highlighted by which the middle bins contain a large amount of observations while the ones at either extreme only encompass a handful of them.
 
 ## Quantiles
 
@@ -218,24 +230,26 @@ The code required to create the choropleth mirrors that needed above for equal i
 
 ```{python}
 
-fig, ax = plt.subplots(figsize=(15, 5))  # Increase the map size
+fig, ax = plt.subplots(figsize=(9, 11))  # Increase the map size
 
-# Plotting the GeoDataFrame `world_dev_filtered` on the `ax` axes
-world_dev_filtered.plot(
-    column="v_2015",  # Specify the column to be visualized; `v_2015` represents data for the year 2015
+# Plotting the GeoDataFrame `spf_filtered` on the `ax` axes
+spf_filtered.plot(
+    column="cloud_probability",  # Specify the column to be visualized
     legend=True,  # Add a legend to the map
     scheme="quantiles",  # Use quantile interval classification for the color scheme
     k=4,  # Divide the data into 4 intervals
-    cmap="YlGn",  # Use the Yellow-Green colormap for coloring the map
+    cmap="Blues",  # Use the Blues colormap for coloring the map
     legend_kwds={
         'loc': 'center left',  # Position the legend in the center left of the map
         'bbox_to_anchor': (1.00, 0.2),  # Anchor the legend at this position (right of the plot)
         'fontsize': 10  # Set the font size of the legend text
     },
     edgecolor='grey',  # Add grey contours around each geographical feature
-    linewidth=0.5,  # Adjust the thickness of the contours (optional)
+    linewidth=0.1,  # Adjust the thickness of the contours (optional)
     ax=ax  # Specify the axes object to plot on
 )
+ax.set_axis_off()
+ax.set_title("SPF 2025: Quantile Classification", fontweight="bold")
 
 # Adjust the subplot parameters to give more space for the legend
 plt.subplots_adjust(right=0.70)  # Increase right space to accommodate a larger map
@@ -245,12 +259,12 @@ plt.show()
 
 ```
 
-Note how, in this case, the amount of polygons in each color is by definition much more balanced (almost equal in fact, except for rounding differences). This obscures outlier values, which get blurred by significantly smaller values in the same group, but allows to get more detail in the “most populated” part of the distribution, where instead of only white polygons, we can now discern more variability.
+Note how, in this case, the amount of polygons in each color is by definition much more balanced (almost equal in fact, except for rounding differences). This obscures outlier values, which get blurred by significantly smaller values in the same group, but allows to get more detail in the “most populated” part of the distribution, where instead of only pale polygons, we can now discern more variability.
 
 To get further insight into the quantile classification, let’s calculate it with `mapclassify`:
 
 ```{python}
-classi = mapclassify.Quantiles(world_dev_filtered["v_2015"], k=4)
+classi = mapclassify.Quantiles(spf_filtered["cloud_probability"], k=4)
 classi
 
 ```
@@ -267,12 +281,13 @@ The visualization of the distribution can be generated in a similar way as well:
 # Set up the figure
 f, ax = plt.subplots(1)
 # Plot the kernel density estimation (KDE)
-sns.kdeplot(world_dev_filtered["v_2015"], fill=True)
+sns.kdeplot(spf_filtered["cloud_probability"], fill=True)
 # Add a blue tick for every value at the bottom of the plot (rugs)
-sns.rugplot(world_dev_filtered["v_2015"], alpha=0.5)
+sns.rugplot(spf_filtered["cloud_probability"], alpha=0.5)
 # Loop over each break point and plot a vertical red line
 for cut in classi.bins:
-    plt.axvline(cut, color='lightgreen', linewidth=1.25)
+    plt.axvline(cut, color='darkorange', linewidth=1.25)
+ax.set_xlabel("SPF (cloud probability)")
 # Display image
 plt.show()
 ```
@@ -283,24 +298,26 @@ Equal interval and quantiles are only two examples of very many classification s
 
 ```{python}
 
-fig, ax = plt.subplots(figsize=(15, 5))  # Increase the map size
+fig, ax = plt.subplots(figsize=(9, 11))  # Increase the map size
 
-# Plotting the GeoDataFrame `world_dev_filtered` on the `ax` axes
-world_dev_filtered.plot(
-    column="v_2015",  # Specify the column to be visualized; `v_2015` represents data for the year 2015
+# Plotting the GeoDataFrame `spf_filtered` on the `ax` axes
+spf_filtered.plot(
+    column="cloud_probability",  # Specify the column to be visualized
     legend=True,  # Add a legend to the map
-    scheme="fisher_jenks",  # Use quantile interval classification for the color scheme
+    scheme="fisher_jenks",  # Use Fisher-Jenks classification for the color scheme
     k=7,  # Divide the data into 7 intervals
-    cmap="YlGn",  # Use the Yellow-Green colormap for coloring the map
+    cmap="Blues",  # Use the Blues colormap for coloring the map
     legend_kwds={
         'loc': 'center left',  # Position the legend in the center left of the map
         'bbox_to_anchor': (1.00, 0.2),  # Anchor the legend at this position (right of the plot)
         'fontsize': 10  # Set the font size of the legend text
     },
     edgecolor='grey',  # Add grey contours around each geographical feature
-    linewidth=0.5,  # Adjust the thickness of the contours (optional)
+    linewidth=0.1,  # Adjust the thickness of the contours (optional)
     ax=ax  # Specify the axes object to plot on
 )
+ax.set_axis_off()
+ax.set_title("SPF 2025: Fisher-Jenks Classification", fontweight="bold")
 
 # Adjust the subplot parameters to give more space for the legend
 plt.subplots_adjust(right=0.70)  # Increase right space to accommodate a larger map
@@ -313,7 +330,7 @@ plt.show()
 The same classification can be obtained with a similar approach as before:
 
 ```{python}
-classi = mapclassify.FisherJenks(world_dev_filtered["v_2015"], k=7)
+classi = mapclassify.FisherJenks(spf_filtered["cloud_probability"], k=7)
 classi
 ```
 
@@ -329,17 +346,18 @@ Now let's look at the density plot
 # Set up the figure
 f, ax = plt.subplots(1)
 # Plot the kernel density estimation (KDE)
-sns.kdeplot(world_dev_filtered["v_2015"], fill=True)
+sns.kdeplot(spf_filtered["cloud_probability"], fill=True)
 # Add a blue tick for every value at the bottom of the plot (rugs)
-sns.rugplot(world_dev_filtered["v_2015"], alpha=0.5)
+sns.rugplot(spf_filtered["cloud_probability"], alpha=0.5)
 # Loop over each break point and plot a vertical red line
 for cut in classi.bins:
-    plt.axvline(cut, color='lightgreen', linewidth=1.25)
+    plt.axvline(cut, color='darkorange', linewidth=1.25)
+ax.set_xlabel("SPF (cloud probability)")
 # Display image
 plt.show()
 ```
 
-For example, the bin with highest values covers a much wider span that the one with lowest, because there are fewer states in that value range.
+For example, the bins at the extremes of the distribution cover a much wider span than those in the middle, because there are fewer small areas in those value ranges.
 
 You will notice a lot cooler difference once you play around with a larger dataset.
 
@@ -347,32 +365,89 @@ You will notice a lot cooler difference once you play around with a larger datas
 
 A general map of an entire region, or urban area, can sometimes obscure local patterns because they happen at a much smaller scale that cannot be perceived in the global view. One way to solve this is by providing a focus of a smaller part of the map in a separate figure. Although there are many ways to do this in `R`, the most straightforward one is to define the bounding box.
 
-As an example, let us consider the first `ggplot` map of this Lab:
+As an example, let us zoom into Wales — which, per the SPF map above, stands out with generally higher cloud probability than the rest of the UK. Rather than hardcoding coordinates (which depend on knowing the exact CRS of the data), we compute the bounding box directly from the `nation` subset we already created:
 
 ### Zoom into full map
 
 ```{python}
+# Get the bounding box of Wales directly from the data --
+# this works regardless of which CRS the file happens to be in
+wales = spf_25[spf_25["nation"] == "Wales"]
+minx, miny, maxx, maxy = wales.total_bounds
+
 # Setup the figure
-f, ax = plt.subplots(1)
+f, ax = plt.subplots(1, figsize=(8, 9))
 # Draw the choropleth
-world_dev_gdf.plot(
-    column="income_group", 
-    cmap="YlGn",
+spf_25.plot(
+    column="cloud_probability",
+    cmap="Blues",
     legend=True,
     ax=ax
 )
-# Redimensionate X and Y axes to desired bounds
-ax.set_ylim(30.520606, 36.285000)
-ax.set_xlim(30.763478, 40.332570)
+# Redimensionate X and Y axes to Wales's bounds
+ax.set_xlim(minx, maxx)
+ax.set_ylim(miny, maxy)
+ax.set_axis_off()
+ax.set_title("SPF 2025: Zoomed into Wales", fontweight="bold")
 
 # Display image
 plt.show()
 ```
 
+## Putting it all together: a publication-ready map
+
+The four maps above were deliberately rough — the point was to show the classification mechanics, not to produce a finished product. A map intended for a report or publication needs a few more cartographic elements: a clear title, a colour scheme chosen on purpose, a north arrow, a scale bar, and a source credit.
+
+For the colour scheme, we'll switch to `viridis` — a perceptually uniform, colourblind-safe palette, and a deliberate change from the `Blues` used throughout this lab, to show that the choice of palette is independent of the choice of classification.
+
+For the north arrow and scale bar, we'll use [`matplotlib-map-utils`](https://github.com/moss-xyz/matplotlib-map-utils), which handles both and is CRS-aware — it works out the correct orientation and distance regardless of what projection `spf_filtered` happens to be in, the same "don't hardcode it, derive it from the data" principle we used for the zoom above.
+
+```{python}
+from matplotlib_map_utils.core.north_arrow import north_arrow
+from matplotlib_map_utils.core.scale_bar import scale_bar
+
+fig, ax = plt.subplots(figsize=(9, 11))
+
+spf_filtered.plot(
+    column="cloud_probability",  # continuous fill -- no scheme/k here, a full gradient rather than discrete bins
+    cmap="viridis_r",
+    legend=True,
+    legend_kwds={'label': "SPF (cloud probability)", 'shrink': 0.5},
+    edgecolor='white',
+    linewidth=0.1,
+    ax=ax,
+)
+
+ax.set_axis_off()
+ax.set_title("Sun Probability Framework, UK, 2025", fontsize=16, fontweight="bold")
+
+# North arrow -- orientation calculated from the data's own CRS
+north_arrow(ax, location="upper right", rotation={"crs": spf_filtered.crs, "reference": "center"})
+
+# Scale bar -- distance calculated from the data's own CRS, handles projected or geographic data automatically
+scale_bar(ax, location="lower right", style="boxes", bar={"projection": spf_filtered.crs})
+
+# Source credit
+ax.annotate(
+    "Source: Imago Data Service, Sun Probability Framework 2025",
+    xy=(0.01, 0.01), xycoords="axes fraction",
+    fontsize=8, color="grey"
+)
+
+plt.tight_layout()
+plt.show()
+```
+
+::: callout-tip
+`matplotlib-map-utils` isn't installed by default — `pip install matplotlib-map-utils` if you don't have it. It's actively maintained and is the approach recommended in [geopandas' own documentation](https://geopandas.org/en/stable/gallery/matplotlib_scalebar.html) for adding both a north arrow and a scale bar in one package; `matplotlib-scalebar` is a lighter-weight alternative if you only need the scale bar.
+:::
+
 ## Additional resources
 
--   On Drawing beautiful choropleths.html with `Python` and `ggplot` see [here](https://geopandas.org/en/stable/gallery/choropleths.html)
+- On Drawing beautiful choropleths.html with `Python` and `ggplot` see [here](https://geopandas.org/en/stable/gallery/choropleths.html)
 
--   If you want to have a look at **Choropleths in Python** have a look at the chapter on choropleth mapping by [Rey, Arribas-Bel and Wolf](https://geographicdata.science/book/notebooks/05_choropleth.html)
+- If you want to have a look at **Choropleths in Python** have a look at the chapter on choropleth mapping by [Rey, Arribas-Bel and Wolf](https://geographicdata.science/book/notebooks/05_choropleth.html)
 
--   Some more on mapping [here](https://geopandas.org/en/stable/docs/user_guide/mapping.html)
+- Some more on mapping [here](https://geopandas.org/en/stable/docs/user_guide/mapping.html)
+
+- For more on the Sun Probability Framework itself, and a worked example comparing multiple years, see the [Imago SPF training materials](spf.html)
