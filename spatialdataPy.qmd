@@ -41,6 +41,14 @@ from IPython.display import display
 
 Today we are going to go to London. We will be playing around with different datasets loading them both locally and dynamically from the web. You can download data manually, keep a copy on your computer, and load them from there.
 
+::: callout-important
+You need the `data/London` folder on your computer, read locally. To do that:
+
+1.  Download the `London` folder by right-clicking [on this link](https://github.com/GDSL-UL/gds/tree/main/data/London) and saving the file (or use the "Download a folder on github" trick from the OpenScience session: <https://download-directory.github.io/>)
+
+2.  Place it inside the `data` folder you created in the previous Lab, so you end up with `data/London/Polygons`, `data/London/Lines`, and `data/London/Tables`.
+:::
+
 ### Creating geographic data
 
 First we will use the following commands create geographic datasets *from scratch* representing coordinates of some famous locations in London. Most projects start with pre-generated data, but it's useful to create datasets to understand data structures.
@@ -104,32 +112,16 @@ plt.show()
 
 ## Points
 
-We can also import point files. So far, we have imported `shapefiles` and `geojsons`, but we can also obtain data from urls like in the [Open Science DIY](https://pietrostefani.github.io/gds/openscienceDIY.html) session or from other sources like **OpenStreetMap**. Both `R` and `Python` have libraries that allow us to query OpenStreetMap.
-
-Note that we use the method `features_from_place`, which queries for points in a particular place (London in this case) and creates a GeoDataFrame of OSM features.
+We can also import point files. So far, we have imported `shapefiles` and `geojsons` for polygons and lines — the same works for points. Here we have a `bus_stops` shapefile for London.
 
 ```{python}
-# Create an OSM query for "Greater London, U.K."
-query = "London, United Kingdom"
-restaurants = ox.features_from_place(query, tags={"amenity": ["restaurant", "bar", "pub"]})
-# Create a simple plot of the roads
-restaurants.plot()
-# Display the plot
+bus_stops = gpd.read_file("data/London/Points/bus_stops.shp")
+
+bus_stops.plot(markersize=3, color="dodgerblue", alpha=0.6)
 plt.show()
-
 ```
 
-And to inspect the data queried:
-
-```{python}
-restaurants.info()
-```
-
-You do not need to know at this point what happens behind the scenes when we run these lines but, if you are curious, we are making a query to OpenStreetMap (almost as if you typed "restaurant in London, UK" within Google Maps) and getting the response as a table of data, instead of as a website with an interactive map. Pretty cool, huh?
-
-*Note*: the code cells above requires internet connectivity. For more about querying from osm see [here](https://osmnx.readthedocs.io/en/stable/user-reference.html#osmnx.features.features_from_point).
-
-**Important**: Be careful, if you query too much data, your environment is likely to get stuck.
+*Note*: point data can also come from other sources like **OpenStreetMap**, queried live with the `osmnx` package in `Python` or `osmdata` in `R` — we won't use that route here, but it's worth knowing it exists for finding point data that isn't already packaged as a shapefile.
 :::
 
 ## Inspecting Spatial Data
@@ -181,7 +173,7 @@ Let's start by plotting London in a colour and adding Hackney (a district) in a 
 fig, ax = plt.subplots()
 districts.plot(ax=ax, color='lightgrey')
 
-# Add city of London (Hackney) in turquoise to the map
+# Add Hackney in turquoise to the map
 hackney = districts[districts['DIST_NAME'] == 'Hackney']
 hackney.plot(ax=ax, color='turquoise')
 
@@ -281,6 +273,8 @@ plt.show()
 
 Border lines sometimes can distort or impede proper interpretation of a map. In those cases, it is useful to know how they can be modified. Let us first see the code to make the lines thicker and black, and then we will work our way through the different steps:
 
+*(the line below reprojects `poi_gdf` — we'll properly cover what CRSs are and why this is needed in the [Coordinate reference Systems] section below; for now, just note that `districts` and `poi_gdf` need to share the same CRS before we can plot them together)*
+
 ```{python}
 # Convert CRS from WGS 84 (EPSG:4326) to British National Grid (EPSG:27700)
 poi_gdf_bng = poi_gdf.to_crs(epsg=27700)
@@ -291,7 +285,7 @@ fig, ax = plt.subplots()
 districts.plot(ax=ax, edgecolor='black', facecolor='none')
 # Plot roads with brown color and 50% transparency
 a_roads.plot(ax=ax, color='brown', alpha=0.5)
-# Plot restaurants with blue color and adjusted size
+# Plot points of interest with blue color and adjusted size
 poi_gdf_bng.plot(ax=ax, edgecolor='blue', facecolor='blue', markersize=100)# Adjust size accordingly
 # Remove the axis for a clean look
 ax.axis('off')
@@ -306,9 +300,9 @@ plt.show()
 
 Labeling maps is of paramount importance as it is often key when presenting data analysis and visualization. Properly labeled maps enables readers to effectively analyze and interpret spatial data.
 
--   `iterrows()` is a pandas function that iterates over DataFrame rows as (index, Series) pairs. Here, `idx` is the index of the row, and row is a `pandas` series containing the data for that particular district.
--   `centroid = row['geometry'].centroid` gets the centroid of each district's geometry. `row['geometry']` refers to the geometry of the district, which could be a polygon or a multipolygon. `.centroid` computes the geometric center (centroid) of this polygon.
--   `ax.text()` is a method from `Matplotlib`, used to place text at specific coordinates on the plot. `centroid.x` and `centroid.y` provide the x and y coordinates of the centroid, which determine where the text will be placed. `row['DIST_NAME']` is the name of the district that will be displayed as the label. `fontsize=6` sets the size of the text to 8 points. `ha='center'` ensures that the text is horizontally aligned to the center of the specified coordinates.
+- `iterrows()` is a pandas function that iterates over DataFrame rows as (index, Series) pairs. Here, `idx` is the index of the row, and row is a `pandas` series containing the data for that particular district.
+- `centroid = row['geometry'].centroid` gets the centroid of each district's geometry. `row['geometry']` refers to the geometry of the district, which could be a polygon or a multipolygon. `.centroid` computes the geometric center (centroid) of this polygon.
+- `ax.text()` is a method from `Matplotlib`, used to place text at specific coordinates on the plot. `centroid.x` and `centroid.y` provide the x and y coordinates of the centroid, which determine where the text will be placed. `row['DIST_NAME']` is the name of the district that will be displayed as the label. `fontsize=6` sets the size of the text to 8 points. `ha='center'` ensures that the text is horizontally aligned to the center of the specified coordinates.
 
 ```{python}
 # Plot the districts with a gray fill
@@ -365,7 +359,9 @@ As we can see, there is information stored about the reference system: it is usi
 
 If we want to modify this and "reproject" the polygons into a different CRS, the quickest way is to find the EPSG code online (epsg.io is a good one, although there are others too). For example, if we wanted to transform the dataset into lat/lon coordinates, we would use its EPSG code, 4326 (CRS's name "WGS84"):
 
-In cases when a coordinate reference system (CRS) is missing or the wrong CRS is set, the `.to_crs` function can be used:
+::: callout-important
+Don't confuse `.to_crs()` with `.set_crs()`. `.to_crs()` **reprojects** data: it mathematically transforms every coordinate, and only makes sense if the `GeoDataFrame` already has a *correct* CRS set. `.set_crs()` **relabels** data: it tells `geopandas` what CRS the existing coordinates are already in, without moving a single point — that's what you want when the CRS is missing or was set incorrectly (we already used it this way earlier, on `poi_gdf`). Using `.to_crs()` on data with a missing or wrong CRS won't fix it — at best it errors, at worst it silently transforms your coordinates as if the wrong CRS were correct, distorting the data.
+:::
 
 ```{python}
 # Transform the CRS to EPSG:4326
@@ -502,7 +498,7 @@ plt.show()
 
 ## Joins
 
-## Join districts with educational level data
+### Join districts with educational level data
 
 ```{python}
 # Import qualifications data from CSV
@@ -522,22 +518,22 @@ districts.head()
 # Then the DataFrame
 qualifications2001_df.head()
 
-## rename(columns={'Zone-Code': 'Dist_code'}) specifies that the column name Zone-Code should be renamed to Dist_code
+## rename(columns={'Zone_Code': 'DIST_CODE'}) specifies that the column name Zone_Code should be renamed to DIST_CODE
 qualifications2001_df.rename(columns={'Zone_Code': 'DIST_CODE'}, inplace=True)
 ```
 
 Merge the qualification dataset to the districts `GeoDataFrame`:
 
--   Merge the `qualifications2001_df` DataFrame with the `districts` `GeoDataFrame`.
--   The merge is done on the `DIST_CODE` column, which must be present in both DataFrames.
--   By default, this performs an inner join, but you can specify different types of joins (e.g., left, right) with the 'how' parameter.
--   `gpd.GeoDataFrame(...)` converts the resulting merged DataFrame into a GeoDataFrame using the 'geopandas' library.
--   `district_qual` is the new `GeoDataFrame` that contains the combined data from 'qualifications2001_df' and 'districts'.
--   `districts.plot()` plots the `GeoDataFrame` and `column='level 4'` specifies the column to plot.
--   `legend=True` adds a legend to the plot and `cmap='OrRd'` applies a color map.
+- Merge the `qualifications2001_df` DataFrame with the `districts` `GeoDataFrame`.
+- The merge is done on the `DIST_CODE` column, which must be present in both DataFrames.
+- We use `how='left'` to keep every district (matching the R lab, which uses `left_join()`) — the default `merge()` behaviour is an inner join, which would silently drop any district with no matching qualifications row.
+- `gpd.GeoDataFrame(...)` converts the resulting merged DataFrame into a GeoDataFrame using the 'geopandas' library.
+- `district_qual` is the new `GeoDataFrame` that contains the combined data from 'qualifications2001_df' and 'districts'.
+- `districts.plot()` plots the `GeoDataFrame` and `column='level 4'` specifies the column to plot.
+- `legend=True` adds a legend to the plot and `cmap='OrRd'` applies a color map.
 
 ```{python}
-district_qual = districts.merge(qualifications2001_df, on='DIST_CODE')
+district_qual = districts.merge(qualifications2001_df, on='DIST_CODE', how='left')
 # Prove it worked
 district_qual.plot(column="Level4", cmap="OrRd")
 # Show the plot
@@ -561,7 +557,7 @@ Create a file to put your maps:
 
 ```{python}
 # Create directory "maps" if it doesn't exist
-os.makedirs("maps2", exist_ok=True)
+os.makedirs("maps", exist_ok=True)
 ```
 
 Let's create a simple map with the variable we just created and save to external file:
@@ -585,28 +581,23 @@ plt.close()
 
 Many single datasets lack context when displayed on their own. A common approach to alleviate this is to use web tiles, which are a way of quickly obtaining geographical context to present spatial data. In Python, we can use `contextily` to pull down tiles and display them along with our own geographic data.
 
-We can begin by creating a map in the same way we would do normally, and then use the `add_basemap` command to add a basemap:
+::: callout-important
+Two separate gotchas with free basemap tiles, both of which show up as a "blocked"/watermarked tile instead of an actual map:
+
+-   **CARTO** retired free, unauthenticated access — providers like `cx.providers.CartoDB.Voyager`, `.Positron` and `.DarkMatter` now return a tile stamped "API KEY REQUIRED" unless you configure your own CARTO API key.
+-   **OpenStreetMap's own tiles** (`cx.providers.OpenStreetMap.Mapnik`) are free, but OSM's tile usage policy actively blocks scripted/bulk access that doesn't properly identify itself — exactly what a classroom full of students all requesting tiles via `contextily` at once looks like from their end. You'll see a "403 Access blocked" tile with a link to `osm.wiki/Blocked`.
+
+**Esri's** tiles are still immediately available — `cx.providers.Esri.WorldStreetMap` and `cx.providers.Esri.WorldImagery` (both used below) stay free, key-free, and don't enforce the same anti-bulk-access policy.
+:::
+
+We can begin by creating a map in the same way we would do normally, and then use the `add_basemap` command to add a basemap. We're explicit about `Esri.WorldStreetMap` here since it doesn't require an API key and isn't blocked for bulk classroom use:
 
 ```{python}
-ax = restaurants.plot(color="black")
-cx.add_basemap(ax, crs=restaurants.crs, source=cx.providers.CartoDB.Voyager);
-
+ax = bus_stops.plot(markersize=3, color="black")
+cx.add_basemap(ax, crs=bus_stops.crs, source=cx.providers.Esri.WorldStreetMap);
 # Show the plot
 plt.show()
 ```
-
-Note that we need to be explicit when adding the basemap to state the coordinate reference system (crs) our data is expressed in, `contextily` will not be able to pick it up otherwise. Conversely, we could change our data’s CRS into `Pseudo-Mercator`, the native reference system for most web tiles:
-
-```{python}
-restaurants_wm = restaurants.to_crs(epsg=3857)
-ax = restaurants_wm.plot(color="black")
-cx.add_basemap(ax, source=cx.providers.OpenStreetMap.Mapnik);
-
-# Show the plot
-plt.show()
-```
-
-Note how the coordinates are different but, if we set it right, either approach aligns tiles and data nicely.
 
 Now, contextily offers a lot of options in terms of the sources and providers you can use to create your basemaps. For example, we can use satellite imagery instead. A lot more about basemap options with `contextly` [here](https://contextily.readthedocs.io/en/latest/providers_deepdive.html).
 

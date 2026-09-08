@@ -1,7 +1,7 @@
 ---
 title: "Geographic Data Science"
 subtitle: "Spatial Data"
-author: "Elisabetta Pietrostefani & Carmen Cabrera-Arnau"
+author: "Elisabetta Pietrostefani & Carmen Cabrera"
 format: 
     revealjs:
         navigation-mode: grid
@@ -112,6 +112,71 @@ Tell your neighbour how maps can lie.
 
 <center><img data-src="./figs/size.png" alt="centered image" width="85%" height="85%"><center>
 
+## Still not convinced? {.smaller}
+
+Scan to play with [thetruesize.com](https://thetruesize.com/) — drag any country around the globe and watch its true size change.
+
+![](./figs/qr_truesize.png){width="220px" fig-align="center"}
+
+## Breaking: *Correcting* the map {background-color="#1B2A4A" style="color:white;"}
+
+On **4 September 2026**, the UN General Assembly voted **164–1** (6 abstentions) to adopt "Correct the Map" — encouraging a shift from Mercator to the **Equal Earth** projection.
+
+::: {.fragment}
+Non-binding. Doesn't ban Mercator for navigation. Doesn't redraw a single border.
+:::
+
+::: {style="font-size: 0.6em; opacity: 0.75;"}
+UN News · The Guardian · Al Jazeera · CBC · also widely reported by the BBC
+:::
+
+## Not everyone agreed
+
+164 in favour, **1 against** (the United States), 6 abstentions.
+
+::: {.fragment}
+US representative: the resolution is *"the reason this institution is losing its credibility"* — the Assembly shouldn't be *"debating map projects from the 16th century."*
+:::
+
+::: {.fragment}
+Togo's FM Robert Dussey: maps shape *"education, imagination and collective perception."*
+:::
+
+## Why it matters
+
+<center><mark>On Mercator: Greenland ≈ Africa in size</mark></center>
+
+<br>
+
+In reality, Africa is about **14× larger** than Greenland.
+
+::: fragment
+Mercator is **conformal** (preserves shape/angle) → area gets distorted, worse toward the poles.
+
+Equal Earth is **equal-area** (preserves area) → shape gets distorted instead.
+:::
+
+## The EPSG codes {.smaller}
+
+*(the news coverage never mentions them — here's the definitive list)*
+
+| CRS | EPSG |
+|----|----|
+| Equal Earth (projection method) | 1078 |
+| WGS 84 / Equal Earth **Greenwich** | **8857** |
+| WGS 84 / Equal Earth Americas | 8858 |
+| WGS 84 / Equal Earth Asia-Pacific | 8859 |
+| World Mercator | 3395 |
+| Web Mercator (Google Maps, OSM) | 3857 |
+
+## Try it yourself
+
+<mark>[Al Jazeera: guess the real size of each country](https://interactive.aljazeera.com/aje/2026/new-world-map/indexmap.html)</mark>
+
+Pick which country is bigger, watch it morph from Mercator to Equal Earth, see how close you were.
+
+![](./figs/qr_ajquiz.png){width="220px" fig-align="center"}
+
 ##  Linking Spatial Info
 
 <br><br>
@@ -134,6 +199,10 @@ Coordinate reference systems provide the context of coordinates:
 -   Combine the coordinates with any other coordinates that have a coordinate reference system
 
 # Have a better look at the concepts page
+
+![](./figs/qr_concepts.png){width="220px" fig-align="center"}
+
+[`gdsl-ul.github.io/gds/spatialdata.html`](https://gdsl-ul.github.io/gds/spatialdata.html)
 
 
 # Questions

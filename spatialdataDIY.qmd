@@ -13,19 +13,16 @@ library(dplyr)
 library(ggplot2)
 library(sf)
 library(viridis)
-library(viridis)
-library(osmdata)
 
 ```
 
 ## Python
 
 ```{python}
-#| warning: true
+#| warning: false
 
 import geopandas as gpd
 import pandas as pd
-import osmnx as ox
 import matplotlib.pyplot as plt
 import matplotlib.colors as mcolors
 from matplotlib import cm
@@ -39,14 +36,14 @@ from matplotlib.ticker import FuncFormatter
 
 For this section, you will have to push yourself out of the comfort zone when it comes to sourcing the data. As nice as it is to be able to pull a dataset directly from the web at the stroke of a url address, most real-world cases are not that straight forward. Instead, you usually have to download a dataset manually and store it locally on your computer before you can get to work.
 
-We are going to use data from the Consumer Data Research Centre (CDRC) about Liverpool, in particular an extract from the Census. You can download a copy of the data at:
+We are going to use data from the Geographic Data Service (GeoDS) about Liverpool, in particular an extract from the Census. GeoDS is part of Smart Data Research UK, based at UCL, the University of Liverpool, the University of Oxford and the University of Edinburgh — it took over hosting this data after the Consumer Data Research Centre (CDRC) portal it used to live on was retired. You can download a copy of the data at:
 
 ::: callout-important
-You will need a username and password to download the data. Create it for free at:
+Go to the Geographic Data Service's teaching materials page:
 
-<https://data.cdrc.ac.uk/user/register>
+<https://data.geods.ac.uk/dataset/teaching-materials>
 
-Then [download](https://data.cdrc.ac.uk/system/files/Census_Residential_Data_Pack_2011/Census_Residential_Data_Pack_2011_E08000012.zip) the Liverpool Census'11 Residential data pack
+You'll need to log in (registration is free) to download. Find the **"Census Residential Data Pack 2011 for Liverpool (E08000012)"** resource on that page and download it.
 :::
 
 Once you have the `.zip` file on your computer, right-click and "Extract all". The resulting folder will contain all you need. Create a folder called `Liverpool` in `data` folder you created in the first Lab.
@@ -70,64 +67,57 @@ lsoas = gpd.read_file("data/Liverpool/Census_Residential_Data_Pack_2011/Local_Au
 
 ### Lines
 
-For a line layer, we are going to use a different bit of `osmdata` functionality that will allow us to extract all the highways. Note the code cell below requires internet connectivity.
+For a line layer, we'll use `roads_osm.gpkg` — an OSM-derived roads extract for Liverpool.
 
 ::: {.panel-tabset group="language"}
 ## R
 
-```{r roads query}
-highway <- opq("Liverpool, U.K.") %>%
-   add_osm_feature(key = "highway", 
-                   value = c("primary", "secondary", "tertiary")) %>%
-   osmdata_sf()
+```{r roads}
+roads <- read_sf("data/Liverpool/lines/roads_osm.gpkg")
 
 ggplot() + 
-  geom_sf(data = highway$osm_lines, color = 'darkorange') + theme_minimal() 
+  geom_sf(data = roads, color = 'darkorange') + theme_minimal() 
 ```
 
 ## Python
 
 ```{python}
-tags = {"highway": True} #OSM tags
-roads = ox.features_from_address("Liverpool, United Kingdom", tags = tags, dist = 2000) 
-roads = roads.reset_index()
- # sometimes building footprints are represented by Points, let's disregard them
-roads = roads[roads.geometry.geom_type == 'LineString']
+roads = gpd.read_file("data/Liverpool/lines/roads_osm.gpkg")
 
 fig, ax = plt.subplots(1, 1, figsize=(15, 10))
 ax.set_title("Roads in Liverpool")
 ax.set_axis_off() # we don't need the ticks function
-# only roads within the extent of the buildings layer
 roads.plot(ax=ax, color = 'darkorange', lw = 0.5) #linewidth can be also passed as lw 
 # Display the plot
 plt.show()
 ```
 :::
 
+
 ### Points
 
-For points, we will find some POI (Points of Interest) : pubs in Liverpool, as recorded by OpenStreetMap. Note the code cell below requires internet connectivity.
+For points, we'll use `points_merseyside.gpkg` — points of interest (POIs) in Merseyside. Since this file covers the wider Merseyside region rather than just Liverpool, we clip it down to the `lsoas` boundary first.
 
 ::: {.panel-tabset group="language"}
 ## R
 
-```{r bar query}
-bars <- opq("Liverpool, U.K.") %>%
-   add_osm_feature(key = "amenity", 
-                   value = c("bar")) %>%
-   osmdata_sf()
+```{r pois}
+pois_merseyside <- read_sf("data/Liverpool/points/points_merseyside.gpkg")
+pois_merseyside <- st_transform(pois_merseyside, st_crs(lsoas)) # match lsoas' CRS before filtering
+pois <- st_filter(pois_merseyside, st_as_sfc(st_bbox(lsoas)))
 
 ggplot() + 
-  geom_sf(data = bars$osm_points) + theme_minimal() 
+  geom_sf(data = pois) + theme_minimal() 
 ```
 
 ## Python
 
 ```{python}
-query = "Liverpool, United Kingdom"
-bars = ox.features_from_place(query, tags={"amenity": ["bar"]})
+pois_merseyside = gpd.read_file("data/Liverpool/points/points_merseyside.gpkg")
+pois_merseyside = pois_merseyside.to_crs(lsoas.crs)  # match lsoas' CRS before clipping
+pois = pois_merseyside.clip(lsoas.total_bounds)
 
-bars.plot()
+pois.plot()
 plt.show()
 
 ```
@@ -139,17 +129,17 @@ plt.show()
 
 With those three layers, try to complete the following tasks:
 
--   Make a map of the Liverpool neighborhoods that includes the following characteristics:
+- Make a map of the Liverpool neighborhoods that includes the following characteristics:
 
-    1.  Features a title
+  1.  Features a title
 
-    2.  Does not include axes frame
+  2.  Does not include axes frame
 
-    3.  Polygons are all in color `#525252` and 50% transparent
+  3.  Polygons are all in color `#525252` and 50% transparent
 
-    4.  Boundary lines ("edges") have a width of 0.3 and are of color `#B9EBE3`
+  4.  Boundary lines ("edges") have a width of 0.3 and are of color `#B9EBE3`
 
-    5.  Includes a basemap different from the one used in class
+  5.  Includes a basemap different from the one used in class
 
 ::: callout-note
 Not all of the requirements above are not equally hard to achieve. If you can get some but not all of them, that's also great! The point is you learn something every time you try.
@@ -178,7 +168,7 @@ housesales <- read.csv("data/London/Tables/housesales.csv") # import housesales 
 
 housesales_clean = housesales %>%
   filter(price < 500000) %>% 
-  st_as_sf(coords = c(17,18)) %>% 
+  st_as_sf(coords = c("greastings", "grnorthing")) %>% 
   st_set_crs(27700) 
 ```
 
@@ -213,10 +203,10 @@ Answering this questions involve 3 steps:
 ::: {.callout-tip collapse="true"}
 ## R Answer
 
-Spatial overlay between points and polygons
+Spatial overlay between points and polygons. We use `left = FALSE` so that only districts with at least one matching sale are kept — this mirrors the Python answer below, which uses an inner join, and avoids `NA` prices sneaking into the average for districts with no sales at all.
 
 ```{r spatial join}
-housesales_districts <- st_join(districts, housesales_clean)
+housesales_districts <- st_join(districts, housesales_clean, left = FALSE)
 ```
 
 Aggregate at district level
@@ -234,7 +224,7 @@ head(housesales_districts_agg)
 ## Python Answer
 
 ```{python}
-# Spatial join
+# Spatial join (inner: matches the R answer's left = FALSE above)
 housesales_districts = housesales_gdf.sjoin(districts, how="inner", predicate='intersects')
 
 # Aggregate at district level

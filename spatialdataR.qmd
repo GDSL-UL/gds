@@ -2,7 +2,7 @@
 
 In this lab, we will learn how to load, manipulate and visualize spatial data. In some senses, spatial data are usually included simply as "one more column" in a table. However, *spatial is special* sometimes and there are few aspects in which geographic data differ from standard numerical tables. In this session, we will extend the skills developed in the previous one about non-spatial data, and combine them. In the process, we will discover that, although with some particularities, dealing with spatial data in `R` largely resembles dealing with non-spatial data.
 
-## Installing packages
+## Importing modules
 
 We will start by loading core packages for working with spatial data. See detailed description of [R](https://r.geocompx.org/spatial-class).
 
@@ -79,29 +79,15 @@ plot(a_roads$geometry)
 
 ## Points
 
-We can also import point files. So far, we have imported `shapefiles` and `geojsons`, but we can also obtain data from urls like in the [Open Science DIY](https://pietrostefani.github.io/gds/openscienceDIY.html) session or from other sources like **OpenStreetMap**. Both `R` and `Python` have libraries that allow us to query OpenStreetMap.
-
-```{r build_query}
-osm_q_sf <- opq("Greater London, U.K.") %>% # searching only in Greater London
-    add_osm_feature(key = "amenity", value = "restaurant") %>% #adding osm data that is tagged as a museum
-  osmdata_sf () # transforming to sf object
-```
-
-The structure of osmdata objects are clear from their default print method, illustrated using the museum example. We will use them shortly.
+We can also import point files. So far, we have imported `shapefiles` and `geojsons` for polygons and lines — the same works for points. Here we have a `bus_stops` shapefile for London.
 
 ```{r}
-osm_q_sf  
+bus_stops <- read_sf("data/London/Points/bus_stops.shp")
+
+plot(bus_stops$geometry, pch = 16, col = adjustcolor("dodgerblue4", alpha.f = 0.6), cex = 0.6)
 ```
 
-You do not need to know at this point what happens behind the scenes when we run these lines but, if you are curious, we are making a query to OpenStreetMap (almost as if you typed "museums in London, UK" within Google Maps) and getting the response as a table of data, instead of as a website with an interactive map. Pretty cool, huh?
-
-*Note*: the code cell above requires internet connectivity. **Important**: Be careful, if you query too much data, your environment is likely to get stuck.
-
-```{r}
-restaurants_points <- osm_q_sf$osm_points
-
-plot(restaurants_points$geometry)
-```
+*Note*: point data can also come from other sources like **OpenStreetMap**, queried live with the `osmdata` package in `R` or `osmnx` in `Python` — we won't use that route here, but it's worth knowing it exists for finding point data that isn't already packaged as a shapefile.
 :::
 
 ## Inspecting Spatial Data
@@ -136,7 +122,7 @@ districts[districts$DIST_NAME== "City of London",]
 ```
 
 ::: callout-note
-Go back to [open science](https://pietrostefani.github.io/gds/openscience.html) for subsetting with `dplyr`.
+Go back to [open science](openscienceR.html) for subsetting with `dplyr`.
 :::
 
 ### Quick visualisation
@@ -147,8 +133,8 @@ Let's start by plotting London in a colour and adding Hackney (a district) in a 
 # plot london in grey
 plot(districts$geometry, col = "lightgrey")
 
-# Add city of London in turquoise to the map
-plot(districts[districts$DIST_NAME == "Hackney", ]$geometry, # select city of london
+# Add Hackney in turquoise to the map
+plot(districts[districts$DIST_NAME == "Hackney", ]$geometry, # select Hackney
      col = "turquoise",
      add = T) # add to the existing map
 ```
@@ -231,6 +217,10 @@ ggplot() +
 
 Border lines sometimes can distort or impede proper interpretation of a map. In those cases, it is useful to know how they can be modified. Let us first see the code to make the lines thicker and black, and then we will work our way through the different steps:
 
+::: callout-tip
+Note that `poi_sf` (created earlier with CRS `EPSG:4326`) is being plotted directly alongside `districts` (which is in the British National Grid, `EPSG:27700`) — no reprojection step first, unlike the Python lab, which had to call `.to_crs()` before combining layers. `ggplot2`'s `geom_sf()` automatically reprojects every layer to match the CRS of the first one added, so mismatched CRSs "just work" in `R`. `matplotlib`/`geopandas`'s `.plot()` does **not** do this — mismatched CRSs there will silently misalign, which is why the Python lab reprojects explicitly.
+:::
+
 ```{r}
 
 ggplot() +
@@ -287,10 +277,12 @@ As we can see, there is information stored about the reference system: it is usi
 
 If we want to modify this and "reproject" the polygons into a different CRS, the quickest way is to find the EPSG code online (epsg.io is a good one, although there are others too). For example, if we wanted to transform the dataset into lat/lon coordinates, we would use its EPSG code, 4326 (CRS's name "WGS84"):
 
-In cases when a coordinate reference system (CRS) is missing or the wrong CRS is set, the st_set_crs() function can be used:
+::: callout-important
+Don't confuse `st_transform()` with `st_set_crs()`. `st_transform()` **reprojects** data: it mathematically transforms every coordinate, and only makes sense if the object already has a *correct* CRS set — that's what the code below demonstrates. `st_set_crs()` **relabels** data: it tells `sf` what CRS the existing coordinates are already in, without moving a single point — that's what you want when the CRS is missing or was set incorrectly (we'll use it that way in the next section, on `housesales`). Using `st_transform()` on data with a missing or wrong CRS won't fix it — at best it errors, at worst it silently transforms your coordinates as if the wrong CRS were correct, distorting the data.
+:::
 
 ```{r}
-districts_4326 = st_transform(districts, "EPSG:4326") # set CRS
+districts_4326 = st_transform(districts, "EPSG:4326") # reproject to WGS84
 # districts_4326 <- st_transform(districts_4326, crs = 4326)
 
 ```
@@ -299,24 +291,24 @@ districts_4326 = st_transform(districts, "EPSG:4326") # set CRS
 
 CRSs are also very useful if we obtain data that is in a csv, has coordinates but needs to be transformed to a spatial `dataframe`. For example we have some London housing transactions we want to import and use.
 
-We want to transform the .csv in a `sf` object with the `st_as_sf` function using the coordinates stored in columns 17 and 18, and then we set the `dataframe` CRS to the British National Grid (EPSG:27700) using the `st_set_crs` function.
+We want to transform the .csv in a `sf` object with the `st_as_sf` function using the coordinates stored in the `greastings` and `grnorthing` columns, and then we set the `dataframe` CRS to the British National Grid (EPSG:27700) using the `st_set_crs` function.
 
 ```{r}
 housesales <- read.csv("data/London/Tables/housesales.csv") # import housesales data from csv
 
 # 3 commands: 
 housesales_filtered = filter(housesales,price < 500000)
-housesales_sf <- st_as_sf(housesales_filtered, coords = c(17,18)) # denote columns which have the coordinates
+housesales_sf <- st_as_sf(housesales_filtered, coords = c("greastings", "grnorthing")) # denote columns which have the coordinates
 housesales_clean <- st_set_crs(housesales_sf, 27700)# set crs to British National Grid 
 ```
 
-As we've seen in [open science](https://pietrostefani.github.io/gds/openscience.html), we can do consecutive operations using `dplyr` pipes `%>%`, they are used to simplify syntax. Pipes allow to perform successive operations on dataframes in one command! More info [here](https://seananderson.ca/2014/09/13/dplyr-intro/).
+As we've seen in [open science](openscienceR.html), we can do consecutive operations using `dplyr` pipes `%>%`, they are used to simplify syntax. Pipes allow to perform successive operations on dataframes in one command! More info [here](https://seananderson.ca/2014/09/13/dplyr-intro/).
 
 ```{r}
 # all one in go and one output
 housesales_clean = housesales %>% # select the main object
   filter(price < 500000) %>% # remove values above 500,000
-  st_as_sf(coords = c(17,18)) %>% # # denote columns which have the coordinates
+  st_as_sf(coords = c("greastings", "grnorthing")) %>% # denote columns which have the coordinates
   st_set_crs(27700) # set crs to British National Grid
 ```
 
@@ -385,7 +377,7 @@ ggplot() +
 
 ## Buffers and selecting by location
 
-Here, we first select by expression the Hackney district and then we create a 1km buffer around it with the `st_buffer()` function from the `sf` package.
+Here, we buffer every district's centroid with the `st_buffer()` function from the `sf` package — for example, to draw a 1km buffer around each one:
 
 ```{r}
 # buffer
@@ -401,7 +393,7 @@ ggplot() +
 
 ## Joins
 
-## Join districts with educational level data
+### Join districts with educational level data
 
 ```{r class.source = "fold-show"}
 
@@ -432,11 +424,6 @@ districts <- left_join(districts,
                        qualifications2001_df, 
                        by=c("DIST_CODE"="Zone_Code"))
 
-# tidyverse alternative with pipe operator %>%
-
-districts_tidy <- districts %>%
-  left_join(qualifications2001_df, by=c("DIST_CODE"="Zone_Code"))
-
 # check the first rows of the merged data table
 head(districts)
 ```
@@ -457,7 +444,7 @@ districts <- districts %>%
 Create a file to put your maps:
 
 ```{r}
-dir.create("maps") 
+dir.create("maps", showWarnings = FALSE)
 ```
 
 If you were creating a map with teh `plot` function you could save it like this:
@@ -472,7 +459,7 @@ dev.off() # Closing the graphical device
 Let's create a simple map with the variable we just created:
 
 ```{r}
-test_map <- ggplot() 
+test_map <- ggplot() +
   geom_sf(data = districts, aes(fill = Level4p)) +
   theme_void() 
 ```
@@ -490,17 +477,21 @@ ggsave("maps/test_map_2.png", width = 20, height = 20, units = "cm")
 
 Various `R` libraries allow us to add static basemaps to out maps. We will be using the `base_map()` function to(down)load a basemap in our maps. This is from the `library(basemapR)` which is easy to execute.
 
-The style of basemap currently supported are 'dark', 'hydda', 'positron', 'voyager', 'wikimedia', 'mapnik', google, google-nobg, google-hybrid, google-terrain, google-satellite, google-road. The package aims to ease the use of basemaps in different contexts by providing a function interface as minimalist as possible. There are other packages which support more choices like `library(basemaps)` which you can check out [here](https://jakob.schwalb-willmann.de/basemaps/index.html#map-examples)
+The style of basemap currently supported are 'dark', 'hydda', 'positron', 'voyager', 'wikimedia', 'mapnik', google, google-nobg, google-hybrid, google-terrain, google-satellite, google-road. The package aims to ease the use of basemaps in different contexts by providing a function interface as minimalist as possible. There are other packages which support more choices like `library(basemaps)`.
 
-We simply add base_map () to our ggplot:
+::: callout-important
+Some basemaps like the ones made by CARTO retired free, unauthenticated access to the tiles behind `dark`, `positron`, `voyager` and `hydda` — using any of those without your own CARTO API key now returns a tile stamped "API KEY REQUIRED" instead of an actual map. Stick to `mapnik` (plain OpenStreetMap tiles) or `wikimedia`, which stay free and key-free. The `google-*` styles need their own Google Maps API key set up separately, regardless of this issue.
+:::
+
+We simply add base_map () to our ggplot. We're explicit about `basemap = "mapnik"` here since it doesn't require an API key:
 
 ```{r}
 ggplot() +
-  base_map(st_bbox(districts_4326), increase_zoom = 2) + 
+  base_map(st_bbox(districts_4326), basemap = "mapnik", increase_zoom = 2) + 
   geom_sf(data = districts_4326, fill = NA)
 ```
 
-If we want to specify the map we use `basemap =`:
+Or another example
 
 ```{r}
 ggplot() +
