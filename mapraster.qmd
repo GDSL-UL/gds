@@ -1,63 +1,208 @@
 # 4 Mapping Raster Data {#sec-map-raster .unnumbered}
 
-This section is all about Raster data, it's different types and some uses for social science.
+## Concepts
+
+Everything we have mapped so far has been **vector** data — points, lines and polygons, each one an object with a geometry and a row in a table. This section is about the other half of the spatial world: **raster** data, where space is carved into a regular grid and every cell just holds a number.
+
+That difference sounds technical, but it changes what the data can tell you — and what you have to do to make it useful.
 
 Slides can be downloaded ["here"](/html/raster_data_gds.pdf)
 
 ## Raster Data
 
-Raster data is a digital image format that represents data as a grid of individual pixels, with each pixel containing a specific value or color information.
+Think of a digital photograph. Zoom in far enough and it stops being a picture and becomes what it always was: a grid of pixels, each one a single value. A raster is exactly that, except the grid is pinned to the Earth and the values mean something — metres above sea level, degrees Celsius, probability of cloud.
 
--   Square grid of pixels.
--   Pixel values can represent continuous or categorical variables:
-    -   Divides 2-D space into regular cells - pixels
-    -   Each cell has a single value
--   Values assigned according to value at mean, centre point, or some other rule
+- Square grid of pixels
+- Divides 2-D space into regular cells
+- **Each cell has a single value** — that's the whole data model
+- Values can be continuous (temperature) or categorical (land cover class)
+- The value is assigned by some rule — the mean across the cell, the value at its centre point, and so on
 
 ![](./img/vector_raster.png){width="60%"}
 
+### Raster vs vector: what actually differs
+
+|   | Vector | Raster |
+|----|----|----|
+| **Space is...** | objects with boundaries | a continuous grid |
+| **Each unit is...** | a point, line or polygon | a cell |
+| **Attributes** | a whole table per feature | one value per cell, per layer |
+| **Good at** | discrete things — buildings, roads, boundaries | continuous surfaces — elevation, temperature, light |
+| **Units come from** | how we chose to divide the world | how the sensor happened to be built |
+
+::: callout-tip
+## The trade-off worth remembering
+
+Vector boundaries are *ours* — wards, districts, LSOAs. Someone drew them, usually for administrative rather than analytical reasons. Raster grids are the sensor's: arbitrary too, but arbitrary in a **consistent, regular** way that doesn't follow politics or history.
+
+Which means rasters sidestep some of the [MAUP](mapvector.html) problem — right up until the moment you aggregate them into administrative units, which is exactly what you'll do in the lab.
+:::
+
 ## Data Types
+
+Not all rasters are the same. The differences come down to **how many layers ("bands") there are** and **what the values mean**.
 
 ### Grayscale Rasters
 
-Grayscale raster data is a type of digital image representation that uses varying shades of gray to depict the intensity or brightness of a particular phenomenon at different locations. In grayscale images, pixel values typically range from **0 (black) to 255 (white)**, with intermediate values representing different levels of gray. These pixel values can represent continuous data, making grayscale rasters suitable for visualizing and analyzing phenomena where intensity or variation needs to be conveyed, such as medical X-rays, satellite nightlights data, or other scenarios where the focus is on quantifying the degree of a single attribute without using color.
+*Continuous data, a single band.*
 
-Example: **Nightlights Data**
+One layer, one value per cell, usually rendered as shades of grey from dark (low) to light (high). Pixel values often run **0 (black) to 255 (white)**, though in scientific rasters they're just as likely to be real measurements — radiance, metres, degrees.
 
-Nightlights data can be represented as a grayscale raster, where darker areas indicate lower levels of artificial light, and lighter areas represent higher levels of artificial light. The pixel values may represent the radiance or luminance values of nighttime lights. Satellite-based nightlights data is used for various applications, such as monitoring urban development, assessing light pollution, and understanding human activity patterns at night.
+**Example: nightlights data.** Darker areas mean less artificial light at night, lighter areas more. Used for monitoring urban development, assessing light pollution, and — as you'll see below — as a proxy for economic activity where reliable statistics don't exist.
 
 ### Multispectral Rasters
 
-Multispectral rasters are a type of digital image representation that incorporates multiple spectral bands or channels to capture a diverse range of information about a scene or phenomenon. In multispectral rasters, each channel represents a specific part of the electromagnetic spectrum, such as visible light, near-infrared, or thermal infrared. By **combining these spectral bands**, multispectral data provides a comprehensive view of the landscape, enabling analysis of various aspects like vegetation health, land use, or changes in urban and rural conditions. This type of raster data is commonly used in applications such as remote sensing, agriculture, and natural resource management, where a nuanced understanding of different attributes of the environment is essential.
+*Multiple bands, stacked.*
 
-Example: **Landsat Satellite Imagery**
+Satellites don't take photographs in the everyday sense. They are flying sensors that record **several slices of the electromagnetic spectrum at once** — red, green, blue, plus bands invisible to us like near-infrared and thermal infrared. Each band is a separate layer over the same grid.
 
-Landsat satellite imagery, with its **multispectral bands**, is extensively used for environmental monitoring. It allows for tracking changes in land cover, assessing vegetation health, monitoring water quality, and detecting forest fires. Researchers and environmental agencies use multispectral data to make informed decisions regarding conservation and resource management.
+This is what makes satellite imagery analytically powerful rather than just pretty. Different materials reflect differently across the spectrum: vegetation reflects strongly in near-infrared while water absorbs it, so a band the human eye can't see turns out to be the best way to map plant health or find a flooded field.
 
-### Color Rasters
+**Example: Landsat.** Used for tracking land cover change, assessing vegetation health, monitoring water quality, detecting fires.
 
-Colour rasters are a digital image representation that utilizes the combination of three primary colour channels: **red, green, and blue (RGB)** to create a full range of colors. Each pixel in a colour raster is assigned values for these three color channels, which determine the pixel's color.
+### Colour Rasters
 
-Example: **Digital Photographs**
+*Three bands: red, green, blue.*
 
-Coluor rasters, as seen in digital photographs can be used for social sciences by analysing pixel differences.
+The everyday case — a digital photograph. Each pixel carries an R, a G and a B value, and their combination gives the colour you see. Technically a multispectral raster restricted to the three bands our eyes happen to have receptors for.
+
+**Example: digital photographs and optical satellite imagery**, including before/after imagery used in damage assessment.
 
 ### Elevation Rasters
 
-Elevation rasters are a type of digital representation that use a grid of values to depict the varying heights or elevations of the Earth's surface across different locations. Each pixel in an elevation raster contains a numerical value representing the height or elevation above a reference point, such as sea level. Elevation rasters are commonly used in geospatial applications, cartography, and terrain modeling. They enable precise visualization and analysis of topographic features, such as mountains, valleys, and slopes, making them essential for tasks like mapmaking, land-use planning, flood risk assessment, and 3D visualization of landscapes.
+*One band, where the value is height.*
 
-Example: **Digital Elevation Models (DEMs)**
+Each cell holds elevation above (or below) a reference point, usually sea level. These are **Digital Elevation Models (DEMs)** — the basis for topographic mapping, slope and terrain analysis, hydrological and flood modelling, and route planning.
 
-DEMs are vital for creating topographic maps, analyzing terrain, and conducting spatial modeling. They find applications in urban planning, flood risk assessment, route planning, and 3D visualization. DEMs enable precise representation of Earth's surface elevation, supporting a wide range of geospatial applications.
+You'll work with a DEM of Lebanon in the lab. Watch out for the negative values: that file includes **bathymetry** — depth below sea level — so the Mediterranean isn't blank.
+
+## Resolution
+
+Two kinds of resolution decide what a raster can and can't show you, and both involve a trade-off.
+
+### Spatial resolution
+
+How much ground does one pixel cover? Measured in **metres per pixel**.
+
+- **1 km/pixel** — very coarse. A whole town is one cell. Fine for global vegetation or sea-surface temperature.
+- **30 m/pixel** — medium. Roughly a city block per cell. This is Landsat.
+- **1 m/pixel or finer** — individual buildings and trees. Usually commercial, usually expensive.
+
+Higher resolution means more detail — but also much bigger files, more compute, and often **less frequent revisits**.
+
+### Temporal resolution
+
+How often does the satellite come back? Also called the **revisit time** or repeat cycle.
+
+Short revisit cycles let you track fast-moving things — floods, fires, crop cycles. Longer cycles usually trade frequency for higher spatial resolution. You rarely get both.
+
+::: callout-important
+## Data volume is a real constraint, not a footnote
+
+A single Sentinel-2 scene is several gigabytes. Multiply by revisit frequency, by years, by area, and raster analysis becomes as much a data-management problem as an analytical one. This is why cloud-based processing (Google Earth Engine, Microsoft Planetary Computer) has largely replaced downloading files to your laptop for serious work.
+:::
+
+## Where the data comes from
+
+Higher spatial resolution data tends to be costly commercial product. Lower resolution data is free, mostly from public space agencies:
+
+- [USGS Earth Explorer](https://earthexplorer.usgs.gov/) — Landsat and much else
+- [NASA Earthdata Search](https://search.earthdata.nasa.gov/search)
+- [Copernicus Data Space](https://dataspace.copernicus.eu/) — Sentinel imagery (replaced the retired SciHub)
+- [AppEEARS](https://appeears.earthdatacloud.nasa.gov/) — extract by area rather than downloading whole scenes
+- [Landsat on AWS](https://aws.amazon.com/marketplace/pp/prodview-ivr4jeq6flk7u)
+
+Most need a free account, and all involve large files.
 
 ## Satellite data for Social Science
 
-Have a look at
+Why should a social scientist care about pixels? Because satellites see places that statistical systems don't — consistently, repeatedly, and for decades. Where census data is missing, outdated, or politically shaped, imagery offers an independent measurement.
 
--   Jean, Neal, et al. 2016 ["Combining satellite imagery and machine learning to predict poverty."](https://www.science.org/doi/full/10.1126/science.aaf7894?casa_token=vIElPwXK8iwAAAAA%3APEuxEqOASCbCw4EmotD1t4qXr8Vs9heB7p7MM2TcUchvpVHqgeU9LejCOSouutlxkOsOKOmFObLUMg) Science
+Two papers worth reading, both of which you'll see referenced in the lecture:
 
--   Henderson, J. Vernon, Adam Storeygard, and David N. Weil. 2012. [Measuring Economic Growth from Outer Space](https://www.aeaweb.org/articles?id=10.1257/aer.102.2.994) American Economic Review, 102 (2): 994-1028. [Replication data](https://www.openicpsr.org/openicpsr/project/112518/version/V1/view)
+- Henderson, J. Vernon, Adam Storeygard, and David N. Weil. 2012. [Measuring Economic Growth from Outer Space](https://www.aeaweb.org/articles?id=10.1257/aer.102.2.994), *American Economic Review*, 102 (2): 994-1028. [Replication data](https://www.openicpsr.org/openicpsr/project/112518/version/V1/view) — uses nighttime lights as a proxy for GDP growth, particularly where national accounts are unreliable.
+
+- Jean, Neal, et al. 2016. ["Combining satellite imagery and machine learning to predict poverty"](https://www.science.org/doi/full/10.1126/science.aaf7894), *Science* — trains a model on daytime imagery to predict household consumption across African countries.
+
+::: callout-warning
+## Read these critically
+
+Both papers are landmarks, and both rest on a proxy. Brighter is not automatically richer — light reflects infrastructure, electrification policy and industrial activity as much as it reflects income. When you map nighttime lights in the lab, ask yourself what a bright cell actually tells you, and what it doesn't.
+:::
+
+## From pixels to policy
+
+There is a gap between "satellite data exists" and "I can use satellite data in my analysis", and it is wider than it looks:
+
+- A single scene is **gigabytes**
+- Much of your imagery is **hidden under cloud**
+- Cleaning, mosaicking and modelling need real compute and remote-sensing knowledge
+- And pixels don't line up with the units social science uses — LSOAs, wards, local authorities
+
+Getting from one to the other takes four steps:
+
+1.  **Raw** — spectral values arrive noisy, partly cloud-covered
+2.  **Clean** — many passes through time are combined into a cloud-free composite
+3.  **Model** — cleaned spectral values become a meaningful indicator: surface temperature, vegetation, cloud probability, light
+4.  **Aggregate** — pixels are pooled into administrative units, so the data can join to censuses, surveys and policy frameworks
+
+**Step 4 is where a raster becomes a choropleth** — and where the skills from the previous section pick back up.
+
+::: callout-tip
+## Want to go further with satellite data?
+
+Running that pipeline is the whole business of [**Imago**](https://imago.ac.uk), the imagery data service for sustainability, prosperity and wellbeing, part of [Smart Data Research UK](https://www.sdruk.ukri.org/) and based partly here at Liverpool. They publish the output as ready-to-use LSOA/MSOA-level statistics — no gigabyte downloads, no remote-sensing algorithms, small-area detail preserved rather than flattened into regional averages.
+
+- [**From grids to areas**](https://imago-sdruk.github.io/Imago_training/satellites_to_areas.html) — the full walkthrough of the four steps above, with the spectral bands, resolution and revisit-cycle background behind them. **Start here.**
+
+- [**Imago training**](https://imago-sdruk.github.io/Imago_training/) — free, openly licensed trainings in both `R` and `Python`, covering air temperature, precipitation and SPF. Several run directly in your browser, no installation needed.
+
+Worth knowing: the **SPF data you mapped in the choropleths lab** was satellite-derived cloud probability that had already been through this entire pipeline. You were doing raster analysis without ever touching a raster — which is rather the point of a service like this.
+:::
+
+## In the lab
+
+You'll work through the pipeline yourself, on two datasets:
+
+**Terrain (Lebanon)** — load a DEM, check and fix its CRS, **crop** then **mask** it to the country boundary, style it with a proper elevation palette, and **extract** raster values at survey point locations.
+
+**Night lights (Kenya & Tanzania)** — stack multi-year rasters, compute **zonal statistics** (mean light per administrative region), and map 1992 against 2013.
+
+::: callout-note
+## Two things that trip everyone up
+
+**CRS mismatches** are the single most common reason raster code silently returns `NA`. Check before you extract, not after.
+
+**Crop before you mask.** Both narrow a raster to your area of interest, but cropping is a cheap rectangular cut while masking tests every cell against a polygon. Shrink the problem first.
+:::
+
+## R and Python side by side
+
+The labs for this session cover the same ground in both languages. Here is how the key functions line up, so you can follow either lab (or switch between them) without losing the thread:
+
+| Task | R (`terra`) | Python (`rasterio`) |
+|----|----|----|
+| Load a raster | `rast()` | `rasterio.open()` |
+| Inspect it | print the object | `.profile` |
+| Check the CRS | `crs()` | `.crs` |
+| Reproject | `project()` | `calculate_default_transform()` + `reproject()` |
+| Crop to a bounding box | `crop()` | `mask(..., crop=True, filled=False)` |
+| Mask to a shape | `mask()` | `mask(..., crop=True)` |
+| Extract at points | `terra::extract()` | `.sample()` |
+| Zonal statistics | `exact_extract()` | `rasterstats.zonal_stats()` |
+| Bin values into classes | `cut()` | `pd.cut()` |
+| Map it | `geom_spatraster()` (`tidyterra`) | `rasterio.plot.show()` |
+
+::: callout-note
+The biggest practical difference is **reprojection**. `terra::project()` is a single call; `rasterio` makes you calculate the new grid and write the output yourself. That's not `rasterio` being awkward — it's exposing the step that `terra` hides, namely that reprojecting a raster means building a whole new grid and estimating values for it. Worth remembering whichever language you use.
+:::
 
 ## Further readings
 
--   [Raster Data in R](https://www.neonscience.org/resources/learning-hub/tutorials/raster-data-r)
+- [Spatial Data Science with R and `terra`](https://rspatial.org/) — free online book, the best general reference
+
+- [Raster Data in R](https://www.neonscience.org/resources/learning-hub/tutorials/raster-data-r) — NEON tutorial
+
+- [`tidyterra`](https://dieghernan.github.io/tidyterra/) — using rasters inside `ggplot`
+
+- [Geocomputation with R, raster chapter](https://r.geocompx.org/spatial-class#raster-data)

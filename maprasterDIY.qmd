@@ -2,32 +2,118 @@
 
 Let's work with some more raster data! In this section, you will practice the concepts and code we have learnt in this block. Happy hacking!
 
+::: callout-tip
+## What you're practising
+
+The lab walked you through a worked example. Here you do it on data you haven't seen before — which is where you find out what you actually understood.
+
+- **Task I** — the full terrain workflow: load, check CRS, crop, mask, visualise
+- **Task II** — the raster → vector bridge: zonal statistics and a choropleth
+- **Task III** — a time series, and the harder question of what it *means*
+
+Tasks I and II use the same Corsica data. Task III is open-ended — pick your own country.
+:::
+
 ## Data preparation
 
-We are going to work with some data of Corsica, a region of France. If you want to challenge yourself you can download the data and pre-process it yourself using [Earth Explorer](https://earthexplorer.usgs.gov/).
+We are going to work with some elevation data for **Corsica**, a region of France. If you want to challenge yourself you can download and pre-process it yourself using [Earth Explorer](https://earthexplorer.usgs.gov/).
 
-If not you can download it [here](https://theuniversityofliverpool-my.sharepoint.com/:u:/g/personal/pietrost_liverpool_ac_uk/EYaxWikecFxPqLTzUNp7Ch0Bxxiv9hyv1bg5lzh6fUcTrg?e=bTdi70). You will need to be signed into your UoL account.
+::: callout-important
+Otherwise, download the prepared Corsica raster from the course repository's [data files](https://github.com/GDSL-UL/gds/tree/main/data) — no login required.
+:::
 
-You will then need to download the shapefiles for France. You can use [GADM](https://gadm.org/formats.html) which has made available national and subnational shapefiles for the world.[Geoboundaries](https://www.geoboundaries.org/) also provide a database of political administrative boundaries.
+You will then need administrative boundaries for France. Two good free sources:
 
-### Task I: Join by attribute
+- [GADM](https://gadm.org/formats.html) — national and subnational boundaries for the whole world
+- [geoBoundaries](https://www.geoboundaries.org/) — an open alternative, with clearer licensing
 
-1.  Plot your data and the CRS. Make sure your files are in the same CRS. Usually France uses the projected coordinate system [Lambert 93](https://epsg.io/2154) or EPSG = 2154
-2.  Crop and Mask the data
-3.  Visualise the elevation in `R` or `Python`.
+::: {.callout-note collapse="true"}
+## Which administrative level should I download?
 
-## Advanced
+GADM gives you several levels: level 0 is the country, level 1 the *régions*, level 2 *départements*, and so on. Corsica is a single région made up of two départements.
 
-Working on a time-series representation of the evolution of Nights Lights in a **country of your choice**. As in the lab, the data can be found [here](https://www.ngdc.noaa.gov/eog/data/web_data/v4composites/).
+For **Task I** you want a boundary to crop and mask against — level 1 (Corse) is the natural choice. For **Task II** you need multiple polygons to compute statistics *for*, so go one level finer.
+:::
 
-### Task II:
+## Task I: Terrain
 
-1.  Process the data and make a map with at least two years of night lights data.
-2.  Think about the story the data is telling you.
-    -   How have night lights evolved over time in your country of choice? Remember this will mean different things for different countries.
+1.  Load the raster and the boundary shapefile. Plot both, and check the CRS of each.
 
-    -   What choices have you made in terms of bins, colours, zoom level to tell your story?
+2.  Get them into the same CRS. France typically uses the projected system [Lambert 93](https://epsg.io/2154), `EPSG:2154`. Think about which layer you should reproject, and why.
+
+3.  **Crop** and then **mask** the raster to Corsica.
+
+4.  Visualise the elevation, in `R` or `Python`. Then improve it: sensible breaks, an appropriate palette, a legend that says what the units are.
+
+::: {.callout-tip collapse="true"}
+## Hints
+
+- If your masked raster comes out entirely empty or entirely `NA`, that's almost always a CRS mismatch — the two layers don't overlap in the coordinate space they think they're in.
+- Reprojecting the **vector** is cheaper and lossless; reprojecting the **raster** resamples and changes your values slightly. But your final map needs everything in one CRS, and for area or distance work it should be a projected one. Which way did the lab go, and does the same reasoning apply here?
+- Corsica is mountainous — a palette designed for terrain (hypsometric tints) will read far better than a generic sequential ramp.
+:::
+
+## Task II: From raster to choropleth
+
+This is the step that makes raster data usable alongside everything else in this course.
+
+1.  Load a finer administrative level for Corsica (départements, or finer still if available).
+
+2.  Compute **zonal statistics** — mean elevation per polygon. Add the count too.
+
+3.  Map the result as a choropleth.
+
+4.  Now think about it: does mean elevation per département actually tell you anything useful? What would `max` or the standard deviation tell you instead?
+
+::: {.callout-tip collapse="true"}
+## Hints
+
+- `exact_extract()` in `R`, `zonal_stats()` in Python — both take the polygons and the raster and hand you back a table.
+- Watch out for `NA`/`nodata` values, especially if your raster includes bathymetry. A mean that silently includes sea-level or negative values will be misleading.
+- Once you have the table, this is an ordinary choropleth — everything you learned in the [vector mapping section](mapvector.html) applies.
+:::
+
+## Task III: Advanced — night lights over time
+
+Work on a time-series representation of the evolution of night lights in a **country of your choice**. As in the lab, the data can be found [here](https://www.ngdc.noaa.gov/eog/data/web_data/v4composites/).
+
+1.  Process the data and make a map with **at least two years** of night lights data.
+
+2.  Think about the story the data is telling you:
+
+    - How have night lights evolved over time in your country of choice? Remember this will mean different things for different countries.
+
+    - What choices have you made in terms of bins, colours, and zoom level to tell your story? Would a different set of breaks tell a different story?
+
+::: callout-warning
+## Be careful what you claim
+
+Night lights are a **proxy**, and a loose one. A brighter map might mean economic growth — or rural electrification, a change in street-lighting policy, new industrial infrastructure, or simply a different satellite sensor with different calibration. The DMSP-OLS series in particular has known inter-satellite inconsistencies across years.
+
+Whatever story you tell, name the assumption it rests on.
+:::
+
+::: {.callout-tip collapse="true"}
+## Sense-check your story
+
+One way to test whether "brighter = development" holds for your country is to compare against an independent measure. Access to electricity is a good one — if lights rose sharply but electrification didn't, something else is going on.
 
 <iframe src="https://ourworldindata.org/grapher/share-of-the-population-with-access-to-electricity" loading="lazy" style="width: 100%; height: 600px; border: 0px none;">
 
 </iframe>
+:::
+
+## Alternative: work with UK data instead
+
+If you'd rather not wrangle multi-gigabyte global rasters — or you want something closer to a UK dissertation topic — you can do Tasks I and II with pre-processed satellite-derived data instead.
+
+::: callout-tip
+## Imago
+
+[**Imago**](https://imago.ac.uk) publishes satellite-derived indicators already aggregated to LSOA/MSOA level: air temperature, precipitation, cloud probability (SPF). The pixel work is done, so you can go straight to the analysis and mapping.
+
+- [**Imago training**](https://imago-sdruk.github.io/Imago_training/) — worked examples in both `R` and `Python`, several runnable in your browser
+- [**From grids to areas**](https://imago-sdruk.github.io/Imago_training/satellites_to_areas.html) — what happened to the pixels before you got them
+
+A good self-set challenge: take an Imago indicator, join it to a deprivation measure like the IMD, and see whether the two are spatially related. That's Task II's skills applied to a real research question.
+:::

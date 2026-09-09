@@ -1,51 +1,73 @@
 # Lab in R {#sec-map-raster-R .unnumbered}
 
-In this session, we will further explore the world of geographic data visualization by building upon our understanding of both raster data and choropleths. Raster data, consisting of gridded cells, allows us to represent continuous geographic phenomena such as temperature, elevation, or satellite imagery. Choropleths, on the other hand, are an effective way to visualize spatial patterns through the use of color-coded regions, making them invaluable for displaying discrete data like population density or election results. By combining these techniques, we will gain a comprehensive toolkit for conveying complex geographical information in a visually compelling manner.
+Everything we have mapped so far has been **vector** data — points, lines and polygons, each with a geometry and a row in a table. Raster data works differently: a regular grid of cells, each holding a single value, with no table of attributes at all.
+
+That difference matters more than it sounds. A raster doesn't know about "neighbourhoods" or "households" — it just knows that cell (1450, 2013) has the value 847. Much of working with raster data is about bridging that gap: getting from *a grid of numbers* to *something you can join to the social and administrative data you actually care about*.
+
+::: callout-tip
+## What you'll be able to do by the end
+
+- Load a raster, check its CRS, and reproject it
+- **Crop** and **mask** it down to an area of interest
+- Style it so it actually communicates something
+- **Extract** raster values at point locations — the raster → vector bridge
+- Compute **zonal statistics** — one value per administrative area, ready to join and map as a choropleth
+:::
 
 ## Installing Packages
 
 ```{r message=FALSE, warning=FALSE}
-# Provides various utility functions for R programming.
+# Provides various utility functions for R programming (we use it to unzip .gz files)
 library(R.utils)
 # For data manipulation and transformation.
 library(dplyr)
-# Spatial data
+# For reshaping data (we use pivot_longer to facet maps by year)
+library(tidyr)
+# Spatial vector data
 library(sf)
 # Popular data visualization package in R.  
 library(ggplot2)
-# For creating thematic maps 
-library(tmap)
 # Color palettes suitable for data visualization, especially for those with color vision deficiencies.
 library(viridis)
 # A collection of color palettes for data visualization.
 library(RColorBrewer)
-# For working with raster data, such as gridded spatial data like satellite imagery or elevation data.
-library(raster)
-# An alternative to the 'raster' package and is used for working with large raster datasets efficiently.
+# The modern package for working with raster data -- gridded spatial data like satellite imagery or elevation
 library(terra)
 # Tools for extracting data from raster layers at exact locations, often used in spatial analysis.
 library(exactextractr)
-# Common methods of the tidyverse packages for objects created with the {terra} package: SpatRaster and SpatVector
+# Lets ggplot2 and the tidyverse work directly with terra objects (SpatRaster, SpatVector)
 library(tidyterra)
 ```
+
+::: callout-note
+## `terra`, not `raster`
+
+You may see older tutorials use the `raster` package. It has been **superseded by `terra`**, written by the same author — `terra` is faster, handles larger files, and is what you should learn now. We use `terra` throughout this lab. If you hit code online that uses `raster`, the function names usually map across fairly directly (`raster()` → `rast()`, `extent()` → `ext()`).
+:::
 
 ## Terrain data
 
 ### **Import raster data**
 
-Raster **terrain** data consists of gridded elevation values that represent the topography of a geographic area. You can download this from the [relevant github folder](https://github.com/pietrostefani/gds/tree/main/data/Lebanon). A good place to download elevation data is [Earth Explorer](https://earthexplorer.usgs.gov/). This [video](https://www.youtube.com/watch?v=NQg0g9ObhXE) takes you through the download process if you want to try this out yourself.
+Raster **terrain** data consists of gridded elevation values that represent the topography of a geographic area. You can download this from the [relevant github folder](https://github.com/GDSL-UL/gds/tree/main/data/Lebanon). A good place to download elevation data is [Earth Explorer](https://earthexplorer.usgs.gov/). This [video](https://www.youtube.com/watch?v=NQg0g9ObhXE) takes you through the download process if you want to try this out yourself.
 
 We first import a raster file for elevation.
 
 ```{r lebanon-import_a_raster}
 elevation <- rast("data/Lebanon/LBN_elevation_w_bathymetry.tif")
+
+elevation
 ```
+
+Printing the object is worth a moment. Unlike an `sf` object, there's no table of rows — instead you get the **dimensions** (how many cells), the **resolution** (how much ground each cell covers), the **extent** (the bounding box), and the **CRS**. That's the anatomy of every raster you'll meet.
 
 Plot it.
 
 ```{r}
 plot(elevation) 
 ```
+
+Note the values below zero: this file includes **bathymetry** (depth below sea level) as well as elevation, which is why the Mediterranean shows up rather than being blank.
 
 Have a look at the CRS.
 
@@ -60,186 +82,150 @@ Import the Lebanon shapefile, plot it, and verify its Coordinate Reference Syste
 ```{r lebanon-import_shp}
 Lebanon_adm1 <- read_sf("data/Lebanon/LBN_adm1.shp")
 plot(Lebanon_adm1$geometry)
-crs(Lebanon_adm1)
+st_crs(Lebanon_adm1)$input
 ```
 
 ### **Reproject the Raster**
 
-As we are using both the `raster` and `terra` packages to handle the raster data it is useful to write `terra::` or `raster::` in front of the function we are using.
-
-We use the terra `project()` function, we need to define two things:
+We use the terra `project()` function. We need to define two things:
 
 1.  The object we want to reproject and
 2.  The CRS that we want to reproject it to.
 
 ```{r lebanon-reproject}
-elevation <- terra::project(elevation, crs(Lebanon_adm1)) # reporjectig the elevation data to the crs of the Lebanon shapefile
-crs(elevation)
+elevation <- terra::project(elevation, crs(vect(Lebanon_adm1))) # reproject the elevation data to the crs of the Lebanon shapefile
+crs(elevation, describe = TRUE)$name
 ```
+
+::: callout-important
+Reprojecting a raster is **not** the same as reprojecting a vector. Vector reprojection just moves coordinates. Raster reprojection has to build a whole new grid and *estimate* values for the new cells — so it necessarily changes your data slightly. Reproject once, as early as possible, and avoid doing it repeatedly.
+:::
 
 ### **Cropping and Masking**
 
-Cropping and masking are both spatial operations used in raster data analysis.
+Cropping and masking are both spatial operations used to narrow a raster down to an area of interest — but they do different things:
 
-**Cropping**:
+**Cropping**
 
--   Purpose: Cropping a raster involves changing the extent of the raster dataset by specifying a new bounding box or geographic area of interest. The result is a new raster that covers only the specified region.
+- Purpose: changes the **extent** of the raster by cutting it down to a new bounding box. The result is a smaller, rectangular raster.
 
--   Typical Use: Cropping is commonly used when you want to reduce the size of a raster dataset to focus on a smaller geographic area of interest while retaining all the original data values within that area.
+- Typical Use: reducing the size of a raster to focus on a smaller geographic area while retaining all the original values within that area.
 
-**Masking**:
+**Masking**
 
--   Purpose: Applying a binary mask to the dataset. The mask is typically a separate raster or polygon layer where certain areas are designated as "masked" (1) or "unmasked" (0).
+- Purpose: sets cells **outside a given shape** to `NA`, keeping the extent the same. The result is the same size, but with everything outside your polygon blanked out.
 
--   Typical Use: Masking is used when you want to extract or isolate specific areas or features within a raster dataset. For example, you might use a mask to extract land cover information within the boundaries of a protected national park.
+- Typical Use: isolating specific areas or features — for example extracting land cover within the boundaries of a protected national park.
 
-In many cases, these cropping and masking are executed one after the other because it is computationally easier to crop when dealing with large datasets, and then masking.
+::: callout-tip
+## Why do both, and in this order?
+
+Cropping is a cheap rectangular operation; masking has to test every cell against a polygon boundary. **Crop first, then mask** — you shrink the problem before doing the expensive part. On a large raster this can be the difference between seconds and minutes.
+:::
 
 ```{r lebanon-crop}
-elevation_lebanon <- crop(elevation, extent(Lebanon_adm1))
-elevation_lebanon_mask <- mask(elevation_lebanon, Lebanon_adm1)
+elevation_lebanon <- crop(elevation, vect(Lebanon_adm1))
+elevation_lebanon_mask <- mask(elevation_lebanon, vect(Lebanon_adm1))
 ```
+
+Note `vect()` — that converts an `sf` object into terra's own vector class (`SpatVector`), which is what `terra` functions expect.
+
+::: callout-note
+Compare the two results to see the difference for yourself:
+
+```{r lebanon-crop-vs-mask}
+par(mfrow = c(1, 2))
+plot(elevation_lebanon, main = "Cropped only")
+plot(elevation_lebanon_mask, main = "Cropped + masked")
+par(mfrow = c(1, 1))
+```
+:::
 
 ### **Plot elevation**
 
 ```{r lebanon-plot}
 plot(elevation_lebanon_mask)
-plot(Lebanon_adm1$geometry, col= NA, add=T)
+plot(Lebanon_adm1$geometry, col = NA, add = TRUE)
 ```
 
 Let's improve this a bit. Remember that there is a lot we can do with [ColorBrewer](https://colorbrewer2.org/#type=sequential&scheme=BuGn&n=3).
 
 ::: {.panel-tabset group="data"}
-# `plot`
+## Base `plot`
 
 ```{r lebanon-changecolours}
 #| warning = FALSE
 
-pal = rev(brewer.pal(6,"Oranges"))
-plot(elevation_lebanon_mask, breaks=c(-100,0,700,1200,1800,3300), col=pal)
-plot(Lebanon_adm1$geometry, col= NA, add=T)
+pal <- rev(brewer.pal(6, "Oranges"))
+plot(elevation_lebanon_mask, breaks = c(-100, 0, 700, 1200, 1800, 3300), col = pal)
+plot(Lebanon_adm1$geometry, col = NA, add = TRUE)
 ```
 
-# `tmap`
+## `ggplot`
 
-```{r}
+`tidyterra` gives us `geom_spatraster()`, which lets a `SpatRaster` slot straight into the `ggplot` grammar you already know:
+
+```{r lebanon-ggplot}
 #| warning = FALSE
 
-# Define the palette
-pal <- rev(brewer.pal(6, "Oranges"))
-
-# Create the base map
-tm_shape(elevation_lebanon_mask) +
-  tm_raster(breaks = c(-100, 0, 700, 1200, 1800, 3300),
-            palette = pal) +  # Plot the raster with breaks and palette
-  tm_shape(Lebanon_adm1) +
-  tm_borders(lwd = 2) +  # Add borders to the administrative boundaries
-tm_layout(frame = FALSE, legend.outside = TRUE, legend.outside.position = "right")  # Remove frame
+ggplot() +
+  geom_spatraster(data = elevation_lebanon_mask) +
+  geom_sf(data = Lebanon_adm1, fill = NA, colour = "grey20", linewidth = 0.4) +
+  scale_fill_hypso_c(palette = "dem_poster", na.value = NA, name = "Elevation (m)") +
+  labs(title = "Elevation in Lebanon") +
+  theme_void()
 ```
+
+`scale_fill_hypso_c()` is a `tidyterra` scale built specifically for elevation — it uses a **hypsometric** palette, the green-through-brown-to-white convention you see on physical atlases. Much more legible for terrain than a generic sequential ramp.
 :::
 
-Questions to ask yourself about how you can improve these maps, going back to [geo-visualisation and choropleths](https://pietrostefani.github.io/gds/mapvector.html).
+Questions to ask yourself about how you can improve these maps, going back to [geo-visualisation and choropleths](mapvector.html):
 
--   What are the logical breaks for elevation data?
+- What are the logical breaks for elevation data? Sea level is a natural one — are the others meaningful, or arbitrary?
 
--   Should the colours be changed to standard elevation pallettes?
+- Should the colours be changed to standard elevation palettes? (Compare the two tabs above.)
 
--   Have a look at some of the [`tmap` documentation](https://r-tmap.github.io/tmap/reference/tm_layout.html) to improve your map further .
-
-````{=html}
-<!--
-### **Slope**
-
-We are now going to calculate slopes of the `terra` package.
-
-```{r rasters}
-# import elevation data
-elevation_proj <- rast("data/Lebanon/DEM_Leb_projected.tif")
-
-slope <- terra::terrain(elevation_proj, v="slope", neighbors=8, unit="degrees")
-plot(slope)
-```
-
-Alternatively you can try out the function `raster::terrain`, details [here](https://www.rdocumentation.org/packages/raster/versions/3.6-23/topics/terrain).
-
-Now let's stylise the contours. The package `tidyterra` provides a great solution by combingn the methods of the `tidyverse` packages for objects SpatRaster objects. See [here](https://dieghernan.github.io/tidyterra/reference/geom_spat_contour.html) for more information.
-
-```{r}
-ggplot() +
-  geom_spatraster_contour(data = elevation_proj)
-
-# Create a new ggplot2 plot object.
-ggplot() +
-  # Add a spatial raster contour layer to the plot.
-  geom_spatraster_contour(
-    data = elevation_proj,               # Use the 'elevation' data for this layer.
-    aes(color = after_stat(level)), # Color the contour lines based on 'level'.
-    binwidth = 100,                # Define the binwidth for contouring. Every 100 metres
-    linewidth = 0.4               # Set the line width for contour lines.
-  ) +
-  # Customize the color scale for contour lines.
-  scale_color_gradientn(
-    colours = hcl.colors(20, "Terrain2"), # Specify a color palette.
-    guide = guide_coloursteps()           # Use a color step guide for legend.
-  ) +
-  # Apply a minimalistic theme to the plot.
-  theme_minimal()
-```
-
-Have a play around with [hcl.color](https://blog.r-project.org/2019/04/01/hcl-based-color-palettes-in-grdevices/).
-
-### **Flood risk area**
-
-We can employ reclassification techniques to delineate flood risk areas. Specifically, we identify and classify areas where the elevation is under 10 meters above sea level as high-risk zones. This critical step in flood risk assessment helps communities and decision-makers pinpoint vulnerable areas, enabling them to implement effective mitigation strategies and disaster preparedness plans to safeguard against potential flooding events.
-
-```{r floodrisk}
-flood_risk <- app(elevation_proj, fun= function(x) ifelse(x<10, 1, 0))
-# This is an anonymous function defined within the 'app' function.
-# It checks each pixel (or cell) value in the 'elevation' raster or matrix.
-# If the pixel value is less than 10 meters, it assigns 1 to 'flood_risk'; otherwise, it assigns 0. This effectively creates a binary flood risk map, where 1 represents areas with a flood risk (elevation < 10m), and 0 represents areas with no flood risk (elevation >= 10m).
-plot(flood_risk)
-```
--->
-````
+- Does the reader know what the units are?
 
 ### **Spatial join with vector data**
 
-You might want to extract values from a raster data set, and then map them within a vector `sf` framework or extract them to analyse them statistically. If it therefore very useful to know how to extract:
+Here is the bridge between the two data models. You have a raster of elevation, and a set of points — survey households. You want each household to know its own elevation.
 
 ```{r extract}
 # Load some geo-localised survey data 
 households <- read_sf("data/Lebanon/random_survey_LBN.shp")
 
-# Using the 'raster::extract' function, it calculates the elevation values at the coordinates of the points. 'elevation' is a raster layer, and 'households' is point data representing household locations.
-housesales_elevation <- raster::extract(elevation,
-                                households)
+# terra::extract() reads the raster value at each point location.
+# 'elevation' is the raster; 'households' the point locations.
+household_elevation <- terra::extract(elevation, vect(households))
 
-# Attach elevation at each point to the original housesales dataframe
-households <- cbind(households, housesales_elevation)
+# Attach elevation at each point to the original households dataframe
+households <- cbind(households, household_elevation)
 
 # Check out the data
 head(households)
 ```
 
-::: callout-important
-Make sure all your data is in the same CRS, otherwise the `raster::extract` function will not work properly.
+`terra::extract()` returns a data frame with an `ID` column (which point) plus one column per raster layer — so after `cbind()` your points carry their elevation as an ordinary attribute. From here it is just a table: you can model it, summarise it, or map it as a normal point layer.
 
-You should not be seeing NAs, if you do you should use the terra `project()` function.
+::: callout-important
+Make sure all your data is in the same CRS, otherwise the extraction will not work properly.
+
+**If you get a column of `NA`s, this is almost always why.** Check with `crs(elevation)` and `st_crs(households)`, and reproject with terra's `project()` before extracting.
 :::
 
 ## Night Lights
 
 This section is a bit more advanced, there are hints along the way to make it simpler.
 
-### **Some useful functions**
+Nighttime lights are one of the most widely used satellite products in social science — they are a proxy for economic activity that is available consistently, globally, and for decades, in places where reliable statistics simply don't exist. (Recall Henderson et al. from the lecture.) Here we'll go from raw imagery to a choropleth of light per administrative region.
 
-To start this exercise, let's see some useful functions to manipulate data in R.
+::: {.callout-note collapse="true"}
+## Refresher: some useful R functions
+
+This section leans on file manipulation and custom functions. If those are rusty, expand this and work through it first.
 
 ```{r output=FALSE}
-
-# Before we get to clean the data, let's go over a few useful function
-# set the working directory to where you saved the ENVS363_563 data
-
 # list files 
 list.files()
 
@@ -262,16 +248,16 @@ file1
 # how many characters in the filename
 nchar(file1)
 
-# let's remove the last 4 charcters (the file extension)
-file1_short <- substr(file1, 1, nchar(file1)-4)
+# let's remove the last 4 characters (the file extension)
+file1_short <- substr(file1, 1, nchar(file1) - 4)
 
 # let's add something to the name (concatenate strings) - for example, a new extension ".tif"
-paste(file1_short, ".tif", sep="")
+paste(file1_short, ".tif", sep = "")
 
-# finally let's create a function MathOperations that first calculate the square and then add 3
+# finally let's create a function MathOperations that first calculates the square and then adds 3
 MathOperations <- function(x) {
   sq <- x^2
-  z <- sq+3
+  z <- sq + 3
   return(z)
 }
 
@@ -282,20 +268,19 @@ MathOperations(6)
 
 # repeat this operation for the vector 4 to 6 (similar to a loop in STATA)
 lapply(4:6, function(x) MathOperations(x))
-
-
 ```
+:::
 
 ### **Download data**
 
 ::: {.callout-note title="Download the Data"}
-We need to download some raster data. NOAA has made nighttime lights data available for 1992 to 2013. It is called the Version 4 DMSP-OLS Nighttime Lights Time Series. The files are cloud-free composites made using all the available archived DMSP-OLS smooth resolution data for calendar years. In cases where two satellites were collecting data - two composites were produced. The products are 30 arc-second grids, spanning -180 to 180 degrees longitude and -65 to 75 degrees latitude. We can download the [Average, Visible, Stable Lights, & Cloud Free Coverages for 1992 and 2013](https://www.ngdc.noaa.gov/eog/data/web_data/v4composites/) and put them in the `data/Kenya_Tanzania` folder.
+We need to download some raster data. NOAA has made nighttime lights data available for 1992 to 2013. It is called the Version 4 DMSP-OLS Nighttime Lights Time Series. The files are cloud-free composites made using all the available archived DMSP-OLS smooth resolution data for calendar years. In cases where two satellites were collecting data, two composites were produced. The products are 30 arc-second grids, spanning -180 to 180 degrees longitude and -65 to 75 degrees latitude. We can download the [Average, Visible, Stable Lights, & Cloud Free Coverages for 1992 and 2013](https://www.ngdc.noaa.gov/eog/data/web_data/v4composites/) and put them in the `data/Kenya_Tanzania` folder.
 :::
 
 ::: callout-important
-You can also download the data [here](https://theuniversityofliverpool-my.sharepoint.com/:u:/g/personal/pietrost_liverpool_ac_uk/EX85foAh7ZBBtSZ64pxbFmsBStf8UX2uaLXE5MBYJt6PeQ?e=LMYu7d). You will need to be logged into your UoL account.
+If you have trouble downloading from NOAA, a copy of the two years we need is available from [here](https://theuniversityofliverpool-my.sharepoint.com/:f:/g/personal/pietrost_liverpool_ac_uk/IgAHJu26oswMRqG7c5HZhzx3ATkM5Hb9j0HrSag43-lGPPU?e=1irrJZ) — you need to be logged into your UoL account. Available both as the original *tar* archives and as ready-to-use **TIFs** if you'd rather skip the decompression step.
 
-The downloaded files are going to be in a **"TAR" format**. A TAR file is an archive created by tar, a Unix-based utility used to package files together for backup or distribution purposes. It contains multiple files stored in an uncompressed format along with metadata about the archive. Tars files are also used to reduce files' size. TAR archives compressed with GNU Zip compression may become GZ, .TAR.GZ, or .TGZ files. We need to decompress them before using them.
+A **TAR** file is an archive created by tar, a Unix-based utility used to package files together for backup or distribution purposes. It contains multiple files stored in an uncompressed format along with metadata about the archive. TAR archives compressed with GNU Zip compression may become GZ, .TAR.GZ, or .TGZ files. We need to decompress them before using them.
 :::
 
 Before you move forward **download the data for 1992 and 2013.** It is also good practice to create a scratch folder where you do all your unzipping.
@@ -327,8 +312,20 @@ UnzipSelect <- function(i) {
   untar(file.path(datafolder,"Kenya_Tanzania/scratch",i), exdir = file.path(datafolder, "Kenya_Tanzania/scratch")) # unzip
   all.files <- list.files(file.path(datafolder,"Kenya_Tanzania/scratch"), pattern = paste0(substr(i, 6, 12), "*")) # list extracted files
   gz <- all.files[grepl("web.stable_lights.avg_vis.tif.gz", all.files)] # select the TIF files
+
+  destfile <- file.path(datafolder, "Kenya_Tanzania", substr(gz, 1, nchar(gz) - 3))
+
+  # If we've already decompressed this file on a previous run, skip it.
+  # Without this the chunk only works once, then errors on every re-render.
+  if (file.exists(destfile)) return(destfile)
+
+  # gunzip writes to "<destfile>.tmp" first and refuses to start if that
+  # already exists -- clear any left behind by an interrupted run.
+  tmpfile <- paste0(destfile, ".tmp")
+  if (file.exists(tmpfile)) file.remove(tmpfile)
+
   R.utils::gunzip(filename	= file.path(datafolder,"Kenya_Tanzania/scratch", gz),
-                  destname = file.path(datafolder,"Kenya_Tanzania", substr(gz, 1, nchar(gz) -3)),
+                  destname = destfile,
                   overwrite = TRUE) # unzip again
 }
 
@@ -340,23 +337,41 @@ nl <- lapply(tars, UnzipSelect)
 # unlink(file.path(datafolder,"Kenya_Tanzania/scratch"), recursive = TRUE)
 ```
 
-We can load and plot the nighttime lights data. When working with many rasters of the same origin, it is usually faster to stack them together for faster processing.
+::: callout-important
+## If this chunk errors with "File already exists"
+
+`gunzip()` decompresses into a temporary `.tif.tmp` file before renaming it, and it refuses to run if that temp file is already there — which happens if a previous attempt was interrupted part-way. Note that `overwrite = TRUE` does **not** cover this: it applies to the final destination, not the temp file.
+
+The guards above handle it automatically. If you're still stuck, delete the leftovers by hand and re-run:
+
+```{r cleanup-tmp, eval=FALSE}
+# remove any stray .tmp files from interrupted runs
+file.remove(list.files(file.path(datafolder, "Kenya_Tanzania"),
+                       pattern = "\\.tmp$", full.names = TRUE))
+```
+:::
+
+We can load and plot the nighttime lights data. When working with many rasters of the same origin, it is faster to hold them together as a single multi-layer object — in `terra`, `rast()` does this in one call.
 
 ```{r nightlightststats}
-# load NL
-# we apply the function raster to each tif file to load the raster in the workspace
-nl_rasters <- lapply(nl, raster)
-# we stack the raster (only possible for rasters of the same extent and definition)
-nl_rasters_stack <- stack(nl_rasters)
+# load the night lights rasters as one multi-layer SpatRaster
+# (only possible for rasters of the same extent and resolution)
+nl_rasters <- rast(unlist(nl))
+
+# change the layer names
+names(nl_rasters) <- c("NL1992", "NL2013")
+
 # plot the result
-plot(nl_rasters_stack,  
-     main=c("Nightlights 1992", "Nightlights 2013"),
-     axes=FALSE)
-# change the names 
-names(nl_rasters_stack) <- c("NL1992", "NL2013")
+plot(nl_rasters, axes = FALSE)
 ```
 
 Why can't you see much? Discuss with the person next to you.
+
+::: {.callout-tip collapse="true"}
+## Stuck?
+
+These are **global** rasters, and you're looking at the whole planet. Nearly all of it is dark, and the few bright pixels are tiny at this scale. Two things are going on: the extent is far larger than our area of interest, and the value distribution is extremely skewed — a handful of very bright cells compress everything else into the bottom of the colour ramp. We'll fix the first with zonal statistics, and the second with fixed breaks when we map.
+:::
 
 ### **Country shapefiles**
 
@@ -391,13 +406,15 @@ shps
 
 ### **Zonal statistics**
 
-We use the package `exactextractr` to calculate the sum and average nighttime for each region. The nighttime lights rasters are quite large, but as we do not need to do any operations on them (e.g. calculations using the overlay function, cropping or masking to the shapefiles extent), the process should be relatively fast.
+This is the step that turns a raster into something you can treat like any other table. **Zonal statistics** summarise raster cells within each polygon — giving you one number per administrative region.
+
+We use the package `exactextractr`, which is fast and, unlike simpler approaches, correctly handles cells that only *partly* fall inside a polygon by weighting them by the fraction covered.
 
 Again, we use the `lapply` function to process the two countries successively.
 
 ```{r zonalstats}
 # summarize
-ex <- lapply(shps, function(x) exact_extract(nl_rasters_stack, x, c("sum", "mean", "count"), progress = FALSE))
+ex <- lapply(shps, function(x) exact_extract(nl_rasters, x, c("sum", "mean", "count"), progress = FALSE))
 # lapply returns a list of two dataframes, we can use "do.call" to return each element of the list and iterate the function rbind
 # the results is a dataframe with the merged rows of the dataframes
 ex <- do.call("rbind", ex)
@@ -409,18 +426,21 @@ head(ex)
 summary(ex)
 ```
 
+::: callout-tip
+Note we asked for three statistics — `sum`, `mean` and `count`. Which one you want depends on the question. **Sum** of light is closer to total economic activity; **mean** controls for the fact that regions differ enormously in size (the same MAUP issue you met with choropleths). We map the mean below — try the sum and see how differently the map reads.
+:::
+
 ### **Merge shapefiles**
 
 Even though it is not necessary here, we can merge the shapefile to visualize all the regions at once.
 
-Usually, it is easier to process data in small chunks using a function like "sapply, lapply, mapply" or a loop before merging. For example, when doing zonal statistics, it is faster and easier to process one country at a time and then combine the resulting tables. If you have access to a computer with multiple cores, it is also possible to do "parallel processing" to process each chunk at the same time in parallel.
+Usually, it is easier to process data in small chunks using a function like `sapply`, `lapply`, `mapply` or a loop before merging. For example, when doing zonal statistics, it is faster and easier to process one country at a time and then combine the resulting tables. If you have access to a computer with multiple cores, it is also possible to do "parallel processing" to process each chunk at the same time in parallel.
 
 ```{r merge shapefile}
-
 # merge together
 # we select each sf object and merge the rows
-# do.call() in R to apply a given function to a list as a whole
-# The rbind()  function can be used to bind or combine several vectors, matrices, or data frames by rows
+# do.call() in R applies a given function to a list as a whole
+# rbind() can be used to bind or combine several vectors, matrices, or data frames by rows
 tza_ken <- do.call("rbind", shps)
 
 # inspect
@@ -428,73 +448,136 @@ str(tza_ken)
 
 # plot
 plot(tza_ken$geometry)
-
 ```
 
 ### **Visualize**
 
-Let's have a first look at our result.
+Let's have a first look at our result. Note that from here on, this is just a **choropleth** — exactly what you built in the vector labs. The raster work is done; the output is an ordinary `sf` object with numeric columns.
 
 ```{r plotnl}
 # merge back with shapefile attribute table
 # this time instead of merging the rows, we append the columns using cbind
 df <- cbind(tza_ken, ex)
 
-# Custom palette: dark blue to light yellow
-blue_yellow <- c("#08306B", "#FFFFB2")
-
-# Map for "mean.NL1992"
-map1992 <- tm_shape(df) +
-  tm_polygons(
-    fill = "mean.NL1992",
-    col = "grey", lwd = 0.5,
-    fill.scale = tm_scale(values = blue_yellow),
-    fill.legend = tm_legend(title = "Mean 1992")
-  )
-
-# Map for "mean.NL2013"
-map2013 <- tm_shape(df) +
-  tm_polygons(
-    fill = "mean.NL2013",
-    col = "grey", lwd = 0.5,
-    fill.scale = tm_scale(values = blue_yellow),
-    fill.legend = tm_legend(title = "Mean 2013")
-  )
-
-# Arrange maps side by side
-tmap_arrange(map1992, map2013)
+ggplot(df) +
+  geom_sf(aes(fill = mean.NL1992), colour = "grey60", linewidth = 0.1) +
+  scale_fill_viridis_c(name = "Mean 1992", option = "inferno") +
+  labs(title = "Mean nighttime lights, 1992",
+       subtitle = "Continuous scale — almost everything looks identical") +
+  theme_void()
 ```
 
-Most of the Kenya and Tanzania have really low values. To make the maps tell a story, we can use fixed breaks and make the maps interactive using the `tmap` package:
+That map is nearly useless, and deliberately so. A handful of very bright regions (Nairobi, Dar es Salaam) stretch the colour scale so far that all the actual variation across the rest of the two countries is squashed into the bottom of the ramp.
+
+The distribution shows why:
+
+```{r nl-hist}
+ggplot(df, aes(x = mean.NL1992)) +
+  geom_histogram(bins = 60, fill = "grey30") +
+  labs(x = "Mean nighttime lights, 1992", y = "Number of regions",
+       title = "Extremely skewed — most regions are near zero") +
+  theme_minimal()
+```
+
+To make the maps tell a story, we need **fixed breaks** placed where the variation actually is — bunched up near zero, rather than spread evenly from 0 to 63.
 
 ```{r prettymap, message=FALSE}
-tmap_mode("view") # switch to other mode: ttm()
-
-# define custom palette
-blue_yellow <- c("#08306B", "#FFFFB2")
-
-tm_shape(df) +
-  tm_polygons(
-    fill = c("mean.NL1992", "mean.NL2013"),
-    col = "grey", lwd = 0.5,   # white polygon borders
-    fill.scale = tm_scale(
-      values = blue_yellow,
+# reshape to long format so we can facet the two years side by side
+df_long <- df |>
+  pivot_longer(
+    cols = c(mean.NL1992, mean.NL2013),
+    names_to = "year",
+    values_to = "mean_nl"
+  ) |>
+  mutate(
+    year = recode(year, "mean.NL1992" = "1992", "mean.NL2013" = "2013"),
+    # cut() into explicit classes -- 5 break points give 4 bins,
+    # so we need exactly 4 labels and 4 colours below
+    nl_class = cut(
+      mean_nl,
       breaks = c(0, 0.05, 0.1, 2, 63),
-      style = "fixed"
-    ),
-    fill.legend = tm_legend(title = "Average nightlights")
-  ) +
-  tm_facets(sync = TRUE, ncol = 2) +
-  tm_layout(legend.outside = TRUE, legend.outside.position = "right")
+      labels = c("0 – 0.05", "0.05 – 0.1", "0.1 – 2", "2 – 63"),
+      include.lowest = TRUE
+    )
+  )
 
+ggplot(df_long) +
+  geom_sf(aes(fill = nl_class), colour = "grey70", linewidth = 0.1) +
+  scale_fill_manual(
+    name = "Average\nnightlights",
+    values = c("#08306B", "#2C7FB8", "#7FCDBB", "#FFFFB2"),
+    na.value = "grey90"
+  ) +
+  facet_wrap(~ year) +
+  labs(title = "Nighttime lights, Kenya & Tanzania",
+       subtitle = "Fixed breaks — now the variation is visible") +
+  theme_void()
 ```
 
-::: callout-tip
-Have a think about what the data is telling you. What's the story?
+::: callout-important
+## Why `cut()` rather than a continuous scale with breaks
+
+Binning explicitly with `cut()` and mapping with `scale_fill_manual()` gives you a **discrete** variable, so you control exactly how many classes there are and which colour each one gets. Getting this wrong is a classic trap: `n` break points define `n − 1` bins, so a mismatch between the number of breaks and the number of colours silently produces a map where classes blur together — exactly the flat map we were trying to escape.
+
+If you'd rather keep a continuous scale, the equivalent is `scale_fill_fermenter()` or `scale_fill_stepsn()` — just count your bins carefully.
 :::
 
-# Resources
+::: {.callout-tip collapse="true"}
+## Alternative: a log scale
 
--   Downloading [night lights] (https://github.com/walshc/nightlights/tree/master/R)
+Fixed breaks are one answer to a skewed variable. Another is to transform the scale itself, which avoids having to pick break points by hand:
 
--   The package [`nightlightstats`](https://github.com/JakobMie/nightlightstats)
+```{r nl-log}
+ggplot(df_long) +
+  geom_sf(aes(fill = mean_nl + 0.01), colour = "grey70", linewidth = 0.1) +
+  scale_fill_viridis_c(
+    name = "Average\nnightlights",
+    trans = "log10", option = "inferno",
+    labels = scales::label_number(accuracy = 0.01)
+  ) +
+  facet_wrap(~ year) +
+  labs(title = "Nighttime lights on a log scale") +
+  theme_void()
+```
+
+Note the `+ 0.01`: `log10(0)` is undefined, so regions with zero light would drop out entirely. Adding a small constant keeps them in — but be honest about it, since it's a choice that affects what the reader sees.
+:::
+
+::: callout-tip
+Have a think about what the data is telling you. What's the story? And — carefully — what *isn't* it telling you? Brighter isn't automatically richer.
+:::
+
+## Where this fits: rasters in the wild
+
+You have just done, by hand and on a small scale, roughly what a data service does at national scale and industrial volume:
+
+1.  **Raw** imagery arrives as a noisy grid, partly obscured by cloud
+2.  It gets **cleaned** — many passes combined into a composite
+3.  A model turns spectral values into a **meaningful indicator** — surface temperature, vegetation, cloud probability, light
+4.  Pixels are **aggregated** to administrative units, so the data can be joined to censuses, surveys and policy frameworks
+
+Steps 1–2 we skipped (the NOAA composites arrive pre-cleaned). Step 3 was done for us. Step 4 is exactly what `exact_extract()` did above.
+
+::: callout-tip
+## Want to go further with satellite data?
+
+This is the whole business of [**Imago**](https://imago.ac.uk), the imagery data service for sustainability, prosperity and wellbeing, part of [Smart Data Research UK](https://www.sdruk.ukri.org/). They run that pipeline and publish the output as ready-to-use LSOA/MSOA-level statistics — no gigabyte downloads, no remote-sensing algorithms, small-area detail preserved.
+
+- [**From grids to areas**](https://imago-sdruk.github.io/Imago_training/satellites_to_areas.html) — the full version of the four steps above, with the spectral bands / resolution / revisit-cycle background behind them. **Start here.**
+
+- [**Imago training**](https://imago-sdruk.github.io/Imago_training/) — free, openly licensed trainings in both `R` and `Python`, covering air temperature, precipitation and SPF. Several run directly in your browser with no installation.
+
+Worth knowing: the **SPF data you mapped in the choropleths lab** was satellite-derived cloud probability that had already been through this whole pipeline. You were doing raster analysis without ever touching a raster — which is rather the point of a service like this.
+:::
+
+## Resources
+
+- Downloading [night lights](https://github.com/walshc/nightlights/tree/master/R)
+
+- The package [`nightlightstats`](https://github.com/JakobMie/nightlightstats)
+
+- [`terra` documentation](https://rspatial.github.io/terra/reference/terra-package.html) — the reference for everything in this lab
+
+- [`tidyterra`](https://dieghernan.github.io/tidyterra/) — for using rasters inside `ggplot`
+
+- [Spatial Data Science with R and `terra`](https://rspatial.org/) — free online book

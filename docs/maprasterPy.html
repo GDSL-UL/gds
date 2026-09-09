@@ -2,13 +2,16 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.5.55">
+<meta name="generator" content="quarto-1.9.36">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
 <title>Lab in Python – A course in Geographic Data Science</title>
 <style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
 div.columns{display: flex; gap: min(4vw, 1.5em);}
@@ -21,8 +24,9 @@ ul.task-list li input[type="checkbox"] {
   vertical-align: middle;
 }
 /* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -33,7 +37,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -57,7 +61,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </style>
 
 
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" integrity="sha384-ZvpUoO/+PpLXR1lu4jmpXWu80pZlYUAfxl5NsBMWOEPSjUn/6Z/hRTt8+pR6L4N2" crossorigin="anonymous"></script><script src="site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="site_libs/quarto-nav/headroom.min.js"></script>
 <script src="site_libs/clipboard/clipboard.min.js"></script>
 <script src="site_libs/quarto-search/autocomplete.umd.js"></script>
@@ -66,15 +70,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <meta name="quarto:offset" content="./">
 <link href="./maprasterDIY.html" rel="next">
 <link href="./maprasterR.html" rel="prev">
-<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-845c23b38eaddc0f92fda52bfe77a8c8.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-d61101752a43e6db2baa24b252b88ce6.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -102,15 +107,21 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-label": "Search"
   }
 }</script>
+<script src="https://cdn.jsdelivr.net/npm/requirejs@2.3.6/require.min.js" integrity="sha384-c9c+LnTbwQ3aujuU7ULEPVvgLs+Fn6fJUvIGTsuu1ZcCf11fiEubah0ttpca4ntM sha384-6V1/AdqZRWk1KAlWbKBlGhN7VG4iE/yAZcO6NZPMF8od0vukrvr0tg4qY6NSrItx" crossorigin="anonymous"></script>
+
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
 
 
 <meta name="twitter:title" content="Lab in Python – A course in Geographic Data Science">
 <meta name="twitter:description" content="">
+<meta name="twitter:image" content="https://gdsl-ul.github.io/gds/maprasterPy_files/figure-html/cell-4-output-1.png">
 <meta name="twitter:creator" content="@EPietrostefani">
-<meta name="twitter:card" content="summary">
+<meta name="twitter:image-height" content="1221">
+<meta name="twitter:image-width" content="1324">
+<meta name="twitter:card" content="summary_large_image">
 </head>
 
-<body class="nav-sidebar floating">
+<body class="nav-sidebar floating quarto-light">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -136,7 +147,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div class="sidebar-title mb-0 py-0">
       <a href="./">A course in Geographic Data Science</a> 
         <div class="sidebar-tools-main">
-    <a href="https://github.com/pietrostefani/gds" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+    <a href="https://github.com/GDSL-UL/gds" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
     <div class="dropdown">
       <a href="" title="Share" id="quarto-navigation-tool-dropdown-0" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" role="link" aria-label="Share"><i class="bi bi-share"></i></a>
       <ul class="dropdown-menu" aria-labelledby="quarto-navigation-tool-dropdown-0">
@@ -470,6 +481,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="menu-text">Lab in Python</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./spatialnetworksDIY.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Do-It-Yourself</span></a>
+  </div>
+</li>
       </ul>
   </li>
         <li class="sidebar-item">
@@ -508,13 +525,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul class="collapse">
   <li><a href="#download-data" id="toc-download-data" class="nav-link" data-scroll-target="#download-data"><strong>Download data</strong></a></li>
   <li><a href="#country-shapefiles" id="toc-country-shapefiles" class="nav-link" data-scroll-target="#country-shapefiles"><strong>Country shapefiles</strong></a></li>
-  <li><a href="#merge-shapefiles" id="toc-merge-shapefiles" class="nav-link" data-scroll-target="#merge-shapefiles"><strong>Merge Shapefiles</strong></a></li>
+  <li><a href="#merge-shapefiles" id="toc-merge-shapefiles" class="nav-link" data-scroll-target="#merge-shapefiles"><strong>Merge shapefiles</strong></a></li>
   <li><a href="#zonal-statistics" id="toc-zonal-statistics" class="nav-link" data-scroll-target="#zonal-statistics"><strong>Zonal statistics</strong></a></li>
   <li><a href="#visualize" id="toc-visualize" class="nav-link" data-scroll-target="#visualize"><strong>Visualize</strong></a></li>
   </ul></li>
+  <li><a href="#where-this-fits-rasters-in-the-wild" id="toc-where-this-fits-rasters-in-the-wild" class="nav-link" data-scroll-target="#where-this-fits-rasters-in-the-wild">Where this fits: rasters in the wild</a></li>
   <li><a href="#resources" id="toc-resources" class="nav-link" data-scroll-target="#resources">Resources</a></li>
   </ul>
-<div class="toc-actions"><ul><li><a href="https://github.com/pietrostefani/gds/edit/main/maprasterPy.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></nav>
+<div class="toc-actions"><ul><li><a href="https://github.com/GDSL-UL/gds/edit/main/maprasterPy.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -538,61 +556,82 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p>In this session, we will further explore the world of geographic data visualization by building upon our understanding of both raster data and choropleths. Raster data, consisting of gridded cells, allows us to represent continuous geographic phenomena such as temperature, elevation, or satellite imagery. Choropleths, on the other hand, are an effective way to visualize spatial patterns through the use of color-coded regions, making them invaluable for displaying discrete data like population density or election results. By combining these techniques, we will gain a comprehensive toolkit for conveying complex geographical information in a visually compelling manner.</p>
+<p>Everything we have mapped so far has been <strong>vector</strong> data — points, lines and polygons, each with a geometry and a row in a table. Raster data works differently: a regular grid of cells, each holding a single value, with no table of attributes at all.</p>
+<p>That difference matters more than it sounds. A raster doesn’t know about “neighbourhoods” or “households” — it just knows that cell (1450, 2013) has the value 847. Much of working with raster data is about bridging that gap: getting from <em>a grid of numbers</em> to <em>something you can join to the social and administrative data you actually care about</em>.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>What you’ll be able to do by the end
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li>Load a raster, check its CRS, and reproject it</li>
+<li><strong>Crop</strong> and <strong>mask</strong> it down to an area of interest</li>
+<li>Style it so it actually communicates something</li>
+<li><strong>Extract</strong> raster values at point locations — the raster → vector bridge</li>
+<li>Compute <strong>zonal statistics</strong> — one value per administrative area, ready to join and map as a choropleth</li>
+</ul>
+</div>
+</div>
 <section id="importing-modules" class="level2">
 <h2 class="anchored" data-anchor-id="importing-modules">Importing Modules</h2>
-<div id="ca05ca1b" class="cell" data-execution_count="1">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Importing rasterio for handling raster data</span></span>
+<div id="d95cc096" class="cell" data-execution_count="1">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Importing rasterio for handling raster data</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> rasterio</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> rasterio.warp <span class="im">import</span> reproject, Resampling, calculate_default_transform</span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> rasterio.mask <span class="im">import</span> mask</span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> rasterio.plot <span class="im">import</span> show</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> rasterio <span class="im">import</span> features</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co"># For converting Shapely geometries to GeoJSON format</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> shapely.geometry <span class="im">import</span> mapping</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="co"># For plotting and visualizing data using Matplotlib</span></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.patches <span class="im">as</span> mpatches</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co"># For converting Shapely geometries to GeoJSON format</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> shapely.geometry <span class="im">import</span> mapping</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co"># For combining many geometries into one (version-agnostic across geopandas releases)</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> shapely.ops <span class="im">import</span> unary_union</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="co"># For plotting and visualizing data using Matplotlib</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> matplotlib.patches <span class="im">import</span> Patch</span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.colorbar <span class="im">as</span> colorbar</span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.colors <span class="im">as</span> mcolors</span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> matplotlib.colors <span class="im">import</span> ListedColormap, BoundaryNorm</span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="co"># For working with geospatial data</span></span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> geopandas <span class="im">as</span> gpd</span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="co"># For numerical operations and handling arrays</span></span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a><span class="co"># These imports are for file and directory operations</span></span>
-<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
-<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> zipfile</span>
-<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> shutil</span>
-<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a><span class="co">#import rioxarray as rxr</span></span>
-<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> rasterstats <span class="im">import</span> zonal_stats</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.colors <span class="im">as</span> mcolors</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> matplotlib.colors <span class="im">import</span> ListedColormap, BoundaryNorm</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="co"># For working with geospatial data</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> geopandas <span class="im">as</span> gpd</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="co"># For numerical operations and handling arrays</span></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a><span class="co"># These imports are for file and directory operations</span></span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> zipfile</span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> tarfile</span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> gzip</span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> shutil</span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a><span class="co"># For zonal statistics</span></span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> rasterstats <span class="im">import</span> zonal_stats</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="terrain-data" class="level2">
 <h2 class="anchored" data-anchor-id="terrain-data">Terrain data</h2>
 <section id="import-raster-data" class="level3">
 <h3 class="anchored" data-anchor-id="import-raster-data"><strong>Import raster data</strong></h3>
-<p>Raster <strong>terrain</strong> data consists of gridded elevation values that represent the topography of a geographic area. You can download this from the <a href="https://github.com/pietrostefani/gds/tree/main/data/Lebanon">relevant github folder</a>. A good place to download elevation data is <a href="https://earthexplorer.usgs.gov/">Earth Explorer</a>. This <a href="https://www.youtube.com/watch?v=NQg0g9ObhXE">video</a> takes you through the download process if you want to try this out yourself.</p>
+<p>Raster <strong>terrain</strong> data consists of gridded elevation values that represent the topography of a geographic area. You can download this from the <a href="https://github.com/GDSL-UL/gds/tree/main/data/Lebanon">relevant github folder</a>. A good place to download elevation data is <a href="https://earthexplorer.usgs.gov/">Earth Explorer</a>. This <a href="https://www.youtube.com/watch?v=NQg0g9ObhXE">video</a> takes you through the download process if you want to try this out yourself.</p>
 <p>We first import a raster file for elevation.</p>
-<div id="20c108e0" class="cell" data-execution_count="2">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load the raster data</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>elevation <span class="op">=</span> rasterio.<span class="bu">open</span>(<span class="st">"data/Lebanon/LBN_elevation_w_bathymetry.tif"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="a6045414" class="cell" data-execution_count="2">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load the raster data</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>elevation <span class="op">=</span> rasterio.<span class="bu">open</span>(<span class="st">"data/Lebanon/LBN_elevation_w_bathymetry.tif"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Plot it.</p>
-<div id="79acd40b" class="cell" data-execution_count="3">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">8</span>))</span>
+<div id="62c4867a" class="cell" data-execution_count="3">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">8</span>))</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>plt.imshow(elevation.read(<span class="dv">1</span>), cmap<span class="op">=</span><span class="st">'viridis'</span>)</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>plt.colorbar(label<span class="op">=</span><span class="st">'Elevation'</span>)</span>
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Elevation with Bathymetry'</span>)</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -602,18 +641,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <p>This information is typically accessed and updated via the .profile.</p>
-<div id="3c54ca28" class="cell" data-execution_count="4">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(elevation.profile)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="9761712c" class="cell" data-execution_count="4">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(elevation.profile)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>{'driver': 'GTiff', 'dtype': 'float64', 'nodata': nan, 'width': 1150, 'height': 708, 'count': 1, 'crs': CRS.from_epsg(4326), 'transform': Affine(0.002500000000000124, 0.0, 33.74907268219525,
        0.0, -0.002500000000000124, 34.833268747734884), 'blockxsize': 256, 'blockysize': 256, 'tiled': True, 'compress': 'deflate', 'interleave': 'band'}</code></pre>
 </div>
 </div>
 <p>Have a look at the CRS.</p>
-<div id="ed21dbe0" class="cell" data-execution_count="5">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Check the CRS of the raster</span></span>
+<div id="4c0a1361" class="cell" data-execution_count="5">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Check the CRS of the raster</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>crs <span class="op">=</span> elevation.crs</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(crs)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(crs)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>EPSG:4326</code></pre>
 </div>
@@ -622,14 +661,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="import-the-lebanon-shapefile" class="level3">
 <h3 class="anchored" data-anchor-id="import-the-lebanon-shapefile"><strong>Import the Lebanon shapefile</strong></h3>
 <p>Import the Lebanon shapefile, plot it, and verify its Coordinate Reference System (CRS). Is it the same as the raster’s CRS?</p>
-<div id="41072f5c" class="cell" data-execution_count="6">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load the shapefile data</span></span>
+<div id="f6d0e59d" class="cell" data-execution_count="6">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load the shapefile data</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>Lebanon_adm1 <span class="op">=</span> gpd.read_file(<span class="st">"data/Lebanon/LBN_adm1.shp"</span>)</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the geometry</span></span>
 <span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>Lebanon_adm1.plot(edgecolor<span class="op">=</span><span class="st">'grey'</span>, facecolor<span class="op">=</span><span class="st">'none'</span>)</span>
 <span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Lebanon Administrative Boundaries'</span>)</span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -638,10 +677,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
-<div id="dd69e35d" class="cell" data-execution_count="7">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Check the CRS of the shapefile</span></span>
+<div id="8ac15a91" class="cell" data-execution_count="7">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Check the CRS of the shapefile</span></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>crs <span class="op">=</span> Lebanon_adm1.crs</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(crs)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(crs)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>EPSG:22770</code></pre>
 </div>
@@ -649,9 +688,23 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="reproject-the-raster" class="level3">
 <h3 class="anchored" data-anchor-id="reproject-the-raster"><strong>Reproject the Raster</strong></h3>
-<div id="80f73390" class="cell" data-execution_count="8">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Define the desired destination CRS</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>dst_crs <span class="op">=</span> <span class="st">"EPSG:22770"</span>  <span class="co"># For example, WGS84</span></span>
+<p>We reproject the raster to match the CRS of the Lebanon shapefile — the same thing the R lab does. Reprojecting a raster in <code>rasterio</code> takes a few more steps than in R: we have to calculate the new transform and grid dimensions ourselves, then write the result out.</p>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Important
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Reprojecting a raster is <strong>not</strong> the same as reprojecting a vector. Vector reprojection just moves coordinates. Raster reprojection has to build a whole new grid and <em>estimate</em> values for the new cells — so it necessarily changes your data slightly. Reproject once, as early as possible, and avoid doing it repeatedly.</p>
+</div>
+</div>
+<div id="9973e6b2" class="cell" data-execution_count="8">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Match the CRS of the Lebanon shapefile (rather than hardcoding a code)</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>dst_crs <span class="op">=</span> Lebanon_adm1.crs</span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate the transform matrix, width, and height for the output raster</span></span>
 <span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>dst_transform, width, height <span class="op">=</span> calculate_default_transform(</span>
@@ -686,7 +739,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb11-34"><a href="#cb11-34" aria-hidden="true" tabindex="-1"></a>            dst_transform<span class="op">=</span>dst_transform,</span>
 <span id="cb11-35"><a href="#cb11-35" aria-hidden="true" tabindex="-1"></a>            dst_crs<span class="op">=</span>dst_crs,</span>
 <span id="cb11-36"><a href="#cb11-36" aria-hidden="true" tabindex="-1"></a>            resampling<span class="op">=</span>Resampling.nearest</span>
-<span id="cb11-37"><a href="#cb11-37" aria-hidden="true" tabindex="-1"></a>        )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb11-37"><a href="#cb11-37" aria-hidden="true" tabindex="-1"></a>        )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Source Transform:
  | 0.00, 0.00, 33.75|
@@ -694,95 +747,153 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 | 0.00, 0.00, 1.00| 
 
 Destination Transform:
- | 244.59, 0.00,-36330.85|
-| 0.00,-244.59, 326252.80|
+ | 244.50, 0.00,-36219.30|
+| 0.00,-244.50, 326205.11|
 | 0.00, 0.00, 1.00|</code></pre>
 </div>
 </div>
 </section>
 <section id="cropping-and-masking" class="level3">
 <h3 class="anchored" data-anchor-id="cropping-and-masking"><strong>Cropping and Masking</strong></h3>
-<p><strong>Cropping</strong>:</p>
+<p>Cropping and masking are both spatial operations used to narrow a raster down to an area of interest — but they do different things:</p>
+<p><strong>Cropping</strong></p>
 <ul>
-<li><p>Purpose: Cropping a raster involves changing the extent of the raster dataset by specifying a new bounding box or geographic area of interest. The result is a new raster that covers only the specified region.</p></li>
-<li><p>Typical Use: Cropping is commonly used when you want to reduce the size of a raster dataset to focus on a smaller geographic area of interest while retaining all the original data values within that area.</p></li>
+<li><p>Purpose: changes the <strong>extent</strong> of the raster by cutting it down to a new bounding box. The result is a smaller, rectangular raster.</p></li>
+<li><p>Typical Use: reducing the size of a raster to focus on a smaller geographic area while retaining all the original values within that area.</p></li>
 </ul>
-<p><strong>Masking</strong>:</p>
+<p><strong>Masking</strong></p>
 <ul>
-<li><p>Purpose: Applying a binary mask to the dataset. The mask is typically a separate raster or polygon layer where certain areas are designated as “masked” (1) or “unmasked” (0).</p></li>
-<li><p>Typical Use: Masking is used when you want to extract or isolate specific areas or features within a raster dataset. For example, you might use a mask to extract land cover information within the boundaries of a protected national park.</p></li>
+<li><p>Purpose: sets cells <strong>outside a given shape</strong> to <code>nodata</code>, keeping the extent the same. The result is the same size, but with everything outside your polygon blanked out.</p></li>
+<li><p>Typical Use: isolating specific areas or features — for example extracting land cover within the boundaries of a protected national park.</p></li>
 </ul>
-<p>In many cases, these cropping and masking are executed one after the other because it is computationally easier to crop when dealing with large datasets, and then masking.</p>
-<div id="8f2d3b73" class="cell" data-execution_count="9">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>elevation_22770 <span class="op">=</span> rasterio.<span class="bu">open</span>(<span class="st">"data/Lebanon/reprojected_elevation.tif"</span>)</span>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Why do both, and in this order?
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Cropping is a cheap rectangular operation; masking has to test every cell against a polygon boundary. <strong>Crop first, then mask</strong> — you shrink the problem before doing the expensive part. On a large raster this can be the difference between seconds and minutes.</p>
+</div>
+</div>
+<p>In <code>rasterio</code>, <code>mask()</code> does both jobs depending on its arguments — <code>crop=True</code> trims the extent, and <code>filled=True</code> blanks out cells beyond the polygon. Let’s do them separately so you can see the difference:</p>
+<div id="0752861e" class="cell" data-execution_count="9">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>elevation_22770 <span class="op">=</span> rasterio.<span class="bu">open</span>(<span class="st">"data/Lebanon/reprojected_elevation.tif"</span>)</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Use unary_union method to combine the geometries</span></span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>lebanon_union <span class="op">=</span> Lebanon_adm1.geometry.unary_union</span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Crop the elevation data to the extent of Lebanon</span></span>
-<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>elevation_lebanon, elevation_lebanon_transform <span class="op">=</span> mask(elevation_22770, [mapping(lebanon_union)], crop<span class="op">=</span><span class="va">True</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Combine the geometries into a single shape.</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="co"># We use shapely's unary_union() rather than the GeoSeries method, because</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="co"># that method was renamed in geopandas 1.0 (.unary_union -&gt; .union_all()),</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="co"># so calling it directly breaks on one version or the other.</span></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>lebanon_union <span class="op">=</span> unary_union(Lebanon_adm1.geometry.values)</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. CROP only -- trim to the bounding box, keep every value inside it</span></span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>elevation_cropped, cropped_transform <span class="op">=</span> mask(</span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>    elevation_22770, [mapping(lebanon_union)], crop<span class="op">=</span><span class="va">True</span>, filled<span class="op">=</span><span class="va">False</span></span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. CROP + MASK -- also blank out anything outside the country outline</span></span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>elevation_lebanon, elevation_lebanon_transform <span class="op">=</span> mask(</span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a>    elevation_22770, [mapping(lebanon_union)], crop<span class="op">=</span><span class="va">True</span></span>
+<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Compare the two results to see the difference for yourself:</p>
+<div id="a08fed42" class="cell" data-execution_count="10">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>fig, (ax1, ax2) <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">6</span>))</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>show(elevation_cropped, transform<span class="op">=</span>cropped_transform, ax<span class="op">=</span>ax1, cmap<span class="op">=</span><span class="st">'terrain'</span>)</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>ax1.set_title(<span class="st">"Cropped only"</span>)</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>ax1.axis(<span class="st">'off'</span>)</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>show(elevation_lebanon, transform<span class="op">=</span>elevation_lebanon_transform, ax<span class="op">=</span>ax2, cmap<span class="op">=</span><span class="st">'terrain'</span>)</span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>ax2.set_title(<span class="st">"Cropped + masked"</span>)</span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>ax2.axis(<span class="st">'off'</span>)</span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="maprasterPy_files/figure-html/cell-11-output-1.png" width="981" height="566" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
 </div>
 </section>
 <section id="plot-elevation" class="level3">
 <h3 class="anchored" data-anchor-id="plot-elevation"><strong>Plot elevation</strong></h3>
-<div id="3f384b6e" class="cell" data-execution_count="10">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Assuming elevation_lebanon contains the cropped elevation data and Lebanon_adm1 is the GeoDataFrame</span></span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">8</span>))</span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the elevation data</span></span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>show(elevation_lebanon, transform<span class="op">=</span>elevation_lebanon_transform, ax<span class="op">=</span>ax, cmap<span class="op">=</span><span class="st">'terrain'</span>)</span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the Lebanon boundaries on top, with no fill color</span></span>
-<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>Lebanon_adm1.boundary.plot(ax<span class="op">=</span>ax, edgecolor<span class="op">=</span><span class="st">'black'</span>)</span>
-<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="262f2572" class="cell" data-execution_count="11">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Assuming elevation_lebanon contains the cropped elevation data and Lebanon_adm1 is the GeoDataFrame</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">8</span>))</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the elevation data</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>show(elevation_lebanon, transform<span class="op">=</span>elevation_lebanon_transform, ax<span class="op">=</span>ax, cmap<span class="op">=</span><span class="st">'terrain'</span>)</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the Lebanon boundaries on top, with no fill color</span></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>Lebanon_adm1.boundary.plot(ax<span class="op">=</span>ax, edgecolor<span class="op">=</span><span class="st">'black'</span>)</span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="maprasterPy_files/figure-html/cell-11-output-1.png" width="596" height="633" class="figure-img"></p>
+<p><img src="maprasterPy_files/figure-html/cell-12-output-1.png" width="596" height="633" class="figure-img"></p>
 </figure>
 </div>
 </div>
 </div>
 <p>Let’s improve this a bit. Remember that there is a lot we can do with <a href="https://www.analyticsvidhya.com/blog/2020/09/colormaps-matplotlib/#:~:text=Colormaps%20or%20Cmap%20in%20python%20colormaps%20is%20a%20very%20useful,custom%20ones%20using%20python%20colormaps">Cmap</a>.</p>
-<div id="3a62cc5d" class="cell" data-execution_count="11">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Define the reversed 6 shades of orange</span></span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>orange_shades_reversed <span class="op">=</span> [<span class="st">'#ef3b2c'</span>, <span class="st">'#fb6a4a'</span>, <span class="st">'#fc9272'</span>, <span class="st">'#fcbba1'</span>, <span class="st">'#fee0d2'</span>, <span class="st">'#fff5eb'</span>]</span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Define the breaks</span></span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>boundaries <span class="op">=</span> [<span class="op">-</span><span class="dv">100</span>, <span class="dv">0</span>, <span class="dv">700</span>, <span class="dv">1200</span>, <span class="dv">1800</span>, <span class="dv">3300</span>]</span>
-<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Define the color map and normalization</span></span>
-<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>cmap <span class="op">=</span> ListedColormap(orange_shades_reversed)</span>
-<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>norm <span class="op">=</span> BoundaryNorm(boundaries<span class="op">=</span>boundaries, ncolors<span class="op">=</span><span class="bu">len</span>(orange_shades_reversed))</span>
-<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">8</span>))</span>
-<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the elevation data with the custom color map</span></span>
-<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a>im <span class="op">=</span> show(elevation_lebanon, transform<span class="op">=</span>elevation_lebanon_transform, ax<span class="op">=</span>ax, cmap<span class="op">=</span>cmap, norm<span class="op">=</span>norm)</span>
-<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the Lebanon boundaries on top, with no fill color</span></span>
-<span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a>Lebanon_adm1.boundary.plot(ax<span class="op">=</span>ax, edgecolor<span class="op">=</span><span class="st">'black'</span>)</span>
-<span id="cb15-18"><a href="#cb15-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-19"><a href="#cb15-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Remove the axes</span></span>
-<span id="cb15-20"><a href="#cb15-20" aria-hidden="true" tabindex="-1"></a>ax.axis(<span class="st">'off'</span>)</span>
-<span id="cb15-21"><a href="#cb15-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-22"><a href="#cb15-22" aria-hidden="true" tabindex="-1"></a><span class="co"># Manually create a legend</span></span>
-<span id="cb15-23"><a href="#cb15-23" aria-hidden="true" tabindex="-1"></a>legend_labels <span class="op">=</span> [<span class="st">'&lt; 0 m'</span>, <span class="st">'0 - 700 m'</span>, <span class="st">'700 - 1200 m'</span>, <span class="st">'1200 - 1800 m'</span>, <span class="st">'1800 - 3300 m'</span>, <span class="st">'&gt; 3300 m'</span>]</span>
-<span id="cb15-24"><a href="#cb15-24" aria-hidden="true" tabindex="-1"></a>legend_patches <span class="op">=</span> [Patch(color<span class="op">=</span>orange_shades_reversed[i], label<span class="op">=</span>legend_labels[i]) <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(orange_shades_reversed))]</span>
-<span id="cb15-25"><a href="#cb15-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-26"><a href="#cb15-26" aria-hidden="true" tabindex="-1"></a><span class="co"># Add the legend to the right of the plot</span></span>
-<span id="cb15-27"><a href="#cb15-27" aria-hidden="true" tabindex="-1"></a>ax.legend(handles<span class="op">=</span>legend_patches, loc<span class="op">=</span><span class="st">'center left'</span>, bbox_to_anchor<span class="op">=</span>(<span class="dv">1</span>, <span class="fl">0.5</span>), title<span class="op">=</span><span class="st">'Elevation (m)'</span>, frameon<span class="op">=</span><span class="va">False</span>)</span>
-<span id="cb15-28"><a href="#cb15-28" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-29"><a href="#cb15-29" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-30"><a href="#cb15-30" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="ea011a8b" class="cell" data-execution_count="12">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Define the reversed 6 shades of orange</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>orange_shades_reversed <span class="op">=</span> [<span class="st">'#ef3b2c'</span>, <span class="st">'#fb6a4a'</span>, <span class="st">'#fc9272'</span>, <span class="st">'#fcbba1'</span>, <span class="st">'#fee0d2'</span>, <span class="st">'#fff5eb'</span>]</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Define the breaks</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>boundaries <span class="op">=</span> [<span class="op">-</span><span class="dv">100</span>, <span class="dv">0</span>, <span class="dv">700</span>, <span class="dv">1200</span>, <span class="dv">1800</span>, <span class="dv">3300</span>]</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Define the color map and normalization</span></span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>cmap <span class="op">=</span> ListedColormap(orange_shades_reversed)</span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>norm <span class="op">=</span> BoundaryNorm(boundaries<span class="op">=</span>boundaries, ncolors<span class="op">=</span><span class="bu">len</span>(orange_shades_reversed))</span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">8</span>))</span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the elevation data with the custom color map</span></span>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a>im <span class="op">=</span> show(elevation_lebanon, transform<span class="op">=</span>elevation_lebanon_transform, ax<span class="op">=</span>ax, cmap<span class="op">=</span>cmap, norm<span class="op">=</span>norm)</span>
+<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the Lebanon boundaries on top, with no fill color</span></span>
+<span id="cb16-17"><a href="#cb16-17" aria-hidden="true" tabindex="-1"></a>Lebanon_adm1.boundary.plot(ax<span class="op">=</span>ax, edgecolor<span class="op">=</span><span class="st">'black'</span>)</span>
+<span id="cb16-18"><a href="#cb16-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-19"><a href="#cb16-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Remove the axes</span></span>
+<span id="cb16-20"><a href="#cb16-20" aria-hidden="true" tabindex="-1"></a>ax.axis(<span class="st">'off'</span>)</span>
+<span id="cb16-21"><a href="#cb16-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-22"><a href="#cb16-22" aria-hidden="true" tabindex="-1"></a><span class="co"># Manually create a legend</span></span>
+<span id="cb16-23"><a href="#cb16-23" aria-hidden="true" tabindex="-1"></a>legend_labels <span class="op">=</span> [<span class="st">'&lt; 0 m'</span>, <span class="st">'0 - 700 m'</span>, <span class="st">'700 - 1200 m'</span>, <span class="st">'1200 - 1800 m'</span>, <span class="st">'1800 - 3300 m'</span>, <span class="st">'&gt; 3300 m'</span>]</span>
+<span id="cb16-24"><a href="#cb16-24" aria-hidden="true" tabindex="-1"></a>legend_patches <span class="op">=</span> [Patch(color<span class="op">=</span>orange_shades_reversed[i], label<span class="op">=</span>legend_labels[i]) <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(orange_shades_reversed))]</span>
+<span id="cb16-25"><a href="#cb16-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-26"><a href="#cb16-26" aria-hidden="true" tabindex="-1"></a><span class="co"># Add the legend to the right of the plot</span></span>
+<span id="cb16-27"><a href="#cb16-27" aria-hidden="true" tabindex="-1"></a>ax.legend(handles<span class="op">=</span>legend_patches, loc<span class="op">=</span><span class="st">'center left'</span>, bbox_to_anchor<span class="op">=</span>(<span class="dv">1</span>, <span class="fl">0.5</span>), title<span class="op">=</span><span class="st">'Elevation (m)'</span>, frameon<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb16-28"><a href="#cb16-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-29"><a href="#cb16-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-30"><a href="#cb16-30" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="maprasterPy_files/figure-html/cell-12-output-1.png" width="668" height="611" class="figure-img"></p>
+<p><img src="maprasterPy_files/figure-html/cell-13-output-1.png" width="669" height="611" class="figure-img"></p>
 </figure>
 </div>
 </div>
 </div>
-<p>Questions to ask yourself about how you can improve these maps, going back to <a href="https://pietrostefani.github.io/gds/mapvector.html">geo-visualisation and choropleths</a>.</p>
+<p>Questions to ask yourself about how you can improve these maps, going back to <a href="mapvector.html">geo-visualisation and choropleths</a>.</p>
 <ul>
 <li><p>What are the logical breaks for elevation data?</p></li>
 <li><p>Should the colours be changed to standard elevation pallettes?</p></li>
@@ -791,26 +902,26 @@ Destination Transform:
 <section id="spatial-join-with-vector-data" class="level3">
 <h3 class="anchored" data-anchor-id="spatial-join-with-vector-data"><strong>Spatial join with vector data</strong></h3>
 <p>You might want to extract values from a raster data set, and then map them within a vector framework or extract them to analyse them statistically. If it therefore very useful to know how to extract:</p>
-<div id="7d0ab62e" class="cell" data-execution_count="12">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load some geo-localized survey data</span></span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>households <span class="op">=</span> gpd.read_file(<span class="st">"data/Lebanon/random_survey_LBN.shp"</span>)</span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Open the elevation raster file</span></span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> rasterio.<span class="bu">open</span>(<span class="st">"data/Lebanon/LBN_elevation_w_bathymetry.tif"</span>) <span class="im">as</span> src:</span>
-<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Reproject households coordinates to the CRS of the raster</span></span>
-<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>    households <span class="op">=</span> households.to_crs(src.crs)</span>
-<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Extract elevation values at the coordinates of the points</span></span>
-<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>    housesales_elevation <span class="op">=</span> [</span>
-<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>        val[<span class="dv">0</span>] <span class="cf">if</span> val <span class="kw">is</span> <span class="kw">not</span> <span class="va">None</span> <span class="cf">else</span> <span class="va">None</span></span>
-<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> val <span class="kw">in</span> src.sample([(geom.x, geom.y) <span class="cf">for</span> geom <span class="kw">in</span> households.geometry])</span>
-<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a>    ]</span>
-<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Attach elevation at each point to the original households GeoDataFrame</span></span>
-<span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a>households[<span class="st">'elevation'</span>] <span class="op">=</span> housesales_elevation</span>
-<span id="cb16-17"><a href="#cb16-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-18"><a href="#cb16-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Check out the data</span></span>
-<span id="cb16-19"><a href="#cb16-19" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(households.head())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="28a4ee40" class="cell" data-execution_count="13">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load some geo-localized survey data</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>households <span class="op">=</span> gpd.read_file(<span class="st">"data/Lebanon/random_survey_LBN.shp"</span>)</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Open the elevation raster file</span></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> rasterio.<span class="bu">open</span>(<span class="st">"data/Lebanon/LBN_elevation_w_bathymetry.tif"</span>) <span class="im">as</span> src:</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Reproject households coordinates to the CRS of the raster</span></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>    households <span class="op">=</span> households.to_crs(src.crs)</span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Extract elevation values at the coordinates of the points</span></span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>    housesales_elevation <span class="op">=</span> [</span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>        val[<span class="dv">0</span>] <span class="cf">if</span> val <span class="kw">is</span> <span class="kw">not</span> <span class="va">None</span> <span class="cf">else</span> <span class="va">None</span></span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> val <span class="kw">in</span> src.sample([(geom.x, geom.y) <span class="cf">for</span> geom <span class="kw">in</span> households.geometry])</span>
+<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a>    ]</span>
+<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-15"><a href="#cb17-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Attach elevation at each point to the original households GeoDataFrame</span></span>
+<span id="cb17-16"><a href="#cb17-16" aria-hidden="true" tabindex="-1"></a>households[<span class="st">'elevation'</span>] <span class="op">=</span> housesales_elevation</span>
+<span id="cb17-17"><a href="#cb17-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-18"><a href="#cb17-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Check out the data</span></span>
+<span id="cb17-19"><a href="#cb17-19" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(households.head())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   id                   geometry  elevation
 0   0  POINT (35.90386 33.72841)      876.0
@@ -851,7 +962,7 @@ Important
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Download the Data
+<span class="screen-reader-only">Note</span>Download the Data
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -868,110 +979,125 @@ Important
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>You can also download the data <a href="https://theuniversityofliverpool-my.sharepoint.com/:u:/g/personal/pietrost_liverpool_ac_uk/EX85foAh7ZBBtSZ64pxbFmsBStf8UX2uaLXE5MBYJt6PeQ?e=LMYu7d">here</a> in <em>tar</em> format.</p>
-<p>The downloaded files are going to be in a <strong>“TAR” format</strong>. A TAR file is an archive created by tar, a Unix-based utility used to package files together for backup or distribution purposes. It contains multiple files stored in an uncompressed format along with metadata about the archive. Tars files are also used to reduce files’ size. TAR archives compressed with GNU Zip compression may become GZ, .TAR.GZ, or .TGZ files. We need to decompress them before using them.</p>
-<p>If you want to simplify further, you can download the data directly as <strong>TIFs</strong>: Here for <a href="https://theuniversityofliverpool-my.sharepoint.com/my?login_hint=pietrost%40liverpool%2Eac%2Euk&amp;id=%2Fpersonal%2Fpietrost%5Fliverpool%5Fac%5Fuk%2FDocuments%2Fgds%5FENVS363%5F563%2FF101992%2Ev4b%5Fweb%2Estable%5Flights%2Eavg%5Fvis%2Etif&amp;parent=%2Fpersonal%2Fpietrost%5Fliverpool%5Fac%5Fuk%2FDocuments%2Fgds%5FENVS363%5F563">1992</a> and here for <a href="https://theuniversityofliverpool-my.sharepoint.com/my?login_hint=pietrost%40liverpool%2Eac%2Euk&amp;id=%2Fpersonal%2Fpietrost%5Fliverpool%5Fac%5Fuk%2FDocuments%2Fgds%5FENVS363%5F563%2FF182013%2Ev4c%5Fweb%2Estable%5Flights%2Eavg%5Fvis%2Etif&amp;parent=%2Fpersonal%2Fpietrost%5Fliverpool%5Fac%5Fuk%2FDocuments%2Fgds%5FENVS363%5F563">2013</a>. You will need to be logged into your UoL account.</p>
+<p>If you have trouble downloading from NOAA, a copy of the two years we need is available from <a href="https://theuniversityofliverpool-my.sharepoint.com/:f:/g/personal/pietrost_liverpool_ac_uk/IgAHJu26oswMRqG7c5HZhzx3ATkM5Hb9j0HrSag43-lGPPU?e=1irrJZ">here</a> — you need to be logged into your UoL account. Available both as the original <em>tar</em> archives and as ready-to-use <strong>TIFs</strong> if you’d rather skip the decompression step.</p>
+<p>A <strong>TAR</strong> file is an archive created by tar, a Unix-based utility used to package files together for backup or distribution purposes. It contains multiple files stored in an uncompressed format along with metadata about the archive. TAR archives compressed with GNU Zip compression may become GZ, .TAR.GZ, or .TGZ files. We need to decompress them before using them.</p>
 </div>
 </div>
 <p>It is also good practice to create a scratch folder where you do all your unzipping.</p>
-<div id="f9e60471" class="cell" data-execution_count="13">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load the raster files</span></span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>raster1_path <span class="op">=</span> <span class="st">'data/Kenya_Tanzania/F101992.v4b_web.stable_lights.avg_vis.tif'</span></span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>raster2_path <span class="op">=</span> <span class="st">'data/Kenya_Tanzania/F182013.v4c_web.stable_lights.avg_vis.tif'</span></span>
-<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Open the raster files</span></span>
-<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> rasterio.<span class="bu">open</span>(raster1_path) <span class="im">as</span> src1:</span>
-<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>    raster1 <span class="op">=</span> src1.read(<span class="dv">1</span>)  <span class="co"># Read the first (and only) band</span></span>
-<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> rasterio.<span class="bu">open</span>(raster2_path) <span class="im">as</span> src2:</span>
-<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>    raster2 <span class="op">=</span> src2.read(<span class="dv">1</span>)  <span class="co"># Read the first (and only) band</span></span>
-<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Stack the rasters along a new axis (depth axis)</span></span>
-<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a>stacked_rasters <span class="op">=</span> np.stack([raster1, raster2], axis<span class="op">=</span><span class="dv">0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div id="9dd9bf0d" class="cell" data-execution_count="14">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a plot</span></span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>fig, (ax1, ax2) <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">8</span>))</span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the first raster</span></span>
-<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>ax1.imshow(stacked_rasters[<span class="dv">0</span>], cmap<span class="op">=</span><span class="st">'cividis'</span>)</span>
-<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>ax1.set_title(<span class="st">'1992'</span>)</span>
-<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>ax1.axis(<span class="st">'off'</span>)</span>
+<div id="79b278da" class="cell" data-execution_count="14">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load the raster files</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>raster1_path <span class="op">=</span> <span class="st">'data/Kenya_Tanzania/F101992.v4b_web.stable_lights.avg_vis.tif'</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>raster2_path <span class="op">=</span> <span class="st">'data/Kenya_Tanzania/F182013.v4c_web.stable_lights.avg_vis.tif'</span></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Open the raster files</span></span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> rasterio.<span class="bu">open</span>(raster1_path) <span class="im">as</span> src1:</span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>    raster1 <span class="op">=</span> src1.read(<span class="dv">1</span>)  <span class="co"># Read the first (and only) band</span></span>
 <span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the second raster</span></span>
-<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a>ax2.imshow(stacked_rasters[<span class="dv">1</span>], cmap<span class="op">=</span><span class="st">'cividis'</span>)</span>
-<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a>ax2.set_title(<span class="st">'2013'</span>)</span>
-<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a>ax2.axis(<span class="st">'off'</span>)</span>
-<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Show the plot</span></span>
-<span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
-<span id="cb19-16"><a href="#cb19-16" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> rasterio.<span class="bu">open</span>(raster2_path) <span class="im">as</span> src2:</span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a>    raster2 <span class="op">=</span> src2.read(<span class="dv">1</span>)  <span class="co"># Read the first (and only) band</span></span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Stack the rasters along a new axis (depth axis)</span></span>
+<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a>stacked_rasters <span class="op">=</span> np.stack([raster1, raster2], axis<span class="op">=</span><span class="dv">0</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="93e74f85" class="cell" data-execution_count="15">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a plot</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>fig, (ax1, ax2) <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">8</span>))</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the first raster</span></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>ax1.imshow(stacked_rasters[<span class="dv">0</span>], cmap<span class="op">=</span><span class="st">'cividis'</span>)</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>ax1.set_title(<span class="st">'1992'</span>)</span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>ax1.axis(<span class="st">'off'</span>)</span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the second raster</span></span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>ax2.imshow(stacked_rasters[<span class="dv">1</span>], cmap<span class="op">=</span><span class="st">'cividis'</span>)</span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a>ax2.set_title(<span class="st">'2013'</span>)</span>
+<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a>ax2.axis(<span class="st">'off'</span>)</span>
+<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Show the plot</span></span>
+<span id="cb20-15"><a href="#cb20-15" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb20-16"><a href="#cb20-16" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="maprasterPy_files/figure-html/cell-15-output-1.png" width="758" height="180" class="figure-img"></p>
+<p><img src="maprasterPy_files/figure-html/cell-16-output-1.png" width="758" height="180" class="figure-img"></p>
 </figure>
 </div>
 </div>
 </div>
 <p>Why can’t you see much? Discuss with the person next to you.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-8-contents" aria-controls="callout-8" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Stuck?
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-8" class="callout-8-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>These are <strong>global</strong> rasters, and you’re looking at the whole planet. Nearly all of it is dark, and the few bright pixels are tiny at this scale. Two things are going on: the extent is far larger than our area of interest, and the value distribution is extremely skewed — a handful of very bright cells compress everything else into the bottom of the colour ramp. We’ll fix the first with zonal statistics, and the second with fixed breaks when we map.</p>
+</div>
+</div>
+</div>
 </section>
 <section id="country-shapefiles" class="level3">
 <h3 class="anchored" data-anchor-id="country-shapefiles"><strong>Country shapefiles</strong></h3>
 <p>The second step is to download the shapefiles for Kenya and Tanzania. GADM has made available national and subnational shapefiles for the world. The zips you download, such as <em>gadm36_KEN_shp.zip</em> from GADM should be placed in the <strong>Kenya_Tanzania</strong> folder. This is the link <a href="https://gadm.org/formats.html">gadm</a>.</p>
-<div id="52d41cde" class="cell" data-execution_count="15">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Set the data folder path</span></span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>datafolder <span class="op">=</span> <span class="st">'data'</span></span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="co"># List the country shapefiles downloaded from the GADM website</span></span>
-<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>files <span class="op">=</span> [os.path.join(root, <span class="bu">file</span>)</span>
-<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>         <span class="cf">for</span> root, dirs, files <span class="kw">in</span> os.walk(os.path.join(datafolder, <span class="st">"Kenya_Tanzania"</span>))</span>
-<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>         <span class="cf">for</span> <span class="bu">file</span> <span class="kw">in</span> files <span class="cf">if</span> <span class="bu">file</span>.endswith(<span class="st">"_shp.zip"</span>)]</span>
-<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(files)</span>
-<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a scratch folder</span></span>
-<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a>scratch_folder <span class="op">=</span> os.path.join(datafolder, <span class="st">"Kenya_Tanzania"</span>, <span class="st">"scratch"</span>)</span>
-<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a>os.makedirs(scratch_folder, exist_ok<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-15"><a href="#cb20-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Unzip the files</span></span>
-<span id="cb20-16"><a href="#cb20-16" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> <span class="bu">file</span> <span class="kw">in</span> files:</span>
-<span id="cb20-17"><a href="#cb20-17" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> zipfile.ZipFile(<span class="bu">file</span>, <span class="st">'r'</span>) <span class="im">as</span> zip_ref:</span>
-<span id="cb20-18"><a href="#cb20-18" aria-hidden="true" tabindex="-1"></a>        zip_ref.extractall(scratch_folder)</span>
-<span id="cb20-19"><a href="#cb20-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-20"><a href="#cb20-20" aria-hidden="true" tabindex="-1"></a><span class="co"># List GADM shapefiles</span></span>
-<span id="cb20-21"><a href="#cb20-21" aria-hidden="true" tabindex="-1"></a>gadm_files <span class="op">=</span> [os.path.join(root, <span class="bu">file</span>)</span>
-<span id="cb20-22"><a href="#cb20-22" aria-hidden="true" tabindex="-1"></a>              <span class="cf">for</span> root, dirs, files <span class="kw">in</span> os.walk(os.path.join(datafolder, <span class="st">"Kenya_Tanzania"</span>))</span>
-<span id="cb20-23"><a href="#cb20-23" aria-hidden="true" tabindex="-1"></a>              <span class="cf">for</span> <span class="bu">file</span> <span class="kw">in</span> files <span class="cf">if</span> <span class="bu">file</span>.startswith(<span class="st">"gadm"</span>)]</span>
-<span id="cb20-24"><a href="#cb20-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-25"><a href="#cb20-25" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(gadm_files)</span>
-<span id="cb20-26"><a href="#cb20-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-27"><a href="#cb20-27" aria-hidden="true" tabindex="-1"></a><span class="co"># Select regional level 2 files</span></span>
-<span id="cb20-28"><a href="#cb20-28" aria-hidden="true" tabindex="-1"></a>gadm_files_level2 <span class="op">=</span> [<span class="bu">file</span> <span class="cf">for</span> <span class="bu">file</span> <span class="kw">in</span> gadm_files <span class="cf">if</span> <span class="st">"2.shp"</span> <span class="kw">in</span> <span class="bu">file</span>]</span>
-<span id="cb20-29"><a href="#cb20-29" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(gadm_files_level2)</span>
-<span id="cb20-30"><a href="#cb20-30" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-31"><a href="#cb20-31" aria-hidden="true" tabindex="-1"></a><span class="co"># Load the shapefiles</span></span>
-<span id="cb20-32"><a href="#cb20-32" aria-hidden="true" tabindex="-1"></a>shps <span class="op">=</span> [gpd.read_file(shp) <span class="cf">for</span> shp <span class="kw">in</span> gadm_files_level2]</span>
-<span id="cb20-33"><a href="#cb20-33" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(shps)</span>
-<span id="cb20-34"><a href="#cb20-34" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-35"><a href="#cb20-35" aria-hidden="true" tabindex="-1"></a><span class="co"># Delete the scratch folder with the data we don't need</span></span>
-<span id="cb20-36"><a href="#cb20-36" aria-hidden="true" tabindex="-1"></a><span class="co">#shutil.rmtree(scratch_folder)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="99acd6fa" class="cell" data-execution_count="16">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Set the data folder path</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>datafolder <span class="op">=</span> <span class="st">'data'</span></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="co"># List the country shapefiles downloaded from the GADM website</span></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>files <span class="op">=</span> [os.path.join(root, <span class="bu">file</span>)</span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>         <span class="cf">for</span> root, dirs, files <span class="kw">in</span> os.walk(os.path.join(datafolder, <span class="st">"Kenya_Tanzania"</span>))</span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>         <span class="cf">for</span> <span class="bu">file</span> <span class="kw">in</span> files <span class="cf">if</span> <span class="bu">file</span>.endswith(<span class="st">"_shp.zip"</span>)]</span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(files)</span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a scratch folder</span></span>
+<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a>scratch_folder <span class="op">=</span> os.path.join(datafolder, <span class="st">"Kenya_Tanzania"</span>, <span class="st">"scratch"</span>)</span>
+<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a>os.makedirs(scratch_folder, exist_ok<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb21-14"><a href="#cb21-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-15"><a href="#cb21-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Unzip the files</span></span>
+<span id="cb21-16"><a href="#cb21-16" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> <span class="bu">file</span> <span class="kw">in</span> files:</span>
+<span id="cb21-17"><a href="#cb21-17" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> zipfile.ZipFile(<span class="bu">file</span>, <span class="st">'r'</span>) <span class="im">as</span> zip_ref:</span>
+<span id="cb21-18"><a href="#cb21-18" aria-hidden="true" tabindex="-1"></a>        zip_ref.extractall(scratch_folder)</span>
+<span id="cb21-19"><a href="#cb21-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-20"><a href="#cb21-20" aria-hidden="true" tabindex="-1"></a><span class="co"># List GADM shapefiles</span></span>
+<span id="cb21-21"><a href="#cb21-21" aria-hidden="true" tabindex="-1"></a>gadm_files <span class="op">=</span> [os.path.join(root, <span class="bu">file</span>)</span>
+<span id="cb21-22"><a href="#cb21-22" aria-hidden="true" tabindex="-1"></a>              <span class="cf">for</span> root, dirs, files <span class="kw">in</span> os.walk(os.path.join(datafolder, <span class="st">"Kenya_Tanzania"</span>))</span>
+<span id="cb21-23"><a href="#cb21-23" aria-hidden="true" tabindex="-1"></a>              <span class="cf">for</span> <span class="bu">file</span> <span class="kw">in</span> files <span class="cf">if</span> <span class="bu">file</span>.startswith(<span class="st">"gadm"</span>)]</span>
+<span id="cb21-24"><a href="#cb21-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-25"><a href="#cb21-25" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(gadm_files)</span>
+<span id="cb21-26"><a href="#cb21-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-27"><a href="#cb21-27" aria-hidden="true" tabindex="-1"></a><span class="co"># Select regional level 2 files</span></span>
+<span id="cb21-28"><a href="#cb21-28" aria-hidden="true" tabindex="-1"></a>gadm_files_level2 <span class="op">=</span> [<span class="bu">file</span> <span class="cf">for</span> <span class="bu">file</span> <span class="kw">in</span> gadm_files <span class="cf">if</span> <span class="st">"2.shp"</span> <span class="kw">in</span> <span class="bu">file</span>]</span>
+<span id="cb21-29"><a href="#cb21-29" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(gadm_files_level2)</span>
+<span id="cb21-30"><a href="#cb21-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-31"><a href="#cb21-31" aria-hidden="true" tabindex="-1"></a><span class="co"># Load the shapefiles</span></span>
+<span id="cb21-32"><a href="#cb21-32" aria-hidden="true" tabindex="-1"></a>shps <span class="op">=</span> [gpd.read_file(shp) <span class="cf">for</span> shp <span class="kw">in</span> gadm_files_level2]</span>
+<span id="cb21-33"><a href="#cb21-33" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(shps)</span>
+<span id="cb21-34"><a href="#cb21-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-35"><a href="#cb21-35" aria-hidden="true" tabindex="-1"></a><span class="co"># Delete the scratch folder with the data we don't need</span></span>
+<span id="cb21-36"><a href="#cb21-36" aria-hidden="true" tabindex="-1"></a><span class="co">#shutil.rmtree(scratch_folder)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>['data/Kenya_Tanzania/gadm36_TZA_shp.zip', 'data/Kenya_Tanzania/gadm36_KEN_shp.zip']
 ['data/Kenya_Tanzania/gadm36_TZA_shp.zip', 'data/Kenya_Tanzania/gadm36_KEN_shp.zip', 'data/Kenya_Tanzania/scratch/gadm36_KEN_2.dbf', 'data/Kenya_Tanzania/scratch/gadm36_KEN_3.dbf', 'data/Kenya_Tanzania/scratch/gadm36_KEN_1.dbf', 'data/Kenya_Tanzania/scratch/gadm36_KEN_0.dbf', 'data/Kenya_Tanzania/scratch/gadm36_TZA_0.dbf', 'data/Kenya_Tanzania/scratch/gadm36_TZA_1.dbf', 'data/Kenya_Tanzania/scratch/gadm36_TZA_3.dbf', 'data/Kenya_Tanzania/scratch/gadm36_TZA_2.dbf', 'data/Kenya_Tanzania/scratch/gadm36_TZA_2.shp', 'data/Kenya_Tanzania/scratch/gadm36_TZA_1.shx', 'data/Kenya_Tanzania/scratch/gadm36_TZA_2.cpg', 'data/Kenya_Tanzania/scratch/gadm36_TZA_3.cpg', 'data/Kenya_Tanzania/scratch/gadm36_TZA_0.shx', 'data/Kenya_Tanzania/scratch/gadm36_TZA_3.shp', 'data/Kenya_Tanzania/scratch/gadm36_TZA_1.shp', 'data/Kenya_Tanzania/scratch/gadm36_TZA_2.shx', 'data/Kenya_Tanzania/scratch/gadm36_TZA_1.cpg', 'data/Kenya_Tanzania/scratch/gadm36_TZA_0.cpg', 'data/Kenya_Tanzania/scratch/gadm36_TZA_3.shx', 'data/Kenya_Tanzania/scratch/gadm36_TZA_0.shp', 'data/Kenya_Tanzania/scratch/gadm36_KEN_0.cpg', 'data/Kenya_Tanzania/scratch/gadm36_KEN_3.shx', 'data/Kenya_Tanzania/scratch/gadm36_KEN_0.shp', 'data/Kenya_Tanzania/scratch/gadm36_KEN_1.shp', 'data/Kenya_Tanzania/scratch/gadm36_KEN_2.shx', 'data/Kenya_Tanzania/scratch/gadm36_KEN_1.cpg', 'data/Kenya_Tanzania/scratch/gadm36_KEN_3.cpg', 'data/Kenya_Tanzania/scratch/gadm36_KEN_0.shx', 'data/Kenya_Tanzania/scratch/gadm36_KEN_3.shp', 'data/Kenya_Tanzania/scratch/gadm36_KEN_2.shp', 'data/Kenya_Tanzania/scratch/gadm36_KEN_1.shx', 'data/Kenya_Tanzania/scratch/gadm36_KEN_2.cpg', 'data/Kenya_Tanzania/scratch/gadm36_TZA_2.prj', 'data/Kenya_Tanzania/scratch/gadm36_TZA_3.prj', 'data/Kenya_Tanzania/scratch/gadm36_TZA_1.prj', 'data/Kenya_Tanzania/scratch/gadm36_TZA_0.prj', 'data/Kenya_Tanzania/scratch/gadm36_KEN_0.prj', 'data/Kenya_Tanzania/scratch/gadm36_KEN_1.prj', 'data/Kenya_Tanzania/scratch/gadm36_KEN_3.prj', 'data/Kenya_Tanzania/scratch/gadm36_KEN_2.prj']
 ['data/Kenya_Tanzania/scratch/gadm36_TZA_2.shp', 'data/Kenya_Tanzania/scratch/gadm36_KEN_2.shp']
-[    GID_0    NAME_0     GID_1                      NAME_1  NL_NAME_1  \
-0     TZA  Tanzania   TZA.1_1                      Arusha        NaN   
-1     TZA  Tanzania   TZA.1_1                      Arusha        NaN   
-2     TZA  Tanzania   TZA.1_1                      Arusha        NaN   
-3     TZA  Tanzania   TZA.1_1                      Arusha        NaN   
-4     TZA  Tanzania   TZA.1_1                      Arusha        NaN   
-..    ...       ...       ...                         ...        ...   
-178   TZA  Tanzania  TZA.28_1              Zanzibar North        NaN   
-179   TZA  Tanzania  TZA.29_1  Zanzibar South and Central        NaN   
-180   TZA  Tanzania  TZA.29_1  Zanzibar South and Central        NaN   
-181   TZA  Tanzania  TZA.30_1               Zanzibar West        NaN   
-182   TZA  Tanzania  TZA.30_1               Zanzibar West        NaN   
+[    GID_0    NAME_0     GID_1                      NAME_1 NL_NAME_1  \
+0     TZA  Tanzania   TZA.1_1                      Arusha      None   
+1     TZA  Tanzania   TZA.1_1                      Arusha      None   
+2     TZA  Tanzania   TZA.1_1                      Arusha      None   
+3     TZA  Tanzania   TZA.1_1                      Arusha      None   
+4     TZA  Tanzania   TZA.1_1                      Arusha      None   
+..    ...       ...       ...                         ...       ...   
+178   TZA  Tanzania  TZA.28_1              Zanzibar North      None   
+179   TZA  Tanzania  TZA.29_1  Zanzibar South and Central      None   
+180   TZA  Tanzania  TZA.29_1  Zanzibar South and Central      None   
+181   TZA  Tanzania  TZA.30_1               Zanzibar West      None   
+182   TZA  Tanzania  TZA.30_1               Zanzibar West      None   
 
           GID_2         NAME_2  \
 0     TZA.1.2_1         Arusha   
@@ -986,31 +1112,31 @@ Important
 181  TZA.30.1_1      Magharibi   
 182  TZA.30.2_1          Mjini   
 
-                                             VARNAME_2  NL_NAME_2      TYPE_2  \
-0                                                  NaN        NaN      Wilaya   
-1                                                  NaN        NaN      Wilaya   
-2                                                  NaN        NaN      Wilaya   
-3                                                  NaN        NaN  Water body   
-4                                                  NaN        NaN  Water body   
-..                                                 ...        ...         ...   
-178  Kaskazini B|North B|Zansibar North|Zanzibar No...        NaN      Wilaya   
-179                                   Zanzibar Central        NaN      Wilaya   
-180                                     Zanzibar South        NaN      Wilaya   
-181                                      Zanzibar West        NaN      Wilaya   
-182                                      Zanzibar Town        NaN      Wilaya   
+                                             VARNAME_2 NL_NAME_2      TYPE_2  \
+0                                                 None      None      Wilaya   
+1                                                 None      None      Wilaya   
+2                                                 None      None      Wilaya   
+3                                                 None      None  Water body   
+4                                                 None      None  Water body   
+..                                                 ...       ...         ...   
+178  Kaskazini B|North B|Zansibar North|Zanzibar No...      None      Wilaya   
+179                                   Zanzibar Central      None      Wilaya   
+180                                     Zanzibar South      None      Wilaya   
+181                                      Zanzibar West      None      Wilaya   
+182                                      Zanzibar Town      None      Wilaya   
 
-      ENGTYPE_2 CC_2    HASC_2  \
-0      District   06  TZ.AS.AS   
-1      District   03       NaN   
-2      District   04  TZ.AS.KA   
-3    Water body  NaN       NaN   
-4    Water body  NaN       NaN   
-..          ...  ...       ...   
-178    District   02  TZ.ZN.NB   
-179    District   01  TZ.ZS.CE   
-180    District   02  TZ.ZS.SO   
-181    District   01  TZ.ZW.WE   
-182    District   02  TZ.ZW.TO   
+      ENGTYPE_2  CC_2    HASC_2  \
+0      District    06  TZ.AS.AS   
+1      District    03      None   
+2      District    04  TZ.AS.KA   
+3    Water body  None      None   
+4    Water body  None      None   
+..          ...   ...       ...   
+178    District    02  TZ.ZN.NB   
+179    District    01  TZ.ZS.CE   
+180    District    02  TZ.ZS.SO   
+181    District    01  TZ.ZW.WE   
+182    District    02  TZ.ZW.TO   
 
                                               geometry  
 0    MULTIPOLYGON (((36.86976 -3.52607, 36.86972 -3...  
@@ -1025,81 +1151,81 @@ Important
 181  MULTIPOLYGON (((39.33430 -6.41708, 39.33430 -6...  
 182  POLYGON ((39.22165 -6.18391, 39.22163 -6.18395...  
 
-[183 rows x 14 columns],     GID_0 NAME_0     GID_1      NAME_1  NL_NAME_1       GID_2  \
-0     KEN  Kenya   KEN.1_1     Baringo        NaN   KEN.1.1_1   
-1     KEN  Kenya   KEN.1_1     Baringo        NaN   KEN.1.2_1   
-2     KEN  Kenya   KEN.1_1     Baringo        NaN   KEN.1.3_1   
-3     KEN  Kenya   KEN.1_1     Baringo        NaN   KEN.1.4_1   
-4     KEN  Kenya   KEN.1_1     Baringo        NaN   KEN.1.5_1   
-..    ...    ...       ...         ...        ...         ...   
-296   KEN  Kenya  KEN.47_1  West Pokot        NaN  KEN.47.2_1   
-297   KEN  Kenya  KEN.47_1  West Pokot        NaN  KEN.47.3_1   
-298   KEN  Kenya  KEN.47_1  West Pokot        NaN  KEN.47.4_1   
-299   KEN  Kenya  KEN.47_1  West Pokot        NaN  KEN.47.5_1   
-300   KEN  Kenya  KEN.47_1  West Pokot        NaN  KEN.47.6_1   
+[183 rows x 14 columns],     GID_0 NAME_0     GID_1      NAME_1 NL_NAME_1       GID_2           NAME_2  \
+0     KEN  Kenya   KEN.1_1     Baringo      None   KEN.1.1_1              805   
+1     KEN  Kenya   KEN.1_1     Baringo      None   KEN.1.2_1  Baringo Central   
+2     KEN  Kenya   KEN.1_1     Baringo      None   KEN.1.3_1    Baringo North   
+3     KEN  Kenya   KEN.1_1     Baringo      None   KEN.1.4_1    Baringo South   
+4     KEN  Kenya   KEN.1_1     Baringo      None   KEN.1.5_1    Eldama Ravine   
+..    ...    ...       ...         ...       ...         ...              ...   
+296   KEN  Kenya  KEN.47_1  West Pokot      None  KEN.47.2_1       Kapenguria   
+297   KEN  Kenya  KEN.47_1  West Pokot      None  KEN.47.3_1      Pokot South   
+298   KEN  Kenya  KEN.47_1  West Pokot      None  KEN.47.4_1            Sigor   
+299   KEN  Kenya  KEN.47_1  West Pokot      None  KEN.47.5_1        unknown 3   
+300   KEN  Kenya  KEN.47_1  West Pokot      None  KEN.47.6_1        unknown 8   
 
-              NAME_2  VARNAME_2  NL_NAME_2        TYPE_2     ENGTYPE_2 CC_2  \
-0                805        NaN        NaN  Constituency  Constituency  162   
-1    Baringo Central        NaN        NaN  Constituency  Constituency  159   
-2      Baringo North        NaN        NaN  Constituency  Constituency  158   
-3      Baringo South        NaN        NaN  Constituency  Constituency  160   
-4      Eldama Ravine        NaN        NaN  Constituency  Constituency  162   
-..               ...        ...        ...           ...           ...  ...   
-296       Kapenguria        NaN        NaN  Constituency  Constituency  129   
-297      Pokot South        NaN        NaN  Constituency  Constituency  132   
-298            Sigor        NaN        NaN  Constituency  Constituency  130   
-299        unknown 3        NaN        NaN  Constituency  Constituency    0   
-300        unknown 8        NaN        NaN  Constituency  Constituency    0   
+    VARNAME_2 NL_NAME_2        TYPE_2     ENGTYPE_2 CC_2 HASC_2  \
+0        None      None  Constituency  Constituency  162   None   
+1        None      None  Constituency  Constituency  159   None   
+2        None      None  Constituency  Constituency  158   None   
+3        None      None  Constituency  Constituency  160   None   
+4        None      None  Constituency  Constituency  162   None   
+..        ...       ...           ...           ...  ...    ...   
+296      None      None  Constituency  Constituency  129   None   
+297      None      None  Constituency  Constituency  132   None   
+298      None      None  Constituency  Constituency  130   None   
+299      None      None  Constituency  Constituency    0   None   
+300      None      None  Constituency  Constituency    0   None   
 
-     HASC_2                                           geometry  
-0       NaN  POLYGON ((35.87727 -0.02973, 35.87699 -0.02947...  
-1       NaN  POLYGON ((35.80651 0.31642, 35.80780 0.31627, ...  
-2       NaN  POLYGON ((35.81394 0.60442, 35.81377 0.60363, ...  
-3       NaN  POLYGON ((36.25757 0.38328, 36.25766 0.38242, ...  
-4       NaN  POLYGON ((35.84734 -0.07654, 35.84637 -0.07804...  
-..      ...                                                ...  
-296     NaN  MULTIPOLYGON (((35.35352 1.65473, 35.35364 1.6...  
-297     NaN  POLYGON ((35.47385 1.00621, 35.47345 1.00622, ...  
-298     NaN  POLYGON ((35.59382 1.28579, 35.59303 1.28596, ...  
-299     NaN  POLYGON ((35.15631 1.49415, 35.15616 1.49424, ...  
-300     NaN  POLYGON ((35.06057 1.50514, 35.06191 1.50485, ...  
+                                              geometry  
+0    POLYGON ((35.87727 -0.02973, 35.87699 -0.02947...  
+1    POLYGON ((35.80651 0.31642, 35.80780 0.31627, ...  
+2    POLYGON ((35.81394 0.60442, 35.81377 0.60363, ...  
+3    POLYGON ((36.25757 0.38328, 36.25766 0.38242, ...  
+4    POLYGON ((35.84734 -0.07654, 35.84637 -0.07804...  
+..                                                 ...  
+296  MULTIPOLYGON (((35.35352 1.65473, 35.35364 1.6...  
+297  POLYGON ((35.47385 1.00621, 35.47345 1.00622, ...  
+298  POLYGON ((35.59382 1.28579, 35.59303 1.28596, ...  
+299  POLYGON ((35.15631 1.49415, 35.15616 1.49424, ...  
+300  POLYGON ((35.06057 1.50514, 35.06191 1.50485, ...  
 
 [301 rows x 14 columns]]</code></pre>
 </div>
 </div>
 </section>
 <section id="merge-shapefiles" class="level3">
-<h3 class="anchored" data-anchor-id="merge-shapefiles"><strong>Merge Shapefiles</strong></h3>
+<h3 class="anchored" data-anchor-id="merge-shapefiles"><strong>Merge shapefiles</strong></h3>
 <p>Even though it is not necessary here, we can merge the shapefile to visualize all the regions at once.</p>
 <p>When doing zonal statistics, it is faster and easier to process one country at a time and then combine the resulting tables. If you have access to a computer with multiple cores, it is also possible to do “parallel processing” to process each chunk at the same time in parallel.</p>
-<div id="ff15da3f" class="cell" data-execution_count="16">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Merge all shapefiles into one GeoDataFrame</span></span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>merged_countries <span class="op">=</span> gpd.GeoDataFrame(pd.concat(shps, ignore_index<span class="op">=</span><span class="va">True</span>))</span>
-<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Optionally, reset index if needed</span></span>
-<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>merged_countries <span class="op">=</span> merged_countries.reset_index(drop<span class="op">=</span><span class="va">True</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="e33d40a2" class="cell" data-execution_count="17">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Merge all shapefiles into one GeoDataFrame</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>merged_countries <span class="op">=</span> gpd.GeoDataFrame(pd.concat(shps, ignore_index<span class="op">=</span><span class="va">True</span>))</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Optionally, reset index if needed</span></span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>merged_countries <span class="op">=</span> merged_countries.reset_index(drop<span class="op">=</span><span class="va">True</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>We can then plot Kenya and Tanzania at Regional Level 2:</p>
-<div id="f464aa4e" class="cell" data-execution_count="17">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot all shapefiles</span></span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">10</span>))</span>
-<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>merged_countries.plot(ax<span class="op">=</span>ax, edgecolor<span class="op">=</span><span class="st">'k'</span>, facecolor<span class="op">=</span><span class="st">'none'</span>, linewidth<span class="op">=</span><span class="dv">1</span>)  <span class="co"># No fill color</span></span>
-<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a><span class="co">#for gdf in shps:</span></span>
-<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a><span class="co">#    gdf.plot(ax=ax, edgecolor='k', facecolor='none', alpha=0.5)  # Adjust alpha and edgecolor as needed</span></span>
-<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Set plot title and labels</span></span>
-<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">'Regional Level 2 Shapefiles'</span>)</span>
-<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a>ax.set_xlabel(<span class="st">'Longitude'</span>)</span>
-<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="st">'Latitude'</span>)</span>
-<span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-14"><a href="#cb23-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Show plot</span></span>
-<span id="cb23-15"><a href="#cb23-15" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="4267c998" class="cell" data-execution_count="18">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot all shapefiles</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">10</span>))</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>merged_countries.plot(ax<span class="op">=</span>ax, edgecolor<span class="op">=</span><span class="st">'k'</span>, facecolor<span class="op">=</span><span class="st">'none'</span>, linewidth<span class="op">=</span><span class="dv">1</span>)  <span class="co"># No fill color</span></span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a><span class="co">#for gdf in shps:</span></span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a><span class="co">#    gdf.plot(ax=ax, edgecolor='k', facecolor='none', alpha=0.5)  # Adjust alpha and edgecolor as needed</span></span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Set plot title and labels</span></span>
+<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">'Regional Level 2 Shapefiles'</span>)</span>
+<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a>ax.set_xlabel(<span class="st">'Longitude'</span>)</span>
+<span id="cb24-12"><a href="#cb24-12" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="st">'Latitude'</span>)</span>
+<span id="cb24-13"><a href="#cb24-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-14"><a href="#cb24-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Show plot</span></span>
+<span id="cb24-15"><a href="#cb24-15" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="maprasterPy_files/figure-html/cell-18-output-1.png" width="641" height="819" class="figure-img"></p>
+<p><img src="maprasterPy_files/figure-html/cell-19-output-1.png" width="641" height="819" class="figure-img"></p>
 </figure>
 </div>
 </div>
@@ -1107,134 +1233,364 @@ Important
 </section>
 <section id="zonal-statistics" class="level3">
 <h3 class="anchored" data-anchor-id="zonal-statistics"><strong>Zonal statistics</strong></h3>
-<p>We use the module <code>rasterstats</code> to calculate the sum and average nighttime for each region. The nighttime lights rasters are quite large, but as we do not need to do any operations on them (e.g.&nbsp;calculations using the overlay function, cropping or masking to the shapefiles extent), the process should be relatively fast.</p>
-<div id="ef59c082" class="cell" data-execution_count="18">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate zonal statistics for the first raster (1992)</span></span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>stats_1992 <span class="op">=</span> zonal_stats(merged_countries, raster1_path, stats<span class="op">=</span>[<span class="st">'sum'</span>, <span class="st">'mean'</span>], nodata<span class="op">=-</span><span class="dv">9999</span>, geojson_out<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate zonal statistics for the second raster (2013)</span></span>
-<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>stats_2013 <span class="op">=</span> zonal_stats(merged_countries, raster2_path, stats<span class="op">=</span>[<span class="st">'sum'</span>, <span class="st">'mean'</span>], nodata<span class="op">=-</span><span class="dv">9999</span>, geojson_out<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert the zonal stats results to GeoDataFrames, retaining geometry and attributes</span></span>
-<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>stats_1992_gdf <span class="op">=</span> gpd.GeoDataFrame.from_features(stats_1992)</span>
-<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a>stats_2013_gdf <span class="op">=</span> gpd.GeoDataFrame.from_features(stats_2013)</span>
-<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Optionally, add a year column to distinguish between them</span></span>
-<span id="cb24-12"><a href="#cb24-12" aria-hidden="true" tabindex="-1"></a>stats_1992_gdf[<span class="st">'year'</span>] <span class="op">=</span> <span class="dv">1992</span></span>
-<span id="cb24-13"><a href="#cb24-13" aria-hidden="true" tabindex="-1"></a>stats_1992_gdf[<span class="st">'year'</span>] <span class="op">=</span> <span class="dv">2013</span></span>
-<span id="cb24-14"><a href="#cb24-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-15"><a href="#cb24-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Combine the results into a single DataFrame</span></span>
-<span id="cb24-16"><a href="#cb24-16" aria-hidden="true" tabindex="-1"></a>combined_stats_gdf <span class="op">=</span> pd.concat([stats_1992_gdf, stats_2013_gdf], ignore_index<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb24-17"><a href="#cb24-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-18"><a href="#cb24-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Display the results</span></span>
-<span id="cb24-19"><a href="#cb24-19" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(combined_stats_gdf.head())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>                                            geometry GID_0    NAME_0    GID_1  \
-0  MULTIPOLYGON (((36.86976 -3.52607, 36.86972 -3...   TZA  Tanzania  TZA.1_1   
-1  POLYGON ((36.75153 -3.37381, 36.75180 -3.37386...   TZA  Tanzania  TZA.1_1   
-2  POLYGON ((34.79647 -3.79258, 34.79669 -3.79408...   TZA  Tanzania  TZA.1_1   
-3  POLYGON ((34.89178 -3.62421, 34.89257 -3.62398...   TZA  Tanzania  TZA.1_1   
-4  POLYGON ((35.77901 -3.56244, 35.77862 -3.56134...   TZA  Tanzania  TZA.1_1   
+<p>This is the step that turns a raster into something you can treat like any other table. <strong>Zonal statistics</strong> summarise raster cells within each polygon — giving you one number per administrative region.</p>
+<p>We use the module <code>rasterstats</code> to calculate the sum and average nighttime lights for each region. The nighttime lights rasters are quite large, but as we do not need to do any operations on them (e.g.&nbsp;cropping or masking to the shapefiles extent), the process should be relatively fast.</p>
+<div id="be1410bb" class="cell" data-execution_count="19">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate zonal statistics for the first raster (1992)</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>stats_1992 <span class="op">=</span> zonal_stats(merged_countries, raster1_path, stats<span class="op">=</span>[<span class="st">'sum'</span>, <span class="st">'mean'</span>], nodata<span class="op">=-</span><span class="dv">9999</span>, geojson_out<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate zonal statistics for the second raster (2013)</span></span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>stats_2013 <span class="op">=</span> zonal_stats(merged_countries, raster2_path, stats<span class="op">=</span>[<span class="st">'sum'</span>, <span class="st">'mean'</span>], nodata<span class="op">=-</span><span class="dv">9999</span>, geojson_out<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert the zonal stats results to GeoDataFrames, retaining geometry and attributes</span></span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>stats_1992_gdf <span class="op">=</span> gpd.GeoDataFrame.from_features(stats_1992)</span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a>stats_2013_gdf <span class="op">=</span> gpd.GeoDataFrame.from_features(stats_2013)</span>
+<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Add a year column to distinguish between them</span></span>
+<span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a>stats_1992_gdf[<span class="st">'year'</span>] <span class="op">=</span> <span class="dv">1992</span></span>
+<span id="cb25-13"><a href="#cb25-13" aria-hidden="true" tabindex="-1"></a>stats_2013_gdf[<span class="st">'year'</span>] <span class="op">=</span> <span class="dv">2013</span></span>
+<span id="cb25-14"><a href="#cb25-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-15"><a href="#cb25-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Combine the results into a single GeoDataFrame -- we use this for the faceted map below</span></span>
+<span id="cb25-16"><a href="#cb25-16" aria-hidden="true" tabindex="-1"></a>combined_stats_gdf <span class="op">=</span> pd.concat([stats_1992_gdf, stats_2013_gdf], ignore_index<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb25-17"><a href="#cb25-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-18"><a href="#cb25-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Display the results</span></span>
+<span id="cb25-19"><a href="#cb25-19" aria-hidden="true" tabindex="-1"></a>combined_stats_gdf.head()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="19">
+<div>
 
-   NAME_1 NL_NAME_1      GID_2        NAME_2 VARNAME_2 NL_NAME_2      TYPE_2  \
-0  Arusha      None  TZA.1.2_1        Arusha      None      None      Wilaya   
-1  Arusha      None  TZA.1.1_1  Arusha Urban      None      None      Wilaya   
-2  Arusha      None  TZA.1.3_1        Karatu      None      None      Wilaya   
-3  Arusha      None  TZA.1.4_1    Lake Eyasi      None      None  Water body   
-4  Arusha      None  TZA.1.5_1  Lake Manyara      None      None  Water body   
 
-    ENGTYPE_2  CC_2    HASC_2      mean    sum    year  
-0    District    06  TZ.AS.AS  0.616771  890.0  2013.0  
-1    District    03      None  2.260450  703.0  2013.0  
-2    District    04  TZ.AS.KA  0.000000    0.0  2013.0  
-3  Water body  None      None  0.000000    0.0  2013.0  
-4  Water body  None      None  0.000000    0.0  2013.0  </code></pre>
+<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">geometry</th>
+<th data-quarto-table-cell-role="th">GID_0</th>
+<th data-quarto-table-cell-role="th">NAME_0</th>
+<th data-quarto-table-cell-role="th">GID_1</th>
+<th data-quarto-table-cell-role="th">NAME_1</th>
+<th data-quarto-table-cell-role="th">NL_NAME_1</th>
+<th data-quarto-table-cell-role="th">GID_2</th>
+<th data-quarto-table-cell-role="th">NAME_2</th>
+<th data-quarto-table-cell-role="th">VARNAME_2</th>
+<th data-quarto-table-cell-role="th">NL_NAME_2</th>
+<th data-quarto-table-cell-role="th">TYPE_2</th>
+<th data-quarto-table-cell-role="th">ENGTYPE_2</th>
+<th data-quarto-table-cell-role="th">CC_2</th>
+<th data-quarto-table-cell-role="th">HASC_2</th>
+<th data-quarto-table-cell-role="th">mean</th>
+<th data-quarto-table-cell-role="th">sum</th>
+<th data-quarto-table-cell-role="th">year</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">0</th>
+<td>MULTIPOLYGON (((36.86976 -3.52607, 36.86972 -3...</td>
+<td>TZA</td>
+<td>Tanzania</td>
+<td>TZA.1_1</td>
+<td>Arusha</td>
+<td>None</td>
+<td>TZA.1.2_1</td>
+<td>Arusha</td>
+<td>None</td>
+<td>None</td>
+<td>Wilaya</td>
+<td>District</td>
+<td>06</td>
+<td>TZ.AS.AS</td>
+<td>0.616771</td>
+<td>890.0</td>
+<td>1992</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">1</th>
+<td>POLYGON ((36.75153 -3.37381, 36.75180 -3.37386...</td>
+<td>TZA</td>
+<td>Tanzania</td>
+<td>TZA.1_1</td>
+<td>Arusha</td>
+<td>None</td>
+<td>TZA.1.1_1</td>
+<td>Arusha Urban</td>
+<td>None</td>
+<td>None</td>
+<td>Wilaya</td>
+<td>District</td>
+<td>03</td>
+<td>None</td>
+<td>2.260450</td>
+<td>703.0</td>
+<td>1992</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">2</th>
+<td>POLYGON ((34.79647 -3.79258, 34.79669 -3.79408...</td>
+<td>TZA</td>
+<td>Tanzania</td>
+<td>TZA.1_1</td>
+<td>Arusha</td>
+<td>None</td>
+<td>TZA.1.3_1</td>
+<td>Karatu</td>
+<td>None</td>
+<td>None</td>
+<td>Wilaya</td>
+<td>District</td>
+<td>04</td>
+<td>TZ.AS.KA</td>
+<td>0.000000</td>
+<td>0.0</td>
+<td>1992</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">3</th>
+<td>POLYGON ((34.89178 -3.62421, 34.89257 -3.62398...</td>
+<td>TZA</td>
+<td>Tanzania</td>
+<td>TZA.1_1</td>
+<td>Arusha</td>
+<td>None</td>
+<td>TZA.1.4_1</td>
+<td>Lake Eyasi</td>
+<td>None</td>
+<td>None</td>
+<td>Water body</td>
+<td>Water body</td>
+<td>None</td>
+<td>None</td>
+<td>0.000000</td>
+<td>0.0</td>
+<td>1992</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">4</th>
+<td>POLYGON ((35.77901 -3.56244, 35.77862 -3.56134...</td>
+<td>TZA</td>
+<td>Tanzania</td>
+<td>TZA.1_1</td>
+<td>Arusha</td>
+<td>None</td>
+<td>TZA.1.5_1</td>
+<td>Lake Manyara</td>
+<td>None</td>
+<td>None</td>
+<td>Water body</td>
+<td>Water body</td>
+<td>None</td>
+<td>None</td>
+<td>0.000000</td>
+<td>0.0</td>
+<td>1992</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Note we asked for two statistics — <code>sum</code> and <code>mean</code>. Which one you want depends on the question. <strong>Sum</strong> of light is closer to total economic activity; <strong>mean</strong> controls for the fact that regions differ enormously in size (the same MAUP issue you met with choropleths). We map the mean below — try the sum and see how differently the map reads.</p>
 </div>
 </div>
 <p>More on zonal stats in python <a href="https://pythonhosted.org/rasterstats/manual.html#zonal-statistics">here</a>.</p>
 </section>
 <section id="visualize" class="level3">
 <h3 class="anchored" data-anchor-id="visualize"><strong>Visualize</strong></h3>
-<p>Let’s have a first look at our result.</p>
-<div id="ea370def" class="cell" data-execution_count="19">
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a figure with two subplots side by side</span></span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>fig, (ax1, ax2) <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">6</span>))</span>
-<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot for 1992 with inverted colormap</span></span>
-<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>stats_1992_gdf.plot(column<span class="op">=</span><span class="st">'mean'</span>, cmap<span class="op">=</span><span class="st">'YlGnBu_r'</span>, legend<span class="op">=</span><span class="va">True</span>, ax<span class="op">=</span>ax1)</span>
-<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>ax1.set_title(<span class="st">"Mean 1992"</span>)</span>
-<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>ax1.axis(<span class="st">'off'</span>)</span>
-<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot for 2013 with inverted colormap</span></span>
-<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a>stats_2013_gdf.plot(column<span class="op">=</span><span class="st">'mean'</span>, cmap<span class="op">=</span><span class="st">'YlGnBu_r'</span>, legend<span class="op">=</span><span class="va">True</span>, ax<span class="op">=</span>ax2)</span>
-<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a>ax2.set_title(<span class="st">"Mean 2013"</span>)</span>
-<span id="cb26-12"><a href="#cb26-12" aria-hidden="true" tabindex="-1"></a>ax2.axis(<span class="st">'off'</span>)</span>
-<span id="cb26-13"><a href="#cb26-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-14"><a href="#cb26-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Adjust layout</span></span>
-<span id="cb26-15"><a href="#cb26-15" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
-<span id="cb26-16"><a href="#cb26-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-17"><a href="#cb26-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Show the plots</span></span>
-<span id="cb26-18"><a href="#cb26-18" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Let’s have a first look at our result. Note that from here on, this is just a <strong>choropleth</strong> — exactly what you built in the vector labs. The raster work is done; the output is an ordinary <code>GeoDataFrame</code> with numeric columns.</p>
+<div id="c68723b3" class="cell" data-execution_count="20">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">8</span>))</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>stats_1992_gdf.plot(column<span class="op">=</span><span class="st">'mean'</span>, cmap<span class="op">=</span><span class="st">'inferno'</span>, legend<span class="op">=</span><span class="va">True</span>, ax<span class="op">=</span>ax)</span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">"Mean nighttime lights, 1992</span><span class="ch">\n</span><span class="st">Continuous scale — almost everything looks identical"</span>)</span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>ax.axis(<span class="st">'off'</span>)</span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="maprasterPy_files/figure-html/cell-20-output-1.png" width="750" height="566" class="figure-img"></p>
+<p><img src="maprasterPy_files/figure-html/cell-21-output-1.png" width="637" height="759" class="figure-img"></p>
 </figure>
 </div>
 </div>
 </div>
-<p>Most of the Kenya and Tanzania have really low values. To make the maps tell a story, we can use fixed breaks.</p>
-<div id="23014561" class="cell" data-execution_count="20">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Define breaks and labels</span></span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>breaks <span class="op">=</span> [<span class="dv">0</span>, <span class="fl">0.05</span>, <span class="fl">0.1</span>, <span class="dv">2</span>, <span class="dv">63</span>]</span>
-<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>labels <span class="op">=</span> [<span class="st">'0-0.05'</span>, <span class="st">'0.05-0.1'</span>, <span class="st">'0.1-2'</span>, <span class="st">'2-63'</span>]</span>
-<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a custom colormap and normalization</span></span>
-<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>cmap <span class="op">=</span> plt.get_cmap(<span class="st">'YlGnBu_r'</span>)</span>
-<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>norm <span class="op">=</span> mcolors.BoundaryNorm(breaks, cmap.N)</span>
-<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a figure with two subplots side by side</span></span>
-<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a>fig, (ax1, ax2) <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">6</span>))</span>
-<span id="cb27-11"><a href="#cb27-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-12"><a href="#cb27-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot for 1992 with custom colormap and breaks</span></span>
-<span id="cb27-13"><a href="#cb27-13" aria-hidden="true" tabindex="-1"></a>stats_1992_gdf.plot(column<span class="op">=</span><span class="st">'mean'</span>, cmap<span class="op">=</span>cmap, norm<span class="op">=</span>norm, legend<span class="op">=</span><span class="va">False</span>, ax<span class="op">=</span>ax1)</span>
-<span id="cb27-14"><a href="#cb27-14" aria-hidden="true" tabindex="-1"></a>ax1.set_title(<span class="st">"Mean 1992"</span>)</span>
-<span id="cb27-15"><a href="#cb27-15" aria-hidden="true" tabindex="-1"></a>ax1.axis(<span class="st">'off'</span>)</span>
-<span id="cb27-16"><a href="#cb27-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-17"><a href="#cb27-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot for 2013 with custom colormap and breaks</span></span>
-<span id="cb27-18"><a href="#cb27-18" aria-hidden="true" tabindex="-1"></a>stats_2013_gdf.plot(column<span class="op">=</span><span class="st">'mean'</span>, cmap<span class="op">=</span>cmap, norm<span class="op">=</span>norm, legend<span class="op">=</span><span class="va">False</span>, ax<span class="op">=</span>ax2)</span>
-<span id="cb27-19"><a href="#cb27-19" aria-hidden="true" tabindex="-1"></a>ax2.set_title(<span class="st">"Mean 2013"</span>)</span>
-<span id="cb27-20"><a href="#cb27-20" aria-hidden="true" tabindex="-1"></a>ax2.axis(<span class="st">'off'</span>)</span>
-<span id="cb27-21"><a href="#cb27-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-22"><a href="#cb27-22" aria-hidden="true" tabindex="-1"></a><span class="co"># Add a colorbar to the figure</span></span>
-<span id="cb27-23"><a href="#cb27-23" aria-hidden="true" tabindex="-1"></a>cbar <span class="op">=</span> fig.colorbar(plt.cm.ScalarMappable(norm<span class="op">=</span>norm, cmap<span class="op">=</span>cmap), ax<span class="op">=</span>[ax1, ax2], orientation<span class="op">=</span><span class="st">'horizontal'</span>, fraction<span class="op">=</span><span class="fl">0.05</span>, pad<span class="op">=</span><span class="fl">0.18</span>, aspect<span class="op">=</span><span class="dv">12</span>)</span>
-<span id="cb27-24"><a href="#cb27-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-25"><a href="#cb27-25" aria-hidden="true" tabindex="-1"></a><span class="co"># Set ticks and labels to match the breaks</span></span>
-<span id="cb27-26"><a href="#cb27-26" aria-hidden="true" tabindex="-1"></a><span class="co">#cbar.set_ticks(breaks)</span></span>
-<span id="cb27-27"><a href="#cb27-27" aria-hidden="true" tabindex="-1"></a><span class="co">#cbar.set_ticklabels(labels)</span></span>
-<span id="cb27-28"><a href="#cb27-28" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-29"><a href="#cb27-29" aria-hidden="true" tabindex="-1"></a><span class="co"># Adjust layout</span></span>
-<span id="cb27-30"><a href="#cb27-30" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
-<span id="cb27-31"><a href="#cb27-31" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-32"><a href="#cb27-32" aria-hidden="true" tabindex="-1"></a><span class="co"># Show the plots</span></span>
-<span id="cb27-33"><a href="#cb27-33" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>/var/folders/79/65l52xsj7vq_4_t_l6k5bl2c0000gn/T/ipykernel_9958/423459503.py:30: UserWarning:
-
-This figure includes Axes that are not compatible with tight_layout, so results might be incorrect.
-</code></pre>
-</div>
+<p>That map is nearly useless, and deliberately so. A handful of very bright regions (Nairobi, Dar es Salaam) stretch the colour scale so far that all the actual variation across the rest of the two countries is squashed into the bottom of the ramp.</p>
+<p>The distribution shows why:</p>
+<div id="956f1755" class="cell" data-execution_count="21">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">4</span>))</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>ax.hist(stats_1992_gdf[<span class="st">'mean'</span>].dropna(), bins<span class="op">=</span><span class="dv">60</span>, color<span class="op">=</span><span class="st">'grey'</span>)</span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>ax.set_xlabel(<span class="st">"Mean nighttime lights, 1992"</span>)</span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="st">"Number of regions"</span>)</span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">"Extremely skewed — most regions are near zero"</span>)</span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="maprasterPy_files/figure-html/cell-21-output-2.png" width="758" height="532" class="figure-img"></p>
+<p><img src="maprasterPy_files/figure-html/cell-22-output-1.png" width="758" height="374" class="figure-img"></p>
 </figure>
 </div>
 </div>
 </div>
-<p>Have a think about what the data is telling you. What’s the story?</p>
+<p>To make the maps tell a story, we need <strong>fixed breaks</strong> placed where the variation actually is — bunched up near zero, rather than spread evenly from 0 to 63.</p>
+<div id="72d325b8" class="cell" data-execution_count="22">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 5 break points give 4 bins, so we need exactly 4 labels and 4 colours</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>breaks <span class="op">=</span> [<span class="dv">0</span>, <span class="fl">0.05</span>, <span class="fl">0.1</span>, <span class="dv">2</span>, <span class="dv">63</span>]</span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>labels <span class="op">=</span> [<span class="st">'0 – 0.05'</span>, <span class="st">'0.05 – 0.1'</span>, <span class="st">'0.1 – 2'</span>, <span class="st">'2 – 63'</span>]</span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>colours <span class="op">=</span> [<span class="st">'#08306B'</span>, <span class="st">'#2C7FB8'</span>, <span class="st">'#7FCDBB'</span>, <span class="st">'#FFFFB2'</span>]</span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a><span class="co"># pd.cut() assigns each region to a class explicitly</span></span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>combined_stats_gdf[<span class="st">'nl_class'</span>] <span class="op">=</span> pd.cut(</span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a>    combined_stats_gdf[<span class="st">'mean'</span>],</span>
+<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a>    bins<span class="op">=</span>breaks,</span>
+<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a>    labels<span class="op">=</span>labels,</span>
+<span id="cb28-11"><a href="#cb28-11" aria-hidden="true" tabindex="-1"></a>    include_lowest<span class="op">=</span><span class="va">True</span></span>
+<span id="cb28-12"><a href="#cb28-12" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb28-13"><a href="#cb28-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-14"><a href="#cb28-14" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">13</span>, <span class="dv">6</span>))</span>
+<span id="cb28-15"><a href="#cb28-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-16"><a href="#cb28-16" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> ax, yr <span class="kw">in</span> <span class="bu">zip</span>(axes, [<span class="dv">1992</span>, <span class="dv">2013</span>]):</span>
+<span id="cb28-17"><a href="#cb28-17" aria-hidden="true" tabindex="-1"></a>    subset <span class="op">=</span> combined_stats_gdf[combined_stats_gdf[<span class="st">'year'</span>] <span class="op">==</span> yr]</span>
+<span id="cb28-18"><a href="#cb28-18" aria-hidden="true" tabindex="-1"></a>    subset.plot(</span>
+<span id="cb28-19"><a href="#cb28-19" aria-hidden="true" tabindex="-1"></a>        column<span class="op">=</span><span class="st">'nl_class'</span>, ax<span class="op">=</span>ax,</span>
+<span id="cb28-20"><a href="#cb28-20" aria-hidden="true" tabindex="-1"></a>        cmap<span class="op">=</span>ListedColormap(colours),</span>
+<span id="cb28-21"><a href="#cb28-21" aria-hidden="true" tabindex="-1"></a>        edgecolor<span class="op">=</span><span class="st">'grey'</span>, linewidth<span class="op">=</span><span class="fl">0.1</span>,</span>
+<span id="cb28-22"><a href="#cb28-22" aria-hidden="true" tabindex="-1"></a>        legend<span class="op">=</span><span class="va">False</span>, missing_kwds<span class="op">=</span>{<span class="st">'color'</span>: <span class="st">'lightgrey'</span>}</span>
+<span id="cb28-23"><a href="#cb28-23" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb28-24"><a href="#cb28-24" aria-hidden="true" tabindex="-1"></a>    ax.set_title(<span class="bu">str</span>(yr))</span>
+<span id="cb28-25"><a href="#cb28-25" aria-hidden="true" tabindex="-1"></a>    ax.axis(<span class="st">'off'</span>)</span>
+<span id="cb28-26"><a href="#cb28-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-27"><a href="#cb28-27" aria-hidden="true" tabindex="-1"></a><span class="co"># One shared legend, built manually so the labels match the bins exactly</span></span>
+<span id="cb28-28"><a href="#cb28-28" aria-hidden="true" tabindex="-1"></a>handles <span class="op">=</span> [Patch(facecolor<span class="op">=</span>c, label<span class="op">=</span>l) <span class="cf">for</span> c, l <span class="kw">in</span> <span class="bu">zip</span>(colours, labels)]</span>
+<span id="cb28-29"><a href="#cb28-29" aria-hidden="true" tabindex="-1"></a>fig.legend(handles<span class="op">=</span>handles, loc<span class="op">=</span><span class="st">'lower center'</span>, ncol<span class="op">=</span><span class="dv">4</span>,</span>
+<span id="cb28-30"><a href="#cb28-30" aria-hidden="true" tabindex="-1"></a>           frameon<span class="op">=</span><span class="va">False</span>, title<span class="op">=</span><span class="st">'Average nightlights'</span>)</span>
+<span id="cb28-31"><a href="#cb28-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-32"><a href="#cb28-32" aria-hidden="true" tabindex="-1"></a>fig.suptitle(<span class="st">"Nighttime lights, Kenya &amp; Tanzania</span><span class="ch">\n</span><span class="st">Fixed breaks — now the variation is visible"</span>)</span>
+<span id="cb28-33"><a href="#cb28-33" aria-hidden="true" tabindex="-1"></a>plt.tight_layout(rect<span class="op">=</span>[<span class="dv">0</span>, <span class="fl">0.06</span>, <span class="dv">1</span>, <span class="dv">1</span>])</span>
+<span id="cb28-34"><a href="#cb28-34" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="maprasterPy_files/figure-html/cell-23-output-1.png" width="917" height="577" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>Why <code>pd.cut()</code> rather than a continuous colormap with breaks
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Binning explicitly with <code>pd.cut()</code> and mapping with a <code>ListedColormap</code> gives you a <strong>discrete</strong> variable, so you control exactly how many classes there are and which colour each one gets. Getting this wrong is a classic trap: <code>n</code> break points define <code>n − 1</code> bins, so a mismatch between the number of breaks and the number of colours silently produces a map where classes blur together — exactly the flat map we were trying to escape.</p>
+<p><code>BoundaryNorm</code> can do the same job on a continuous colormap, but you have to be careful to pass it the right number of colours; the explicit route above is harder to get wrong.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-11-contents" aria-controls="callout-11" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Alternative: a log scale
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-11" class="callout-11-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Fixed breaks are one answer to a skewed variable. Another is to transform the scale itself, which avoids having to pick break points by hand:</p>
+<div id="f8f4e9bd" class="cell" data-execution_count="23">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> matplotlib.colors <span class="im">import</span> LogNorm</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">13</span>, <span class="dv">6</span>))</span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> ax, yr <span class="kw">in</span> <span class="bu">zip</span>(axes, [<span class="dv">1992</span>, <span class="dv">2013</span>]):</span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>    subset <span class="op">=</span> combined_stats_gdf[combined_stats_gdf[<span class="st">'year'</span>] <span class="op">==</span> yr].copy()</span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>    <span class="co"># log(0) is undefined, so nudge zeros up slightly to keep those regions in</span></span>
+<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a>    subset[<span class="st">'mean_adj'</span>] <span class="op">=</span> subset[<span class="st">'mean'</span>].fillna(<span class="dv">0</span>) <span class="op">+</span> <span class="fl">0.01</span></span>
+<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a>    subset.plot(</span>
+<span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a>        column<span class="op">=</span><span class="st">'mean_adj'</span>, ax<span class="op">=</span>ax, cmap<span class="op">=</span><span class="st">'inferno'</span>,</span>
+<span id="cb29-11"><a href="#cb29-11" aria-hidden="true" tabindex="-1"></a>        norm<span class="op">=</span>LogNorm(vmin<span class="op">=</span><span class="fl">0.01</span>, vmax<span class="op">=</span>subset[<span class="st">'mean_adj'</span>].<span class="bu">max</span>()),</span>
+<span id="cb29-12"><a href="#cb29-12" aria-hidden="true" tabindex="-1"></a>        edgecolor<span class="op">=</span><span class="st">'grey'</span>, linewidth<span class="op">=</span><span class="fl">0.1</span>, legend<span class="op">=</span>(ax <span class="kw">is</span> axes[<span class="op">-</span><span class="dv">1</span>])</span>
+<span id="cb29-13"><a href="#cb29-13" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb29-14"><a href="#cb29-14" aria-hidden="true" tabindex="-1"></a>    ax.set_title(<span class="bu">str</span>(yr))</span>
+<span id="cb29-15"><a href="#cb29-15" aria-hidden="true" tabindex="-1"></a>    ax.axis(<span class="st">'off'</span>)</span>
+<span id="cb29-16"><a href="#cb29-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-17"><a href="#cb29-17" aria-hidden="true" tabindex="-1"></a>fig.suptitle(<span class="st">"Nighttime lights on a log scale"</span>)</span>
+<span id="cb29-18"><a href="#cb29-18" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb29-19"><a href="#cb29-19" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="maprasterPy_files/figure-html/cell-24-output-1.png" width="1071" height="568" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Note the <code>+ 0.01</code>: <code>log(0)</code> is undefined, so regions with zero light would drop out entirely. Adding a small constant keeps them in — but be honest about it, since it’s a choice that affects what the reader sees.</p>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Have a think about what the data is telling you. What’s the story? And — carefully — what <em>isn’t</em> it telling you? Brighter isn’t automatically richer.</p>
+</div>
+</div>
 <p>We can also make it interactive with <code>folium</code> and <code>folium.plugins</code> <code>DualMap</code> but this is a bit more complicated in <code>python</code> and will be covered in <a href="https://gdsl-ul.github.io/wma/labs/w05_interactive.html">Web Mapping and Visualiation</a>.</p>
 </section>
+</section>
+<section id="where-this-fits-rasters-in-the-wild" class="level2">
+<h2 class="anchored" data-anchor-id="where-this-fits-rasters-in-the-wild">Where this fits: rasters in the wild</h2>
+<p>You have just done, by hand and on a small scale, roughly what a data service does at national scale and industrial volume:</p>
+<ol type="1">
+<li><strong>Raw</strong> imagery arrives as a noisy grid, partly obscured by cloud</li>
+<li>It gets <strong>cleaned</strong> — many passes combined into a composite</li>
+<li>A model turns spectral values into a <strong>meaningful indicator</strong> — surface temperature, vegetation, cloud probability, light</li>
+<li>Pixels are <strong>aggregated</strong> to administrative units, so the data can be joined to censuses, surveys and policy frameworks</li>
+</ol>
+<p>Steps 1–2 we skipped (the NOAA composites arrive pre-cleaned). Step 3 was done for us. Step 4 is exactly what <code>zonal_stats()</code> did above.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Want to go further with satellite data?
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>This is the whole business of <a href="https://imago.ac.uk"><strong>Imago</strong></a>, the imagery data service for sustainability, prosperity and wellbeing, part of <a href="https://www.sdruk.ukri.org/">Smart Data Research UK</a>. They run that pipeline and publish the output as ready-to-use LSOA/MSOA-level statistics — no gigabyte downloads, no remote-sensing algorithms, small-area detail preserved.</p>
+<ul>
+<li><p><a href="https://imago-sdruk.github.io/Imago_training/satellites_to_areas.html"><strong>From grids to areas</strong></a> — the full version of the four steps above, with the spectral bands / resolution / revisit-cycle background behind them. <strong>Start here.</strong></p></li>
+<li><p><a href="https://imago-sdruk.github.io/Imago_training/"><strong>Imago training</strong></a> — free, openly licensed trainings in both <code>R</code> and <code>Python</code>, covering air temperature, precipitation and SPF. Several run directly in your browser with no installation.</p></li>
+</ul>
+<p>Worth knowing: the <strong>SPF data you mapped in the choropleths lab</strong> was satellite-derived cloud probability that had already been through this whole pipeline. You were doing raster analysis without ever touching a raster — which is rather the point of a service like this.</p>
+</div>
+</div>
 </section>
 <section id="resources" class="level2">
 <h2 class="anchored" data-anchor-id="resources">Resources</h2>
@@ -1242,6 +1598,9 @@ This figure includes Axes that are not compatible with tight_layout, so results 
 <li><p><a href="https://pygis.io/docs/e_interpolation.html">Python Open Source Spatial Programming &amp; Remote Sensing</a></p></li>
 <li><p><a href="https://worldbank.github.io/OpenNightLights/welcome.html">Remote Sensing with Python</a></p></li>
 <li><p><a href="https://blogs.worldbank.org/en/opendata/illuminating-insights-harnessing-nasas-black-marble-r-and-python-packages">Black Marble in Python</a></p></li>
+<li><p><a href="https://rasterio.readthedocs.io/"><code>rasterio</code> documentation</a> — the reference for everything in this lab</p></li>
+<li><p><a href="https://pythonhosted.org/rasterstats/"><code>rasterstats</code> documentation</a> — zonal statistics</p></li>
+<li><p><a href="https://corteva.github.io/rioxarray/stable/"><code>rioxarray</code></a> — a more <code>xarray</code>-flavoured alternative to <code>rasterio</code>, worth knowing about for multi-band or time-series rasters</p></li>
 </ul>
 <!--
 problem installing richdem
@@ -1254,239 +1613,243 @@ https://www.earthdatascience.org/tutorials/get-slope-aspect-from-digital-elevati
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
-window.document.addEventListener("DOMContentLoaded", function (event) {
-  const toggleBodyColorMode = (bsSheetEl) => {
-    const mode = bsSheetEl.getAttribute("data-mode");
-    const bodyEl = window.document.querySelector("body");
-    if (mode === "dark") {
-      bodyEl.classList.add("quarto-dark");
-      bodyEl.classList.remove("quarto-light");
-    } else {
-      bodyEl.classList.add("quarto-light");
-      bodyEl.classList.remove("quarto-dark");
-    }
-  }
-  const toggleBodyColorPrimary = () => {
-    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
-    if (bsSheetEl) {
-      toggleBodyColorMode(bsSheetEl);
-    }
-  }
-  toggleBodyColorPrimary();  
-  const icon = "";
-  const anchorJS = new window.AnchorJS();
-  anchorJS.options = {
-    placement: 'right',
-    icon: icon
-  };
-  anchorJS.add('.anchored');
-  const isCodeAnnotation = (el) => {
-    for (const clz of el.classList) {
-      if (clz.startsWith('code-annotation-')) {                     
-        return true;
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
       }
+      return false;
     }
-    return false;
-  }
-  const onCopySuccess = function(e) {
-    // button target
-    const button = e.trigger;
-    // don't keep focus
-    button.blur();
-    // flash "checked"
-    button.classList.add('code-copy-button-checked');
-    var currentTitle = button.getAttribute("title");
-    button.setAttribute("title", "Copied!");
-    let tooltip;
-    if (window.bootstrap) {
-      button.setAttribute("data-bs-toggle", "tooltip");
-      button.setAttribute("data-bs-placement", "left");
-      button.setAttribute("data-bs-title", "Copied!");
-      tooltip = new bootstrap.Tooltip(button, 
-        { trigger: "manual", 
-          customClass: "code-copy-button-tooltip",
-          offset: [0, -8]});
-      tooltip.show();    
-    }
-    setTimeout(function() {
-      if (tooltip) {
-        tooltip.hide();
-        button.removeAttribute("data-bs-title");
-        button.removeAttribute("data-bs-toggle");
-        button.removeAttribute("data-bs-placement");
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
       }
-      button.setAttribute("title", currentTitle);
-      button.classList.remove('code-copy-button-checked');
-    }, 1000);
-    // clear code selection
-    e.clearSelection();
-  }
-  const getTextToCopy = function(trigger) {
-      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
       for (const childEl of codeEl.children) {
         if (isCodeAnnotation(childEl)) {
           childEl.remove();
         }
       }
       return codeEl.innerText;
-  }
-  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
-    text: getTextToCopy
-  });
-  clipboard.on('success', onCopySuccess);
-  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
-    // For code content inside modals, clipBoardJS needs to be initialized with a container option
-    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
-    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
-      text: getTextToCopy,
-      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
     });
-    clipboardModal.on('success', onCopySuccess);
-  }
-    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
-    var mailtoRegex = new RegExp(/^mailto:/);
-      var filterRegex = new RegExp("https:\/\/pietrostefani\.github\.io\/wma");
-    var isInternal = (href) => {
-        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
     }
-    // Inspect non-navigation links and adorn them if external
- 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
-    for (var i=0; i<links.length; i++) {
-      const link = links[i];
-      if (!isInternal(link.href)) {
-        // undo the damage that might have been done by quarto-nav.js in the case of
-        // links that we want to consider external
-        if (link.dataset.originalHref !== undefined) {
-          link.href = link.dataset.originalHref;
-        }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/gdsl-ul\.github\.io\/gds\/");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
       }
-    }
-  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
-    const config = {
-      allowHTML: true,
-      maxWidth: 500,
-      delay: 100,
-      arrow: false,
-      appendTo: function(el) {
-          return el.parentElement;
-      },
-      interactive: true,
-      interactiveBorder: 10,
-      theme: 'quarto',
-      placement: 'bottom-start',
-    };
-    if (contentFn) {
-      config.content = contentFn;
-    }
-    if (onTriggerFn) {
-      config.onTrigger = onTriggerFn;
-    }
-    if (onUntriggerFn) {
-      config.onUntrigger = onUntriggerFn;
-    }
-    window.tippy(el, config); 
-  }
-  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
-  for (var i=0; i<noterefs.length; i++) {
-    const ref = noterefs[i];
-    tippyHover(ref, function() {
-      // use id or data attribute instead here
-      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
-      try { href = new URL(href).hash; } catch {}
-      const id = href.replace(/^#\/?/, "");
-      const note = window.document.getElementById(id);
-      if (note) {
-        return note.innerHTML;
-      } else {
-        return "";
-      }
-    });
-  }
-  const xrefs = window.document.querySelectorAll('a.quarto-xref');
-  const processXRef = (id, note) => {
-    // Strip column container classes
-    const stripColumnClz = (el) => {
-      el.classList.remove("page-full", "page-columns");
-      if (el.children) {
-        for (const child of el.children) {
-          stripColumnClz(child);
-        }
-      }
-    }
-    stripColumnClz(note)
-    if (id === null || id.startsWith('sec-')) {
-      // Special case sections, only their first couple elements
-      const container = document.createElement("div");
-      if (note.children && note.children.length > 2) {
-        container.appendChild(note.children[0].cloneNode(true));
-        for (let i = 1; i < note.children.length; i++) {
-          const child = note.children[i];
-          if (child.tagName === "P" && child.innerText === "") {
-            continue;
-          } else {
-            container.appendChild(child.cloneNode(true));
-            break;
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
           }
         }
-        if (window.Quarto?.typesetMath) {
-          window.Quarto.typesetMath(container);
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
         }
-        return container.innerHTML
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
       } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
         if (window.Quarto?.typesetMath) {
           window.Quarto.typesetMath(note);
         }
-        return note.innerHTML;
-      }
-    } else {
-      // Remove any anchor links if they are present
-      const anchorLink = note.querySelector('a.anchorjs-link');
-      if (anchorLink) {
-        anchorLink.remove();
-      }
-      if (window.Quarto?.typesetMath) {
-        window.Quarto.typesetMath(note);
-      }
-      // TODO in 1.5, we should make sure this works without a callout special case
-      if (note.classList.contains("callout")) {
-        return note.outerHTML;
-      } else {
-        return note.innerHTML;
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
       }
     }
-  }
-  for (var i=0; i<xrefs.length; i++) {
-    const xref = xrefs[i];
-    tippyHover(xref, undefined, function(instance) {
-      instance.disable();
-      let url = xref.getAttribute('href');
-      let hash = undefined; 
-      if (url.startsWith('#')) {
-        hash = url;
-      } else {
-        try { hash = new URL(url).hash; } catch {}
-      }
-      if (hash) {
-        const id = hash.replace(/^#\/?/, "");
-        const note = window.document.getElementById(id);
-        if (note !== null) {
-          try {
-            const html = processXRef(id, note.cloneNode(true));
-            instance.setContent(html);
-          } finally {
-            instance.enable();
-            instance.show();
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
           }
         } else {
-          // See if we can fetch this
-          fetch(url.split('#')[0])
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
           .then(res => res.text())
           .then(html => {
             const parser = new DOMParser();
             const htmlDoc = parser.parseFromString(html, "text/html");
-            const note = htmlDoc.getElementById(id);
+            const note = htmlDoc.querySelector('main.content');
             if (note !== null) {
-              const html = processXRef(id, note);
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
               instance.setContent(html);
             } 
           }).finally(() => {
@@ -1494,185 +1857,161 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
             instance.show();
           });
         }
-      } else {
-        // See if we can fetch a full url (with no hash to target)
-        // This is a special case and we should probably do some content thinning / targeting
-        fetch(url)
-        .then(res => res.text())
-        .then(html => {
-          const parser = new DOMParser();
-          const htmlDoc = parser.parseFromString(html, "text/html");
-          const note = htmlDoc.querySelector('main.content');
-          if (note !== null) {
-            // This should only happen for chapter cross references
-            // (since there is no id in the URL)
-            // remove the first header
-            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
-              note.children[0].remove();
-            }
-            const html = processXRef(null, note);
-            instance.setContent(html);
-          } 
-        }).finally(() => {
-          instance.enable();
-          instance.show();
-        });
-      }
-    }, function(instance) {
-    });
-  }
-      let selectedAnnoteEl;
-      const selectorForAnnotation = ( cell, annotation) => {
-        let cellAttr = 'data-code-cell="' + cell + '"';
-        let lineAttr = 'data-code-annotation="' +  annotation + '"';
-        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
-        return selector;
-      }
-      const selectCodeLines = (annoteEl) => {
-        const doc = window.document;
-        const targetCell = annoteEl.getAttribute("data-target-cell");
-        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
-        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
-        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
-        const lineIds = lines.map((line) => {
-          return targetCell + "-" + line;
-        })
-        let top = null;
-        let height = null;
-        let parent = null;
-        if (lineIds.length > 0) {
-            //compute the position of the single el (top and bottom and make a div)
-            const el = window.document.getElementById(lineIds[0]);
-            top = el.offsetTop;
-            height = el.offsetHeight;
-            parent = el.parentElement.parentElement;
-          if (lineIds.length > 1) {
-            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
-            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
-            height = bottom - top;
-          }
-          if (top !== null && height !== null && parent !== null) {
-            // cook up a div (if necessary) and position it 
-            let div = window.document.getElementById("code-annotation-line-highlight");
-            if (div === null) {
-              div = window.document.createElement("div");
-              div.setAttribute("id", "code-annotation-line-highlight");
-              div.style.position = 'absolute';
-              parent.appendChild(div);
-            }
-            div.style.top = top - 2 + "px";
-            div.style.height = height + 4 + "px";
-            div.style.left = 0;
-            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
-            if (gutterDiv === null) {
-              gutterDiv = window.document.createElement("div");
-              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
-              gutterDiv.style.position = 'absolute';
-              const codeCell = window.document.getElementById(targetCell);
-              const gutter = codeCell.querySelector('.code-annotation-gutter');
-              gutter.appendChild(gutterDiv);
-            }
-            gutterDiv.style.top = top - 2 + "px";
-            gutterDiv.style.height = height + 4 + "px";
-          }
-          selectedAnnoteEl = annoteEl;
-        }
-      };
-      const unselectCodeLines = () => {
-        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
-        elementsIds.forEach((elId) => {
-          const div = window.document.getElementById(elId);
-          if (div) {
-            div.remove();
-          }
-        });
-        selectedAnnoteEl = undefined;
-      };
-        // Handle positioning of the toggle
-    window.addEventListener(
-      "resize",
-      throttle(() => {
-        elRect = undefined;
-        if (selectedAnnoteEl) {
-          selectCodeLines(selectedAnnoteEl);
-        }
-      }, 10)
-    );
-    function throttle(fn, ms) {
-    let throttle = false;
-    let timer;
-      return (...args) => {
-        if(!throttle) { // first call gets through
-            fn.apply(this, args);
-            throttle = true;
-        } else { // all the others get throttled
-            if(timer) clearTimeout(timer); // cancel #2
-            timer = setTimeout(() => {
-              fn.apply(this, args);
-              timer = throttle = false;
-            }, ms);
-        }
-      };
-    }
-      // Attach click handler to the DT
-      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
-      for (const annoteDlNode of annoteDls) {
-        annoteDlNode.addEventListener('click', (event) => {
-          const clickedEl = event.target;
-          if (clickedEl !== selectedAnnoteEl) {
-            unselectCodeLines();
-            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
-            if (activeEl) {
-              activeEl.classList.remove('code-annotation-active');
-            }
-            selectCodeLines(clickedEl);
-            clickedEl.classList.add('code-annotation-active');
-          } else {
-            // Unselect the line
-            unselectCodeLines();
-            clickedEl.classList.remove('code-annotation-active');
-          }
-        });
-      }
-  const findCites = (el) => {
-    const parentEl = el.parentElement;
-    if (parentEl) {
-      const cites = parentEl.dataset.cites;
-      if (cites) {
-        return {
-          el,
-          cites: cites.split(' ')
-        };
-      } else {
-        return findCites(el.parentElement)
-      }
-    } else {
-      return undefined;
-    }
-  };
-  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
-  for (var i=0; i<bibliorefs.length; i++) {
-    const ref = bibliorefs[i];
-    const citeInfo = findCites(ref);
-    if (citeInfo) {
-      tippyHover(citeInfo.el, function() {
-        var popup = window.document.createElement('div');
-        citeInfo.cites.forEach(function(cite) {
-          var citeDiv = window.document.createElement('div');
-          citeDiv.classList.add('hanging-indent');
-          citeDiv.classList.add('csl-entry');
-          var biblioDiv = window.document.getElementById('ref-' + cite);
-          if (biblioDiv) {
-            citeDiv.innerHTML = biblioDiv.innerHTML;
-          }
-          popup.appendChild(citeDiv);
-        });
-        return popup.innerHTML;
+      }, function(instance) {
       });
     }
-  }
-});
-</script>
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
       <a href="./maprasterR.html" class="pagination-link" aria-label="Lab in R">
@@ -1693,7 +2032,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </div>   
     <div class="nav-footer-center">
       &nbsp;
-    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/pietrostefani/gds/edit/main/maprasterPy.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></div>
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/GDSL-UL/gds/edit/main/maprasterPy.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></div>
     <div class="nav-footer-right">
 <p>This book was built with <a href="https://quarto.org/">Quarto</a>.</p>
 </div>

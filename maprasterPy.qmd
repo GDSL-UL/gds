@@ -1,6 +1,18 @@
 # Lab in Python {#sec-map-raster-Python .unnumbered}
 
-In this session, we will further explore the world of geographic data visualization by building upon our understanding of both raster data and choropleths. Raster data, consisting of gridded cells, allows us to represent continuous geographic phenomena such as temperature, elevation, or satellite imagery. Choropleths, on the other hand, are an effective way to visualize spatial patterns through the use of color-coded regions, making them invaluable for displaying discrete data like population density or election results. By combining these techniques, we will gain a comprehensive toolkit for conveying complex geographical information in a visually compelling manner.
+Everything we have mapped so far has been **vector** data — points, lines and polygons, each with a geometry and a row in a table. Raster data works differently: a regular grid of cells, each holding a single value, with no table of attributes at all.
+
+That difference matters more than it sounds. A raster doesn't know about "neighbourhoods" or "households" — it just knows that cell (1450, 2013) has the value 847. Much of working with raster data is about bridging that gap: getting from *a grid of numbers* to *something you can join to the social and administrative data you actually care about*.
+
+::: {.callout-tip}
+## What you'll be able to do by the end
+
+- Load a raster, check its CRS, and reproject it
+- **Crop** and **mask** it down to an area of interest
+- Style it so it actually communicates something
+- **Extract** raster values at point locations — the raster → vector bridge
+- Compute **zonal statistics** — one value per administrative area, ready to join and map as a choropleth
+:::
 
 ## Importing Modules
 
@@ -10,16 +22,15 @@ import rasterio
 from rasterio.warp import reproject, Resampling, calculate_default_transform
 from rasterio.mask import mask
 from rasterio.plot import show
-from rasterio import features
 
 # For converting Shapely geometries to GeoJSON format
 from shapely.geometry import mapping
+# For combining many geometries into one (version-agnostic across geopandas releases)
+from shapely.ops import unary_union
 
 # For plotting and visualizing data using Matplotlib
 import matplotlib.pyplot as plt
-import matplotlib.patches as mpatches
 from matplotlib.patches import Patch
-import matplotlib.colorbar as colorbar
 import matplotlib.colors as mcolors
 from matplotlib.colors import ListedColormap, BoundaryNorm
 
@@ -33,9 +44,11 @@ import pandas as pd
 # These imports are for file and directory operations
 import os
 import zipfile
+import tarfile
+import gzip
 import shutil
 
-#import rioxarray as rxr
+# For zonal statistics
 from rasterstats import zonal_stats
 ```
 
@@ -43,7 +56,7 @@ from rasterstats import zonal_stats
 
 ### **Import raster data**
 
-Raster **terrain** data consists of gridded elevation values that represent the topography of a geographic area. You can download this from the [relevant github folder](https://github.com/pietrostefani/gds/tree/main/data/Lebanon). A good place to download elevation data is [Earth Explorer](https://earthexplorer.usgs.gov/). This [video](https://www.youtube.com/watch?v=NQg0g9ObhXE) takes you through the download process if you want to try this out yourself.
+Raster **terrain** data consists of gridded elevation values that represent the topography of a geographic area. You can download this from the [relevant github folder](https://github.com/GDSL-UL/gds/tree/main/data/Lebanon). A good place to download elevation data is [Earth Explorer](https://earthexplorer.usgs.gov/). This [video](https://www.youtube.com/watch?v=NQg0g9ObhXE) takes you through the download process if you want to try this out yourself.
 
 We first import a raster file for elevation.
 
@@ -98,9 +111,15 @@ print(crs)
 
 ### **Reproject the Raster**
 
+We reproject the raster to match the CRS of the Lebanon shapefile — the same thing the R lab does. Reprojecting a raster in `rasterio` takes a few more steps than in R: we have to calculate the new transform and grid dimensions ourselves, then write the result out.
+
+::: callout-important
+Reprojecting a raster is **not** the same as reprojecting a vector. Vector reprojection just moves coordinates. Raster reprojection has to build a whole new grid and *estimate* values for the new cells — so it necessarily changes your data slightly. Reproject once, as early as possible, and avoid doing it repeatedly.
+:::
+
 ```{python}
-# Define the desired destination CRS
-dst_crs = "EPSG:22770"  # For example, WGS84
+# Match the CRS of the Lebanon shapefile (rather than hardcoding a code)
+dst_crs = Lebanon_adm1.crs
 
 # Calculate the transform matrix, width, and height for the output raster
 dst_transform, width, height = calculate_default_transform(
@@ -140,29 +159,66 @@ with rasterio.open("data/Lebanon/reprojected_elevation.tif", "w", **dst_meta) as
 
 ### **Cropping and Masking**
 
-**Cropping**:
+Cropping and masking are both spatial operations used to narrow a raster down to an area of interest — but they do different things:
 
--   Purpose: Cropping a raster involves changing the extent of the raster dataset by specifying a new bounding box or geographic area of interest. The result is a new raster that covers only the specified region.
+**Cropping**
 
--   Typical Use: Cropping is commonly used when you want to reduce the size of a raster dataset to focus on a smaller geographic area of interest while retaining all the original data values within that area.
+-   Purpose: changes the **extent** of the raster by cutting it down to a new bounding box. The result is a smaller, rectangular raster.
 
-**Masking**:
+-   Typical Use: reducing the size of a raster to focus on a smaller geographic area while retaining all the original values within that area.
 
--   Purpose: Applying a binary mask to the dataset. The mask is typically a separate raster or polygon layer where certain areas are designated as "masked" (1) or "unmasked" (0).
+**Masking**
 
--   Typical Use: Masking is used when you want to extract or isolate specific areas or features within a raster dataset. For example, you might use a mask to extract land cover information within the boundaries of a protected national park.
+-   Purpose: sets cells **outside a given shape** to `nodata`, keeping the extent the same. The result is the same size, but with everything outside your polygon blanked out.
 
-In many cases, these cropping and masking are executed one after the other because it is computationally easier to crop when dealing with large datasets, and then masking.
+-   Typical Use: isolating specific areas or features — for example extracting land cover within the boundaries of a protected national park.
+
+::: callout-tip
+## Why do both, and in this order?
+
+Cropping is a cheap rectangular operation; masking has to test every cell against a polygon boundary. **Crop first, then mask** — you shrink the problem before doing the expensive part. On a large raster this can be the difference between seconds and minutes.
+:::
+
+In `rasterio`, `mask()` does both jobs depending on its arguments — `crop=True` trims the extent, and `filled=True` blanks out cells beyond the polygon. Let's do them separately so you can see the difference:
 
 ```{python}
 elevation_22770 = rasterio.open("data/Lebanon/reprojected_elevation.tif")
 
-# Use unary_union method to combine the geometries
-lebanon_union = Lebanon_adm1.geometry.unary_union
+# Combine the geometries into a single shape.
+# We use shapely's unary_union() rather than the GeoSeries method, because
+# that method was renamed in geopandas 1.0 (.unary_union -> .union_all()),
+# so calling it directly breaks on one version or the other.
+lebanon_union = unary_union(Lebanon_adm1.geometry.values)
 
-# Crop the elevation data to the extent of Lebanon
-elevation_lebanon, elevation_lebanon_transform = mask(elevation_22770, [mapping(lebanon_union)], crop=True)
+# 1. CROP only -- trim to the bounding box, keep every value inside it
+elevation_cropped, cropped_transform = mask(
+    elevation_22770, [mapping(lebanon_union)], crop=True, filled=False
+)
+
+# 2. CROP + MASK -- also blank out anything outside the country outline
+elevation_lebanon, elevation_lebanon_transform = mask(
+    elevation_22770, [mapping(lebanon_union)], crop=True
+)
 ```
+
+::: callout-note
+Compare the two results to see the difference for yourself:
+
+```{python}
+fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12, 6))
+
+show(elevation_cropped, transform=cropped_transform, ax=ax1, cmap='terrain')
+ax1.set_title("Cropped only")
+ax1.axis('off')
+
+show(elevation_lebanon, transform=elevation_lebanon_transform, ax=ax2, cmap='terrain')
+ax2.set_title("Cropped + masked")
+ax2.axis('off')
+
+plt.tight_layout()
+plt.show()
+```
+:::
 
 ### **Plot elevation**
 
@@ -212,7 +268,7 @@ ax.legend(handles=legend_patches, loc='center left', bbox_to_anchor=(1, 0.5), ti
 plt.show()
 ```
 
-Questions to ask yourself about how you can improve these maps, going back to [geo-visualisation and choropleths](https://pietrostefani.github.io/gds/mapvector.html).
+Questions to ask yourself about how you can improve these maps, going back to [geo-visualisation and choropleths](mapvector.html).
 
 -   What are the logical breaks for elevation data?
 
@@ -264,11 +320,9 @@ We need to download some raster data. NOAA has made nighttime lights data availa
 :::
 
 ::: callout-important
-You can also download the data [here](https://theuniversityofliverpool-my.sharepoint.com/:u:/g/personal/pietrost_liverpool_ac_uk/EX85foAh7ZBBtSZ64pxbFmsBStf8UX2uaLXE5MBYJt6PeQ?e=LMYu7d) in *tar* format.
+If you have trouble downloading from NOAA, a copy of the two years we need is available from [here](https://theuniversityofliverpool-my.sharepoint.com/:f:/g/personal/pietrost_liverpool_ac_uk/IgAHJu26oswMRqG7c5HZhzx3ATkM5Hb9j0HrSag43-lGPPU?e=1irrJZ) — you need to be logged into your UoL account. Available both as the original *tar* archives and as ready-to-use **TIFs** if you'd rather skip the decompression step.
 
-The downloaded files are going to be in a **"TAR" format**. A TAR file is an archive created by tar, a Unix-based utility used to package files together for backup or distribution purposes. It contains multiple files stored in an uncompressed format along with metadata about the archive. Tars files are also used to reduce files' size. TAR archives compressed with GNU Zip compression may become GZ, .TAR.GZ, or .TGZ files. We need to decompress them before using them.
-
-If you want to simplify further, you can download the data directly as **TIFs**: Here for [1992](https://theuniversityofliverpool-my.sharepoint.com/my?login_hint=pietrost%40liverpool%2Eac%2Euk&id=%2Fpersonal%2Fpietrost%5Fliverpool%5Fac%5Fuk%2FDocuments%2Fgds%5FENVS363%5F563%2FF101992%2Ev4b%5Fweb%2Estable%5Flights%2Eavg%5Fvis%2Etif&parent=%2Fpersonal%2Fpietrost%5Fliverpool%5Fac%5Fuk%2FDocuments%2Fgds%5FENVS363%5F563) and here for [2013](https://theuniversityofliverpool-my.sharepoint.com/my?login_hint=pietrost%40liverpool%2Eac%2Euk&id=%2Fpersonal%2Fpietrost%5Fliverpool%5Fac%5Fuk%2FDocuments%2Fgds%5FENVS363%5F563%2FF182013%2Ev4c%5Fweb%2Estable%5Flights%2Eavg%5Fvis%2Etif&parent=%2Fpersonal%2Fpietrost%5Fliverpool%5Fac%5Fuk%2FDocuments%2Fgds%5FENVS363%5F563). You will need to be logged into your UoL account.
+A **TAR** file is an archive created by tar, a Unix-based utility used to package files together for backup or distribution purposes. It contains multiple files stored in an uncompressed format along with metadata about the archive. TAR archives compressed with GNU Zip compression may become GZ, .TAR.GZ, or .TGZ files. We need to decompress them before using them.
 :::
 
 It is also good practice to create a scratch folder where you do all your unzipping.
@@ -310,7 +364,13 @@ plt.show()
 
 ```
 
-Why can’t you see much? Discuss with the person next to you.
+Why can't you see much? Discuss with the person next to you.
+
+::: {.callout-tip collapse="true"}
+## Stuck?
+
+These are **global** rasters, and you're looking at the whole planet. Nearly all of it is dark, and the few bright pixels are tiny at this scale. Two things are going on: the extent is far larger than our area of interest, and the value distribution is extremely skewed — a handful of very bright cells compress everything else into the bottom of the colour ramp. We'll fix the first with zonal statistics, and the second with fixed breaks when we map.
+:::
 
 ### **Country shapefiles**
 
@@ -355,7 +415,7 @@ print(shps)
 #shutil.rmtree(scratch_folder)
 ```
 
-### **Merge Shapefiles**
+### **Merge shapefiles**
 
 Even though it is not necessary here, we can merge the shapefile to visualize all the regions at once.
 
@@ -391,7 +451,9 @@ plt.show()
 
 ### **Zonal statistics**
 
-We use the module `rasterstats` to calculate the sum and average nighttime for each region. The nighttime lights rasters are quite large, but as we do not need to do any operations on them (e.g. calculations using the overlay function, cropping or masking to the shapefiles extent), the process should be relatively fast.
+This is the step that turns a raster into something you can treat like any other table. **Zonal statistics** summarise raster cells within each polygon — giving you one number per administrative region.
+
+We use the module `rasterstats` to calculate the sum and average nighttime lights for each region. The nighttime lights rasters are quite large, but as we do not need to do any operations on them (e.g. cropping or masking to the shapefiles extent), the process should be relatively fast.
 
 ```{python}
 # Calculate zonal statistics for the first raster (1992)
@@ -404,86 +466,159 @@ stats_2013 = zonal_stats(merged_countries, raster2_path, stats=['sum', 'mean'], 
 stats_1992_gdf = gpd.GeoDataFrame.from_features(stats_1992)
 stats_2013_gdf = gpd.GeoDataFrame.from_features(stats_2013)
 
-# Optionally, add a year column to distinguish between them
+# Add a year column to distinguish between them
 stats_1992_gdf['year'] = 1992
-stats_1992_gdf['year'] = 2013
+stats_2013_gdf['year'] = 2013
 
-# Combine the results into a single DataFrame
+# Combine the results into a single GeoDataFrame -- we use this for the faceted map below
 combined_stats_gdf = pd.concat([stats_1992_gdf, stats_2013_gdf], ignore_index=True)
 
 # Display the results
-print(combined_stats_gdf.head())
+combined_stats_gdf.head()
 ```
+
+::: callout-tip
+Note we asked for two statistics — `sum` and `mean`. Which one you want depends on the question. **Sum** of light is closer to total economic activity; **mean** controls for the fact that regions differ enormously in size (the same MAUP issue you met with choropleths). We map the mean below — try the sum and see how differently the map reads.
+:::
 
 More on zonal stats in python [here](https://pythonhosted.org/rasterstats/manual.html#zonal-statistics).
 
 ### **Visualize**
 
-Let's have a first look at our result.
+Let's have a first look at our result. Note that from here on, this is just a **choropleth** — exactly what you built in the vector labs. The raster work is done; the output is an ordinary `GeoDataFrame` with numeric columns.
 
 ```{python}
-# Create a figure with two subplots side by side
-fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(8, 6))
+fig, ax = plt.subplots(figsize=(8, 8))
 
-# Plot for 1992 with inverted colormap
-stats_1992_gdf.plot(column='mean', cmap='YlGnBu_r', legend=True, ax=ax1)
-ax1.set_title("Mean 1992")
-ax1.axis('off')
+stats_1992_gdf.plot(column='mean', cmap='inferno', legend=True, ax=ax)
+ax.set_title("Mean nighttime lights, 1992\nContinuous scale — almost everything looks identical")
+ax.axis('off')
 
-# Plot for 2013 with inverted colormap
-stats_2013_gdf.plot(column='mean', cmap='YlGnBu_r', legend=True, ax=ax2)
-ax2.set_title("Mean 2013")
-ax2.axis('off')
-
-# Adjust layout
 plt.tight_layout()
-
-# Show the plots
 plt.show()
 ```
 
-Most of the Kenya and Tanzania have really low values. To make the maps tell a story, we can use fixed breaks.
+That map is nearly useless, and deliberately so. A handful of very bright regions (Nairobi, Dar es Salaam) stretch the colour scale so far that all the actual variation across the rest of the two countries is squashed into the bottom of the ramp.
+
+The distribution shows why:
 
 ```{python}
-# Define breaks and labels
+fig, ax = plt.subplots(figsize=(8, 4))
+
+ax.hist(stats_1992_gdf['mean'].dropna(), bins=60, color='grey')
+ax.set_xlabel("Mean nighttime lights, 1992")
+ax.set_ylabel("Number of regions")
+ax.set_title("Extremely skewed — most regions are near zero")
+
+plt.tight_layout()
+plt.show()
+```
+
+To make the maps tell a story, we need **fixed breaks** placed where the variation actually is — bunched up near zero, rather than spread evenly from 0 to 63.
+
+```{python}
+# 5 break points give 4 bins, so we need exactly 4 labels and 4 colours
 breaks = [0, 0.05, 0.1, 2, 63]
-labels = ['0-0.05', '0.05-0.1', '0.1-2', '2-63']
+labels = ['0 – 0.05', '0.05 – 0.1', '0.1 – 2', '2 – 63']
+colours = ['#08306B', '#2C7FB8', '#7FCDBB', '#FFFFB2']
 
-# Create a custom colormap and normalization
-cmap = plt.get_cmap('YlGnBu_r')
-norm = mcolors.BoundaryNorm(breaks, cmap.N)
+# pd.cut() assigns each region to a class explicitly
+combined_stats_gdf['nl_class'] = pd.cut(
+    combined_stats_gdf['mean'],
+    bins=breaks,
+    labels=labels,
+    include_lowest=True
+)
 
-# Create a figure with two subplots side by side
-fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(8, 6))
+fig, axes = plt.subplots(1, 2, figsize=(13, 6))
 
-# Plot for 1992 with custom colormap and breaks
-stats_1992_gdf.plot(column='mean', cmap=cmap, norm=norm, legend=False, ax=ax1)
-ax1.set_title("Mean 1992")
-ax1.axis('off')
+for ax, yr in zip(axes, [1992, 2013]):
+    subset = combined_stats_gdf[combined_stats_gdf['year'] == yr]
+    subset.plot(
+        column='nl_class', ax=ax,
+        cmap=ListedColormap(colours),
+        edgecolor='grey', linewidth=0.1,
+        legend=False, missing_kwds={'color': 'lightgrey'}
+    )
+    ax.set_title(str(yr))
+    ax.axis('off')
 
-# Plot for 2013 with custom colormap and breaks
-stats_2013_gdf.plot(column='mean', cmap=cmap, norm=norm, legend=False, ax=ax2)
-ax2.set_title("Mean 2013")
-ax2.axis('off')
+# One shared legend, built manually so the labels match the bins exactly
+handles = [Patch(facecolor=c, label=l) for c, l in zip(colours, labels)]
+fig.legend(handles=handles, loc='lower center', ncol=4,
+           frameon=False, title='Average nightlights')
 
-# Add a colorbar to the figure
-cbar = fig.colorbar(plt.cm.ScalarMappable(norm=norm, cmap=cmap), ax=[ax1, ax2], orientation='horizontal', fraction=0.05, pad=0.18, aspect=12)
-
-# Set ticks and labels to match the breaks
-#cbar.set_ticks(breaks)
-#cbar.set_ticklabels(labels)
-
-# Adjust layout
-plt.tight_layout()
-
-# Show the plots
+fig.suptitle("Nighttime lights, Kenya & Tanzania\nFixed breaks — now the variation is visible")
+plt.tight_layout(rect=[0, 0.06, 1, 1])
 plt.show()
-
 ```
 
-Have a think about what the data is telling you. What's the story?
+::: callout-important
+## Why `pd.cut()` rather than a continuous colormap with breaks
+
+Binning explicitly with `pd.cut()` and mapping with a `ListedColormap` gives you a **discrete** variable, so you control exactly how many classes there are and which colour each one gets. Getting this wrong is a classic trap: `n` break points define `n − 1` bins, so a mismatch between the number of breaks and the number of colours silently produces a map where classes blur together — exactly the flat map we were trying to escape.
+
+`BoundaryNorm` can do the same job on a continuous colormap, but you have to be careful to pass it the right number of colours; the explicit route above is harder to get wrong.
+:::
+
+::: {.callout-tip collapse="true"}
+## Alternative: a log scale
+
+Fixed breaks are one answer to a skewed variable. Another is to transform the scale itself, which avoids having to pick break points by hand:
+
+```{python}
+from matplotlib.colors import LogNorm
+
+fig, axes = plt.subplots(1, 2, figsize=(13, 6))
+
+for ax, yr in zip(axes, [1992, 2013]):
+    subset = combined_stats_gdf[combined_stats_gdf['year'] == yr].copy()
+    # log(0) is undefined, so nudge zeros up slightly to keep those regions in
+    subset['mean_adj'] = subset['mean'].fillna(0) + 0.01
+    subset.plot(
+        column='mean_adj', ax=ax, cmap='inferno',
+        norm=LogNorm(vmin=0.01, vmax=subset['mean_adj'].max()),
+        edgecolor='grey', linewidth=0.1, legend=(ax is axes[-1])
+    )
+    ax.set_title(str(yr))
+    ax.axis('off')
+
+fig.suptitle("Nighttime lights on a log scale")
+plt.tight_layout()
+plt.show()
+```
+
+Note the `+ 0.01`: `log(0)` is undefined, so regions with zero light would drop out entirely. Adding a small constant keeps them in — but be honest about it, since it's a choice that affects what the reader sees.
+:::
+
+::: callout-tip
+Have a think about what the data is telling you. What's the story? And — carefully — what *isn't* it telling you? Brighter isn't automatically richer.
+:::
 
 We can also make it interactive with `folium` and `folium.plugins` `DualMap` but this is a bit more complicated in `python` and will be covered in [Web Mapping and Visualiation](https://gdsl-ul.github.io/wma/labs/w05_interactive.html).
+
+## Where this fits: rasters in the wild
+
+You have just done, by hand and on a small scale, roughly what a data service does at national scale and industrial volume:
+
+1.  **Raw** imagery arrives as a noisy grid, partly obscured by cloud
+2.  It gets **cleaned** — many passes combined into a composite
+3.  A model turns spectral values into a **meaningful indicator** — surface temperature, vegetation, cloud probability, light
+4.  Pixels are **aggregated** to administrative units, so the data can be joined to censuses, surveys and policy frameworks
+
+Steps 1–2 we skipped (the NOAA composites arrive pre-cleaned). Step 3 was done for us. Step 4 is exactly what `zonal_stats()` did above.
+
+::: callout-tip
+## Want to go further with satellite data?
+
+This is the whole business of [**Imago**](https://imago.ac.uk), the imagery data service for sustainability, prosperity and wellbeing, part of [Smart Data Research UK](https://www.sdruk.ukri.org/). They run that pipeline and publish the output as ready-to-use LSOA/MSOA-level statistics — no gigabyte downloads, no remote-sensing algorithms, small-area detail preserved.
+
+- [**From grids to areas**](https://imago-sdruk.github.io/Imago_training/satellites_to_areas.html) — the full version of the four steps above, with the spectral bands / resolution / revisit-cycle background behind them. **Start here.**
+
+- [**Imago training**](https://imago-sdruk.github.io/Imago_training/) — free, openly licensed trainings in both `R` and `Python`, covering air temperature, precipitation and SPF. Several run directly in your browser with no installation.
+
+Worth knowing: the **SPF data you mapped in the choropleths lab** was satellite-derived cloud probability that had already been through this whole pipeline. You were doing raster analysis without ever touching a raster — which is rather the point of a service like this.
+:::
 
 ## Resources
 
@@ -492,6 +627,12 @@ We can also make it interactive with `folium` and `folium.plugins` `DualMap` but
 -   [Remote Sensing with Python](https://worldbank.github.io/OpenNightLights/welcome.html)
 
 -   [Black Marble in Python](https://blogs.worldbank.org/en/opendata/illuminating-insights-harnessing-nasas-black-marble-r-and-python-packages)
+
+-   [`rasterio` documentation](https://rasterio.readthedocs.io/) — the reference for everything in this lab
+
+-   [`rasterstats` documentation](https://pythonhosted.org/rasterstats/) — zonal statistics
+
+-   [`rioxarray`](https://corteva.github.io/rioxarray/stable/) — a more `xarray`-flavoured alternative to `rasterio`, worth knowing about for multi-band or time-series rasters
 
 ```{=html}
 <!--
