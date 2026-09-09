@@ -450,4 +450,16 @@ plt.show()
 
 - Some more on mapping [here](https://geopandas.org/en/stable/docs/user_guide/mapping.html)
 
-- For more on the Sun Probability Framework itself, and a worked example comparing multiple years, see the [Imago SPF training materials](spf.html)
+::: callout-tip
+## Want to go further with Imago data?
+
+The SPF dataset we used in this lab is one of several openly available products from [**Imago**](https://imago.ac.uk), the imagery data service for sustainability, prosperity and wellbeing, part of [Smart Data Research UK](https://www.sdruk.ukri.org/). They publish their own training materials, free and openly licensed:
+
+- [**Imago training**](https://imago-sdruk.github.io/Imago_training/) — the full set, covering air temperature, precipitation and SPF, in both `R` and `Python`. Several come with notebooks you can run straight in your browser, no installation needed.
+
+- [**From grids to areas**](https://imago-sdruk.github.io/Imago_training/satellites_to_areas.html) — start here if you're curious where a dataset like SPF actually *comes from*. It walks through how raw satellite imagery becomes neighbourhood-level statistics: spectral bands, resolution and revisit cycles, then the four-stage pipeline from noisy cloud-covered grid → cleaned composite → modelled indicator → values aggregated to LSOAs.
+
+- [**SPF: Sun Probability Framework**](https://imago-sdruk.github.io/Imago_training/spf.html) and [**Comparing 2024 and 2025**](https://imago-sdruk.github.io/Imago_training/spf_1.html) — more on the specific dataset you've just been mapping, including a worked example across multiple years.
+
+Worth a look if you're thinking about using Earth observation data in your own assignment or dissertation.
+:::

@@ -559,7 +559,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="installing-packages" class="level2">
 <h2 class="anchored" data-anchor-id="installing-packages">Installing Packages</h2>
 <p>Before all this mapping fun, let us get the importing of libraries and data loading out of the way:</p>
-<div id="6c7b4db2" class="cell" data-execution_count="1">
+<div id="a33a4f62" class="cell" data-execution_count="1">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> geopandas <span class="im">as</span> gpd</span>
@@ -586,7 +586,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Place it inside a <code>data/</code> directory. Unlike the polygon/table pairs you’ve joined before, this file already contains both the small-area geometries <em>and</em> the SPF value in one GeoPackage — no separate join needed to get started.</p>
 </div>
 </div>
-<div id="0084ef5c" class="cell" data-execution_count="2">
+<div id="b0d95eb4" class="cell" data-execution_count="2">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># A GeoPackage can bundle multiple layers/tables -- check what's actually</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co"># in the file before reading, since gpd.read_file() silently picks the</span></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co"># first layer if you don't specify one, which may not be the spatial layer</span></span>
@@ -596,7 +596,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <pre><code>['SPF_LSOA_level']</code></pre>
 </div>
 </div>
-<div id="1c7bbca0" class="cell" data-execution_count="3">
+<div id="34b01713" class="cell" data-execution_count="3">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load the GeoPackage into a GeoDataFrame</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>spf_25 <span class="op">=</span> gpd.read_file(</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"data/Imago_spf/Cloud probability statistics per small area in 2025 (GeoPackage).gpkg"</span>,</span>
@@ -627,7 +627,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <div id="callout-2" class="callout-2-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<div id="d3ec5dd6" class="cell" data-execution_count="4">
+<div id="5ff0edd7" class="cell" data-execution_count="4">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Check the CRS of the GeoDataFrame</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(spf_25.crs)</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -660,7 +660,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><code>geometry</code>: the small-area boundary</li>
 </ul>
 <p>Since our “Unique values” example needs a genuinely categorical variable, and SPF itself is continuous, we’ll derive one from the <code>data_zone_code</code> prefix — which UK nation each small area belongs to:</p>
-<div id="3e5a1b8e" class="cell" data-execution_count="5">
+<div id="12d00038" class="cell" data-execution_count="5">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_nation(code):</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> code.startswith(<span class="st">"E"</span>):</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="st">"England"</span></span>
@@ -682,7 +682,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p><strong>Nominal</strong>: Nominal variables represent categories or labels <em>without</em> any inherent order or ranking. The categories are distinct and do not have a natural progression or hierarchy, such as “apple,” “banana,” and “orange” for fruit types.</p>
 <p><strong>Ordinal</strong> : Ordinal variables represent categories or labels with a meaningful <em>order</em> or <em>ranking</em>. The relative order or hierarchy among the categories is significant, indicating a clear progression from lower to higher values, such as “low,” “medium,” and “high” for satisfaction levels.</p>
 <p>In Python, creating categorical choropleths is possible with one line of code. <code>nation</code> is nominal — there’s no inherent ranking between England, Scotland, Wales and Northern Ireland.</p>
-<div id="9975f235" class="cell" data-execution_count="6">
+<div id="82eddaac" class="cell" data-execution_count="6">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>spf_25.plot(</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    column<span class="op">=</span><span class="st">"nation"</span>,  <span class="co"># Specifies the column "nation" to color the plot based on categories</span></span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    categorical<span class="op">=</span><span class="va">True</span>,       <span class="co"># Indicates that the "nation" column is categorical (not continuous)</span></span>
@@ -717,7 +717,7 @@ Important
 <p>If, instead of categorical variables, we want to display the geographical distribution of a continuous phenomenon, we need to select a way to encode each value into a color. One potential solution is applying what is usually called “equal intervals”. The intuition of this method is to split the range of the distribution, the difference between the minimum and maximum value, into equally large segments and to assign a different color to each of them according to a palette that reflects the fact that values are ordered.</p>
 <p>Creating the choropleth is relatively straightforward in <code>Python</code>. For example, to create an equal interval map of <code>cloud_probability</code>.</p>
 <p>First we need to prepare the data, going back to our <a href="opensciencePy.html">data wrangling</a>.</p>
-<div id="2ca03a3e" class="cell" data-execution_count="7">
+<div id="1e666365" class="cell" data-execution_count="7">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Step 1: Remove rows where 'cloud_probability' is missing (i.e., remove NA values)</span></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>spf_filtered <span class="op">=</span> spf_25.dropna(subset<span class="op">=</span>[<span class="st">"cloud_probability"</span>])</span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -725,7 +725,7 @@ Important
 <span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>spf_filtered[<span class="st">"cloud_probability"</span>] <span class="op">=</span> spf_filtered[<span class="st">"cloud_probability"</span>].<span class="bu">round</span>().astype(<span class="bu">int</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>An equal interval classification scheme produces a map of 5 classes where each class size is equal, so that each class has an equal range in between the low and high possible value. This allows for the legend to be easily understood by the viewer, since the legend entries are all the same size. However, this scheme does not show data which are skewed towards one side all that well.</p>
-<div id="681e3b4f" class="cell" data-execution_count="8">
+<div id="c00af67a" class="cell" data-execution_count="8">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">9</span>, <span class="dv">11</span>))  <span class="co"># Increase the map size</span></span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Plotting the GeoDataFrame `spf_filtered` on the `ax` axes</span></span>
@@ -783,7 +783,7 @@ Important
 </div>
 </div>
 <p>It is important to understand that equal intervals can first and foremost be visualised on the data distribution.</p>
-<div id="3b36ddac" class="cell" data-execution_count="9">
+<div id="08057b65" class="cell" data-execution_count="9">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>classi <span class="op">=</span> mapclassify.EqualInterval(spf_filtered[<span class="st">"cloud_probability"</span>], k<span class="op">=</span><span class="dv">7</span>)</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>classi</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="9">
@@ -801,14 +801,14 @@ Important
 </div>
 </div>
 <p>Once we have classified the variable, we can check the actual break points where values stop being in one class and become part of the next one:</p>
-<div id="9d9187c3" class="cell" data-execution_count="10">
+<div id="51858a46" class="cell" data-execution_count="10">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>classi.bins</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="10">
 <pre><code>array([58.71428571, 62.42857143, 66.14285714, 69.85714286, 73.57142857,
        77.28571429, 81.        ])</code></pre>
 </div>
 </div>
-<div id="e9d51bcf" class="cell" data-execution_count="11">
+<div id="9012cecb" class="cell" data-execution_count="11">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Set up the figure</span></span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>f, ax <span class="op">=</span> plt.subplots(<span class="dv">1</span>)</span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the kernel density estimation (KDE)</span></span>
@@ -835,7 +835,7 @@ Important
 <h2 class="anchored" data-anchor-id="quantiles">Quantiles</h2>
 <p>One solution to obtain a more balanced classification scheme is using quantiles. This, by definition, assigns the same amount of values to each bin: the entire series is laid out in order and break points are assigned in a way that leaves exactly the same amount of observations between each of them. This “observation-based” approach contrasts with the “value-based” method of equal intervals and, although it can obscure the magnitude of extreme values, it can be more informative in cases with skewed distributions.</p>
 <p>The code required to create the choropleth mirrors that needed above for equal intervals:</p>
-<div id="0ed724e3" class="cell" data-execution_count="12">
+<div id="41420c2b" class="cell" data-execution_count="12">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">9</span>, <span class="dv">11</span>))  <span class="co"># Increase the map size</span></span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Plotting the GeoDataFrame `spf_filtered` on the `ax` axes</span></span>
@@ -872,7 +872,7 @@ Important
 </div>
 <p>Note how, in this case, the amount of polygons in each color is by definition much more balanced (almost equal in fact, except for rounding differences). This obscures outlier values, which get blurred by significantly smaller values in the same group, but allows to get more detail in the “most populated” part of the distribution, where instead of only pale polygons, we can now discern more variability.</p>
 <p>To get further insight into the quantile classification, let’s calculate it with <code>mapclassify</code>:</p>
-<div id="03c17e37" class="cell" data-execution_count="13">
+<div id="ed6d3438" class="cell" data-execution_count="13">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>classi <span class="op">=</span> mapclassify.Quantiles(spf_filtered[<span class="st">"cloud_probability"</span>], k<span class="op">=</span><span class="dv">4</span>)</span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>classi</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="13">
@@ -887,14 +887,14 @@ Important
 </div>
 </div>
 <p>And, similarly, the bins can also be inspected:</p>
-<div id="82d5564f" class="cell" data-execution_count="14">
+<div id="16a3a87d" class="cell" data-execution_count="14">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>classi.bins</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="14">
 <pre><code>array([67., 72., 74., 81.])</code></pre>
 </div>
 </div>
 <p>The visualization of the distribution can be generated in a similar way as well:</p>
-<div id="7539ac3c" class="cell" data-execution_count="15">
+<div id="9204a431" class="cell" data-execution_count="15">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Set up the figure</span></span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>f, ax <span class="op">=</span> plt.subplots(<span class="dv">1</span>)</span>
 <span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the kernel density estimation (KDE)</span></span>
@@ -919,7 +919,7 @@ Important
 <section id="fisher-jenks" class="level2">
 <h2 class="anchored" data-anchor-id="fisher-jenks">Fisher-Jenks</h2>
 <p>Equal interval and quantiles are only two examples of very many classification schemes to encode values into colors. As an example of a more sophisticated one, let us create a Fisher-Jenks choropleth.</p>
-<div id="770537e7" class="cell" data-execution_count="16">
+<div id="7a88c855" class="cell" data-execution_count="16">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">9</span>, <span class="dv">11</span>))  <span class="co"># Increase the map size</span></span>
 <span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Plotting the GeoDataFrame `spf_filtered` on the `ax` axes</span></span>
@@ -955,7 +955,7 @@ Important
 </div>
 </div>
 <p>The same classification can be obtained with a similar approach as before:</p>
-<div id="85b9a655" class="cell" data-execution_count="17">
+<div id="6ee39994" class="cell" data-execution_count="17">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>classi <span class="op">=</span> mapclassify.FisherJenks(spf_filtered[<span class="st">"cloud_probability"</span>], k<span class="op">=</span><span class="dv">7</span>)</span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>classi</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="17">
@@ -973,14 +973,14 @@ Important
 </div>
 </div>
 <p>Once we have classified the variable, we can check the actual break points where values stop being in one class and become part of the next one:</p>
-<div id="159104a0" class="cell" data-execution_count="18">
+<div id="0ccf8603" class="cell" data-execution_count="18">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>classi.bins</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="18">
 <pre><code>array([63., 66., 69., 72., 74., 76., 81.])</code></pre>
 </div>
 </div>
 <p>Now let’s look at the density plot</p>
-<div id="7cb60591" class="cell" data-execution_count="19">
+<div id="41f86c14" class="cell" data-execution_count="19">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Set up the figure</span></span>
 <span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>f, ax <span class="op">=</span> plt.subplots(<span class="dv">1</span>)</span>
 <span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the kernel density estimation (KDE)</span></span>
@@ -1010,7 +1010,7 @@ Important
 <p>As an example, let us zoom into Wales — which, per the SPF map above, stands out with generally higher cloud probability than the rest of the UK. Rather than hardcoding coordinates (which depend on knowing the exact CRS of the data), we compute the bounding box directly from the <code>nation</code> subset we already created:</p>
 <section id="zoom-into-full-map" class="level3">
 <h3 class="anchored" data-anchor-id="zoom-into-full-map">Zoom into full map</h3>
-<div id="b79079e1" class="cell" data-execution_count="20">
+<div id="ff07ffaa" class="cell" data-execution_count="20">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Get the bounding box of Wales directly from the data --</span></span>
 <span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="co"># this works regardless of which CRS the file happens to be in</span></span>
 <span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>wales <span class="op">=</span> spf_25[spf_25[<span class="st">"nation"</span>] <span class="op">==</span> <span class="st">"Wales"</span>]</span>
@@ -1048,7 +1048,7 @@ Important
 <p>The four maps above were deliberately rough — the point was to show the classification mechanics, not to produce a finished product. A map intended for a report or publication needs a few more cartographic elements: a clear title, a colour scheme chosen on purpose, a north arrow, a scale bar, and a source credit.</p>
 <p>For the colour scheme, we’ll switch to <code>viridis</code> — a perceptually uniform, colourblind-safe palette, and a deliberate change from the <code>Blues</code> used throughout this lab, to show that the choice of palette is independent of the choice of classification.</p>
 <p>For the north arrow and scale bar, we’ll use <a href="https://github.com/moss-xyz/matplotlib-map-utils"><code>matplotlib-map-utils</code></a>, which handles both and is CRS-aware — it works out the correct orientation and distance regardless of what projection <code>spf_filtered</code> happens to be in, the same “don’t hardcode it, derive it from the data” principle we used for the zoom above.</p>
-<div id="0381eb0d" class="cell" data-execution_count="21">
+<div id="7159f969" class="cell" data-execution_count="21">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> matplotlib_map_utils.core.north_arrow <span class="im">import</span> north_arrow</span>
 <span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> matplotlib_map_utils.core.scale_bar <span class="im">import</span> scale_bar</span>
 <span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -1114,8 +1114,26 @@ Tip
 <li><p>On Drawing beautiful choropleths.html with <code>Python</code> and <code>ggplot</code> see <a href="https://geopandas.org/en/stable/gallery/choropleths.html">here</a></p></li>
 <li><p>If you want to have a look at <strong>Choropleths in Python</strong> have a look at the chapter on choropleth mapping by <a href="https://geographicdata.science/book/notebooks/05_choropleth.html">Rey, Arribas-Bel and Wolf</a></p></li>
 <li><p>Some more on mapping <a href="https://geopandas.org/en/stable/docs/user_guide/mapping.html">here</a></p></li>
-<li><p>For more on the Sun Probability Framework itself, and a worked example comparing multiple years, see the <a href="spf.html">Imago SPF training materials</a></p></li>
 </ul>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Want to go further with Imago data?
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The SPF dataset we used in this lab is one of several openly available products from <a href="https://imago.ac.uk"><strong>Imago</strong></a>, the imagery data service for sustainability, prosperity and wellbeing, part of <a href="https://www.sdruk.ukri.org/">Smart Data Research UK</a>. They publish their own training materials, free and openly licensed:</p>
+<ul>
+<li><p><a href="https://imago-sdruk.github.io/Imago_training/"><strong>Imago training</strong></a> — the full set, covering air temperature, precipitation and SPF, in both <code>R</code> and <code>Python</code>. Several come with notebooks you can run straight in your browser, no installation needed.</p></li>
+<li><p><a href="https://imago-sdruk.github.io/Imago_training/satellites_to_areas.html"><strong>From grids to areas</strong></a> — start here if you’re curious where a dataset like SPF actually <em>comes from</em>. It walks through how raw satellite imagery becomes neighbourhood-level statistics: spectral bands, resolution and revisit cycles, then the four-stage pipeline from noisy cloud-covered grid → cleaned composite → modelled indicator → values aggregated to LSOAs.</p></li>
+<li><p><a href="https://imago-sdruk.github.io/Imago_training/spf.html"><strong>SPF: Sun Probability Framework</strong></a> and <a href="https://imago-sdruk.github.io/Imago_training/spf_1.html"><strong>Comparing 2024 and 2025</strong></a> — more on the specific dataset you’ve just been mapping, including a worked example across multiple years.</p></li>
+</ul>
+<p>Worth a look if you’re thinking about using Earth observation data in your own assignment or dissertation.</p>
+</div>
+</div>
 
 
 </section>
