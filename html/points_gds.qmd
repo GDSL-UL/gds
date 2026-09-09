@@ -1,7 +1,7 @@
 ---
 title: "Geographic Data Science"
 subtitle: "Point Patterns"
-author: "Elisabetta Pietrostefani & Carmen Cabrera-Arnau"
+author: "Elisabetta Pietrostefani & Carmen Cabrera"
 format: 
     revealjs:
         navigation-mode: grid
@@ -52,9 +52,9 @@ Point data are not only a different geometry than polygons or lines... <br> ... 
 
 <center>
 
-# Points patterns
+# Point patterns
 
-# Points patterns
+# Point patterns
 
 Distribution of **points** over a portion of **space** Assumption is a point can happen anywhere on that space, but only happens in specific locations
 
@@ -73,12 +73,15 @@ Describe, characterize, and explain point patterns, focusing on their **generati
 
 # Visualization of PPs
 
-Four routes (today):
+Three routes (today):
 
 -   One-to-one mapping -- "Scatter plot"
 -   Aggregate -- "Histogram"
 -   Smooth -- KDE
--   Smooth -- Interpolation
+
+::: {style="font-size: 0.8em; opacity: 0.8;"}
+You will use all three in the lab, in this order.
+:::
 
 # One-to-one
 
@@ -132,7 +135,7 @@ Hexagons...
 -   (Arbitrary) aggregation may induce MAUP 
 -   Points usually represent events that affect only part of the population and hence are best considered as rates
 
-# Kernet Density Estimation (KDE)
+# Kernel Density Estimation (KDE)
 
 # KDE
 
@@ -166,46 +169,181 @@ Probability of finding observations at a given point in space
 
 <center>
 
-# Interpolation
+# Bandwidth: the one knob that matters
 
--   Estimating values spatially continuous variables for spatial locations where they **have not** been observed, based on observations.
--   **Geostatistics**, is concerned with the modelling, prediction and simulation of spatially continuous phenomena.
+How far does each point's influence spread?
 
-# Inverse Distance Weighting (IDW)
+-   **Small bandwidth** → spiky surface, tracks individual points <br> Lots of detail, lots of noise
+-   **Large bandwidth** → smooth blob <br> Clean, but real local structure washed out
 
--   We observe a property of a phenomenon $Z(s)$ at a **limited** number of sample locations, and are interested in the property value at **all** locations.
--   Have to predict it for unobserved locations.
-
-# Kriging
-
-If we were predicting prices
-
-$$Price_i = \sum^N_{j=1} w_j * Price_j + \epsilon_i$$
-
--   with $w_j = (\frac{1}{d_{ij}})^2$ for all $i$ and $j \neq i$
--   $d$ the distance between $i$ and $j$.
+::: {.fragment}
+There is **no single correct value**. It's a judgement call about what *scale* of pattern you want to show.
+:::
 
 # 
 
 <center>
 
-<img alt="centered image" data-src="./figs/l09_idw.png" width="75%" height="75%"/>
+<img alt="Same ten points shown at three different bandwidths" data-src="./figs/kde_bandwidth.png" height="600"/>
 
 <center>
 
-# Parametres
+# Bandwidth in the lab
 
--   **Variable**: for example price
--   **Nearest Neighbours** : the number of nearest observations that should be used
--   **idp** : set inverse distance power to 2
+You'll map the same data at three bandwidths and decide which one you'd actually publish
 
-A super useful link [here](https://gisgeography.com/inverse-distance-weighting-idw-interpolation/)
-
-# Parametres
-
-idp = 1 <img data-src="./figs/L09_pw1.png" height="250"/> <br> idp = 2 <img data-src="./figs/L09_pw2.png" height="250"/>
+| | R | Python |
+|---|---|---|
+| Default | *(no argument)* | *(no argument)* |
+| Spikier | `adjust = 0.5` | `bw_adjust = 0.5` |
+| Smoother | `adjust = 2` | `bw_adjust = 2` |
 
 # Density-Based Spatial Clustering of Applications with Noise, or DBSCAN
+
+# What DBSCAN does
+
+Finds **concentrations of points** — areas denser than the space around them
+
+::: {.fragment}
+Unlike the clustering you met earlier in the course, DBSCAN:
+
+-   Finds clusters of **arbitrary shape** (not just blobs)
+-   Explicitly labels some points as **noise** — not everything has to belong somewhere
+:::
+
+# Three kinds of point
+
+Every point ends up in one of three categories:
+
+-   **Core** — has at least `m` points within distance `r` of it
+-   **Border** — inside a cluster, but with fewer than `m` neighbours
+-   **Noise** — outside any cluster
+
+::: {.fragment}
+That third category is the "N" in DBSCA**N**, and it's what makes the algorithm robust to outliers.
+:::
+
+# Two parameters, set by *you*
+
+-   **`eps` (r)** — the search radius. *How close is close?*
+-   **`minPts` / `min_samples` (m)** — how many neighbours are needed. *How dense is dense?*
+
+::: {.fragment}
+⚠️ Both must be chosen **before** running the algorithm, and both change the answer substantially.
+:::
+
+# 
+
+<center>
+
+<img alt="Three-panel illustration of how DBSCAN assigns core, border and noise labels" data-src="./figs/dbscan_explained.png" width="95%"/>
+
+<center>
+
+# `eps` is a real distance
+
+::: {.fragment}
+This means your data **must be projected** before you run DBSCAN.
+
+-   Lon/lat degrees are not a distance — 1° means something different at the equator than in Buenos Aires
+-   In the lab we reproject to **EPSG:22176** (metres, Argentina) first
+-   Then `eps = 100` genuinely means *100 metres*
+:::
+
+# Parameters change everything
+
+In the lab you'll run the same data twice:
+
+| | Run 1 | Run 2 |
+|---|---|---|
+| `eps` | 100 m | 250 m |
+| min points | 50 | 10 |
+
+::: {.fragment}
+Same data, same algorithm, **very** different maps. Compare them and ask which one you'd trust.
+:::
+
+# Choosing `eps` less arbitrarily
+
+For every point, measure the distance to its *k*th nearest neighbour, sort those distances, and plot them
+
+::: {.fragment}
+-   Look for the **"knee"** — where the curve bends sharply upward
+-   Below the knee: points close enough to plausibly cluster
+-   Above it: points that look more like noise
+-   That knee is a defensible choice of `eps`
+:::
+
+# Two advantages worth knowing
+
+::: {.fragment}
+**1. It is not necessarily spatial.** Designed for data mining, not geography. Works in 2 dimensions (XY) or many more (price, product type...).
+:::
+
+::: {.fragment}
+**2. Fast and scalable.** Runs on large datasets without trouble — unlike traditional point pattern methods that lean on simulation. You can iterate quickly.
+:::
+
+# Two drawbacks worth knowing
+
+::: {.fragment}
+**1. No probabilistic model.** Unlike LISAs, there's no null hypothesis, no inference, no statistical significance. You can't tell whether a "cluster" could have arisen at random.
+:::
+
+::: {.fragment}
+**2. Agnostic about process.** It tells you *where* the clusters are, not *why* they're there.
+:::
+
+# Going further
+
+Plain DBSCAN uses **one fixed radius everywhere** — a problem when some parts of your map are inherently denser than others.
+
+::: {.fragment}
+Both labs end with a more robust variant:
+
+-   **R** → `hdbscan()` — works out an appropriate radius per region
+-   **Python** → `ADBSCAN()` — runs DBSCAN many times and lets the runs *vote*
+:::
+
+::: {.fragment}
+::: {style="font-size: 0.8em; opacity: 0.8;"}
+Different algorithms, same motivation: handle clusters of varying density.
+:::
+:::
+
+# In the lab
+
+Buenos Aires Airbnb listings, start to finish:
+
+1.  **One-to-one** — plot every listing
+2.  **Aggregate** — count by neighbourhood, then hex-bin
+3.  **Smooth** — KDE, and vary the bandwidth
+4.  **Cluster** — DBSCAN at two parameter settings, then a robust variant
+
+# R and Python, side by side {.smaller}
+
+| Task | R | Python |
+|---|---|---|
+| Pull out coordinates | `st_coordinates()` | `.geometry.x` / `.geometry.y` |
+| KDE | `geom_density_2d_filled()` | `sns.kdeplot(fill=True)` |
+| Adjust bandwidth | `adjust =` | `bw_adjust =` |
+| Clustering | `dbscan::dbscan()` | `DBSCAN()` |
+| Find optimal `eps` | `kNNdistplot()` | `NearestNeighbors()` |
+| Robust variant | `hdbscan()` | `ADBSCAN()` |
+
+# One last thing
+
+::: {.fragment}
+Every map you make in the lab is a **working map**, not a finished one.
+:::
+
+::: {.fragment}
+Raw legend labels, no scale bar, no north arrow, debugging titles...
+:::
+
+::: {.fragment}
+<center><mark>Before anything goes in your assignment, clean it up properly.</mark></center>
+:::
 
 # Questions
 

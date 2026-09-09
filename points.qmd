@@ -29,10 +29,10 @@ information carried in the locations of the points, such as: and
 typically these locations are not controlled by sampling but a result of
 a process we're interested in:
 
--   animal sightings
--   accidents
--   disease cases,
--   tree locations.
+- animal sightings
+- accidents
+- disease cases,
+- tree locations.
 
 This is opposed to geostatistical processes, where we have values of
 some phenomenon everywhere but observations limited to a set of
@@ -61,9 +61,9 @@ advanced) lecture on point patterns.
 Once we have a better sense of what makes points special, we turn to
 visualising point patterns. Here we cover three main strategies:
 
--   One to one mapping
--   Aggregation
--   Smoothing
+- One to one mapping
+- Aggregation
+- Smoothing
 
 ## Clustering Points
 
@@ -171,7 +171,31 @@ method: $$Price_i = \sum^N_{j=1} w_j * Price_j + \epsilon_i$$ with
 $w_j = (\frac{1}{d_{ij}})^2$ for all $i$ and $j \neq i$, $d$ the
 distance between $i$ and $j$.
 
+## R and Python side by side
+
+The labs for this session cover the same ground in both languages. Here
+is how the key functions line up, so you can follow either lab (or
+switch between them) without losing the thread:
+
+| Task | R | Python |
+|----|----|----|
+| Pull coordinates out of a spatial object | `st_coordinates()` | `.geometry.x` / `.geometry.y` |
+| Kernel density estimation | `geom_density_2d_filled()` | `sns.kdeplot(fill=True)` |
+| Adjust KDE bandwidth | `adjust = 0.5` / `2` | `bw_adjust = 0.5` / `2` |
+| Density-based clustering | `dbscan::dbscan(eps = 100, minPts = 50)` | `DBSCAN(eps=100, min_samples=50)` |
+| Find the optimal `eps` | `kNNdistplot(coords, k = 50)` | `NearestNeighbors(n_neighbors=50)` + sorted k-distance plot |
+| More robust clustering variant | `hdbscan()` | `ADBSCAN()` |
+
+::: callout-note
+The last row is the one place the two labs genuinely diverge.
+**HDBSCAN** (R) and **A-DBSCAN** (Python) share the same motivation —
+handling clusters of varying density more robustly than plain DBSCAN —
+but they are different algorithms and work differently under the hood.
+Each lab flags this where it comes up. Everything else in the table
+produces comparable output across the two languages.
+:::
+
 ## Further readings
 
--   [Interpolation with
-    R](https://rspatial.org/raster/analysis/4-interpolation.html)
+- [Interpolation with
+  R](https://rspatial.org/raster/analysis/4-interpolation.html)

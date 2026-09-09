@@ -5,10 +5,8 @@
 
 ```{r message=FALSE}
 library(sf)
-library(leaflet)
-library(tmap)
-library(geojsonsf) 
 library(dplyr)
+library(ggplot2)
 ```
 
 ## Python
@@ -23,7 +21,11 @@ import matplotlib.pyplot as plt
 
 ## Task I: Photographs in Tokyo
 
-In this task, you will explore patterns in the distribution of the location of photos. We are going to dip our toes in the lake of point data by looking at a sample of geo-referenced photographs in Tokyo. The dataset comes from the [GDS Python Book](https://geographicdata.science/) and contains photographs voluntarily uploaded to the Flickr service.
+In this task, you will explore patterns in the distribution of the location of photos. We are going to dip our toes in the lake of point data by looking at a sample of geo-referenced photographs in Tokyo. The dataset comes from the [GDS Python Book](https://geographicdata.science/) and contains 10,000 photographs voluntarily uploaded to the Flickr service.
+
+::: callout-note
+We read both files below straight from GitHub, so there is nothing to download — but you do need an internet connection when you run these cells.
+:::
 
 ### Photos
 
@@ -32,18 +34,25 @@ In this task, you will explore patterns in the distribution of the location of p
 
 ```{r}
 # Read the CSV file into a data frame
-tokyo <- read.csv("https://geographicdata.science/book/_downloads/7fb86b605af15b3c9cbd9bfcbead23e9/tokyo_clean.csv")
+tokyo <- read.csv("https://raw.githubusercontent.com/gdsbook/book/master/data/tokyo/tokyo_clean.csv")
+
+head(tokyo)
 ```
 
 ## Python
 
 ```{python}
 # Read the CSV file into a data frame
-tokyo = pd.read_csv("https://geographicdata.science/book/_downloads/7fb86b605af15b3c9cbd9bfcbead23e9/tokyo_clean.csv")
+tokyo = pd.read_csv("https://raw.githubusercontent.com/gdsbook/book/master/data/tokyo/tokyo_clean.csv")
 
 tokyo.info()
-
 ```
+:::
+
+The table gives you, for each photo: the `user_id` of the Flickr user who took it, its `longitude`/`latitude` (WGS84), the `date_taken`, a link to the photo page, and `x`/`y` — the same location already projected to Web Mercator.
+
+::: callout-important
+`tokyo` is a plain table, not a spatial object yet. Before you can map it you'll need to turn those coordinates into geometries — `st_as_sf()` in R, `gpd.points_from_xy()` in Python — exactly as you did at the start of the lab.
 :::
 
 ### Administrative areas
@@ -52,20 +61,26 @@ tokyo.info()
 ## R
 
 ```{r}
-url <- "https://darribas.org/gds_course/content/data/tokyo_admin_boundaries.geojson"
+url <- "https://raw.githubusercontent.com/darribas/gds_course/master/content/data/tokyo_admin_boundaries.geojson"
 
 tokyo_areas <- sf::st_read(url) # import
+
+head(tokyo_areas)
 ```
 
 ## Python
 
 ```{python}
-tokyo = gpd.read_file("https://darribas.org/gds_course/content/data/tokyo_admin_boundaries.geojson") # import
+url = "https://raw.githubusercontent.com/darribas/gds_course/master/content/data/tokyo_admin_boundaries.geojson"
+
+tokyo_areas = gpd.read_file(url) # import
 
 # Display the first few rows of the GeoDataFrame
-print(tokyo.head())
+tokyo_areas.head()
 ```
 :::
+
+This gives you 39 administrative areas. The column you'll want for joining and labelling is `NAME_2`.
 
 With these at hand, get to work with the following challenges:
 
@@ -83,13 +98,13 @@ With these at hand, get to work with the following challenges:
 
 ## Task II: Clusters of Indian cities
 
-For this one, we are going to use a dataset on the location of populated places in India provided by http://geojson.xyz. The original table covers the entire world so, to get it ready for you to work on it, we need to prepare it:
+For this one, we are going to use a dataset on the location of populated places from [Natural Earth](https://www.naturalearthdata.com/). The original table covers the entire world so, to get it ready for you to work on it, we need to prepare it:
 
 ::: {.panel-tabset group="language"}
 ## R
 
 ```{r warning=FALSE}
-url <- "https://d2ad6b4ur7yvpq.cloudfront.net/naturalearth-3.3.0/ne_50m_populated_places_simple.geojson"
+url <- "https://raw.githubusercontent.com/nvkelso/natural-earth-vector/master/geojson/ne_50m_populated_places_simple.geojson"
 
 data <- sf::st_read(url) # import
 data <- st_make_valid(data)
@@ -101,24 +116,24 @@ plot(data$geometry) # plot to check all is well
 
 ```{python}
 url_popplaces = (
-    "https://d2ad6b4ur7yvpq.cloudfront.net/naturalearth-3.3.0/"
-    "ne_50m_populated_places_simple.geojson"
+    "https://raw.githubusercontent.com/nvkelso/natural-earth-vector/"
+    "master/geojson/ne_50m_populated_places_simple.geojson"
 )
-url_popplaces
 
 # Read GeoJSON data directly from the URL
-populated_places = gpd.read_file("https://d2ad6b4ur7yvpq.cloudfront.net/naturalearth-3.3.0/ne_50m_populated_places_simple.geojson")
+populated_places = gpd.read_file(url_popplaces)
 
 # Plotting the data
 fig, ax = plt.subplots(figsize=(12, 8))
 populated_places.plot(ax=ax, marker='o', color='black', markersize=10, alpha=0.5)
 ax.set_title('Populated Places of the World')
 plt.show()
-
 ```
 :::
 
 Note the code cell above requires internet connectivity.
+
+Now we subset to India only — this leaves us with 71 places to work with:
 
 ::: {.panel-tabset group="language"}
 ## R
@@ -131,7 +146,7 @@ places <- data %>%
 ## Python
 
 ```{python}
-places = gpd.read_file("https://d2ad6b4ur7yvpq.cloudfront.net/naturalearth-3.3.0/ne_50m_populated_places_simple.geojson").query("adm0name == 'India'")
+places = populated_places.query("adm0name == 'India'")
 ```
 :::
 
@@ -158,24 +173,27 @@ This is what we have to work with then:
 ## R
 
 ```{r warning=FALSE}
-tmap_mode("view")
-
-tm_shape(places_m) + tm_bubbles(size = "pop_max", col = "yellow")+
-tm_tiles("Stamen.TonerLabels")
-
+ggplot() +
+  geom_sf(data = places_m, aes(size = pop_max), colour = "goldenrod", alpha = 0.7) +
+  scale_size_continuous(name = "Population", range = c(1, 9), labels = scales::comma) +
+  ggtitle("Populated places in India") +
+  theme_void()
 ```
 
 ## Python
 
 ```{python}
 ax = places_m.plot(
-    color="xkcd:bright yellow", figsize=(9, 9)
+    color="xkcd:bright yellow", markersize=places_m["pop_max"] / 50000,
+    alpha=0.7, figsize=(9, 9)
 )
 cx.add_basemap(
-    ax, 
+    ax,
     crs=places_m.crs,
-    source=cx.providers.CartoDB.DarkMatter
+    source=cx.providers.Esri.WorldGrayCanvas
 )
+ax.set_title("Populated places in India")
+ax.set_axis_off()
 plt.show()
 ```
 :::

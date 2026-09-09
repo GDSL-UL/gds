@@ -8,41 +8,34 @@ editor:
 
 ## Points
 
-Points are spatial entities that can be understood in two fundamentally
-different ways. On the one hand, points can be seen as fixed objects in
-space, which is to say their location is taken as given (exogenous). In
-this case, analysis of points is very similar to that of other types of
-spatial data such as polygons and lines. On the other hand, points can
-be seen as the occurence of an event that could theoretically take place
-anywhere but only manifests in certain locations. This is the approach
-we will adopt in the rest of the notebook.
+Think about the last time you walked through a city. Some things around you — lamp posts, bus stops, benches — sit exactly where they were put, and stay there. Others — where a crime happened, where someone hailed a taxi, where a photo was taken — could have happened *almost anywhere*, but happened to happen *right there*. Points, it turns out, can be read in two completely different ways.
 
-When points are seen as events that could take place in several
-locations but only happen in a few of them, a collection of such events
-is called a point pattern. In this case, the location of points is one
-of the key aspects of interest for analysis. A good example of a point
-pattern is crime events in a city: they could technically happen in many
-locations but we usually find crimes are committed only in a handful of
-them. Point patterns can be marked, if more attributes are provided with
-the location, or unmarked, if only the coordinates of where the event
-occured are provided. Continuing the crime example, an unmarked pattern
-would result if only the location where crimes were committed was used
-for analysis, while we would be speaking of a marked point pattern if
-other attributes, such as the type of crime, the extent of the damage,
-etc. was provided with the location.
+::: {.callout-note}
+## Two ways to think about a point
 
-Point pattern analysis is thus concerned with the description,
-statistical characerization, and modeling of point patterns, focusing
-specially on the generating process that gives rise and explains the
-observed data. What's the nature of the distribution of points? Is there
-any structure we can statistically discern in the way locations are
-arranged over space? Why do events occur in those places and not in
-others? These are all questions that point pattern analysis is concerned
-with.
+**Fixed objects** — the location is just a given fact (a bus stop is where it is). Analysing these is a lot like analysing polygons or lines: the geometry describes something that already exists.
 
-This notebook aims to be a gentle introduction to working with point
-patterns in `R`. As such, it covers how to read, process and transform
-point data, as well as several common ways to visualize point patterns.
+**Events** — the location is the *interesting* part. The thing could theoretically have happened anywhere, but it manifested here rather than there. This is the lens we'll use for the rest of this notebook.
+:::
+
+When we zoom out from a single event to a whole collection of them, we get a **point pattern** — and the *arrangement* of those points becomes the object of study in its own right.
+
+> 🔎 Think of crime in a city. In principle, a crime could happen on almost any street corner. In practice, they cluster — some blocks see them constantly, others almost never. That clustering (or lack of it) is exactly what point pattern analysis is built to describe.
+
+Point patterns come in two flavours:
+
+- **Unmarked** — all you have is *where*. Just the coordinates of each crime, nothing else.
+- **Marked** — you also know *what*. The type of crime, the damage caused, the time of day — extra attributes riding along with each location.
+
+::: {.callout-tip}
+## The questions driving this notebook
+
+- What's the *shape* of the distribution — clustered, dispersed, random?
+- Is there structure we can actually detect statistically, or does it just look like a pattern to the human eye?
+- *Why* here and not there? What process could be generating what we see?
+:::
+
+This notebook is a gentle, hands-on introduction to working with point patterns in `R` — reading them in, transforming them, and building up a toolkit of ways to visualize what they're telling you.
 
 ## Installing Packages
 
@@ -52,21 +45,12 @@ point data, as well as several common ways to visualize point patterns.
 library(sf)         # Simple Features, spatial data manipulation
 library(dplyr)      # Data manipulation and transformation
 library(ggplot2)    # Data visualization
-library(tmap)       # Thematic maps
-library(mapview)    # Interactive maps
 library(basemapR)   # Static maps
-library(ggspatial)  # Spatial visualization with ggplot2
 library(viridis)    # Color palettes for data visualization
-library(raster)     # Raster data manipulation
-library(colorspace)  # Color manipulation and palettes
-
-# Spatial and Spatio-Temporal Geostatistical Modelling, Prediction, and Simulation
-library(spatstat)   # Spatial point pattern analysis
+library(factoextra) # Visualising clustering results
 
 # Clustering and Dimensionality Reduction
 library(dbscan)     # Density-based spatial clustering
-library(fpc)        # Flexible procedures for clustering
-library(eks)        # Kernel density estimation and clustering
 ```
 
 ## Data
@@ -129,9 +113,17 @@ ggplot() +
 
 We can visualise a bit better with a basemap
 
+::: callout-important
+CARTO retired free, unauthenticated access to their tiles (`dark`,
+`positron`, `voyager`, `hydda`) — using them without your own CARTO API
+key now returns a tile stamped "API KEY REQUIRED". `google-*` styles
+need their own separate Google Maps API key too. `mapnik` (plain
+OpenStreetMap tiles) stays free and key-free.
+:::
+
 ```{r}
 ggplot() +
-  base_map(st_bbox(listings), basemap = 'google-terrain', increase_zoom = 2) + 
+  base_map(st_bbox(listings), basemap = 'mapnik', increase_zoom = 2) + 
   geom_sf(data = listings, aes(color = neighbourhood), size = 0.5, alpha = 0.5) +
   theme(legend.position = "none")
 
@@ -326,208 +318,208 @@ grid_filtered <- filter(grid, n_airbnb > 1)
 
 Let's unpack the coded here:
 
--   `mutate` : This is a function from the `dplyr` package we've used
-    many times before and it is used to add new variables or modify
-    existing variables in a data frame.
--   `lengths`: This function is used to compute the lengths of the
-    elements in a list. Here, it is applied to the result of the
-    `st_intersects` function.
--   `st_intersects`(grid, listings_proj): This is a spatial operation
-    using the `sf` package. It checks for spatial intersections between
-    the objects in the grid and listings_proj data frames. This
-    operation returns a list where each element corresponds to the
-    intersections of a grid cell with the listings.
--   The result of `st_intersects` is passed to `lengths` to determine
-    the number of intersections for each grid cell.
+- `mutate` : This is a function from the `dplyr` package we've used many
+  times before and it is used to add new variables or modify existing
+  variables in a data frame.
+- `lengths`: This function is used to compute the lengths of the
+  elements in a list. Here, it is applied to the result of the
+  `st_intersects` function.
+- `st_intersects`(grid, listings_proj): This is a spatial operation
+  using the `sf` package. It checks for spatial intersections between
+  the objects in the grid and listings_proj data frames. This operation
+  returns a list where each element corresponds to the intersections of
+  a grid cell with the listings.
+- The result of `st_intersects` is passed to `lengths` to determine the
+  number of intersections for each grid cell.
 
 The final result is that a new variable n_airbnb is added to the grid
 data frame, representing the number of intersections (or occurrences)
 for each grid cell with the listings in listings_proj.
 
 ```{r message=FALSE}
-# map manual
-tmap_mode("view")
-
-tm_shape(grid_filtered) +
-  tm_fill("n_airbnb",style="fixed", title = "Airbnb counts", alpha = .60, breaks=c(1, 10, 25, 50, 200, 500, 1000, Inf), palette = "-viridis")
+ggplot() +
+  geom_sf(data = grid_filtered, aes(fill = n_airbnb), color = "white", linewidth = 0.1) +
+  scale_fill_viridis("Airbnb\ncounts", direction = -1, trans = "log10") +
+  ggtitle("Hex-binned Airbnb counts") +
+  theme_void()
 ```
 
 ## Kernel Density Estimation
 
-Using a hexagonal binning can be a quick solution when we do not have a
-good polygon layer to overlay the points directly and some of its
-properties, such as the equal size of each polygon, can help alleviate
-some of the problems with a "bad" irregular topology (one that does not
-fit the underlying point generating process). However, it does not get
-around the issue of the modifiable areal unit problem
-([M.A.U.P.](https://pietrostefani.github.io/gds/mapvector.html): at the
-end of the day, we are still imposing arbitrary boundary lines and
-aggregating based on them, so the possibility of mismatch with the
-underlying distribution of the point pattern is very real.
+Hex-binning is a quick fix when you don't have a sensible polygon layer
+to aggregate into. But it doesn't escape the
+[modifiable areal unit problem](mapvector.html) — we're still drawing
+arbitrary boundaries and counting inside them, so the result can still
+mismatch the underlying pattern.
 
-One way to work around this problem is to avoid aggregating into another
-geography altogether. Instead, we can aim at estimating the continuous
-observed probability distribution. The most commonly used method to do
-this is the so called kernel density estimate (KDE). The idea behind
-KDEs is to count the number of points in a continious way. Instead of
-using discrete counting, where you include a point in the count if it is
-inside a certain boundary and ignore it otherwise, KDEs use functions
-(kernels) that include points but give different weights to each one
-depending of how far of the location where we are counting the point is.
+**Kernel density estimation (KDE)** avoids the problem entirely by never
+aggregating into areas at all. Instead of asking *"how many points fell
+inside this box?"*, KDE asks *"how much point-ness is there at this
+exact spot?"* — counting nearby points more heavily than distant ones,
+and producing a smooth continuous surface rather than a set of bins.
 
-The actual algorithm to estimate a kernel density is not trivial but its
-application in `R` is rather simplified by the use of the`spatstat` or
-`eks` package.
+::: {.callout-note}
+## The one parameter that matters: bandwidth
 
-### Spatstat package
+Bandwidth controls how far each point's influence spreads.
 
-We first need to get the data into spatstat format from the `spatstat`
-package.
+-   **Small bandwidth** → a spiky surface that tracks individual points.
+    Lots of detail, lots of noise.
+-   **Large bandwidth** → a smooth blob. Clean, but real local structure
+    gets washed out.
 
--   This package is designed to work with points stored as `ppp` objects
-    and not SpatialPointsDataFrame or `sf` objects
--   Note that a `ppp` object may or may not have attribute information
-    (also referred to as marks).
--   We will only concern ourselves with the pattern generated by the
-    points and not their attributes
-
-Point patterns in spatstat are objects of class `ppp` that contain
-points and an observation window (an object of class `owin`). We can
-create a `ppp` from points by where we see that the bounding box of the
-points is used as observation window when no window is specified.
-
-```{r prepare data, message=FALSE}
-# Transform the Buenos Aires neighbourhood file to
-BA_owin  <- as.owin(BA_proj)
-BA_owin <- rescale(BA_owin, 1000)
- 
-# Transform listing to ppp object
-listings_ppp  <- as.ppp(listings_proj) # We can create a `ppp` object, object needs to be projected
-marks(listings_ppp) <- NULL #remove all marks from point object
-listings_ppp <- rescale(listings_ppp, 1000)
-
-Window(listings_ppp) <- BA_owin # Creating window. Many point pattern analyses such as the average nearest neighbor analysis should have their study boundaries explicitly defined. This can be done in spatstat by “binding” the extent polygon to the  point feature object using the Window() function.
-```
-
-We then plot ppp just to check all is well.
-
-```{r plot point layer}
-plot(listings_ppp, main=NULL, cols=rgb(0,0,0,.2), pch=20)
-```
-
-### Kernel densities
-
-Kernel densities can be computed using the function `density`, where
-kernel shape and bandwidth can be controlled. Below we specify the
-`sigma` and type of `kernel`.
-
--   `sigma` : The smoothing bandwidth (the amount of smoothing). The
-    standard deviation of the isotropic smoothing kernel. Either a
-    numerical value, or a function that computes an appropriate value of
-    sigma.
--   `kernel` : The smoothing kernel. A character string specifying the
-    smoothing kernel (current options are "gaussian", "epanechnikov",
-    "quartic" or "disc"), or a pixel image (object of class "im")
-    containing values of the kernel, or a function(x,y) which yields
-    values of the kernel.
-
-For more have a look
-[here](https://www.rdocumentation.org/packages/spatstat.core/versions/2.3-1/topics/density.ppp).
-
-```{r}
-plot(density(listings_ppp, sigma=0.4, kernel="epanechnikov"))
-plot(BA_owin, add = TRUE)
-```
-
-Here, cross validation is used by function `bw.diggle` to specify the
-bandwidth parameter sigma. To perform automatic bandwidth selection
-using cross-validation, it is recommended to use the functions
-`bw.diggle`, `bw.CvL`, `bw.scott` or `bw.ppl`.
-
-```{r}
-plot(density(listings_ppp,sigma=bw.diggle(cells)))
-plot(BA_owin, add = TRUE)
-```
-
-Or we can do Quadrat density
-
-::: {.callout-tip collapse="true"}
-Or we can do Quadrat density
-
-```{r 3}
-Q <- quadratcount(listings_ppp, nx= 6, ny=3)
-plot(listings_ppp, pch=20, cols="grey70", main=NULL)  # Plot points
-plot(Q, add=TRUE)  # Add quadrat grid
-
-# Compute the density for each quadrat
-Q.d <- intensity(Q)
-
-# Plot the density
-plot(intensity(Q, image=TRUE), main=NULL, las=1)  # Plot density raster
-
-```
+There is no single "correct" value. Choosing one is a judgement call
+about what scale of pattern you're trying to show.
 :::
 
-We can also use the `density` function and then convert density_spatstat
-into a `stars` object to then plot with `ggplot`. Check
-[here](https://r-spatial.github.io/stars/index.html) for more details.
+### Kernel densities with `ggplot`
+
+The good news: you don't need any extra packages for this. `ggplot2` can
+compute a KDE directly with `geom_density_2d_filled()`, which is the
+same approach the Python version of this lab uses via `seaborn`.
+
+It needs plain x/y columns rather than an `sf` geometry column, so we
+pull the coordinates out first. Note we use `listings_proj` (projected,
+in metres) rather than the unprojected version — distances need to be
+meaningful for the smoothing to make sense.
 
 ```{r}
-# use density function
-density_spatstat <- density(listings_ppp)
+listings_xy <- listings_proj |>
+  st_coordinates() |>
+  as.data.frame()
 
-# convert into a stars object
-density_stars <- stars::st_as_stars(density_spatstat)
-
-#Convert density_stars into an sf object
-density_sf <- st_as_sf(density_stars) %>%
-  st_set_crs(22176)
+head(listings_xy)
 ```
 
-USe `ggplot` to visualise it.
+Now we can map it:
 
-```{r gglot density_sf}
+```{r}
+ggplot(listings_xy, aes(x = X, y = Y)) +
+  geom_density_2d_filled(bins = 12) +
+  scale_fill_viridis_d(name = "Density") +
+  coord_sf() +
+  ggtitle("KDE of Airbnbs in Buenos Aires") +
+  theme_void()
+```
+
+Let's unpack that:
+
+-   `geom_density_2d_filled()` does the density estimation and the
+    filled-contour drawing in one step.
+-   `bins = 12` sets how many contour bands to draw — more bands, finer
+    gradation.
+-   `coord_sf()` keeps the aspect ratio correct so the map isn't
+    stretched.
+
+We can add the neighbourhood boundaries for context. Because the
+boundaries are an `sf` object and our density layer isn't, we need
+`inherit.aes = FALSE` so `geom_sf` doesn't try to reuse the `x`/`y`
+aesthetics:
+
+```{r}
+ggplot(listings_xy, aes(x = X, y = Y)) +
+  geom_density_2d_filled(bins = 12) +
+  geom_sf(data = BA_proj, fill = NA, colour = "white",
+          linewidth = 0.2, inherit.aes = FALSE) +
+  scale_fill_viridis_d(name = "Density") +
+  coord_sf() +
+  ggtitle("KDE of Airbnbs in Buenos Aires") +
+  theme_void()
+```
+
+### Changing the bandwidth
+
+The `adjust` argument multiplies the default bandwidth: values below 1
+give a spikier surface, above 1 a smoother one. Compare these two
+against the default above:
+
+```{r}
+# Half the default bandwidth -- more local detail
+ggplot(listings_xy, aes(x = X, y = Y)) +
+  geom_density_2d_filled(bins = 12, adjust = 0.5) +
+  scale_fill_viridis_d(name = "Density") +
+  coord_sf() +
+  ggtitle("Bandwidth: adjust = 0.5") +
+  theme_void()
+```
+
+```{r}
+# Double the default bandwidth -- much smoother
+ggplot(listings_xy, aes(x = X, y = Y)) +
+  geom_density_2d_filled(bins = 12, adjust = 2) +
+  scale_fill_viridis_d(name = "Density") +
+  coord_sf() +
+  ggtitle("Bandwidth: adjust = 2") +
+  theme_void()
+```
+
+::: {.callout-warning}
+## These are working maps, not finished ones
+
+Everything we've mapped so far is deliberately rough — the point has
+been to see what the method does, not to produce something
+publication-ready. Look closely and you'll spot plenty that still needs
+fixing:
+
+-   The legend labels are raw contour brackets like `(0.0e+00, 5.0e-09]`
+    — technically correct, meaningless to a reader
+-   No scale bar, no north arrow, no source credit
+-   `"Density"` as a legend title says nothing about *what* is dense, or
+    in what units
+-   No basemap or boundaries for geographic context on most of them
+-   Titles are debugging notes to ourselves (`"Bandwidth: adjust = 2"`),
+    not something you'd caption in a report
+
+Before any of these went into a piece of written work, you'd want to
+clean all of that up — much like we did in the
+[choropleths lab](mapvectorR.html), where we built up a final map with a
+proper title, palette, north arrow, scale bar and source.
+:::
+
+::: {.callout-tip}
+## Have a think
+
+Which of the three bandwidths would you actually put in a report, and
+why? There's no right answer — it depends on whether you're trying to
+show *where the main concentrations are* or *how fine-grained the
+clustering gets*.
+:::
+
+::: {.callout-note}
+## Going further: the `eks` package
+
+`geom_density_2d_filled()` is quick and needs nothing extra, but it has
+limits. It doesn't know that Buenos Aires has a boundary, so it will
+happily smear density out over the river; and `adjust` is a hand-tuned
+multiplier rather than a statistically-chosen bandwidth.
+
+If you need more control, the [`eks`](https://cran.r-project.org/web/packages/eks/vignettes/tidysf_kde.html)
+package works natively with `sf` objects and returns contours as `sf`,
+so they slot straight into normal `geom_sf()` mapping:
+
+```{r}
+#| eval: false
+skde <- eks::st_kde(listings_proj)
+
 ggplot() +
-  geom_sf(data = density_sf, aes(fill = v), col = NA) +
-  scale_fill_viridis_c() +
+  geom_sf(data = eks::st_get_contour(skde), aes(fill = contlabel), colour = NA) +
+  geom_sf(data = BA_proj, fill = NA, colour = "white", linewidth = 0.2) +
+  scale_fill_viridis_d(name = "Density") +
   theme_void()
 ```
 
-There is an alternative using the package `eks` which can be useful for
-final visualisations.
+The other main option is [`spatstat`](https://spatstat.org/), which is
+the most powerful of the three: it handles observation windows properly
+(so density is only estimated *inside* your study area) and offers
+cross-validated bandwidth selection via `bw.diggle()` and friends. It's
+also the most involved — you have to convert your data into its own
+`ppp` and `owin` object classes first.
 
-::: {.callout-tip collapse="true"}
-Kernel density can be computed with `st_kde`. The calculations of the
-KDE, including the bandwidth matrix fo smoothing parameters, are the
-same as in `tidy_kde`. For display, it is a matter of selecting the
-appropriate contour regions. The quartile contours 25%, 50%, 75% are
-selected by default in geom_contour_filled_ks for tidy data.
-
-```{r}
-skde1 <- st_kde(listings_proj)
-
-# Plot with ggplot
-gs <- ggplot(skde1)
-
-gs + geom_sf(data=listings_proj, col=8, size=0.5) + 
-   geom_sf(data=st_get_contour(skde1), colour=1, fill=NA, show.legend=FALSE) + 
-  theme_void()
-```
-
-`geom_sf` filled contours
-
-```{r}
-# geom_sf filled contour
-gs + geom_sf(data=st_get_contour(skde1), aes(fill=label_percent(contlabel))) + 
-  scale_fill_discrete_sequential(palette = "Blues")  +  
-  geom_sf(data=BA_proj, fill=NA) +
-  theme_void()
-```
-
-To generate a filled contour plot, the only required changes are to
-input an appropriate colour scale function with
-`scale_fill_discrete_sequential`. Have a look at
-`help(scale_fill_binned_sequential)`.
+**This is a good moment to practise reading documentation.** We're not
+going to walk through either package line by line. If you want to use
+them, go and look at their vignettes, work out what the functions
+expect, and try it — that skill will serve you far better over the rest
+of this course than us handing you the code.
 :::
 
 ## Cluster of points (DBSCAN)
@@ -548,51 +540,34 @@ of at least `m` points, each of them within a distance of `r` of at
 least another point in the cluster. Points in the dataset are then
 divided into three categories:
 
--   *Noise*, for those points outside a cluster.
--   *Cores*, for those points inside a cluster whith at least `m` points
-    in the cluster within distance `r`.
--   *Borders* for points inside a cluster with less than `m` other
-    points in the cluster within distance `r`.
+- *Noise*, for those points outside a cluster.
+- *Cores*, for those points inside a cluster whith at least `m` points
+  in the cluster within distance `r`.
+- *Borders* for points inside a cluster with less than `m` other points
+  in the cluster within distance `r`.
 
 Both `m` and `r` need to be prespecified by the user before running
 `DBSCAN`. This is a critical point, as their value can influence
 significantly the final result. Before exploring this in greater depth,
-let us get a first run at computing `DBSCAN`.
+let us get a first run at computing `DBSCAN`, using the `dbscan`
+package, which implements the algorithm.
 
-In R we use the following packages to compute `DBSCAN` for real data.
+### Data preparation for DBSCAN
 
--   `dbscan`: package which implements the DBSCAN algorithm
+`DBSCAN`'s `eps` parameter is a real-world distance, so we need our
+points expressed in a projected CRS with metres as units — not raw
+longitude/latitude, and not a standardised/scaled version of them, since
+neither has a meaningful "distance" interpretation. We already have
+exactly that: `listings_proj`, created earlier for the hex-binning
+section, in EPSG:22176 (metres). We just need to pull the X/Y
+coordinates out into a plain matrix for `dbscan`:
 
--   `fpc`: flexible procedures for clustering
-
-### Data preparation for DBSCAN.
-
-In preparing the data we are going to subset only the variables that we
-will need for the analysis. These include the location and the id of the
-stations.
-
-```{r, warning=FALSE}
-listings <- read.csv("data/BuenosAires/listings_nooutliers.csv")
-
-vars <- c("id","latitude","longitude")
-d.sub <- dplyr::select(listings,vars)
-head(d.sub)
+```{r}
+coords <- st_coordinates(listings_proj)
+head(coords)
 ```
 
-### Clustering by location.
-
-```{r, warning=FALSE}
-locs = dplyr::select(d.sub,latitude,longitude)
-
-# scalling the data points.
-locs.scaled = scale(locs,center = T,scale = T)
-
-head(locs.scaled)
-```
-
-### Computing DBSCAN using dbscan package
-
-Load in all functions from the `dbscan` package
+### Computing DBSCAN using the dbscan package
 
 First, we set the 'random seed', which means that the results will
 always be the same when running the following commands, since the random
@@ -604,16 +579,18 @@ set.seed(123456789)
 
 Run the DBSCAN algorithm, specifying:
 
--   `eps`: 'epsilon', radius of the 'epsilon neighborhood' (the maximum
-    point-to-point distance for considering two points to be in the same
-    cluster)
--   `minPt`s: the minimum number of points required to be in the
-    'epsilon neighborhoods' of core points (including the point itself).
--   Note that 'core points' refer to points which are within the
-    'epsilon neighborhood' of the randomly selected starting point.
+- `eps`: 'epsilon', radius (in metres, since `coords` is projected) of
+  the 'epsilon neighborhood' (the maximum point-to-point distance for
+  considering two points to be in the same cluster)
+- `minPts`: the minimum number of points required to be in the 'epsilon
+  neighborhoods' of core points (including the point itself).
+
+We decide to consider a cluster of airbnb with more than 50 airbnbs
+within 100 metres from them, hence we set the two parameters accordingly
+— matching the Python lab's first run exactly:
 
 ```{r}
-db <- dbscan::dbscan(locs.scaled, eps=0.10, minPts = 10)
+db <- dbscan::dbscan(coords, eps = 100, minPts = 50)
 db
 ```
 
@@ -625,44 +602,105 @@ close enough to ('minPts' - 1) number of other points to be considered
 part of any cluster.
 
 ```{r, warning=FALSE}
-factoextra::fviz_cluster(db,locs.scaled,stand = F,ellipse = T,geom = "point") + theme_minimal() 
-
+factoextra::fviz_cluster(db, coords, stand = FALSE, geom = "point", pointsize = 0.5) + 
+  theme_minimal() +
+  ggtitle("DBSCAN: eps = 100m, minPts = 50")
 ```
 
-This needs some cleaning up, but you get the idea.
+The algorithm is able to identify a few clusters with a high density of
+airbnbs. However, this is all contingent on the parameters we
+arbitrarily set. Depending on the maximum radius (`eps`) we set, we will
+pick one type of cluster or another: a higher (lower) radius will
+translate into less (more) local clusters. Equally, the minimum number
+of points required for a cluster (`minPts`) will affect the implicit
+size of the cluster.
 
-You can also display the results of the `dbscan`.
+For an illustration of this, let's run through a case with very
+different parameter values: a larger radius (250m) and a smaller minimum
+number of points (10) — matching the Python lab's second run:
 
 ```{r}
-print(db)
+db2 <- dbscan::dbscan(coords, eps = 250, minPts = 10)
+
+factoextra::fviz_cluster(db2, coords, stand = FALSE, geom = "point", pointsize = 0.5) + 
+  theme_minimal() +
+  ggtitle("DBSCAN: eps = 250m, minPts = 10")
 ```
+
+The output is now very different, isn't it? This exemplifies how
+different parameters can give rise to substantially different outcomes,
+even if the same data and algorithm are applied.
 
 The `dbscan` algorithm is very sensitive to changes to the `epsilon` and
 `minPts` values. Smaller `epsilons` leads to definition of sparser
 clusters as noise while larger epsilon sizes may make denser clusters to
 be merged.
 
-### Determining the optimal eps value.
+### Determining the optimal eps value
 
-To determine the optimal distance, think of every point and its average
-distance from its nearest neighbours. We can now use k-nearest neighbour
-distances matrix to compute this with a specified value of k
+Rather than picking `eps` arbitrarily, think of every point and its
+distance from its nearest neighbours. We can use a k-nearest-neighbour
+distance matrix to compute this, with a specified value of `k`
 corresponding to `minPts`.
 
-We then plot these points in ascending order with an aim of aim of
-determining the "knee" which corresponds to the optimal eps parameter.
-The "knee" in this case is equivalent to a threshhold where a sharp
-change occurs along the k distance curve.
+We then plot these distances in ascending order, with the aim of finding
+the "knee" — the point where a sharp change occurs along the curve.
+Points below the knee are close enough together to plausibly be part of
+a cluster; points above it start looking more like noise. That knee is a
+reasonable candidate value for `eps`.
 
-We can use the `kNNdistplot()` function from the `dbscan` package.
+We can use the `kNNdistplot()` function from the `dbscan` package — here
+with `k = 50`, matching the `minPts` from our first run:
 
 ```{r}
-dbscan::kNNdistplot(locs.scaled,k=12)
-abline(h=0.15,lty = 2,col=rainbow(1),main="eps optimal value")
+dbscan::kNNdistplot(coords, k = 50)
 ```
 
-The optimal value of eps is around 0.10 from the chart above.
+Look for where the curve visibly bends upward — that distance (in
+metres, since `coords` is projected) is a defensible choice of `eps` for
+this `minPts`.
+
+### A more robust alternative: HDBSCAN
+
+Python's version of this lab uses A-DBSCAN, an ensemble/adaptive variant
+of DBSCAN from the `esda` package that isn't available in R. The closest
+equivalent available here is **HDBSCAN** (Hierarchical DBSCAN), which
+shares A-DBSCAN's core motivation — handling clusters of varying density
+more robustly than vanilla DBSCAN — even though the two algorithms work
+differently under the hood. `HDBSCAN` only needs `minPts`; it works out
+an appropriate `eps` internally for each region of the data rather than
+using one fixed radius everywhere:
+
+```{r}
+hdb <- dbscan::hdbscan(coords, minPts = 50)
+hdb
+
+factoextra::fviz_cluster(list(data = coords, cluster = hdb$cluster), 
+                          stand = FALSE, geom = "point", pointsize = 0.5) +
+  theme_minimal() +
+  ggtitle("HDBSCAN")
+```
 
 ## Resources
 
--   [DBSCAN](https://www.kaggle.com/code/pmcgovern/dbscan-example-in-r)
+- [DBSCAN example in
+  R](https://www.kaggle.com/code/pmcgovern/dbscan-example-in-r)
+
+- [`spatstat` documentation](https://spatstat.org/) — the most powerful
+  R option for point pattern analysis, if you want to go beyond this lab
+
+- [`eks` documentation](https://cran.r-project.org/web/packages/eks/vignettes/tidysf_kde.html)
+  — `sf`-native kernel density estimation
+
+- [`ggplot2` 2D density docs](https://ggplot2.tidyverse.org/reference/geom_density_2d.html)
+  — the `geom_density_2d_filled()` function used in this lab
+
+- [`dbscan` package
+  documentation](https://cran.r-project.org/web/packages/dbscan/dbscan.pdf),
+  including `hdbscan()`
+
+- [Arribas-Bel et al.,
+  2019](https://www.sciencedirect.com/science/article/pii/S0094119019300944)
+
+- [Point Pattern
+  Analysis](https://geographicdata.science/book/notebooks/08_point_pattern_analysis.html)

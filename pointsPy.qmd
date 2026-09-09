@@ -2,40 +2,53 @@
 
 ## Points
 
-Points are spatial entities that can be understood in two fundamentally different ways. On the one hand, points can be seen as fixed objects in space, which is to say their location is taken as given (exogenous). In this case, analysis of points is very similar to that of other types of spatial data such as polygons and lines. On the other hand, points can be seen as the occurence of an event that could theoretically take place anywhere but only manifests in certain locations. This is the approach we will adopt in the rest of the notebook.
+Think about the last time you walked through a city. Some things around you — lamp posts, bus stops, benches — sit exactly where they were put, and stay there. Others — where a crime happened, where someone hailed a taxi, where a photo was taken — could have happened *almost anywhere*, but happened to happen *right there*. Points, it turns out, can be read in two completely different ways.
 
-When points are seen as events that could take place in several locations but only happen in a few of them, a collection of such events is called a point pattern. In this case, the location of points is one of the key aspects of interest for analysis. A good example of a point pattern is crime events in a city: they could technically happen in many locations but we usually find crimes are committed only in a handful of them. Point patterns can be marked, if more attributes are provided with the location, or unmarked, if only the coordinates of where the event occured are provided. Continuing the crime example, an unmarked pattern would result if only the location where crimes were committed was used for analysis, while we would be speaking of a marked point pattern if other attributes, such as the type of crime, the extent of the damage, etc. was provided with the location.
+::: callout-note
+## Two ways to think about a point
 
-Point pattern analysis is thus concerned with the description, statistical characerisation, and modeling of point patterns, focusing specially on the generating process that gives rise and explains the observed data. What's the nature of the distribution of points? Is there any structure we can statistically discern in the way locations are arranged over space? Why do events occur in those places and not in others? These are all questions that point pattern analysis is concerned with.
+**Fixed objects** — the location is just a given fact (a bus stop is where it is). Analysing these is a lot like analysing polygons or lines: the geometry describes something that already exists.
 
-This notebook aims to be a gentle introduction to working with point patterns in `Python`. As such, it covers how to read, process and transform point data, as well as several common ways to visualize point patterns.
+**Events** — the location is the *interesting* part. The thing could theoretically have happened anywhere, but it manifested here rather than there. This is the lens we'll use for the rest of this notebook.
+:::
+
+When we zoom out from a single event to a whole collection of them, we get a **point pattern** — and the *arrangement* of those points becomes the object of study in its own right.
+
+> 🔎 Think of crime in a city. In principle, a crime could happen on almost any street corner. In practice, they cluster — some blocks see them constantly, others almost never. That clustering (or lack of it) is exactly what point pattern analysis is built to describe.
+
+Point patterns come in two flavours:
+
+- **Unmarked** — all you have is *where*. Just the coordinates of each crime, nothing else.
+- **Marked** — you also know *what*. The type of crime, the damage caused, the time of day — extra attributes riding along with each location.
+
+::: callout-tip
+## The questions driving this notebook
+
+- What's the *shape* of the distribution — clustered, dispersed, random?
+- Is there structure we can actually detect statistically, or does it just look like a pattern to the human eye?
+- *Why* here and not there? What process could be generating what we see?
+:::
+
+This notebook is a gentle, hands-on introduction to working with point patterns in `Python` — reading them in, transforming them, and building up a toolkit of ways to visualize what they're telling you.
 
 ## Importing Modules
 
 ```{python}
-import pandas as pd # data manipulation and analysis.
-import geopandas as gpd # spatial data operations 
-from shapely.geometry import Point, Polygon # handling geometric points
+import pandas as pd # data manipulation and analysis
+import geopandas as gpd # spatial data operations
 import numpy as np # multi-dimensional arrays and matrices
 
+import matplotlib.pyplot as plt # static visualizations
+import seaborn as sns # attractive statistical graphics, including KDEs
 
-# Creating static, animated, and interactive visualizations in Python.
-import matplotlib.pyplot as plt
-from matplotlib.colors import LinearSegmentedColormap
-from matplotlib import cm
-
-import seaborn as sns # drawing attractive statistical graphics.
-
-# Adding basemaps
 import contextily as cx # adding basemaps
 
-# sklearn.cluster - a module in the Scikit-Learn library (sklearn) used for clustering (unsupervised learning)
-from sklearn import metrics
+# sklearn - clustering (unsupervised learning) and nearest-neighbour search
 from sklearn.cluster import DBSCAN
 from sklearn.neighbors import NearestNeighbors
 
-#ESDA: Exploratory Spatial Data Analysis
-from esda.adbscan import ADBSCAN, get_cluster_boundary, remap_lbls
+# ESDA: Exploratory Spatial Data Analysis
+from esda.adbscan import ADBSCAN, get_cluster_boundary
 ```
 
 ## Data
@@ -50,19 +63,22 @@ Let's read in the point dataset:
 # read the Airbnb listing
 listings = pd.read_csv("data/BuenosAires/listings_nooutliers.csv")
 
-# Show summary statistics of the dataset
-print(listings.describe())
+listings.describe()
 ```
 
-Let's finish preparing it, note the CRS.
+Let's finish preparing it, note the CRS:
 
 ```{python}
-# Locate the longitude and latitude
-print(listings.columns)
+# locate the longitude and latitude
+listings.columns
+```
 
-# Use columns 'longitude' and 'latitude' respectively
+```{python}
+# use columns 'longitude' and 'latitude' to create points, and set the crs
 listings_gdf = gpd.GeoDataFrame(
-    listings, geometry=gpd.points_from_xy(listings.longitude, listings.latitude), crs="EPSG:4326"
+    listings,
+    geometry=gpd.points_from_xy(listings.longitude, listings.latitude),
+    crs="EPSG:4326"
 )
 ```
 
@@ -71,87 +87,57 @@ listings_gdf = gpd.GeoDataFrame(
 We will later use administrative areas for aggregation. Let's load them.
 
 ```{python}
-# We will later use administrative areas for aggregation. Let's load them.
-BA = gpd.read_file("data/BuenosAires/neighbourhoods_BA.shp")
+BA = gpd.read_file("data/BuenosAires/neighbourhoods_BA.shp") # read shp
+
+BA["geometry"] = BA.geometry.make_valid() # make geometry valid
 ```
 
 ### Spatial Join
 
 ```{python}
-# Perform spatial overlay between points and polygons
-listings_BA = listings_gdf.sjoin(BA, how="inner", predicate='intersects')
+# spatial overlay between points and polygons
+listings_BA = listings_gdf.sjoin(BA, how="inner", predicate="intersects")
 
-# Read the first lines of the attribute table
-print(listings_BA.head())
+# read the first lines of the attribute table
+listings_BA.head()
 ```
 
--   `.sjoin(BA, how="inner", predicate='intersects')`: This function performs a spatial join between listings_gdf and BA where:
-    -   `how="inner"` ensures that only matching records (where the spatial relationship is true) are included.
-    -   `predicate='intersects'` specifies that the join condition is based on whether the geometries intersect.
+- `how="inner"` ensures that only matching records (where the spatial relationship is true) are included.
+- `predicate="intersects"` specifies that the join condition is based on whether the geometries intersect.
 
 ## One-to-one
 
-The first approach we review here is the one-to-one approach, where we place a dot on the screen for every point to visualise. In order to actually see all the neighbourhood names we need to do a bit of formatting work.
+The first approach we review here is the one-to-one approach, where we place a dot on the screen for every point to visualise. We are going to plot the points by neighbourhood.
 
 ```{python}
-# Assuming 'neighbourhood' is a column in your listings_gdf GeoDataFrame
-# Plot the GeoDataFrame with neighborhoods colored differently
+fig, ax = plt.subplots(figsize=(8, 8))
 
-fig, ax = plt.subplots(figsize=(15, 5))
+listings_gdf.plot(column="neighbourhood", ax=ax, markersize=2, legend=False)
 
-listings_gdf.plot(column='neighbourhood', ax=ax, legend=True, cmap='Set1',
-                  legend_kwds={'loc': 'center left', 'bbox_to_anchor': (1.2, 0.5), 'fontsize': 'x-small', 'ncol': 2, "fmt": "{:.0f}"})
-
-# Set plot title and labels
-ax.set_title('Airbnb Listings by Neighbourhood', fontsize=15)
-ax.set_xlabel('Longitude')
-ax.set_ylabel('Latitude')
-
-# Adjust the subplot parameters to give more space for the legend
-plt.subplots_adjust(right=0.5)
-
-# Show the plot
+ax.set_axis_off()
 plt.show()
 ```
 
--   `figsize=(35, 10)` : create different spaces for map and legend part of image
--   `legend_kwds` : This dictionary allows you to customize the legend's position and appearance.
-    -   `loc='center left'`: Positions the legend on the center left of the bounding box.
-    -   `bbox_to_anchor=(1.2, 0.5)`: Moves the legend outside the plot area to the right. The (1.2, 0.5) specifies that the anchor point of the legend is placed at 120% (right edge) on the x-axis and 50% (center) on the y-axis of the bounding box.
-    -   `fontsize='x-small'`: This reduces the size of the text in the legend. You can use specific sizes like 'small', 'x-small', 'medium', or specify a numeric value (e.g., fontsize=8).
-    -   `'ncol': 2`: This specifies that the legend should be displayed in two columns. You can adjust this number to display more or fewer columns as needed.
-
 We can visualise a bit better with a basemap
 
+::: callout-important
+CARTO retired free, unauthenticated access to their tiles (`CartoDB.Positron`, `.Voyager`, `.DarkMatter`) — using them without your own CARTO API key now returns a tile stamped "API KEY REQUIRED". `Esri.WorldGrayCanvas` and `Esri.WorldStreetMap` stay free and key-free, so we use those throughout.
+:::
+
+Note that `contextily` expects Web Mercator (EPSG:3857) to line tiles up with your data, so we reproject first:
+
 ```{python}
-# If it's not already, convert it using `to_crs(epsg=3857)`
+# reproject to Web Mercator for the basemap
 listings_gdf_3857 = listings_gdf.to_crs(epsg=3857)
 
-# Assuming `listings_gdf` is your GeoDataFrame and it's already loaded with data
-fig, ax = plt.subplots(figsize=(15, 5))
+fig, ax = plt.subplots(figsize=(8, 8))
 
-# Plot the GeoDataFrame
-listings_gdf_3857.plot(column='neighbourhood', ax=ax, legend=False, cmap='Set1')
+listings_gdf_3857.plot(column="neighbourhood", ax=ax, markersize=2, alpha=0.5, legend=False)
 
-# Add basemap using contextily
-# Note: The GeoDataFrame needs to be in Web Mercator projection for contextily basemaps
+cx.add_basemap(ax, crs=listings_gdf_3857.crs, source=cx.providers.Esri.WorldGrayCanvas)
 
-#listings_gdf = listings_gdf.to_crs(epsg=3857)
-#cx.add_basemap(ax, crs=listings_gdf_3857.crs.to_string())
-cx.add_basemap(
-    ax, 
-    crs="EPSG:3857",
-    source=cx.providers.CartoDB.Positron
-)
-
-# Set plot title and labels
-ax.set_title('Airbnb Listings by Neighbourhood', fontsize=15)
-ax.set_xlabel('Longitude')
-ax.set_ylabel('Latitude')
-
-# Show the plot
+ax.set_axis_off()
 plt.show()
-
 ```
 
 ## Points meet polygons
@@ -162,40 +148,35 @@ This approach is intuitive but of course raises the following question: what pol
 
 ### Irregular lattices
 
-To exemplify this approach, we will use the administrative areas we have loaded above. Let's add them to the figure above to get better context (unfold the code if you are interested in seeing exactly how we do this):
+To exemplify this approach, we will use the administrative areas we have loaded above. Let's add them to the figure above to get better context:
 
 ```{python}
-# Plot the administrative boundaries (BA) and listings with neighborhoods colored differently
-fig, ax = plt.subplots(figsize=(5, 5))
+fig, ax = plt.subplots(figsize=(8, 8))
 
-# Plot the BA GeoDataFrame with no fill and a specific line size
-BA.plot(ax=ax, edgecolor='black', linewidth=1.5, facecolor='none')
+BA.plot(ax=ax, facecolor="none", edgecolor="black", linewidth=0.5)
+listings_gdf.plot(column="neighbourhood", ax=ax, markersize=2, alpha=0.5, legend=False)
 
-# Plot the listings with neighborhoods colored differently, specific point size, and transparency
-listings_gdf.plot(column='neighbourhood', ax=ax, cmap='Set1', markersize=5, alpha=0.5)
-
-# Set plot title and labels
-ax.set_title('Airbnb Listings and Administrative Areas', fontsize=15)
-ax.set_xlabel('Longitude')
-ax.set_ylabel('Latitude')
-
-# Show the plot
+ax.set_axis_off()
 plt.show()
 ```
 
-Now we need to know how many airbnb each area contains.
+Now we need to know how many airbnb each area contains. Our airbnb table already contains the neighbourhood ID following our use of the spatial join. Now, all we need to do is counting by area and attaching the count to the areas table. We can also calculate the mean price of each area.
+
+We rely here on the `groupby` method which takes all the airbnbs in the table and *groups* them *by* neighbourhood. Once grouped, we count how many elements each group has, and calculate the mean price. We then merge the result back onto the polygons so we have geometry to map.
 
 ```{python}
-# Aggregate at district level
-listings_BA_agg = listings_BA.groupby(['neighbourh']).agg(
-    count_airbnb=('price', 'size'),  # count number of sales
-    mean_price=('price', 'mean')    # calculate average price
+# aggregate at neighbourhood level
+listings_BA_agg = listings_BA.groupby("neighbourh").agg(
+    count_airbnb=("price", "size"),  # create count
+    mean_price=("price", "mean")     # average price
 ).reset_index()
 
-# Merge the aggregated data back with the original GeoDataFrame to retain geometry
-airbnb_neigh_agg = BA[['neighbourh', 'geometry']].drop_duplicates().merge(
-    listings_BA_agg, on='neighbourh'
+# merge the aggregated data back with the polygons to retain geometry
+airbnb_neigh_agg = BA[["neighbourh", "geometry"]].drop_duplicates().merge(
+    listings_BA_agg, on="neighbourh"
 )
+
+airbnb_neigh_agg.head()
 ```
 
 The lines above have created a new column in our table called `count_airbnb` that contains the number of airbnb that have been taken within each of the polygons in the table. `mean_price` shows the mean price per neighbourhood.
@@ -203,61 +184,54 @@ The lines above have created a new column in our table called `count_airbnb` tha
 At this point, we are ready to map the counts. Technically speaking, this is a choropleth just as we have seen many times before:
 
 ```{python}
-# Create a figure and axis for plotting
-fig, ax = plt.subplots(figsize=(5, 5))
+fig, ax = plt.subplots(figsize=(8, 8))
 
-# Reverse the 'viridis' colormap
-viridis = plt.get_cmap('viridis')
-viridis_reversed = viridis.reversed()
+airbnb_neigh_agg.plot(
+    column="count_airbnb", ax=ax, edgecolor="white",
+    cmap="viridis_r", legend=True, legend_kwds={"label": "Count", "shrink": 0.5}
+)
 
-# Plot the geometries with fill color based on 'count_airbnb' and a white border
-airbnb_neigh_agg.plot(column='count_airbnb', ax=ax, edgecolor='white', cmap=viridis_reversed, legend=True)
+# add neighbourhood labels at polygon centroids
+for _, row in airbnb_neigh_agg.iterrows():
+    centroid = row["geometry"].centroid
+    ax.text(centroid.x, centroid.y, row["neighbourh"], fontsize=5, ha="center")
 
-# Add text labels at the centroids of the districts
-for idx, row in airbnb_neigh_agg.iterrows():
-    centroid = row['geometry'].centroid
-    ax.text(centroid.x, centroid.y, row['neighbourh'], fontsize=5, ha='center')
-
-# Set the title
 ax.set_title("Count of Airbnbs by Neighbourhood")
-
-# Remove axis
 ax.set_axis_off()
-
-# Show the plot
 plt.show()
 ```
 
-The map above clearly shows a concentration of airbnb in the neighbourhoods of Palermo and Recoleta. However, it is important to remember that the map is showing raw counts. In the case of airbnbs, as with many other phenomena, it is crucial to keep in mind the “container geography” (MAUP). In this case, different administrative areas have different sizes. Everything else equal, a larger polygon may contain more photos, simply because it covers a larger space. To obtain a more accurate picture of the intensity of photos by area, what we would like to see is a map of the density of photos, not of raw counts. To do this, we can divide the count per polygon by the area of the polygon.
+The map above clearly shows a concentration of airbnb in the neighbourhoods of Palermo and Recoleta. However, it is important to remember that the map is showing raw counts. In the case of airbnbs, as with many other phenomena, it is crucial to keep in mind the "container geography" (MAUP). In this case, different administrative areas have different sizes. Everything else equal, a larger polygon may contain more listings, simply because it covers a larger space. To obtain a more accurate picture of the intensity of listings by area, what we would like to see is a map of the density of listings, not of raw counts. To do this, we can divide the count per polygon by the area of the polygon.
 
-Let’s first calculate the area in Sq. metres of each administrative delineation:
+Let's first calculate the area of each administrative delineation. Note we reproject to EPSG:22176 (a projected CRS for Argentina, in metres) first — you cannot meaningfully compute area from unprojected lon/lat:
 
 ```{python}
-# Convert CRS to EPSG:22176 for Argentina
-airbnb_neigh_agg_proj = airbnb_neigh_agg.to_crs(epsg=22176)
+# reproject to a CRS in metres before computing area
+airbnb_neigh_agg = airbnb_neigh_agg.to_crs(epsg=22176)
 
-# Calculate area in square kilometers and add it to the DataFrame
-airbnb_neigh_agg_proj['area_km2'] = airbnb_neigh_agg_proj.geometry.area / 1e6  # Convert area to square kilometers
+# calculate area in square kilometres (1e6 just means 1000000)
+airbnb_neigh_agg["area_km2"] = airbnb_neigh_agg.geometry.area / 1e6
 
-# Calculate density
-airbnb_neigh_agg_proj['density'] = airbnb_neigh_agg_proj['count_airbnb'] / airbnb_neigh_agg_proj['area_km2']
+# calculate density
+airbnb_neigh_agg["density"] = airbnb_neigh_agg["count_airbnb"] / airbnb_neigh_agg["area_km2"]
 ```
 
 With the density at hand, creating the new choropleth is similar as above:
 
 ```{python}
-# Create a figure and axis for plotting
-fig, ax = plt.subplots(figsize=(5, 5))
-# Reverse the 'viridis' colormap
-viridis = plt.get_cmap('viridis')
-viridis_reversed = viridis.reversed()
-# Plot the geometries with fill color based on 'count_airbnb' and a white border
-airbnb_neigh_agg_proj.plot(column='density', ax=ax, edgecolor='white', cmap=viridis_reversed, legend=True)
-# Set the title
+fig, ax = plt.subplots(figsize=(8, 8))
+
+airbnb_neigh_agg.plot(
+    column="density", ax=ax, edgecolor="white",
+    cmap="viridis_r", legend=True, legend_kwds={"label": "Density", "shrink": 0.5}
+)
+
+for _, row in airbnb_neigh_agg.iterrows():
+    centroid = row["geometry"].centroid
+    ax.text(centroid.x, centroid.y, row["neighbourh"], fontsize=5, ha="center")
+
 ax.set_title("Density of Airbnbs by Neighbourhood")
-# Remove axis
 ax.set_axis_off()
-# Show the plot
 plt.show()
 ```
 
@@ -268,114 +242,186 @@ We can see some significant differences. Why is that? Have a chat with the perso
 Sometimes we either do not have any polygon layer to use or the ones we have are not particularly well suited to aggregate points into them. In these cases, a sensible alternative is to create an artificial topology of polygons that we can use to aggregate points. There are several ways to do this but the most common one is to create a grid of hexagons. This provides a regular topology (every polygon is of the same size and shape) that, unlike circles, cleanly exhausts all the space without overlaps and has more edges than squares, which alleviates edge problems.
 
 ::: callout-important
-If you are still still not sure on the difference between geographic coordinate systems and projected coordinated system go back to Lecture 1.
+If you are still not sure on the difference between geographic coordinate systems and projected coordinated systems go back to Lecture 1.
 :::
 
-First we need to make sure we are in a projected coordinated system:
+First we need to make sure we are in a projected coordinate system:
 
 ```{python}
-# Reproject the administrative areas to the CRS for Argentina (EPSG:22176)
-BA_proj =  BA.to_crs(epsg=22176)
+BA_proj = BA.to_crs(epsg=22176)  # CRS for Argentina, in metres
 
-# Reproject the listings to match the CRS of the administrative areas
-listings_proj =  listings_gdf.to_crs(epsg=22176)
+listings_proj = listings_gdf.to_crs(BA_proj.crs)  # making sure both files have the same crs
 ```
 
-Then we create a grid that's 500 metre by 500 metres. We need to be in a projected coordinate system for this to work.
-
-Python has a simplified way to create this hexagon layer and aggregate points into it in one shot thanks to the method `hexbin`, which is available in every axis object (e.g. `ax`). Let us first see how you could create a map of the hexagon layer alone:
+Python has a simplified way to create a hexagon layer and aggregate points into it in one shot, thanks to the `hexbin` method available on every axis object:
 
 ```{python}
-# Setup figure and axis
-f, ax = plt.subplots(1, figsize=(5, 5))
-# Add hexagon layer that displays count of points in each polygon
+fig, ax = plt.subplots(figsize=(8, 8))
+
 hb = ax.hexbin(
-    listings_proj["longitude"], 
-    listings_proj["latitude"], 
-    gridsize=50, 
+    listings_proj.geometry.x,
+    listings_proj.geometry.y,
+    gridsize=50,
+    cmap="viridis_r",
+    mincnt=1,          # don't draw empty hexagons
+    bins="log",        # log scale, as counts are very skewed
 )
-# Add a colorbar (optional)
-plt.colorbar(hb)
-# Show the plot
+
+plt.colorbar(hb, ax=ax, shrink=0.5, label="Airbnb counts")
+ax.set_title("Hex-binned Airbnb counts")
+ax.set_axis_off()
 plt.show()
 ```
 
-Let's unpack the coded here:
+Let's unpack the code here:
 
--   Call `hexbin` directly using the set of coordinate columns `listings_proj["longitude"]` and `listings_proj["latitude"]`.
--   Additional arguments we include is the number of hexagons by axis (gridsize, 50 for a 50 by 50 layer), and the transparency we want (80%).
--   Additionally, we include a colorbar to get a sense of how counts are mapped to colors. Note that we need to pass the name of the object that includes the `hexbin` (hb in our case), but keep in mind this is optional, you do not need to always create one.
-
-You could also add a basemap to visualise the results better as we've done in other code snippets.
+- We call `hexbin` directly on the **projected** coordinates (`listings_proj.geometry.x` / `.y`), so hexagon size is a real distance rather than degrees.
+- `gridsize=50` sets the number of hexagons per axis (a 50 by 50 layer).
+- `mincnt=1` hides hexagons containing no points, so the map isn't a solid block of background colour.
+- `bins="log"` puts counts on a log scale — the same reason the R version uses a log transform, since a handful of hexagons contain vastly more listings than the rest.
+- The colorbar shows how counts map to colours. This is optional but almost always worth including.
 
 ## Kernel Density Estimation
 
-Using a hexagonal binning can be a quick solution when we do not have a good polygon layer to overlay the points directly and some of its properties, such as the equal size of each polygon, can help alleviate some of the problems with a "bad" irregular topology (one that does not fit the underlying point generating process). However, it does not get around the issue of the modifiable areal unit problem [M.A.U.P.](https://pietrostefani.github.io/gds/mapvector.html): at the end of the day, we are still imposing arbitrary boundary lines and aggregating based on them, so the possibility of mismatch with the underlying distribution of the point pattern is very real.
+Hex-binning is a quick fix when you don't have a sensible polygon layer to aggregate into. But it doesn't escape the [modifiable areal unit problem](mapvector.html) — we're still drawing arbitrary boundaries and counting inside them, so the result can still mismatch the underlying pattern.
 
-One way to work around this problem is to avoid aggregating into another geography altogether. Instead, we can aim at estimating the continuous observed probability distribution. The most commonly used method to do this is the so called kernel density estimate (KDE). The idea behind KDEs is to count the number of points in a continious way. Instead of using discrete counting, where you include a point in the count if it is inside a certain boundary and ignore it otherwise, KDEs use functions (kernels) that include points but give different weights to each one depending of how far of the location where we are counting the point is.
+**Kernel density estimation (KDE)** avoids the problem entirely by never aggregating into areas at all. Instead of asking *"how many points fell inside this box?"*, KDE asks *"how much point-ness is there at this exact spot?"* — counting nearby points more heavily than distant ones, and producing a smooth continuous surface rather than a set of bins.
 
-### Kernel densities
+::: callout-note
+## The one parameter that matters: bandwidth
 
-The actual algorithm to estimate a kernel density is not trivial but its application in Python is rather simplified by the use of `seaborn`. KDE’s however are fairly computationally intensive. When you have a large point pattern like we do in the Buenos Aires example (18,572 points), its computation can take a bit long. To get around this issue, you can create a random subset, which retains the overall structure of the pattern, but with much fewer points. Let’s take a subset of 1,000 random points from our original table:
+Bandwidth controls how far each point's influence spreads.
+
+- **Small bandwidth** → a spiky surface that tracks individual points. Lots of detail, lots of noise.
+- **Large bandwidth** → a smooth blob. Clean, but real local structure gets washed out.
+
+There is no single "correct" value. Choosing one is a judgement call about what scale of pattern you're trying to show.
+:::
+
+### Kernel densities with `seaborn`
+
+The good news: you don't need anything exotic for this. `seaborn` can compute and draw a KDE in a single call with `kdeplot()`, which is the same approach the R version of this lab uses via `geom_density_2d_filled()`.
+
+It needs plain x/y columns rather than a geometry column, so we pull the coordinates out first. Note we use `listings_proj` (projected, in metres) rather than the unprojected version — distances need to be meaningful for the smoothing to make sense.
 
 ```{python}
-# Take a random subset of 1,000 rows from `buenos aires listings`
-listings_proj_sub = listings_proj.sample(1000, random_state=12345)
+listings_xy = pd.DataFrame({
+    "X": listings_proj.geometry.x,
+    "Y": listings_proj.geometry.y,
+})
+
+listings_xy.head()
 ```
 
--   Note we need to specify the size of the resulting subset (1,000), and we also add a value for `random_state`; this ensures that the sample is always the same and results are thus reproducible.
-
-Same as above, let us first see how to create a quick KDE. For this we rely on `seaborn`’s `kdeplot`:
+::: callout-tip
+KDEs are computationally intensive, and this is a large point pattern. If the cells below are slow on your machine, take a random subset — it retains the overall structure of the pattern with far fewer points:
 
 ```{python}
-# Setup figure and axis
-f, ax = plt.subplots(1, figsize=(5, 5))
-# using kdeplot
-sns.kdeplot(
-    x="longitude", 
-    y="latitude",
-    data=listings_proj,
-    n_levels=50, 
-    fill=True, 
-    cmap='BuPu'
-);
-# Show the plot
-plt.show()
+#| eval: false
+listings_xy = listings_xy.sample(1000, random_state=12345)
 ```
 
--   `Seaborn` greatly streamlines the process and boils it down to a single line.
--   The method `sns.kdeplot` (which we can also use to create a KDE of a single variable) takes the X and Y coordinate of the points as the only compulsory attributes.
--   In addition, we specify the number of levels we want the color gradient to have (`n_levels`), whether we want to color the space in between each level (share, yes), and the `colormap` of choice.
+The `random_state` ensures the sample is always the same, so your results stay reproducible.
+:::
 
-Once we know how the basic logic works, we can insert it into the usual mapping machinery to create a more complete plot. The main difference here is that we now have to tell `sns.kdeplot` where we want the surface to be added (ax in this case). Toggle the expandable to find out the code that produces the figure below:
+Now we can map it:
 
 ```{python}
-# Setup figure and axis
-f, ax = plt.subplots(1, figsize=(5, 5))
-# Add KDE layer that displays probability surface
+fig, ax = plt.subplots(figsize=(8, 8))
+
 sns.kdeplot(
-    x='longitude', 
-    y='latitude', 
-    data=listings, # because it is in 4326
-    n_levels=50, 
-    fill=True,
-    alpha=0.25,
-    cmap="viridis"
+    data=listings_xy, x="X", y="Y",
+    levels=12, fill=True, cmap="viridis", ax=ax
 )
-# Remove axis
+
+ax.set_title("KDE of Airbnbs in Buenos Aires")
 ax.set_axis_off()
-# Add basemap
-cx.add_basemap(
-    ax, 
-    crs="EPSG:4326",
-    source=cx.providers.CartoDB.DarkMatterNoLabels
-)
-# Add title of the map
-ax.set_title("KDE of airbnbs in Buenos Aires")
-# Draw map
 plt.show()
-
 ```
+
+Let's unpack that:
+
+- `sns.kdeplot()` does the density estimation and the filled-contour drawing in one step.
+- `levels=12` sets how many contour bands to draw — more bands, finer gradation.
+- `fill=True` colours the space between contour lines, rather than drawing lines only.
+
+We can add the neighbourhood boundaries for context. Because both layers are now in the same projected CRS, they line up directly:
+
+```{python}
+fig, ax = plt.subplots(figsize=(8, 8))
+
+sns.kdeplot(
+    data=listings_xy, x="X", y="Y",
+    levels=12, fill=True, cmap="viridis", ax=ax
+)
+BA_proj.plot(ax=ax, facecolor="none", edgecolor="white", linewidth=0.2)
+
+ax.set_title("KDE of Airbnbs in Buenos Aires")
+ax.set_axis_off()
+plt.show()
+```
+
+### Changing the bandwidth
+
+The `bw_adjust` argument multiplies the default bandwidth: values below 1 give a spikier surface, above 1 a smoother one. Compare these two against the default above:
+
+```{python}
+# Half the default bandwidth -- more local detail
+fig, ax = plt.subplots(figsize=(8, 8))
+
+sns.kdeplot(
+    data=listings_xy, x="X", y="Y",
+    levels=12, fill=True, cmap="viridis", bw_adjust=0.5, ax=ax
+)
+
+ax.set_title("Bandwidth: bw_adjust = 0.5")
+ax.set_axis_off()
+plt.show()
+```
+
+```{python}
+# Double the default bandwidth -- much smoother
+fig, ax = plt.subplots(figsize=(8, 8))
+
+sns.kdeplot(
+    data=listings_xy, x="X", y="Y",
+    levels=12, fill=True, cmap="viridis", bw_adjust=2, ax=ax
+)
+
+ax.set_title("Bandwidth: bw_adjust = 2")
+ax.set_axis_off()
+plt.show()
+```
+
+::: callout-warning
+## These are working maps, not finished ones
+
+Everything we've mapped so far is deliberately rough — the point has been to see what the method does, not to produce something publication-ready. Look closely and you'll spot plenty that still needs fixing:
+
+- No colourbar on most of them, so there's no way to read what the shading actually means
+- No scale bar, no north arrow, no source credit
+- Nothing tells the reader *what* is dense, or in what units
+- No basemap or boundaries for geographic context on most of them
+- Titles are debugging notes to ourselves (`"Bandwidth: bw_adjust = 2"`), not something you'd caption in a report
+
+Before any of these went into a piece of written work, you'd want to clean all of that up — much like we did in the [choropleths lab](mapvectorPy.html), where we built up a final map with a proper title, palette, north arrow, scale bar and source.
+:::
+
+::: callout-tip
+## Have a think
+
+Which of the three bandwidths would you actually put in a report, and why? There's no right answer — it depends on whether you're trying to show *where the main concentrations are* or *how fine-grained the clustering gets*.
+:::
+
+::: callout-note
+## Going further: other KDE tools
+
+`sns.kdeplot()` is quick and needs nothing extra, but it has limits. It doesn't know that Buenos Aires has a boundary, so it will happily smear density out over the river; and `bw_adjust` is a hand-tuned multiplier rather than a statistically-chosen bandwidth.
+
+If you need more control, [`scipy.stats.gaussian_kde`](https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.gaussian_kde.html) gives you the underlying estimator directly, so you can evaluate the density on your own grid and clip it to a boundary. [`scikit-learn`'s `KernelDensity`](https://scikit-learn.org/stable/modules/density.html) goes further still, offering several kernel choices and — importantly — proper bandwidth selection by cross-validation via `GridSearchCV`.
+
+**This is a good moment to practise reading documentation.** We're not going to walk through either library line by line. If you want to use them, go and look at their docs, work out what the functions expect, and try it — that skill will serve you far better over the rest of this course than us handing you the code.
+:::
 
 ## Cluster of points (DBSCAN)
 
@@ -385,221 +431,163 @@ Unfortunately, real life data can contain: i) clusters of arbitrary shape ii) ma
 
 In this section, we will learn a method to identify clusters of points, based on their density across space. To do this, we will use the widely used `DBSCAN` algorithm. For this method, a cluster is a concentration of at least `m` points, each of them within a distance of `r` of at least another point in the cluster. Points in the dataset are then divided into three categories:
 
--   *Noise*, for those points outside a cluster.
--   *Cores*, for those points inside a cluster whith at least `m` points in the cluster within distance `r`.
--   *Borders* for points inside a cluster with less than `m` other points in the cluster within distance `r`.
+- *Noise*, for those points outside a cluster.
+- *Cores*, for those points inside a cluster whith at least `m` points in the cluster within distance `r`.
+- *Borders* for points inside a cluster with less than `m` other points in the cluster within distance `r`.
 
-Both `m` and `r` need to be prespecified by the user before running `DBSCAN`. This is a critical point, as their value can influence significantly the final result. Before exploring this in greater depth, let us get a first run at computing `DBSCAN` in Python. For more on this, check [here](https://scikit-learn.org/stable/modules/clustering.html).
+Both `m` and `r` need to be prespecified by the user before running `DBSCAN`. This is a critical point, as their value can influence significantly the final result. Before exploring this in greater depth, let us get a first run at computing `DBSCAN`, using `scikit-learn`, which implements the algorithm. For more on this, check [here](https://scikit-learn.org/stable/modules/clustering.html).
 
-### The DBSCAN approach
+### Data preparation for DBSCAN
 
-The heavy lifting is done by the method `DBSCAN`, part of the excellent machine learning library `scikit-learn`. We first set up the details:
-
-1.  `eps`: maximum distance to look for neighbors from each location
-2.  `min_samples`: minimum number of neighboring points required for a point to be considered part of a cluster
+`DBSCAN`'s `eps` parameter is a real-world distance, so we need our points expressed in a projected CRS with metres as units — not raw longitude/latitude, and not a standardised/scaled version of them, since neither has a meaningful "distance" interpretation. We already have exactly that: `listings_proj`, created earlier for the hex-binning section, in EPSG:22176 (metres). We just need the X/Y coordinates as a plain array:
 
 ```{python}
-# Set up algorithm
-algo = DBSCAN(eps=100, min_samples=50)
+coords = np.column_stack([listings_proj.geometry.x, listings_proj.geometry.y])
+coords[:5]
 ```
 
-We decide to consider a cluster of airbnb with more than 50 airbnbs within 100 metres from them, hence we set the two parameters accordingly. Once ready, we “fit” it to our data, but note that we first need to express the longitude and latitude of our points in metres. We have already projected to the Argentinian CRS but let's revise this.
+### Computing DBSCAN using scikit-learn
+
+First, we set the 'random seed', which means that the results will always be the same when running the following commands, since the random aspects of the algorithms are controlled.
 
 ```{python}
-## Express points in metres
-# Convert lon/lat into Point objects + set CRS
-pts = gpd.points_from_xy(
-    listings["longitude"],
-    listings["latitude"],
-    crs="EPSG:4326"
-)
-# Convert lon/lat points to Buenos Aires CRS in metres
-pts = gpd.GeoDataFrame({"geometry": pts}).to_crs(epsg=22176)
-# Extract coordinates from point objects into columns
-listings["X_metres"] = pts.geometry.x
-listings["Y_metres"] = pts.geometry.y
+np.random.seed(123456789)
 ```
 
+Run the DBSCAN algorithm, specifying:
+
+- `eps`: 'epsilon', radius (in metres, since `coords` is projected) of the 'epsilon neighborhood' (the maximum point-to-point distance for considering two points to be in the same cluster)
+- `min_samples`: the minimum number of neighbouring points required for a point to be considered part of a cluster.
+
+We decide to consider a cluster of airbnb with more than 50 airbnbs within 100 metres from them, hence we set the two parameters accordingly — matching the R lab's first run exactly:
+
 ```{python}
-algo.fit(listings[["X_metres", "Y_metres"]])
+db = DBSCAN(eps=100, min_samples=50).fit(coords)
+
+# labels: -1 means noise, 0/1/2... are cluster ids
+lbls = pd.Series(db.labels_, index=listings_proj.index)
+lbls.value_counts().head()
 ```
 
-Once fit, we can recover the labels:
+The `labels_` object always has the same length as the number of points used to run `DBSCAN`. Each value represents the index of the cluster a point belongs to. If the point is classified as noise, it receives a `-1`.
+
+Let's plot the data, colouring points according to which cluster `DBSCAN` grouped each point in. Noise points are drawn in grey:
 
 ```{python}
-algo.labels_
+def plot_clusters(coords, labels, title):
+    fig, ax = plt.subplots(figsize=(7, 7))
+    noise = labels == -1
+    # noise in grey
+    ax.scatter(coords[noise, 0], coords[noise, 1], c="grey", s=2, linewidth=0)
+    # clustered points coloured by cluster id
+    ax.scatter(
+        coords[~noise, 0], coords[~noise, 1],
+        c=labels[~noise], cmap="tab20", s=4, linewidth=0
+    )
+    ax.set_title(title)
+    ax.set_axis_off()
+    ax.set_aspect("equal")
+    plt.show()
+
+plot_clusters(coords, db.labels_, "DBSCAN: eps = 100m, min_samples = 50")
 ```
 
-And the list of points classified as cores:
+The algorithm is able to identify a few clusters with a high density of airbnbs. However, this is all contingent on the parameters we arbitrarily set. Depending on the maximum radius (`eps`) we set, we will pick one type of cluster or another: a higher (lower) radius will translate into less (more) local clusters. Equally, the minimum number of points required for a cluster (`min_samples`) will affect the implicit size of the cluster.
+
+For an illustration of this, let's run through a case with very different parameter values: a larger radius (250m) and a smaller minimum number of points (10) — matching the R lab's second run:
 
 ```{python}
-# Print only the first five values
-algo.core_sample_indices_[:5]
+db2 = DBSCAN(eps=250, min_samples=10).fit(coords)
+
+plot_clusters(coords, db2.labels_, "DBSCAN: eps = 250m, min_samples = 10")
 ```
 
-The `labels_` object always has the same length as the number of points used to run `DBSCAN`. Each value represents the index of the cluster a point belongs to. If the point is classified as noise, it receives a -1. Above, we can see that the first five points are effectively not part of any cluster. To make thinks easier later on, let us turn the labels into a `Series` object that we can index in the same way as our collection of points:
+The output is now very different, isn't it? This exemplifies how different parameters can give rise to substantially different outcomes, even if the same data and algorithm are applied.
+
+The `DBSCAN` algorithm is very sensitive to changes to the `eps` and `min_samples` values. Smaller `eps` leads to definition of sparser clusters as noise while larger `eps` sizes may make denser clusters to be merged.
+
+### Determining the optimal eps value
+
+Rather than picking `eps` arbitrarily, think of every point and its distance from its nearest neighbours. We can use a k-nearest-neighbour distance matrix to compute this, with a specified value of `k` corresponding to `min_samples`.
+
+We then plot these distances in ascending order, with the aim of finding the "knee" — the point where a sharp change occurs along the curve. Points below the knee are close enough together to plausibly be part of a cluster; points above it start looking more like noise. That knee is a reasonable candidate value for `eps`.
+
+We use `NearestNeighbors` from `scikit-learn` — here with `k = 50`, matching the `min_samples` from our first run:
 
 ```{python}
-lbls = pd.Series(algo.labels_, index=listings.index)
-```
+k = 50
+neighbors = NearestNeighbors(n_neighbors=k).fit(coords)
+distances, _ = neighbors.kneighbors(coords)
 
-Now we already have the clusters, we can proceed to visualize them. There are many ways in which this can be done. We will start just by coloring points in a cluster in red and noise in grey:
+# distance to the kth nearest neighbour, sorted ascending
+k_distances = np.sort(distances[:, -1])
 
-```{python}
-# Setup figure and axis
-f, ax = plt.subplots(1, figsize=(6, 6))
-# Assign labels to tokyo table dynamically and
-# subset points that are not part of any cluster (noise)
-noise = listings.assign(
-    lbls=lbls
-).query("lbls == -1")
-# Plot noise in grey
-ax.scatter(
-    noise["X_metres"], 
-    noise["Y_metres"], 
-    c='grey', 
-    s=5, 
-    linewidth=0
-)
-# Plot all points that are not noise in red
-# NOTE how this is done through some fancy indexing, where
-#      we take the index of all points (tw) and substract from
-#      it the index of those that are noise
-ax.scatter(
-    listings.loc[listings.index.difference(noise.index), "X_metres"], 
-    listings.loc[listings.index.difference(noise.index), "Y_metres"],
-    c="red", 
-    linewidth=0
-)
-# Display the figure
+fig, ax = plt.subplots(figsize=(7, 5))
+ax.plot(k_distances)
+ax.set_xlabel("Points, sorted by distance")
+ax.set_ylabel(f"Distance to {k}th nearest neighbour (metres)")
+ax.set_title("Finding the optimal eps")
 plt.show()
 ```
 
-This is a first good pass. The algorithm is able to identify a few clusters with high density of airbnbs. However, as we mentioned when discussing DBSCAN, this is all contingent on the parameters we arbitrarily set. Depending on the maximum radious (eps) we set, we will pick one type of cluster or another: a higher (lower) radious will translate in less (more) local clusters. Equally, the minimum number of points required for a cluster (min_samples) will affect the implicit size of the cluster. Both parameters need to be set before running the algorithm, so our decision will affect the final outcome quite significantly.
+Look for where the curve visibly bends upward — that distance (in metres, since `coords` is projected) is a defensible choice of `eps` for this `min_samples`.
 
-For an illustration of this, let’s run through a case with very different parameter values. For example, let’s pick a larger radious (e.g. 250m) and a smaller number of points (e.g. 10):
+### A more robust alternative: A-DBSCAN
 
-```{python}
-# Set up algorithm
-algo = DBSCAN(eps=200, min_samples=10)
-# Fit to Tokyo projected points
-algo.fit(listings[["X_metres", "Y_metres"]])
-# Store labels
-lbls = pd.Series(algo.labels_, index=listings.index)
-```
+The R version of this lab uses HDBSCAN at this point. In Python we have **A-DBSCAN** (from the `esda` package), which shares the same core motivation — handling clusters of varying density more robustly than vanilla DBSCAN — though the two algorithms work differently under the hood.
 
-And let’s now visualise the result (toggle the expandable to see the code):
+A-DBSCAN runs DBSCAN many times on random subsets of the data and lets the runs "vote" on which cluster each point belongs to, which makes the result far less sensitive to any single arbitrary parameter choice.
+
+Unlike `scikit-learn`'s `DBSCAN`, `ADBSCAN` reads coordinates from columns literally named `X` and `Y` rather than from the geometry — so we need to create them first:
 
 ```{python}
-# Setup figure and axis
-f, ax = plt.subplots(1, figsize=(6, 6))
-# Assign labels to tokyo table dynamically and
-# subset points that are not part of any cluster (noise)
-noise = listings.assign(
-    lbls=lbls
-).query("lbls == -1")
-# Plot noise in grey
-ax.scatter(
-    noise["X_metres"], 
-    noise["Y_metres"], 
-    c='grey', 
-    s=5, 
-    linewidth=0
-)
-# Plot all points that are not noise in red
-# NOTE how this is done through some fancy indexing, where
-#      we take the index of all points (tw) and substract from
-#      it the index of those that are noise
-ax.scatter(
-    listings.loc[listings.index.difference(noise.index), "X_metres"], 
-    listings.loc[listings.index.difference(noise.index), "Y_metres"],
-    c="red", 
-    linewidth=0
-)
-# Display the figure
-plt.show()
-
-```
-
-### The A-DBSCAN algorithm
-
-Once we know the parameters we’ll use, we can go ahead and run A-DBSCAN:
-
-```{python}
-ax = listings_gdf_3857.plot(markersize=0.1, color='orange')
-cx.add_basemap(ax, crs=listings_gdf_3857.crs.to_string(), source=cx.providers.CartoDB.Voyager);
-
-plt.show()
-```
-
-Before we get going, we will also pull out the projected coordinates into separate columns:
-
-```{python}
-listings_gdf_3857["X"] = listings_gdf_3857.geometry.x
-listings_gdf_3857["Y"] = listings_gdf_3857.geometry.y
+listings_proj["X"] = listings_proj.geometry.x
+listings_proj["Y"] = listings_proj.geometry.y
 ```
 
 ```{python}
-# Get clusters
 adbs = ADBSCAN(150, 20, pct_exact=0.5, reps=10, keep_solus=True)
 np.random.seed(1234)
-adbs.fit(listings_gdf_3857)
+adbs.fit(listings_proj)
 ```
 
 ```{python}
-ax = listings_gdf_3857.assign(lbls=adbs.votes["lbls"])\
-       .plot(column="lbls",
-             categorical=True,
-             markersize=2.5,
-             figsize=(8, 8)
-            )
-cx.add_basemap(ax, crs= listings_gdf_3857.crs.to_string(), source=cx.providers.CartoDB.Voyager);
+fig, ax = plt.subplots(figsize=(8, 8))
 
+listings_proj.assign(lbls=adbs.votes["lbls"]).plot(
+    column="lbls", categorical=True, markersize=2.5, ax=ax
+)
+
+ax.set_title("A-DBSCAN")
+ax.set_axis_off()
 plt.show()
 ```
 
-```{python}
-polys = get_cluster_boundary(adbs.votes["lbls"], listings_gdf_3857, crs=listings_gdf_3857.crs)
-
-```
+One useful thing A-DBSCAN gives us that plain DBSCAN doesn't: it can return the *boundary* of each cluster as a polygon, which is far easier to overlay on a map than a scatter of coloured dots.
 
 ```{python}
+polys = get_cluster_boundary(adbs.votes["lbls"], listings_proj, crs=listings_proj.crs)
 
-ax = polys.plot(alpha=0.5, color="red")
-cx.add_basemap(ax, crs=polys.crs.to_string(), source=cx.providers.CartoDB.Voyager);
+fig, ax = plt.subplots(figsize=(8, 8))
 
+BA_proj.plot(ax=ax, facecolor="none", edgecolor="grey", linewidth=0.3)
+polys.plot(ax=ax, alpha=0.5, color="red")
+
+ax.set_title("A-DBSCAN cluster boundaries")
+ax.set_axis_off()
 plt.show()
-```
-
-The output is now very different, isn’t it? This exemplifies how different parameters can give rise to substantially different outcomes, even if the same data and algorithm are applied.
-
-```{=html}
-<!--
-## Interpolation
-
-::: callout-warning
-Please keep in mind this final section of the tutorial is OPTIONAL, so do not feel forced to complete it. This will not be covered in the assignment and you will still be able to get a good mark without completing it (also, including any of the following in the assignment does NOT guarantee a better mark).
-:::
-
-Inverse Distance Weighting (IDW) is an interpolation technique where we assume that an outcome varies smoothly across space: the closer points are, the more likely they are to have the same outcome. To predict values across space, IDW uses neighbours values. There are two main variables: the number of neighbours to consider and the speed of the spatial decay. For example, if we were to model the likelihood of a household to shop at the neighbouring local groceries store, we would need to set a decay such as the probability would be close to 0 as we reach 15 minutes walking distance from home.
-
-The typical problem is a missing value problem: we observe a property of a phenomenon $Z(s)$ at a limited number of sample locations, and are interested in the property value at all locations covering an area of interest, so we have to predict it for unobserved locations. This is also called kriging, or Gaussian Process prediction.
-
-### Ordinary Kriging
-
-Two Python packages that can be used for kriging include `scikit-learn` and `pykrige`. The former package works best when the input data has a WGS 84 projection.
-
--   [Python Open Source Spatial Programming & Remote Sensing](https://pygis.io/docs/e_interpolation.html)
-
--->
 ```
 
 ## Resources
 
--   [DBSCAN (Density-Based Spatial Clustering of Applications with Noise) Clearly Explained with Coding in Python](https://medium.com/@satpatishrimanta/clustering-by-dbscan-density-based-spatial-clustering-of-applications-with-noise-clearly-f93c5c72f706)
+- [DBSCAN (Density-Based Spatial Clustering of Applications with Noise) Clearly Explained with Coding in Python](https://medium.com/@satpatishrimanta/clustering-by-dbscan-density-based-spatial-clustering-of-applications-with-noise-clearly-f93c5c72f706)
 
--   [Arribas-Bel et al., 2019](https://www.sciencedirect.com/science/article/pii/S0094119019300944)
+- [`seaborn.kdeplot` documentation](https://seaborn.pydata.org/generated/seaborn.kdeplot.html) — the function used for kernel density estimation in this lab
 
--   [DBSCAN computes nearest neighbor graphs](https://www.reneshbedre.com/blog/dbscan-python.html#google_vignette?utm_content=cmp-true)
+- [`scikit-learn` density estimation](https://scikit-learn.org/stable/modules/density.html) — for going beyond `seaborn`
 
--   [Point Pattern Analysis](https://geographicdata.science/book/notebooks/08_point_pattern_analysis.html)
+- [`scikit-learn` clustering documentation](https://scikit-learn.org/stable/modules/clustering.html), including `DBSCAN` and `HDBSCAN`
+
+- [Arribas-Bel et al., 2019](https://www.sciencedirect.com/science/article/pii/S0094119019300944)
+
+- [Point Pattern Analysis](https://geographicdata.science/book/notebooks/08_point_pattern_analysis.html)
