@@ -2,13 +2,16 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.5.55">
+<meta name="generator" content="quarto-1.9.36">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
 <title>Python – A course in Geographic Data Science</title>
 <style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
 div.columns{display: flex; gap: min(4vw, 1.5em);}
@@ -19,6 +22,41 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -32,15 +70,16 @@ ul.task-list li input[type="checkbox"] {
 <meta name="quarto:offset" content="./">
 <link href="./download.html" rel="next">
 <link href="./environR.html" rel="prev">
-<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-845c23b38eaddc0f92fda52bfe77a8c8.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-d61101752a43e6db2baa24b252b88ce6.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -72,11 +111,12 @@ ul.task-list li input[type="checkbox"] {
 
 <meta name="twitter:title" content="Python – A course in Geographic Data Science">
 <meta name="twitter:description" content="">
+<meta name="twitter:image" content="https://gdsl-ul.github.io/gds/img/Step1_py.PNG">
 <meta name="twitter:creator" content="@EPietrostefani">
-<meta name="twitter:card" content="summary">
+<meta name="twitter:card" content="summary_large_image">
 </head>
 
-<body class="nav-sidebar floating">
+<body class="nav-sidebar floating quarto-light">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -102,7 +142,7 @@ ul.task-list li input[type="checkbox"] {
     <div class="sidebar-title mb-0 py-0">
       <a href="./">A course in Geographic Data Science</a> 
         <div class="sidebar-tools-main">
-    <a href="https://github.com/pietrostefani/gds" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+    <a href="https://github.com/GDSL-UL/gds" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
     <div class="dropdown">
       <a href="" title="Share" id="quarto-navigation-tool-dropdown-0" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" role="link" aria-label="Share"><i class="bi bi-share"></i></a>
       <ul class="dropdown-menu" aria-labelledby="quarto-navigation-tool-dropdown-0">
@@ -178,7 +218,7 @@ ul.task-list li input[type="checkbox"] {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./download.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Download data from github</span></a>
+ <span class="menu-text">Download data from GitHub</span></a>
   </div>
 </li>
       </ul>
@@ -436,6 +476,12 @@ ul.task-list li input[type="checkbox"] {
  <span class="menu-text">Lab in Python</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./spatialnetworksDIY.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Do-It-Yourself</span></a>
+  </div>
+</li>
       </ul>
   </li>
         <li class="sidebar-item">
@@ -460,24 +506,24 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#set-up-miniconda-and-python-on-ms-windows" id="toc-set-up-miniconda-and-python-on-ms-windows" class="nav-link active" data-scroll-target="#set-up-miniconda-and-python-on-ms-windows">Set up Miniconda (and Python) on Ms Windows</a>
+  <li><a href="#setting-up-your-environment-py" id="toc-setting-up-your-environment-py" class="nav-link active" data-scroll-target="#setting-up-your-environment-py">Setting up your environment</a>
   <ul class="collapse">
-  <li><a href="#installation" id="toc-installation" class="nav-link" data-scroll-target="#installation">Installation</a></li>
-  <li><a href="#set-up-the-directories" id="toc-set-up-the-directories" class="nav-link" data-scroll-target="#set-up-the-directories">Set up the Directories</a></li>
-  <li><a href="#set-up-the-python-environment" id="toc-set-up-the-python-environment" class="nav-link" data-scroll-target="#set-up-the-python-environment">Set up the Python Environment</a></li>
-  <li><a href="#start-a-lab-session" id="toc-start-a-lab-session" class="nav-link" data-scroll-target="#start-a-lab-session">Start a Lab Session</a></li>
+  <li><a href="#install-miniforge" id="toc-install-miniforge" class="nav-link" data-scroll-target="#install-miniforge">1. Install Miniforge</a></li>
+  <li><a href="#set-up-your-course-folder" id="toc-set-up-your-course-folder" class="nav-link" data-scroll-target="#set-up-your-course-folder">2. Set up your course folder</a></li>
+  <li><a href="#install-the-course-environment" id="toc-install-the-course-environment" class="nav-link" data-scroll-target="#install-the-course-environment">3. Install the course environment</a></li>
+  <li><a href="#start-a-lab-session" id="toc-start-a-lab-session" class="nav-link" data-scroll-target="#start-a-lab-session">4. Open a lab in Jupyter Notebook</a></li>
   </ul></li>
-  <li><a href="#set-up-miniconda-and-python-on-mac" id="toc-set-up-miniconda-and-python-on-mac" class="nav-link" data-scroll-target="#set-up-miniconda-and-python-on-mac">Set up Miniconda (and Python) on MAC</a>
+  <li><a href="#troubleshooting-py" id="toc-troubleshooting-py" class="nav-link" data-scroll-target="#troubleshooting-py">Troubleshooting</a>
   <ul class="collapse">
-  <li><a href="#installation-1" id="toc-installation-1" class="nav-link" data-scroll-target="#installation-1">Installation</a></li>
-  <li><a href="#set-up-the-directories-1" id="toc-set-up-the-directories-1" class="nav-link" data-scroll-target="#set-up-the-directories-1">Set up the Directories</a></li>
-  <li><a href="#set-up-the-python-environment-1" id="toc-set-up-the-python-environment-1" class="nav-link" data-scroll-target="#set-up-the-python-environment-1">Set up the Python Environment</a></li>
-  <li><a href="#start-a-lab-session-1" id="toc-start-a-lab-session-1" class="nav-link" data-scroll-target="#start-a-lab-session-1">Start a Lab Session</a></li>
+  <li><a href="#installing-miniforge" id="toc-installing-miniforge" class="nav-link" data-scroll-target="#installing-miniforge">Installing Miniforge</a></li>
+  <li><a href="#creating-the-environment" id="toc-creating-the-environment" class="nav-link" data-scroll-target="#creating-the-environment">Creating the environment</a></li>
+  <li><a href="#running-the-notebooks" id="toc-running-the-notebooks" class="nav-link" data-scroll-target="#running-the-notebooks">Running the notebooks</a></li>
+  <li><a href="#asking-for-help" id="toc-asking-for-help" class="nav-link" data-scroll-target="#asking-for-help">Asking for help</a></li>
   </ul></li>
-  <li><a href="#py-basics" id="toc-py-basics" class="nav-link" data-scroll-target="#py-basics">Py Basics</a></li>
+  <li><a href="#python-basics" id="toc-python-basics" class="nav-link" data-scroll-target="#python-basics">Python basics</a></li>
   <li><a href="#resources" id="toc-resources" class="nav-link" data-scroll-target="#resources">Resources</a></li>
   </ul>
-<div class="toc-actions"><ul><li><a href="https://github.com/pietrostefani/gds/edit/main/environPy.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></nav>
+<div class="toc-actions"><ul><li><a href="https://github.com/GDSL-UL/gds/edit/main/environPy.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -501,199 +547,594 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p>To run the analysis and reproduce the code in Python, you will need to set up the Python environment to:</p>
-<ul>
-<li>Execute the <a href="https://docs.jupyter.org/en/latest/">Jupyter Notebooks</a> of the Lab sessions of the course.</li>
-<li>Prepare your own Jupyter Notebooks for the assignments.</li>
-</ul>
+<p>This page has two parts:</p>
+<ol type="1">
+<li><a href="#setting-up-your-environment-py"><strong>Setting up your environment</strong></a>: installing Miniforge, organising your course folder, installing all the packages used in the course, and running the labs in <strong>Jupyter Notebook</strong>. <strong>Everyone following the course in Python needs to complete this part before the first lab.</strong> If something goes wrong, see <a href="#troubleshooting-py">Troubleshooting</a>.</li>
+<li><a href="#python-basics"><strong>Python basics</strong></a>: where to learn the basics if you are new to Python.</li>
+</ol>
 <div class="callout callout-style-default callout-important callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Important
+<span class="screen-reader-only">Important</span>All Python work in this course happens in Jupyter Notebook
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p><strong>Do not</strong> try to run Python code in RStudio. Only run in Jupyter Notebooks (.ipynb) with the Python environment provided.</p>
+<p><strong>Jupyter Notebook</strong> is a program that runs in your web browser and opens notebook files (<code>.ipynb</code>). Every lab is a notebook: it mixes explanations with code cells that you run one at a time, and shows the results (tables, maps, plots) directly underneath each cell.</p>
+<p><strong>Do not</strong> run the Python code in RStudio. Always open the lab notebooks in Jupyter Notebook, started from the course environment you create on this page.</p>
 </div>
 </div>
-<p>We will use <code>Miniconda</code> to handle our working environment.</p>
-<section id="set-up-miniconda-and-python-on-ms-windows" class="level2 unnumbered">
-<h2 class="unnumbered anchored" data-anchor-id="set-up-miniconda-and-python-on-ms-windows">Set up Miniconda (and Python) on Ms Windows</h2>
-<section id="installation" class="level3 unnumbered">
-<h3 class="unnumbered anchored" data-anchor-id="installation">Installation</h3>
-<ol type="1">
-<li><p>Install Miniconda:</p>
+<section id="setting-up-your-environment-py" class="level2">
+<h2 class="anchored" data-anchor-id="setting-up-your-environment-py">Setting up your environment</h2>
+<p>In Python, all the packages for the course are installed together in one <strong>environment</strong>, described in a single file: <code>envs363_563.yml</code>. You install this environment once, and then activate it every time you work on the labs. We use <strong>Miniforge</strong> to create and manage it. The environment also installs <strong>Jupyter Notebook</strong>, which you use to open and run the labs.</p>
+<p>In short, you will do this once:</p>
 <ul>
-<li><p><strong>Option 1</strong>: On a UoL Machine: Anaconda is installed on many university machines. Please check whether it is installed. If not, download and install Anaconda through from <code>Install University Applications</code>, type and choose <code>Anaconda</code>.</p></li>
-<li><p><strong>Option 2</strong>: <em>Recommended</em> - Install Miniconda on your personal Laptop: Follow the instructions <a href="https://docs.conda.io/projects/miniconda/en/latest/miniconda-install.html">here</a>.</p></li>
-</ul></li>
-<li><p>During the installation, leave the default settings. In particular, when asked whom to “Install Miniconda for”, choose “Just for me”.</p></li>
+<li>install Miniforge, set up your course folder, and install the course environment;</li>
+</ul>
+<p>and this every time you work on a lab:</p>
+<ul>
+<li>activate the environment, start Jupyter Notebook from your course folder, and open the lab notebook.</li>
+</ul>
+<p>The steps are:</p>
+<ol type="1">
+<li><a href="#install-miniforge">Install Miniforge</a></li>
+<li><a href="#set-up-your-course-folder">Set up your course folder</a></li>
+<li><a href="#install-the-course-environment">Install the course environment</a></li>
+<li><a href="#start-a-lab-session">Open a lab in Jupyter Notebook</a></li>
 </ol>
+<p>Work through them in order and test your installation <strong>before the first lab</strong>. If you run into problems, check <a href="#troubleshooting-py">Troubleshooting</a> at the end of this part, and if that doesn’t help, post a message on the module’s Microsoft Teams channel.</p>
+<section id="install-miniforge" class="level3">
+<h3 class="anchored" data-anchor-id="install-miniforge">1. Install Miniforge</h3>
+<p>Miniforge is a free, lightweight installer for <code>conda</code>, the tool we use to manage Python environments. It downloads packages from the community-run <strong>conda-forge</strong> channel.</p>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" href="" aria-current="page">Windows</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false" href="">macOS</a></li></ul>
+<div class="tab-content">
+<div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
+<ol type="1">
+<li>Download the Windows installer (<code>Miniforge3-Windows-x86_64.exe</code>) from the <a href="https://conda-forge.org/download/">Miniforge download page</a>.</li>
+<li>Double-click it and keep the default settings. When asked whom to install it for, choose <strong>Just Me</strong>.</li>
+<li>When it has finished, search for <strong>Miniforge Prompt</strong> in the Start menu. This is the terminal you will use for everything on this page.</li>
+</ol>
+</div>
+<div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
+<p>On a Mac, Miniforge is installed from the <strong>Terminal</strong> app (search for it with Spotlight, <code>Cmd + Space</code>).</p>
+<ol type="1">
+<li><p>Go to your Downloads folder and download the installer. The <code>$(uname)</code> and <code>$(uname -m)</code> parts pick the right version for your Mac automatically:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ~/Downloads</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> <span class="at">-L</span> <span class="at">-O</span> <span class="st">"https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-</span><span class="va">$(</span><span class="fu">uname</span><span class="va">)</span><span class="st">-</span><span class="va">$(</span><span class="fu">uname</span> <span class="at">-m</span><span class="va">)</span><span class="st">.sh"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></li>
+<li><p>Run the installer:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">bash</span> Miniforge3-<span class="va">$(</span><span class="fu">uname</span><span class="va">)</span>-<span class="va">$(</span><span class="fu">uname</span> <span class="at">-m</span><span class="va">)</span>.sh</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></li>
+<li><p>Answer the installer’s questions:</p>
+<ul>
+<li>Press <strong>Enter</strong> to show the licence, then scroll to the end (keep pressing <strong>Space</strong>, or press <strong>q</strong>).</li>
+<li>Type <code>yes</code> to accept the licence.</li>
+<li>Press <strong>Enter</strong> to accept the install location (<code>/Users/yourname/miniforge3</code>).</li>
+<li>Type <code>yes</code> when asked whether to initialize conda.</li>
+</ul>
+<p>When you see <code>Thank you for installing Miniforge3!</code>, the installation is complete.</p></li>
+<li><p><strong>Close the Terminal window and open a new one.</strong> Then check which conda is active:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> info <span class="kw">|</span> <span class="fu">grep</span> <span class="at">-i</span> <span class="st">"base environment"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The path should include <code>miniforge3</code>. If it shows <code>anaconda3</code> or <code>miniconda3</code> instead, see <a href="#troubleshooting-py">Troubleshooting</a>.</p></li>
+</ol>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Already have Anaconda or Miniconda?
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>You can keep using it: the course environment file only uses the conda-forge channel. If you install Miniforge as well, check which one your terminal uses (see <a href="#troubleshooting-py">Troubleshooting</a>). If <code>conda</code> asks you to accept Anaconda’s Terms of Service, see the Troubleshooting section too.</p>
+</div>
+</div>
 <div class="callout callout-style-default callout-caution callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-University Machines
+<span class="screen-reader-only">Caution</span>University machines
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>If you do choose to work on University Machines</p>
+<p>Anaconda is pre-installed on many university machines. If it isn’t on yours, install it from <strong>Install University Applications</strong> (search for <code>Anaconda</code>). If you work on university machines:</p>
 <ol type="1">
-<li>Chose a machine where Anaconda has been pre-installed.</li>
-<li>Always use the same machine. For example if on the first day you are using CT60 Station 17 - Orange Zone, continue using this machine for the rest of the course. If you change machine you will need to re-install the environment every time.</li>
+<li>Choose a machine where Anaconda is already installed.</li>
+<li>Always use the same machine (e.g.&nbsp;CT60, Station 17, Orange Zone). The environment is installed on that machine only, so if you change machine you will need to install it again.</li>
+<li>Keep your course folder on your <code>M:\</code> drive, so your files are available from any machine.</li>
 </ol>
 </div>
 </div>
 </section>
-<section id="set-up-the-directories" class="level3 unnumbered">
-<h3 class="unnumbered anchored" data-anchor-id="set-up-the-directories">Set up the Directories</h3>
+<section id="set-up-your-course-folder" class="level3">
+<h3 class="anchored" data-anchor-id="set-up-your-course-folder">2. Set up your course folder</h3>
 <ol type="1">
-<li>Create a folder where you want to keep your work conducted throughout this course. For example, call it <code>envs363_563</code>. You can save it wherever you want. If you are working on a university machine, it could be worth creating it in <code>M:/</code>, which is your “virtual” hard-disk.</li>
+<li><p>Create a folder for all your work on this course, called <code>envs363_563</code>. You can put it wherever you like (on a university machine, put it in <code>M:\</code>). Avoid spaces and special characters in the folder name and in the path to it.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="img/Step1_py.PNG" class="img-fluid figure-img" style="width:90.0%"></p>
+<figcaption>Creating the course folder</figcaption>
+</figure>
+</div></li>
+<li><p>Inside it, create a folder called <code>data</code>.</p></li>
+<li><p>At the start of each lab, download that lab’s data folder into <code>data</code> (see <a href="./download.html">Download data from GitHub</a>), and save that lab’s notebook directly in <code>envs363_563</code>.</p></li>
 </ol>
-<p><img src="./img/Step1_py.PNG" width="90%"></p>
-<ol start="2" type="1">
-<li>Download the <a href="https://github.com/pietrostefani/gds/tree/main/data">data</a> to run and render the jupyter notebooks. To learn how to download folders from github see <a href="https://pietrostefani.github.io/gds/download.html">here</a>.</li>
-<li>Unzip the folders and move the nested folders into the folder <code>envs363_563</code>.</li>
-<li>Create another folder called <code>labs</code></li>
-</ol>
-<p>The folder structure should look like:</p>
+<p>Your course folder should look like this:</p>
 <pre><code>envs363_563/
 ├── data/
-└── labs/</code></pre>
-</section>
-<section id="set-up-the-python-environment" class="level3 unnumbered">
-<h3 class="unnumbered anchored" data-anchor-id="set-up-the-python-environment">Set up the Python Environment</h3>
+│   └── London/
+│       └── ...
+├── envs363_563.yml
+├── spatialdataPy.ipynb
+└── ...</code></pre>
 <div class="callout callout-style-default callout-important callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Naming is important
+<span class="screen-reader-only">Important</span>Keep your notebooks next to the <code>data</code> folder
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>The way you name your folders and files really matters—using clear, consistent names helps you stay organized and avoid easy mistakes.</p>
+<p>The lab notebooks read data with <strong>relative paths</strong> such as <code>"data/London/Tables/housesales.csv"</code>. A notebook looks for these paths starting from the folder it is saved in, so the paths only work if the notebook sits in the same folder as <code>data</code>. If you save a notebook in a subfolder, it won’t find the data.</p>
 </div>
 </div>
+</section>
+<section id="install-the-course-environment" class="level3">
+<h3 class="anchored" data-anchor-id="install-the-course-environment">3. Install the course environment</h3>
 <ol type="1">
-<li>Download the <code>envs363-563.yml</code> from GitHub by cliciking <code>Download raw file</code>, top right <a href="https://github.com/pietrostefani/gds/blob/main/envs363-563.yml">at this page</a></li>
-<li>Save it in the folder <code>envs363_563</code> created before.</li>
-<li>Type in the search bar and find the <code>Anaconda Powershell Prompt</code> if working on University Machine or <code>Anaconda Prompt (miniconda 3)</code> if on your personal. Launch it. The terminal should appear.</li>
+<li><p>Open the <a href="https://github.com/pietrostefani/gds/blob/main/envs363_563.yml">environment file on GitHub</a>, click <strong>Download raw file</strong> (the download arrow at the top right), and save <code>envs363_563.yml</code> in your <code>envs363_563</code> folder.</p></li>
+<li><p>Open a terminal:</p></li>
 </ol>
-<p><img src="./img/Step2_py.jpeg" width="60%"></p>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-2-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-1" role="tab" aria-controls="tabset-2-1" aria-selected="true" href="">Windows</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-2" role="tab" aria-controls="tabset-2-2" aria-selected="false" href="">macOS</a></li></ul>
+<div class="tab-content">
+<div id="tabset-2-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-2-1-tab">
+<p>Search for <strong>Miniforge Prompt</strong> in the Start menu and open it. On a university machine, open <strong>Anaconda Prompt</strong> instead.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="img/Step2_py.jpeg" class="img-fluid figure-img" style="width:60.0%"></p>
+<figcaption>Finding the prompt from the Start menu</figcaption>
+</figure>
+</div>
+</div>
+<div id="tabset-2-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-2-tab">
+<p>Open the <strong>Terminal</strong> app (search for it with Spotlight, <code>Cmd + Space</code>).</p>
+</div>
+</div>
+</div>
 <ol start="3" type="1">
-<li>In the <strong>Anaconda Terminal</strong> write: <code>conda env create -n envs363_563 --file M:\``envs363_563``\envs363-563.yml</code> and press <code>Enter</code>; if the file is located elsewhere you’ll need to use the corresponding file path.</li>
-<li>If you are prompted any questions, press <code>y</code>. This process will install all the packages necessary to carry out the lab sessions.</li>
-<li>In the <strong>Anaconda Terminal</strong> write <code>conda activate envs363_563</code> and press <code>Enter</code>. This activates your working environment.</li>
+<li>Move into your course folder with the <code>cd</code> (“change directory”) command, followed by the path to your folder:</li>
 </ol>
-<p><img src="./img/environ_Py_8.png" width="50%"></p>
-<p><img src="./img/Step3_py.PNG" width="80%"></p>
-<ol start="6" type="1">
-<li><em>Necessary</em> on University machines, otherwise <em>Optional</em>: Configuration of Jupyter Notebooks
-<ul>
-<li>In the <strong>Anaconda Terminal</strong>, write <code>jupyter server --generate-config</code> and press enter. This, at least in Windows, should create a file to: <code>C:\Users\username\.jupyter\jupyter_server_config.py</code>.</li>
-<li>Open the file with a text editor (e.g.&nbsp;<a href="https://notepad-plus-plus.org">Notepad++</a>), do a <code>ctrl-f</code> search for: <code>c.ServerApp.root_dir</code>, uncomment it by removing the # and change it to <code>c.ServerApp.notebook_dir = 'M:\\your\\new\\path</code>, for example the directory where you created the <code>envs363_563</code> folder. In the University Machines, it is advised to work on the directory <code>M:\</code>.</li>
-<li>Save the file and close it.</li>
-</ul></li>
-</ol>
-<p><img src="./img/Step4_py.PNG" width="80%"></p>
-</section>
-<section id="start-a-lab-session" class="level3 unnumbered">
-<h3 class="unnumbered anchored" data-anchor-id="start-a-lab-session">Start a Lab Session</h3>
-<ol type="1">
-<li>Download the Jupyter Notebook of the session in your folder. Choose one jupyter notebook and click <code>Dowload raw file</code> as shown below.</li>
-</ol>
-<p><img src="./img/Step5_py.PNG" width="80%"></p>
-<ol start="2" type="1">
-<li>Save the file in the <code>labs</code> folder within your <code>envs363_563</code> folder on your machine.</li>
-<li>Type in the search bar, find and open the <code>Anaconda Prompt (miniconda 3)</code>.</li>
-<li>In the <strong>Anaconda Terminal</strong> write and run <code>conda activate envs363_563</code>.</li>
-<li>In the <strong>Anaconda Terminal</strong> write and run <code>jupyter notebook</code>. This should open Jupyter Notebook in your default browser.</li>
-</ol>
-<p><img src="./img/Step6_py.PNG" width="80%"></p>
-<ol start="6" type="1">
-<li>Navigate to your course folder in and double click on the notebook downloaded in step 1.</li>
-<li>You can now work on your copy of the notebook.</li>
-</ol>
-<p>Follow these instructions and test your installation <strong>prior to the first Lab Session</strong>. If you experience any issues, write a message on the Ms Teams channel of the module. Setting up the Python environment is necessary for:</p>
-<ul>
-<li>Executing the <a href="https://docs.jupyter.org/en/latest/">Jupyter Notebooks</a> of the Lab sessions of the course.</li>
-<li>Preparing your own Jupyter Notebooks for the assignments (one each).</li>
-</ul>
-</section>
-</section>
-<section id="set-up-miniconda-and-python-on-mac" class="level2 unnumbered">
-<h2 class="unnumbered anchored" data-anchor-id="set-up-miniconda-and-python-on-mac">Set up Miniconda (and Python) on MAC</h2>
-<section id="installation-1" class="level3 unnumbered">
-<h3 class="unnumbered anchored" data-anchor-id="installation-1">Installation</h3>
-<p>To install Miniconda on your personal laptop, Follow the instructions <a href="https://docs.conda.io/projects/miniconda/en/latest/miniconda-install.html">here</a>. During the installation, leave the default settings. In particular, when asked whom to “Install Miniconda for”, choose “Just for me”.</p>
-</section>
-<section id="set-up-the-directories-1" class="level3 unnumbered">
-<h3 class="unnumbered anchored" data-anchor-id="set-up-the-directories-1">Set up the Directories</h3>
-<ol type="1">
-<li>Create a folder where you want to keep your work conducted throughout this course. For example, call it <code>envs363_563</code>. You can save it wherever you want. For example, Elisabetta has named her folder <code>envs363_563</code> and it’s in her Dropbox in <code>Users/PIETROST/Library/CloudStorage/Dropbox/envs363_563</code></li>
-<li>Download the <a href="https://github.com/pietrostefani/gds/tree/main/data">data</a> to run and render the jupyter notebooks. To learn how to download folders from github see <a href="https://pietrostefani.github.io/gds/download.html">here</a>.</li>
-<li>Unzip the folders and move the nested folders into the folder <code>envs363_563</code>.</li>
-<li>Create another folder called <code>labs</code></li>
-</ol>
-<p>The folder structure should look like:</p>
-<pre><code>envs363_563/ ├── data/ └── labs/</code></pre>
-<p><img src="./img/environ_Py_5.png" width="80%"></p>
-</section>
-<section id="set-up-the-python-environment-1" class="level3 unnumbered">
-<h3 class="unnumbered anchored" data-anchor-id="set-up-the-python-environment-1">Set up the Python Environment</h3>
-<ol type="1">
-<li>Download the <code>envs363_563.yml</code> from GitHub by clicking <code>Download raw file</code>, top right <a href="https://github.com/pietrostefani/gds/blob/main/envs363-563.yml">at this page</a></li>
-<li>Save it in the folder <code>envs363_563</code> created before.</li>
-<li>Type in the search bar and open the <strong>Terminal</strong>.</li>
-<li>In the <strong>Terminal</strong> write <code>conda env create -n envs363 --file envs363_563.yml</code> and press <code>Enter</code>. This will need to be modified according to where you placed the <code>envs363_563</code> folder. For example, Elisabetta has named her folder <code>envs363_563</code> and it’s in her Dropbox in <code>Users/PIETROST/Library/CloudStorage/Dropbox/envs363_563/envs363_563.yml</code>. If you created the <code>envs363_563</code> folder on your desktop, the path would be <code>Desktop/envs363_563</code>.</li>
-</ol>
-<p><img src="./img/environ_Py_6.png" width="100%"></p>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-3-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-1" role="tab" aria-controls="tabset-3-1" aria-selected="true" href="">Windows</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-2" role="tab" aria-controls="tabset-3-2" aria-selected="false" href="">macOS</a></li></ul>
+<div class="tab-content">
+<div id="tabset-3-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-3-1-tab">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> /d M:<span class="dt">\e</span>nvs363_563</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Replace <code>M:\envs363_563</code> with the path to your folder. The <code>/d</code> lets you switch drive (e.g.&nbsp;from <code>C:</code> to <code>M:</code>) at the same time. Tip: you can type <code>cd /d</code> followed by a space, then drag the folder from File Explorer into the prompt to paste its path.</p>
+</div>
+<div id="tabset-3-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-3-2-tab">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ~/Desktop/envs363_563</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Replace <code>~/Desktop/envs363_563</code> with the path to your folder. Tip: you can type <code>cd</code> followed by a space, then drag the folder from Finder into the Terminal to paste its path.</p>
+</div>
+</div>
+</div>
 <ol start="4" type="1">
-<li>If you are prompted any questions, press <code>y</code>. This process will install all the packages necessary to carry out the lab sessions.</li>
-<li>You should then see this</li>
+<li><p>Create the environment from the file:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> env create <span class="at">-f</span> envs363_563.yml</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>If you are asked any questions, type <code>y</code> and press <strong>Enter</strong>. This installs all the packages used in the course, and can take 10 to 20 minutes.</p></li>
+<li><p>Activate the environment:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> activate envs363_563</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The start of the line in your terminal should change from <code>(base)</code> to <code>(envs363_563)</code>. This tells you the environment is active.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="img/environ_Py_8.png" class="img-fluid figure-img" style="width:50.0%"></p>
+<figcaption>The course environment activated</figcaption>
+</figure>
+</div></li>
+<li><p>Check that everything installed correctly:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-c</span> <span class="st">"import geopandas, pysal, osmnx, rasterio, contextily; print('All good!')"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>If this prints <code>All good!</code>, you are all set. If it prints an error, copy the full message into your post on Teams.</p></li>
 </ol>
-<p><img src="./img/environ_Py_8.png" width="50%"></p>
+<section id="packages-in-the-course-environment" class="level4">
+<h4 class="anchored" data-anchor-id="packages-in-the-course-environment">Packages in the course environment</h4>
+<p>The main packages used in this course are listed below, grouped by what they are used for. The environment file installs them all, together with the packages they depend on. You don’t need to install anything separately.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Purpose</th>
+<th>Packages</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Data handling</td>
+<td><code>pandas</code>, <code>numpy</code>, <code>scipy</code></td>
+</tr>
+<tr class="even">
+<td>Spatial vector data</td>
+<td><code>geopandas</code>, <code>shapely</code>, <code>pyproj</code>, <code>pyogrio</code>, <code>fiona</code>, <code>rtree</code></td>
+</tr>
+<tr class="odd">
+<td>Raster data</td>
+<td><code>rasterio</code>, <code>rioxarray</code>, <code>xarray</code>, <code>rasterstats</code>, <code>elevation</code></td>
+</tr>
+<tr class="even">
+<td>Maps and plots</td>
+<td><code>matplotlib</code>, <code>seaborn</code>, <code>contextily</code>, <code>folium</code>, <code>mapclassify</code></td>
+</tr>
+<tr class="odd">
+<td>Spatial statistics (PySAL)</td>
+<td><code>pysal</code>, <code>libpysal</code>, <code>esda</code>, <code>spreg</code>, <code>mgwr</code>, <code>pointpats</code>, <code>splot</code>, <code>giddy</code>, <code>inequality</code>, <code>segregation</code>, <code>tobler</code>, <code>spopt</code>, <code>access</code></td>
+</tr>
+<tr class="even">
+<td>Statistics and machine learning</td>
+<td><code>statsmodels</code>, <code>scikit-learn</code></td>
+</tr>
+<tr class="odd">
+<td>Networks and urban form</td>
+<td><code>networkx</code>, <code>osmnx</code>, <code>momepy</code>, <code>spaghetti</code></td>
+</tr>
+<tr class="even">
+<td>Web data and geocoding</td>
+<td><code>requests</code>, <code>beautifulsoup4</code>, <code>geopy</code></td>
+</tr>
+<tr class="odd">
+<td>Jupyter</td>
+<td><code>jupyter</code>, <code>notebook</code>, <code>jupyterlab</code>, <code>ipykernel</code>, <code>ipywidgets</code></td>
+</tr>
+</tbody>
+</table>
+<p>The exact version of every package is listed in <a href="https://github.com/pietrostefani/gds/blob/main/envs363_563.yml"><code>envs363_563.yml</code></a>.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Updating or reinstalling the environment
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>If we announce an update to the environment file during the course, download the new <code>envs363_563.yml</code> into your course folder, <code>cd</code> into the folder, and run:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> env update <span class="at">-f</span> envs363_563.yml <span class="at">--prune</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>If your environment gets into a mess, you can delete it and start again with <code>conda env remove -n envs363_563</code>, followed by step 4 above.</p>
+</div>
+</div>
 </section>
-<section id="start-a-lab-session-1" class="level3 unnumbered">
-<h3 class="unnumbered anchored" data-anchor-id="start-a-lab-session-1">Start a Lab Session</h3>
+</section>
+<section id="start-a-lab-session" class="level3">
+<h3 class="anchored" data-anchor-id="start-a-lab-session">4. Open a lab in Jupyter Notebook</h3>
+<p>You need to do this <strong>every time</strong> you work on a lab.</p>
 <ol type="1">
-<li>Download the Jupyter Notebook of the session in your folder. Choose one jupyter notebook and click <code>Dowload raw file</code> as shown below</li>
+<li><p>Download the lab notebook (<code>.ipynb</code>) from the <a href="https://github.com/pietrostefani/gds/tree/main/ipynb"><code>ipynb</code> folder of the course repository</a>: open the notebook and click <strong>Download raw file</strong>. Save it directly in your <code>envs363_563</code> folder, not in a subfolder.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="img/Step5_py.PNG" class="img-fluid figure-img" style="width:80.0%"></p>
+<figcaption>Downloading a notebook from GitHub</figcaption>
+</figure>
+</div></li>
+<li><p>Download that lab’s data into your <code>data</code> folder (see <a href="./download.html">Download data from GitHub</a>).</p></li>
+<li><p>Open a terminal (<strong>Miniforge Prompt</strong> or <strong>Anaconda Prompt</strong> on Windows, <strong>Terminal</strong> on macOS) and move into your course folder with <code>cd</code>, as in step 3 of <a href="#install-the-course-environment">Install the course environment</a>.</p></li>
+<li><p>Activate the environment and start <strong>Jupyter Notebook</strong>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> activate envs363_563</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="ex">jupyter</span> notebook</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Jupyter Notebook opens in your web browser, showing the files in your course folder. It runs in the browser but works from your computer, so you don’t need to be online to use it. Keep the terminal open while you work: closing it stops Jupyter Notebook.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="img/environ_Py_7.png" class="img-fluid figure-img" style="width:90.0%"></p>
+<figcaption>Starting Jupyter from the terminal</figcaption>
+</figure>
+</div></li>
+<li><p>Click on the lab notebook (<code>.ipynb</code>) to open it in a new tab.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="img/environ_Py_9.png" class="img-fluid figure-img" style="width:80.0%"></p>
+<figcaption>Jupyter Notebook in the browser</figcaption>
+</figure>
+</div></li>
+<li><p>Work through the notebook from top to bottom (see <a href="#working-in-a-notebook">Working in a notebook</a> below).</p></li>
+<li><p>When you have finished, save the notebook (<strong>File &gt; Save</strong>, or <code>Ctrl + S</code> / <code>Cmd + S</code>), close the browser tabs, and press <code>Ctrl + C</code> in the terminal to stop Jupyter Notebook.</p></li>
 </ol>
-<p><img src="./img/environ_Py_11.png" width="80%"></p>
-<ol start="2" type="1">
-<li>Save the file in the <code>labs</code> folder within your <code>envs363</code> folder on your machine.</li>
-<li>Type in the search bar, find and open the <strong>Terminal</strong>.</li>
-<li>In the <strong>Terminal</strong> write and run <code>conda activate envs363</code>.</li>
-<li>In the <strong>Terminal</strong> write and run <code>jupyter notebook</code>.</li>
-</ol>
-<p><img src="./img/environ_Py_7.png" width="90%"></p>
-<ol start="6" type="1">
-<li>This should open Jupyter Notebook in your default browser. You should see something like this:</li>
-</ol>
-<p><img src="./img/environ_Py_9.png" width="80%"></p>
-<ol start="7" type="1">
-<li>Navigate to your folder. You can now work on your copy of the notebook.</li>
-</ol>
-<p><img src="./img/environ_Py_10.png" width="80%"></p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Starting Jupyter from your course folder is what makes the relative paths work: Jupyter only shows files inside the folder it was started from. If you can’t see your notebook, close Jupyter, <code>cd</code> into your course folder, and start it again.</p>
+</div>
+</div>
+<section id="working-in-a-notebook" class="level4">
+<h4 class="anchored" data-anchor-id="working-in-a-notebook">Working in a notebook</h4>
+<p>A notebook is made of <strong>cells</strong>, stacked one under the other. There are two kinds:</p>
+<ul>
+<li><strong>Markdown cells</strong> contain the text of the lab: explanations, instructions and questions.</li>
+<li><strong>Code cells</strong> contain Python code. They have <code>[ ]:</code> to their left. When you run one, its output appears directly underneath, and a number appears in the brackets (e.g.&nbsp;<code>[3]:</code>) showing the order in which cells were run.</li>
+</ul>
+<p>The essentials:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>To…</th>
+<th>Do this</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Run a cell and move to the next one</td>
+<td>Click in the cell and press <code>Shift + Enter</code> (or click <strong>▶ Run</strong> in the toolbar)</td>
+</tr>
+<tr class="even">
+<td>Edit a cell</td>
+<td>Click inside it (code cells) or double-click it (markdown cells)</td>
+</tr>
+<tr class="odd">
+<td>Add a new cell</td>
+<td>Click <strong>+</strong> in the toolbar</td>
+</tr>
+<tr class="even">
+<td>Change a cell between code and markdown</td>
+<td>Use the drop-down menu in the toolbar</td>
+</tr>
+<tr class="odd">
+<td>Start again from a clean slate</td>
+<td><strong>Kernel &gt; Restart Kernel and Run All Cells</strong></td>
+</tr>
+<tr class="even">
+<td>Save</td>
+<td><code>Ctrl + S</code> (Windows) or <code>Cmd + S</code> (macOS)</td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Run cells in order
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Each code cell can use results from the cells above it (e.g.&nbsp;data loaded earlier in the notebook). If you skip a cell, or jump around, you will get errors such as <code>NameError: name 'districts' is not defined</code>. When in doubt, restart and run all cells from the top.</p>
+<p>While a cell is running, its brackets show <code>[*]</code>. Wait for it to finish before running the next one.</p>
+</div>
+</div>
 </section>
 </section>
-<section id="py-basics" class="level2">
-<h2 class="anchored" data-anchor-id="py-basics">Py Basics</h2>
-<p>Please refer to the tutorials from <a href="https://www.learnpython.org/en/Welcome">learnpython.org</a> for an introduction to coding in Python. We particularly recommend the tutorials listed under the “Learn the Basics” section.</p>
+</section>
+<section id="troubleshooting-py" class="level2">
+<h2 class="anchored" data-anchor-id="troubleshooting-py">Troubleshooting</h2>
+<p>Most set-up problems are one of the ones below. Click on a problem to see how to fix it.</p>
+<section id="installing-miniforge" class="level3">
+<h3 class="anchored" data-anchor-id="installing-miniforge">Installing Miniforge</h3>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-8-contents" aria-controls="callout-8" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span><code>No such file or directory</code> when running the installer (macOS)
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-8" class="callout-8-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>The Terminal is not in the folder where the installer is saved. New Terminal windows open in your home folder, not in Downloads. Move to Downloads and check the file is there:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ~/Downloads</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> Miniforge<span class="pp">*</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>If <code>ls</code> lists the file, run the installer again. If the file name is different, for example because your browser added <code>(1)</code> to it, type the name exactly as shown, in quotes:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">bash</span> <span class="st">"Miniforge3-Darwin-arm64 (1).sh"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>If <code>ls</code> finds nothing, download the installer with the <code>curl</code> command in <a href="#install-miniforge">Install Miniforge</a>.</p>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-9-contents" aria-controls="callout-9" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span><code>conda: command not found</code> after installing
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-9" class="callout-9-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ul>
+<li><p><strong>macOS</strong>: close the Terminal and open a new window, because the installation only takes effect in new windows. If it still doesn’t work, you probably answered <code>no</code> when asked to initialize conda. Fix it with the command below, then open a new window:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="ex">~/miniforge3/bin/conda</span> init zsh</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></li>
+<li><p><strong>Windows</strong>: make sure you are using <strong>Miniforge Prompt</strong> from the Start menu, not the standard Command Prompt or PowerShell.</p></li>
+</ul>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-10-contents" aria-controls="callout-10" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>I already had Anaconda or Miniconda, and the old conda is still being used (macOS)
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-10" class="callout-10-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>If you used Python before, your Terminal may still start your old installation. You can tell because this command shows <code>anaconda3</code> or <code>miniconda3</code> instead of <code>miniforge3</code>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> info <span class="kw">|</span> <span class="fu">grep</span> <span class="at">-i</span> <span class="st">"base environment"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>To switch to Miniforge, remove the old set-up from your Terminal and set up Miniforge instead (replace <code>anaconda3</code> with <code>miniconda3</code> if that’s what you had):</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="ex">~/anaconda3/bin/conda</span> init <span class="at">--reverse</span> zsh</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="ex">~/miniforge3/bin/conda</span> init zsh</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Close the Terminal, open a new window, and run the check again. It should now show <code>miniforge3</code>. Your old installation is still on your computer. You can uninstall it later if you no longer need it.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="creating-the-environment" class="level3">
+<h3 class="anchored" data-anchor-id="creating-the-environment">Creating the environment</h3>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-11-contents" aria-controls="callout-11" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span><code>EnvironmentFileNotFound</code> or <code>No such file</code> when creating the environment
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-11" class="callout-11-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><code>conda</code> can’t find <code>envs363_563.yml</code> in the folder you are in. Check which files are in the current folder with <code>ls</code> (macOS) or <code>dir</code> (Windows).</p>
+<ul>
+<li>If you don’t see <code>envs363_563.yml</code>, you are in the wrong folder. <code>cd</code> into your course folder (see <a href="#install-the-course-environment">step 3</a>).</li>
+<li>If you see <code>envs363_563.yml.txt</code> or <code>envs363_563.yaml</code>, your browser renamed the file on download. Rename it to exactly <code>envs363_563.yml</code>. On Windows, file extensions are hidden by default: turn them on in File Explorer under <strong>View &gt; Show &gt; File name extensions</strong> to see the full name.</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-12-contents" aria-controls="callout-12" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span><code>Terms of Service have not been accepted</code> (<code>CondaToSNonInteractiveError</code>)
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-12" class="callout-12-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>You are using the <code>conda</code> from Anaconda or Miniconda, not from Miniforge. On Windows, open <strong>Miniforge Prompt</strong> instead. On macOS, see <em>I already had Anaconda or Miniconda</em> above.</p>
+<p>If you want to keep using Anaconda or Miniconda, you can instead tell conda to stop using Anaconda’s channels, then try again:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> config <span class="at">--remove</span> channels defaults</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-13-contents" aria-controls="callout-13" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>The installation stopped with an error, or the environment already exists
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-13" class="callout-13-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>The installation downloads a lot of packages, so it can fail if your internet connection drops. Delete the half-installed environment and start again:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> env remove <span class="at">-n</span> envs363_563</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> env create <span class="at">-f</span> envs363_563.yml</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>If it fails again at the same point, copy the <strong>full</strong> error message from the terminal into a post on Teams.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="running-the-notebooks" class="level3">
+<h3 class="anchored" data-anchor-id="running-the-notebooks">Running the notebooks</h3>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-14-contents" aria-controls="callout-14" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span><code>ModuleNotFoundError: No module named 'geopandas'</code> (or another package)
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-14" class="callout-14-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>The notebook is not running in the course environment. This usually means Jupyter was started before activating the environment. Close Jupyter (<code>Ctrl + C</code> in the terminal), then run:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> activate envs363_563</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="ex">jupyter</span> notebook</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The start of the line in the terminal should show <code>(envs363_563)</code>, not <code>(base)</code>. To check from inside a notebook, run <code>import sys; print(sys.executable)</code>: the path should include <code>envs363_563</code>.</p>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-15-contents" aria-controls="callout-15" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span><code>FileNotFoundError</code>, <code>No such file</code>, or <code>DataSourceError</code> when loading data
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-15" class="callout-15-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>The notebook can’t find the data at the relative path in the code (e.g.&nbsp;<code>data/London/...</code>). Check that:</p>
+<ul>
+<li>the notebook is saved directly in your <code>envs363_563</code> folder, not in a subfolder;</li>
+<li>the lab’s data is in <code>envs363_563/data/</code>, with the folder name matching the path in the code (e.g.&nbsp;<code>London</code>);</li>
+<li>there is no extra folder in between, e.g.&nbsp;<code>data/London/London/</code>, which can happen when unzipping.</li>
+</ul>
+<p>See <a href="#set-up-your-course-folder">Set up your course folder</a> and <a href="./download.html">Download data from GitHub</a>.</p>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-16-contents" aria-controls="callout-16" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Jupyter started but no browser window opened, or I can’t see my notebook
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-16" class="callout-16-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>If no browser window opened, look in the terminal for a line starting with <code>http://localhost:8888/</code> and copy the full address, including the <code>?token=...</code> part, into your browser.</p>
+<p>If Jupyter opens but you can’t see your notebook, Jupyter was started from the wrong folder: it only shows files inside the folder it was started from. Close it (<code>Ctrl + C</code>), <code>cd</code> into your course folder, and start it again.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="asking-for-help" class="level3">
+<h3 class="anchored" data-anchor-id="asking-for-help">Asking for help</h3>
+<p>If you’re still stuck, post on the module’s Teams channel and include:</p>
+<ol type="1">
+<li>your operating system (Windows or macOS) and whether you are on a university machine;</li>
+<li>the step you were on;</li>
+<li>the <strong>full</strong> error message, copied and pasted as text from the terminal (not a photo of the screen);</li>
+<li>the output of <code>conda info</code>.</li>
+</ol>
+</section>
+</section>
+<section id="python-basics" class="level2">
+<h2 class="anchored" data-anchor-id="python-basics">Python basics</h2>
+<p>If you are new to Python, work through the tutorials in the <strong>Learn the Basics</strong> section of <a href="https://www.learnpython.org/en/Welcome">learnpython.org</a> before the first lab. If you have used Python before, you can skip them.</p>
 </section>
 <section id="resources" class="level2">
 <h2 class="anchored" data-anchor-id="resources">Resources</h2>
 <p>Some help along the way with:</p>
 <ol type="1">
-<li><p><a href="https://geographicdata.science/book/intro.html">Geographic Data Science with Python</a>.</p></li>
-<li><p><a href="https://pythongis.org/index.html">Python for Geographic Data Analysis</a></p></li>
+<li><p><a href="https://geographicdata.science/book/intro.html">Geographic Data Science with Python</a> by Sergio Rey, Dani Arribas-Bel and Levi John Wolf.</p></li>
+<li><p><a href="https://pythongis.org/index.html">Python for Geographic Data Analysis</a> by Henrikki Tenkanen, Vuokko Heikinheimo and David Whipp.</p></li>
+<li><p><a href="https://docs.jupyter.org/en/latest/">Jupyter Notebook documentation</a> for working with notebooks.</p></li>
 </ol>
 
 
@@ -701,239 +1142,243 @@ Naming is important
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
-window.document.addEventListener("DOMContentLoaded", function (event) {
-  const toggleBodyColorMode = (bsSheetEl) => {
-    const mode = bsSheetEl.getAttribute("data-mode");
-    const bodyEl = window.document.querySelector("body");
-    if (mode === "dark") {
-      bodyEl.classList.add("quarto-dark");
-      bodyEl.classList.remove("quarto-light");
-    } else {
-      bodyEl.classList.add("quarto-light");
-      bodyEl.classList.remove("quarto-dark");
-    }
-  }
-  const toggleBodyColorPrimary = () => {
-    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
-    if (bsSheetEl) {
-      toggleBodyColorMode(bsSheetEl);
-    }
-  }
-  toggleBodyColorPrimary();  
-  const icon = "";
-  const anchorJS = new window.AnchorJS();
-  anchorJS.options = {
-    placement: 'right',
-    icon: icon
-  };
-  anchorJS.add('.anchored');
-  const isCodeAnnotation = (el) => {
-    for (const clz of el.classList) {
-      if (clz.startsWith('code-annotation-')) {                     
-        return true;
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
       }
+      return false;
     }
-    return false;
-  }
-  const onCopySuccess = function(e) {
-    // button target
-    const button = e.trigger;
-    // don't keep focus
-    button.blur();
-    // flash "checked"
-    button.classList.add('code-copy-button-checked');
-    var currentTitle = button.getAttribute("title");
-    button.setAttribute("title", "Copied!");
-    let tooltip;
-    if (window.bootstrap) {
-      button.setAttribute("data-bs-toggle", "tooltip");
-      button.setAttribute("data-bs-placement", "left");
-      button.setAttribute("data-bs-title", "Copied!");
-      tooltip = new bootstrap.Tooltip(button, 
-        { trigger: "manual", 
-          customClass: "code-copy-button-tooltip",
-          offset: [0, -8]});
-      tooltip.show();    
-    }
-    setTimeout(function() {
-      if (tooltip) {
-        tooltip.hide();
-        button.removeAttribute("data-bs-title");
-        button.removeAttribute("data-bs-toggle");
-        button.removeAttribute("data-bs-placement");
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
       }
-      button.setAttribute("title", currentTitle);
-      button.classList.remove('code-copy-button-checked');
-    }, 1000);
-    // clear code selection
-    e.clearSelection();
-  }
-  const getTextToCopy = function(trigger) {
-      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
       for (const childEl of codeEl.children) {
         if (isCodeAnnotation(childEl)) {
           childEl.remove();
         }
       }
       return codeEl.innerText;
-  }
-  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
-    text: getTextToCopy
-  });
-  clipboard.on('success', onCopySuccess);
-  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
-    // For code content inside modals, clipBoardJS needs to be initialized with a container option
-    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
-    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
-      text: getTextToCopy,
-      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
     });
-    clipboardModal.on('success', onCopySuccess);
-  }
-    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
-    var mailtoRegex = new RegExp(/^mailto:/);
-      var filterRegex = new RegExp("https:\/\/pietrostefani\.github\.io\/wma");
-    var isInternal = (href) => {
-        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
     }
-    // Inspect non-navigation links and adorn them if external
- 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
-    for (var i=0; i<links.length; i++) {
-      const link = links[i];
-      if (!isInternal(link.href)) {
-        // undo the damage that might have been done by quarto-nav.js in the case of
-        // links that we want to consider external
-        if (link.dataset.originalHref !== undefined) {
-          link.href = link.dataset.originalHref;
-        }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/gdsl-ul\.github\.io\/gds\/");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
       }
-    }
-  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
-    const config = {
-      allowHTML: true,
-      maxWidth: 500,
-      delay: 100,
-      arrow: false,
-      appendTo: function(el) {
-          return el.parentElement;
-      },
-      interactive: true,
-      interactiveBorder: 10,
-      theme: 'quarto',
-      placement: 'bottom-start',
-    };
-    if (contentFn) {
-      config.content = contentFn;
-    }
-    if (onTriggerFn) {
-      config.onTrigger = onTriggerFn;
-    }
-    if (onUntriggerFn) {
-      config.onUntrigger = onUntriggerFn;
-    }
-    window.tippy(el, config); 
-  }
-  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
-  for (var i=0; i<noterefs.length; i++) {
-    const ref = noterefs[i];
-    tippyHover(ref, function() {
-      // use id or data attribute instead here
-      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
-      try { href = new URL(href).hash; } catch {}
-      const id = href.replace(/^#\/?/, "");
-      const note = window.document.getElementById(id);
-      if (note) {
-        return note.innerHTML;
-      } else {
-        return "";
-      }
-    });
-  }
-  const xrefs = window.document.querySelectorAll('a.quarto-xref');
-  const processXRef = (id, note) => {
-    // Strip column container classes
-    const stripColumnClz = (el) => {
-      el.classList.remove("page-full", "page-columns");
-      if (el.children) {
-        for (const child of el.children) {
-          stripColumnClz(child);
-        }
-      }
-    }
-    stripColumnClz(note)
-    if (id === null || id.startsWith('sec-')) {
-      // Special case sections, only their first couple elements
-      const container = document.createElement("div");
-      if (note.children && note.children.length > 2) {
-        container.appendChild(note.children[0].cloneNode(true));
-        for (let i = 1; i < note.children.length; i++) {
-          const child = note.children[i];
-          if (child.tagName === "P" && child.innerText === "") {
-            continue;
-          } else {
-            container.appendChild(child.cloneNode(true));
-            break;
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
           }
         }
-        if (window.Quarto?.typesetMath) {
-          window.Quarto.typesetMath(container);
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
         }
-        return container.innerHTML
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
       } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
         if (window.Quarto?.typesetMath) {
           window.Quarto.typesetMath(note);
         }
-        return note.innerHTML;
-      }
-    } else {
-      // Remove any anchor links if they are present
-      const anchorLink = note.querySelector('a.anchorjs-link');
-      if (anchorLink) {
-        anchorLink.remove();
-      }
-      if (window.Quarto?.typesetMath) {
-        window.Quarto.typesetMath(note);
-      }
-      // TODO in 1.5, we should make sure this works without a callout special case
-      if (note.classList.contains("callout")) {
-        return note.outerHTML;
-      } else {
-        return note.innerHTML;
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
       }
     }
-  }
-  for (var i=0; i<xrefs.length; i++) {
-    const xref = xrefs[i];
-    tippyHover(xref, undefined, function(instance) {
-      instance.disable();
-      let url = xref.getAttribute('href');
-      let hash = undefined; 
-      if (url.startsWith('#')) {
-        hash = url;
-      } else {
-        try { hash = new URL(url).hash; } catch {}
-      }
-      if (hash) {
-        const id = hash.replace(/^#\/?/, "");
-        const note = window.document.getElementById(id);
-        if (note !== null) {
-          try {
-            const html = processXRef(id, note.cloneNode(true));
-            instance.setContent(html);
-          } finally {
-            instance.enable();
-            instance.show();
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
           }
         } else {
-          // See if we can fetch this
-          fetch(url.split('#')[0])
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
           .then(res => res.text())
           .then(html => {
             const parser = new DOMParser();
             const htmlDoc = parser.parseFromString(html, "text/html");
-            const note = htmlDoc.getElementById(id);
+            const note = htmlDoc.querySelector('main.content');
             if (note !== null) {
-              const html = processXRef(id, note);
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
               instance.setContent(html);
             } 
           }).finally(() => {
@@ -941,185 +1386,161 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
             instance.show();
           });
         }
-      } else {
-        // See if we can fetch a full url (with no hash to target)
-        // This is a special case and we should probably do some content thinning / targeting
-        fetch(url)
-        .then(res => res.text())
-        .then(html => {
-          const parser = new DOMParser();
-          const htmlDoc = parser.parseFromString(html, "text/html");
-          const note = htmlDoc.querySelector('main.content');
-          if (note !== null) {
-            // This should only happen for chapter cross references
-            // (since there is no id in the URL)
-            // remove the first header
-            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
-              note.children[0].remove();
-            }
-            const html = processXRef(null, note);
-            instance.setContent(html);
-          } 
-        }).finally(() => {
-          instance.enable();
-          instance.show();
-        });
-      }
-    }, function(instance) {
-    });
-  }
-      let selectedAnnoteEl;
-      const selectorForAnnotation = ( cell, annotation) => {
-        let cellAttr = 'data-code-cell="' + cell + '"';
-        let lineAttr = 'data-code-annotation="' +  annotation + '"';
-        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
-        return selector;
-      }
-      const selectCodeLines = (annoteEl) => {
-        const doc = window.document;
-        const targetCell = annoteEl.getAttribute("data-target-cell");
-        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
-        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
-        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
-        const lineIds = lines.map((line) => {
-          return targetCell + "-" + line;
-        })
-        let top = null;
-        let height = null;
-        let parent = null;
-        if (lineIds.length > 0) {
-            //compute the position of the single el (top and bottom and make a div)
-            const el = window.document.getElementById(lineIds[0]);
-            top = el.offsetTop;
-            height = el.offsetHeight;
-            parent = el.parentElement.parentElement;
-          if (lineIds.length > 1) {
-            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
-            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
-            height = bottom - top;
-          }
-          if (top !== null && height !== null && parent !== null) {
-            // cook up a div (if necessary) and position it 
-            let div = window.document.getElementById("code-annotation-line-highlight");
-            if (div === null) {
-              div = window.document.createElement("div");
-              div.setAttribute("id", "code-annotation-line-highlight");
-              div.style.position = 'absolute';
-              parent.appendChild(div);
-            }
-            div.style.top = top - 2 + "px";
-            div.style.height = height + 4 + "px";
-            div.style.left = 0;
-            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
-            if (gutterDiv === null) {
-              gutterDiv = window.document.createElement("div");
-              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
-              gutterDiv.style.position = 'absolute';
-              const codeCell = window.document.getElementById(targetCell);
-              const gutter = codeCell.querySelector('.code-annotation-gutter');
-              gutter.appendChild(gutterDiv);
-            }
-            gutterDiv.style.top = top - 2 + "px";
-            gutterDiv.style.height = height + 4 + "px";
-          }
-          selectedAnnoteEl = annoteEl;
-        }
-      };
-      const unselectCodeLines = () => {
-        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
-        elementsIds.forEach((elId) => {
-          const div = window.document.getElementById(elId);
-          if (div) {
-            div.remove();
-          }
-        });
-        selectedAnnoteEl = undefined;
-      };
-        // Handle positioning of the toggle
-    window.addEventListener(
-      "resize",
-      throttle(() => {
-        elRect = undefined;
-        if (selectedAnnoteEl) {
-          selectCodeLines(selectedAnnoteEl);
-        }
-      }, 10)
-    );
-    function throttle(fn, ms) {
-    let throttle = false;
-    let timer;
-      return (...args) => {
-        if(!throttle) { // first call gets through
-            fn.apply(this, args);
-            throttle = true;
-        } else { // all the others get throttled
-            if(timer) clearTimeout(timer); // cancel #2
-            timer = setTimeout(() => {
-              fn.apply(this, args);
-              timer = throttle = false;
-            }, ms);
-        }
-      };
-    }
-      // Attach click handler to the DT
-      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
-      for (const annoteDlNode of annoteDls) {
-        annoteDlNode.addEventListener('click', (event) => {
-          const clickedEl = event.target;
-          if (clickedEl !== selectedAnnoteEl) {
-            unselectCodeLines();
-            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
-            if (activeEl) {
-              activeEl.classList.remove('code-annotation-active');
-            }
-            selectCodeLines(clickedEl);
-            clickedEl.classList.add('code-annotation-active');
-          } else {
-            // Unselect the line
-            unselectCodeLines();
-            clickedEl.classList.remove('code-annotation-active');
-          }
-        });
-      }
-  const findCites = (el) => {
-    const parentEl = el.parentElement;
-    if (parentEl) {
-      const cites = parentEl.dataset.cites;
-      if (cites) {
-        return {
-          el,
-          cites: cites.split(' ')
-        };
-      } else {
-        return findCites(el.parentElement)
-      }
-    } else {
-      return undefined;
-    }
-  };
-  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
-  for (var i=0; i<bibliorefs.length; i++) {
-    const ref = bibliorefs[i];
-    const citeInfo = findCites(ref);
-    if (citeInfo) {
-      tippyHover(citeInfo.el, function() {
-        var popup = window.document.createElement('div');
-        citeInfo.cites.forEach(function(cite) {
-          var citeDiv = window.document.createElement('div');
-          citeDiv.classList.add('hanging-indent');
-          citeDiv.classList.add('csl-entry');
-          var biblioDiv = window.document.getElementById('ref-' + cite);
-          if (biblioDiv) {
-            citeDiv.innerHTML = biblioDiv.innerHTML;
-          }
-          popup.appendChild(citeDiv);
-        });
-        return popup.innerHTML;
+      }, function(instance) {
       });
     }
-  }
-});
-</script>
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
       <a href="./environR.html" class="pagination-link" aria-label="R">
@@ -1127,8 +1548,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./download.html" class="pagination-link" aria-label="Download data from github">
-        <span class="nav-page-text">Download data from github</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./download.html" class="pagination-link" aria-label="Download data from GitHub">
+        <span class="nav-page-text">Download data from GitHub</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
@@ -1140,7 +1561,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </div>   
     <div class="nav-footer-center">
       &nbsp;
-    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/pietrostefani/gds/edit/main/environPy.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></div>
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/GDSL-UL/gds/edit/main/environPy.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></div>
     <div class="nav-footer-right">
 <p>This book was built with <a href="https://quarto.org/">Quarto</a>.</p>
 </div>
