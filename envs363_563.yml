@@ -1,21 +1,10 @@
-name: envs363-563
+name: envs363_563
 channels:
   - conda-forge
-  - defaults
+  - nodefaults
 dependencies:
-  - bzip2=1.0.8
-  - ca-certificates=2023.12.12
-  - expat=2.5.0
-  - libffi=3.4.4
-  - openssl=3.0.12
-  - pip=23.3.1
-  - python=3.11.5
-  - setuptools=68.2.2
-  - sqlite=3.41.2
-  - tk=8.6.12
-  - wheel=0.44.0
-  - xz=5.4.5
-  - zlib=1.2.13
+  - python=3.11
+  - pip
   - pip:
       - access==1.1.9
       - affine==2.4.0
@@ -94,6 +83,7 @@ dependencies:
       - markupsafe==2.1.5
       - matplotlib==3.9.2
       - matplotlib-inline==0.1.7
+      - matplotlib-map-utils==4.0.0
       - mercantile==1.2.1
       - mgwr==2.2.1
       - mistune==3.0.2
