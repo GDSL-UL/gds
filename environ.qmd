@@ -1,17 +1,59 @@
 # Environment {.unnumbered}
 
-This course can be followed by anyone with access to a bit of technical infrastructure. This section details the set of local and online requirements you will need to be able to follow along, as well as instructions or pointers to get set up on your own. This is a centralised section that lists *everything* you will require.
+This section explains everything you need to set up before the first lab. It takes about an hour, most of which is waiting for software to install, so do it well before the first session.
 
-## Coding Languages
+You will need:
 
-In this course, you have the option to follow along using either `R` or `Python`, depending on your past experience with these programming languages and preference. Please choose **one** language to focus on and stick to it throughout.
+- a computer running Windows or macOS on which you can install software, or access to a university machine;
+- an internet connection, to install the software and download the lab data;
+- a folder for the course, called `envs363_563`, where you keep your work and the lab data.
 
--   If you want to follow the course in `R`, you can find instructions to set up your environment [here](https://gdsl-ul.github.io/gds/environR.html).
+## Choose R or Python
 
--   If you want to follow the course in `Python`, you can find instructions to set up your environment [here](https://gdsl-ul.github.io/gds/environPy.html).
+You can follow this course in either `R` or `Python`, depending on your past experience and preference. Choose **one** language and stick to it throughout the course: you will need to submit both assignments in the same language.
 
-This course has two assignments and you will be required to submit both assignments in the same programming languages. The next two sections will guide you through the process of setting up your development environment in `R` or `Python`, so you can get started with the course smoothly.
+|   | R | Python |
+|----|----|----|
+| You install | R, RStudio and the R packages for the course | Miniforge and the course environment (`envs363_563.yml`) |
+| You write and run code in | Quarto documents (`.qmd`) in RStudio | Jupyter Notebooks (`.ipynb`) in Jupyter Notebook |
+| Set-up instructions | [R set-up](environR.qmd) | [Python set-up](environPy.qmd) |
 
-## Reproducing code in this book
+Follow the set-up page for your language from start to finish. Each page ends with a check that tells you whether everything installed correctly.
 
-If you want to reproduce the code in the book, you need the most recent version of Quarto, R and relevant packages. These can be installed following the instructions provided in our [R installation guide](https://gdsl-ul.github.io/r_install/). Quarto (1.2.280) can be downloaded from [the Quarto website](https://quarto.org/docs/get-started/), it may already be installed when you download R and R Studio.
+::: callout-important
+Don't mix the two: don't run Python code in RStudio, and don't try to run the R labs in Jupyter.
+:::
+
+## Set up your course folder
+
+Whichever language you choose, keep all your work for the course in one folder called `envs363_563`, with the lab data in a `data` folder inside it:
+
+```         
+envs363_563/
+├── data/
+│   └── London/
+│       └── ...
+├── lab_01.qmd      (R)
+└── lab_01.ipynb    (Python)
+```
+
+Save your `.qmd` or `.ipynb` files directly in `envs363_563`, next to the `data` folder. The labs read data with **relative paths** such as `"data/London/Tables/..."`, which only work with this layout. The set-up pages for [R](environR.qmd#working-in-quarto-documents-with-relative-paths) and [Python](environPy.qmd#set-up-your-course-folder) explain this in more detail.
+
+## Download the data for each lab
+
+The data for each lab is in the course GitHub repository. Download the folder you need at the start of each lab, rather than all the data at once, so you always have the latest version. See [Download data from GitHub](download.qmd) for step-by-step instructions.
+
+## Getting help
+
+If something goes wrong during set-up:
+
+1.  Check the troubleshooting advice on your set-up page (the [Python page](environPy.qmd#troubleshooting-py) has a section covering the most common problems).
+2.  If you're still stuck, post on the module's Microsoft Teams channel. Include your operating system, the step you were on, and the full error message copied as text.
+
+## Reproducing this book
+
+If you want to render this book yourself, rather than just follow the labs, you need:
+
+- a recent version of [Quarto](https://quarto.org/docs/get-started/) (it is bundled with recent versions of RStudio);
+- R and all the packages from the [R set-up](environR.qmd#installing-packages-r);
+- the Python course environment from the [Python set-up](environPy.qmd#install-the-course-environment), activated when you render, so that Quarto can run the Python chapters.
