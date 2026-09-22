@@ -12,7 +12,7 @@ In this session, we will build on all we have learnt so far about loading and ma
 
 - Fisher-Jenks
 
-## Installing Packages
+## Importing packages
 
 Before all this mapping fun, let us get the importing of libraries and data loading out of the way:
 
@@ -59,7 +59,7 @@ spf_25.plot()
 plt.show()
 ```
 
-Don't forget that before you go further, you want to check the `CRS` of the `sf` object as well as the `dataframe`.
+Don't forget that before you go further, you want to check the `CRS` of the `GeoDataFrame` and take a look at its first few rows.
 
 ::: {.callout-tip collapse="true"}
 ## Answer
