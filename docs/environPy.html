@@ -518,6 +518,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#installing-miniforge" id="toc-installing-miniforge" class="nav-link" data-scroll-target="#installing-miniforge">Installing Miniforge</a></li>
   <li><a href="#creating-the-environment" id="toc-creating-the-environment" class="nav-link" data-scroll-target="#creating-the-environment">Creating the environment</a></li>
   <li><a href="#running-the-notebooks" id="toc-running-the-notebooks" class="nav-link" data-scroll-target="#running-the-notebooks">Running the notebooks</a></li>
+  <li><a href="#uni-troubleshooting" id="toc-uni-troubleshooting" class="nav-link" data-scroll-target="#uni-troubleshooting">University machines</a></li>
   <li><a href="#asking-for-help" id="toc-asking-for-help" class="nav-link" data-scroll-target="#asking-for-help">Asking for help</a></li>
   </ul></li>
   <li><a href="#python-basics" id="toc-python-basics" class="nav-link" data-scroll-target="#python-basics">Python basics</a></li>
@@ -549,8 +550,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <p>This page has two parts:</p>
 <ol type="1">
-<li><a href="#setting-up-your-environment-py"><strong>Setting up your environment</strong></a>: installing Miniforge, organising your course folder, installing all the packages used in the course, and running the labs in <strong>Jupyter Notebook</strong>. <strong>Everyone following the course in Python needs to complete this part before the first lab.</strong> If something goes wrong, see <a href="#troubleshooting-py">Troubleshooting</a>.</li>
-<li><a href="#python-basics"><strong>Python basics</strong></a>: where to learn the basics if you are new to Python.</li>
+<li><strong><a href="#setting-up-your-environment-py">Setting up your environment</a></strong>: installing Miniforge, organising your course folder, installing all the packages used in the course, and running the labs in <strong>Jupyter Notebook</strong>. <strong>Everyone following the course in Python needs to complete this part before the first lab.</strong> If something goes wrong, see <a href="#troubleshooting-py">Troubleshooting</a>.</li>
+<li><strong><a href="#python-basics">Python basics</a></strong>: where to learn the basics if you are new to Python.</li>
 </ol>
 <div class="callout callout-style-default callout-important callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -584,13 +585,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><a href="#install-the-course-environment">Install the course environment</a></li>
 <li><a href="#start-a-lab-session">Open a lab in Jupyter Notebook</a></li>
 </ol>
+<p>On a university machine, choose the <strong>University machine</strong> tab in each step, and see <a href="#uni-troubleshooting">University machines</a> in Troubleshooting for the two problems specific to those computers.</p>
 <p>Work through them in order and test your installation <strong>before the first lab</strong>. If you run into problems, check <a href="#troubleshooting-py">Troubleshooting</a> at the end of this part, and if that doesn’t help, post a message on the module’s Microsoft Teams channel.</p>
 <section id="install-miniforge" class="level3">
 <h3 class="anchored" data-anchor-id="install-miniforge">1. Install Miniforge</h3>
 <p>Miniforge is a free, lightweight installer for <code>conda</code>, the tool we use to manage Python environments. It downloads packages from the community-run <strong>conda-forge</strong> channel.</p>
-<div class="tabset-margin-container"></div><div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" href="" aria-current="page">Windows</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false" href="">macOS</a></li></ul>
-<div class="tab-content">
+<div class="tabset-margin-container"></div><div class="panel-tabset" data-group="os">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" href="" aria-current="page">Windows</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false" href="">University machine</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-3" role="tab" aria-controls="tabset-1-3" aria-selected="false" href="">macOS</a></li></ul>
+<div class="tab-content" data-group="os">
 <div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
 <ol type="1">
 <li>Download the Windows installer (<code>Miniforge3-Windows-x86_64.exe</code>) from the <a href="https://conda-forge.org/download/">Miniforge download page</a>.</li>
@@ -599,6 +601,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </ol>
 </div>
 <div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
+<p>You don’t install anything at this step: <strong>Anaconda</strong> is already installed on most university machines, and it provides the same <code>conda</code> command.</p>
+<ol type="1">
+<li>Choose a machine where Anaconda is installed, and <strong>always use the same one</strong> (e.g.&nbsp;CT60, Station 17, Orange Zone). The environment is installed on that machine only, so on a different machine you would have to install it again.</li>
+<li>If Anaconda isn’t installed, get it from <strong>Install University Applications</strong> (search for <code>Anaconda</code>).</li>
+<li>Search for <strong>Anaconda Prompt</strong> (or <strong>Anaconda Powershell Prompt</strong>) in the Start menu. This is the terminal you will use for everything on this page.</li>
+<li>Keep your course folder on your <code>M:\</code> drive, so your work is available from any machine.</li>
+</ol>
+<p>If <code>conda</code> asks you to accept Anaconda’s Terms of Service, see <a href="#troubleshooting-py">Troubleshooting</a>.</p>
+</div>
+<div id="tabset-1-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-3-tab">
 <p>On a Mac, Miniforge is installed from the <strong>Terminal</strong> app (search for it with Spotlight, <code>Cmd + Space</code>).</p>
 <ol type="1">
 <li><p>Go to your Downloads folder and download the installer. The <code>$(uname)</code> and <code>$(uname -m)</code> parts pick the right version for your Mac automatically:</p>
@@ -632,24 +644,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <div class="callout-body-container callout-body">
 <p>You can keep using it: the course environment file only uses the conda-forge channel. If you install Miniforge as well, check which one your terminal uses (see <a href="#troubleshooting-py">Troubleshooting</a>). If <code>conda</code> asks you to accept Anaconda’s Terms of Service, see the Troubleshooting section too.</p>
-</div>
-</div>
-<div class="callout callout-style-default callout-caution callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Caution</span>University machines
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Anaconda is pre-installed on many university machines. If it isn’t on yours, install it from <strong>Install University Applications</strong> (search for <code>Anaconda</code>). If you work on university machines:</p>
-<ol type="1">
-<li>Choose a machine where Anaconda is already installed.</li>
-<li>Always use the same machine (e.g.&nbsp;CT60, Station 17, Orange Zone). The environment is installed on that machine only, so if you change machine you will need to install it again.</li>
-<li>Keep your course folder on your <code>M:\</code> drive, so your files are available from any machine.</li>
-</ol>
 </div>
 </div>
 </section>
@@ -694,11 +688,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><p>Open the <a href="https://github.com/pietrostefani/gds/blob/main/envs363_563.yml">environment file on GitHub</a>, click <strong>Download raw file</strong> (the download arrow at the top right), and save <code>envs363_563.yml</code> in your <code>envs363_563</code> folder.</p></li>
 <li><p>Open a terminal:</p></li>
 </ol>
-<div class="tabset-margin-container"></div><div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-2-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-1" role="tab" aria-controls="tabset-2-1" aria-selected="true" href="">Windows</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-2" role="tab" aria-controls="tabset-2-2" aria-selected="false" href="">macOS</a></li></ul>
-<div class="tab-content">
+<div class="tabset-margin-container"></div><div class="panel-tabset" data-group="os">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-2-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-1" role="tab" aria-controls="tabset-2-1" aria-selected="true" href="">Windows</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-2" role="tab" aria-controls="tabset-2-2" aria-selected="false" href="">University machine</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-3" role="tab" aria-controls="tabset-2-3" aria-selected="false" href="">macOS</a></li></ul>
+<div class="tab-content" data-group="os">
 <div id="tabset-2-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-2-1-tab">
-<p>Search for <strong>Miniforge Prompt</strong> in the Start menu and open it. On a university machine, open <strong>Anaconda Prompt</strong> instead.</p>
+<p>Search for <strong>Miniforge Prompt</strong> in the Start menu and open it.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="img/Step2_py.jpeg" class="img-fluid figure-img" style="width:60.0%"></p>
@@ -707,6 +701,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <div id="tabset-2-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-2-tab">
+<p>Search for <strong>Anaconda Prompt</strong> (or <strong>Anaconda Powershell Prompt</strong>) in the Start menu and open it.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="img/Step2_py.jpeg" class="img-fluid figure-img" style="width:60.0%"></p>
+<figcaption>Finding the prompt from the Start menu</figcaption>
+</figure>
+</div>
+</div>
+<div id="tabset-2-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-3-tab">
 <p>Open the <strong>Terminal</strong> app (search for it with Spotlight, <code>Cmd + Space</code>).</p>
 </div>
 </div>
@@ -714,25 +717,29 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <ol start="3" type="1">
 <li>Move into your course folder with the <code>cd</code> (“change directory”) command, followed by the path to your folder:</li>
 </ol>
-<div class="tabset-margin-container"></div><div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-3-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-1" role="tab" aria-controls="tabset-3-1" aria-selected="true" href="">Windows</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-2" role="tab" aria-controls="tabset-3-2" aria-selected="false" href="">macOS</a></li></ul>
-<div class="tab-content">
+<div class="tabset-margin-container"></div><div class="panel-tabset" data-group="os">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-3-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-1" role="tab" aria-controls="tabset-3-1" aria-selected="true" href="">Windows</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-2" role="tab" aria-controls="tabset-3-2" aria-selected="false" href="">University machine</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-3" role="tab" aria-controls="tabset-3-3" aria-selected="false" href="">macOS</a></li></ul>
+<div class="tab-content" data-group="os">
 <div id="tabset-3-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-3-1-tab">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> /d M:<span class="dt">\e</span>nvs363_563</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Replace <code>M:\envs363_563</code> with the path to your folder. The <code>/d</code> lets you switch drive (e.g.&nbsp;from <code>C:</code> to <code>M:</code>) at the same time. Tip: you can type <code>cd /d</code> followed by a space, then drag the folder from File Explorer into the prompt to paste its path.</p>
 </div>
 <div id="tabset-3-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-3-2-tab">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ~/Desktop/envs363_563</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> /d M:<span class="dt">\e</span>nvs363_563</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Your course folder is on the <code>M:\</code> drive, so the <code>/d</code> is needed to switch from <code>C:</code> to <code>M:</code>. Check you are in the right place by running <code>dir</code>: it should list <code>envs363_563.yml</code> and your <code>data</code> folder.</p>
+</div>
+<div id="tabset-3-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-3-3-tab">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ~/Desktop/envs363_563</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Replace <code>~/Desktop/envs363_563</code> with the path to your folder. Tip: you can type <code>cd</code> followed by a space, then drag the folder from Finder into the Terminal to paste its path.</p>
 </div>
 </div>
 </div>
 <ol start="4" type="1">
 <li><p>Create the environment from the file:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> env create <span class="at">-f</span> envs363_563.yml</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> env create <span class="at">-f</span> envs363_563.yml</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>If you are asked any questions, type <code>y</code> and press <strong>Enter</strong>. This installs all the packages used in the course, and can take 10 to 20 minutes.</p></li>
 <li><p>Activate the environment:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> activate envs363_563</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> activate envs363_563</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>The start of the line in your terminal should change from <code>(base)</code> to <code>(envs363_563)</code>. This tells you the environment is active.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -741,7 +748,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </figure>
 </div></li>
 <li><p>Check that everything installed correctly:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-c</span> <span class="st">"import geopandas, pysal, osmnx, rasterio, contextily; print('All good!')"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-c</span> <span class="st">"import geopandas, pysal, osmnx, rasterio, contextily; print('All good!')"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>If this prints <code>All good!</code>, you are all set. If it prints an error, copy the full message into your post on Teams.</p></li>
 </ol>
 <section id="packages-in-the-course-environment" class="level4">
@@ -809,7 +816,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <div class="callout-body-container callout-body">
 <p>If we announce an update to the environment file during the course, download the new <code>envs363_563.yml</code> into your course folder, <code>cd</code> into the folder, and run:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> env update <span class="at">-f</span> envs363_563.yml <span class="at">--prune</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> env update <span class="at">-f</span> envs363_563.yml <span class="at">--prune</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>If your environment gets into a mess, you can delete it and start again with <code>conda env remove -n envs363_563</code>, followed by step 4 above.</p>
 </div>
 </div>
@@ -827,10 +834,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </figure>
 </div></li>
 <li><p>Download that lab’s data into your <code>data</code> folder (see <a href="./download.html">Download data from GitHub</a>).</p></li>
-<li><p>Open a terminal (<strong>Miniforge Prompt</strong> or <strong>Anaconda Prompt</strong> on Windows, <strong>Terminal</strong> on macOS) and move into your course folder with <code>cd</code>, as in step 3 of <a href="#install-the-course-environment">Install the course environment</a>.</p></li>
+<li><p>Open your terminal (<strong>Miniforge Prompt</strong> on Windows, <strong>Anaconda Prompt</strong> on a university machine, <strong>Terminal</strong> on macOS) and move into your course folder with <code>cd</code>, as in step 3 of <a href="#install-the-course-environment">Install the course environment</a>.</p></li>
 <li><p>Activate the environment and start <strong>Jupyter Notebook</strong>:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> activate envs363_563</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="ex">jupyter</span> notebook</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> activate envs363_563</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="ex">jupyter</span> notebook</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>On a university machine, <code>jupyter notebook</code> may be blocked by the university’s security policy. If it is, start it this way instead:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> notebook</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Jupyter Notebook opens in your web browser, showing the files in your course folder. It runs in the browser but works from your computer, so you don’t need to be online to use it. Keep the terminal open while you work: closing it stops Jupyter Notebook.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -848,6 +857,23 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><p>Work through the notebook from top to bottom (see <a href="#working-in-a-notebook">Working in a notebook</a> below).</p></li>
 <li><p>When you have finished, save the notebook (<strong>File &gt; Save</strong>, or <code>Ctrl + S</code> / <code>Cmd + S</code>), close the browser tabs, and press <code>Ctrl + C</code> in the terminal to stop Jupyter Notebook.</p></li>
 </ol>
+<div class="callout callout-style-default callout-caution callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Caution</span>Working on a university machine?
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Two things work differently on university-managed computers:</p>
+<ul>
+<li><code>jupyter notebook</code> may be blocked by the Device Guard security policy. Start Jupyter Notebook with <code>python -m notebook</code> instead (<a href="#uni-jupyter-blocked">details</a>).</li>
+<li>Jupyter Notebook may open in the wrong folder and not show your <code>M:\</code> files (<a href="#uni-jupyter-folder">how to fix it</a>).</li>
+</ul>
+</div>
+</div>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -942,10 +968,10 @@ Note
 <div id="callout-8" class="callout-8-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>The Terminal is not in the folder where the installer is saved. New Terminal windows open in your home folder, not in Downloads. Move to Downloads and check the file is there:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ~/Downloads</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> Miniforge<span class="pp">*</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ~/Downloads</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> Miniforge<span class="pp">*</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>If <code>ls</code> lists the file, run the installer again. If the file name is different, for example because your browser added <code>(1)</code> to it, type the name exactly as shown, in quotes:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">bash</span> <span class="st">"Miniforge3-Darwin-arm64 (1).sh"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">bash</span> <span class="st">"Miniforge3-Darwin-arm64 (1).sh"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>If <code>ls</code> finds nothing, download the installer with the <code>curl</code> command in <a href="#install-miniforge">Install Miniforge</a>.</p>
 </div>
 </div>
@@ -964,7 +990,7 @@ Note
 <div class="callout-body-container callout-body">
 <ul>
 <li><p><strong>macOS</strong>: close the Terminal and open a new window, because the installation only takes effect in new windows. If it still doesn’t work, you probably answered <code>no</code> when asked to initialize conda. Fix it with the command below, then open a new window:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="ex">~/miniforge3/bin/conda</span> init zsh</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></li>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="ex">~/miniforge3/bin/conda</span> init zsh</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></li>
 <li><p><strong>Windows</strong>: make sure you are using <strong>Miniforge Prompt</strong> from the Start menu, not the standard Command Prompt or PowerShell.</p></li>
 </ul>
 </div>
@@ -983,10 +1009,10 @@ Note
 <div id="callout-10" class="callout-10-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>If you used Python before, your Terminal may still start your old installation. You can tell because this command shows <code>anaconda3</code> or <code>miniconda3</code> instead of <code>miniforge3</code>:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> info <span class="kw">|</span> <span class="fu">grep</span> <span class="at">-i</span> <span class="st">"base environment"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> info <span class="kw">|</span> <span class="fu">grep</span> <span class="at">-i</span> <span class="st">"base environment"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>To switch to Miniforge, remove the old set-up from your Terminal and set up Miniforge instead (replace <code>anaconda3</code> with <code>miniconda3</code> if that’s what you had):</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="ex">~/anaconda3/bin/conda</span> init <span class="at">--reverse</span> zsh</span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="ex">~/miniforge3/bin/conda</span> init zsh</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="ex">~/anaconda3/bin/conda</span> init <span class="at">--reverse</span> zsh</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="ex">~/miniforge3/bin/conda</span> init zsh</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Close the Terminal, open a new window, and run the check again. It should now show <code>miniforge3</code>. Your old installation is still on your computer. You can uninstall it later if you no longer need it.</p>
 </div>
 </div>
@@ -1028,7 +1054,7 @@ Note
 <div class="callout-body-container callout-body">
 <p>You are using the <code>conda</code> from Anaconda or Miniconda, not from Miniforge. On Windows, open <strong>Miniforge Prompt</strong> instead. On macOS, see <em>I already had Anaconda or Miniconda</em> above.</p>
 <p>If you want to keep using Anaconda or Miniconda, you can instead tell conda to stop using Anaconda’s channels, then try again:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> config <span class="at">--remove</span> channels defaults</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> config <span class="at">--remove</span> channels defaults</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div>
 </div>
@@ -1045,8 +1071,8 @@ Note
 <div id="callout-13" class="callout-13-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>The installation downloads a lot of packages, so it can fail if your internet connection drops. Delete the half-installed environment and start again:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> env remove <span class="at">-n</span> envs363_563</span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> env create <span class="at">-f</span> envs363_563.yml</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb20"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> env remove <span class="at">-n</span> envs363_563</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> env create <span class="at">-f</span> envs363_563.yml</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>If it fails again at the same point, copy the <strong>full</strong> error message from the terminal into a post on Teams.</p>
 </div>
 </div>
@@ -1067,8 +1093,8 @@ Note
 <div id="callout-14" class="callout-14-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>The notebook is not running in the course environment. This usually means Jupyter was started before activating the environment. Close Jupyter (<code>Ctrl + C</code> in the terminal), then run:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> activate envs363_563</span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="ex">jupyter</span> notebook</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb21"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> activate envs363_563</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="ex">jupyter</span> notebook</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>The start of the line in the terminal should show <code>(envs363_563)</code>, not <code>(base)</code>. To check from inside a notebook, run <code>import sys; print(sys.executable)</code>: the path should include <code>envs363_563</code>.</p>
 </div>
 </div>
@@ -1109,6 +1135,64 @@ Note
 <div class="callout-body-container callout-body">
 <p>If no browser window opened, look in the terminal for a line starting with <code>http://localhost:8888/</code> and copy the full address, including the <code>?token=...</code> part, into your browser.</p>
 <p>If Jupyter opens but you can’t see your notebook, Jupyter was started from the wrong folder: it only shows files inside the folder it was started from. Close it (<code>Ctrl + C</code>), <code>cd</code> into your course folder, and start it again.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="uni-troubleshooting" class="level3">
+<h3 class="anchored" data-anchor-id="uni-troubleshooting">University machines</h3>
+<p>These two problems only happen on university-managed computers.</p>
+<div id="uni-jupyter-blocked" class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-17-contents" aria-controls="callout-17" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>University machine: <code>jupyter notebook</code> is blocked
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-17" class="callout-17-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>On university-managed computers, the Device Guard security policy can block the <code>jupyter notebook</code> command, so it refuses to start. Start Jupyter Notebook through Python instead, which works:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb22"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> activate envs363_563</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> notebook</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Everything else stays the same: <code>cd</code> into your course folder first, and keep the terminal open while you work.</p>
+</div>
+</div>
+</div>
+<div id="uni-jupyter-folder" class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-18-contents" aria-controls="callout-18" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>University machine: Jupyter Notebook opens in the wrong folder, or can’t see my <code>M:\</code> files
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-18" class="callout-18-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>This happens when Jupyter Notebook is started from somewhere other than your course folder, for example from a Start menu shortcut or Anaconda Navigator.</p>
+<p>Always start it from the terminal, after moving into your course folder:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb23"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> /d M:<span class="dt">\e</span>nvs363_563</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> activate envs363_563</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="ex">jupyter</span> notebook</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>If you still can’t see your files, tell Jupyter Notebook which folder to open:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb24"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="ex">jupyter</span> notebook <span class="at">--notebook-dir</span><span class="op">=</span>M:<span class="dt">\e</span>nvs363_563</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>(or <code>python -m notebook --notebook-dir=M:\envs363_563</code> if <code>jupyter notebook</code> is blocked)</p>
+<p>To set that folder permanently on a machine you always use, create a configuration file:</p>
+<ol type="1">
+<li>In the <strong>Anaconda Prompt</strong>, run <code>jupyter server --generate-config</code>. This creates <code>C:\Users\username\.jupyter\jupyter_server_config.py</code>.</li>
+<li>Open that file in a text editor (e.g.&nbsp;<a href="https://notepad-plus-plus.org">Notepad++</a>), search for <code>c.ServerApp.root_dir</code>, remove the <code>#</code> at the start of the line, and set it to your course folder, doubling each backslash: <code>c.ServerApp.root_dir = 'M:\\envs363_563'</code>.</li>
+<li>Save the file and close it. Jupyter Notebook will now always open in that folder.</li>
+</ol>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="img/Step4_py.PNG" class="img-fluid figure-img" style="width:80.0%"></p>
+<figcaption>Editing the Jupyter configuration file</figcaption>
+</figure>
+</div>
 </div>
 </div>
 </div>
