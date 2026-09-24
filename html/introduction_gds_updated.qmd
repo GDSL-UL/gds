@@ -264,14 +264,6 @@ Command Line Interfaces (CLIs) offer a solution to the reproducibility challenge
 
 <center>
 
-<img alt="centered image" data-src="./figs/Rmarkdown.png" width="70%" height="70%"/>
-
-<center>
-
-## Code
-
-<center>
-
 <img alt="centered image" data-src="./figs/Jupyter-Notebooks.jpg" width="70%" height="80%"/>
 
 <center>
@@ -288,7 +280,7 @@ Command Line Interfaces (CLIs) offer a solution to the reproducibility challenge
 
 <center>
 
-## Assignments
+## Assignments {.smaller}
 
 **Assignment I**
 
@@ -297,8 +289,6 @@ Title: Programmed Map
 Due date: 5th November 2026 (week 6)
 
 40% of the final mark
-
-<br>
 
 **Assignment II**
 
@@ -317,7 +307,7 @@ Due date: 10th December 2026 (week 11)
 **Tier 3 — Structural scaffold: exploratory / critical use**
 
 ::: fragment
-Generative AI tools (ChatGPT, Copilot, Claude...) are broadly **allowed and encouraged** for **specific stages** or **tasks** in both assignments.
+Generative AI tools (ChatGPT, Claude, nebulaone.ai...) are broadly **allowed** for **specific stages** or **tasks** in both assignments.
 :::
 
 ::: fragment
@@ -373,7 +363,7 @@ Every submission must include **evidence of how you used AI**, for example:
 - **Credited author**: plot by @VictimOfMaths
 :::
 
-## Critical thinking: questions to ask of any map {background-color="#ffd54f"}
+## Critical thinking: questions to ask of any map {.smaller background-color="#ffd54f"} 
 
 ::: incremental
 1.  **Where does the data come from?** Is a source named, and can you find it?
@@ -382,7 +372,6 @@ Every submission must include **evidence of how you used AI**, for example:
 4.  **Could you reproduce it?** Is there data and code you can re-run?
 5.  **Does it pass a sanity check?** Does the pattern match what you already know?
 :::
-
 ::: fragment
 Put your answers in your **Tier 3 evidence**: what AI produced, and how you checked it.
 :::
