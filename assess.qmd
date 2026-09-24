@@ -2,39 +2,61 @@
 
 ## Assignment I
 
-- **Title:** Programmed Map
+- **Title:** Programmed Map and Cartographic Critique
 - **Type:** Coursework
 - Due date: 5th November 2026 (week 6)
 - 40% of the final mark
 - Chance to be reassessed
 - Electronic submission only
 
-This assignment will be evaluated on technical data processing, map design abilities (assemblage), and design overall narrative.
+This assignment has two parts. **Part A (10% of final grade)** is a short, individual,
+non-coding critique of the classification scheme of one published map: three
+maps will be on Canvas and you choose one, writing no more than 300 words.
+**Part B (30% of final grade)** is the programmed map: you will map population density by
+region in China, then the population change between 2015 and 2025, and write
+up to 500 words about the choices you made.
 
-Once you have created your map, you will need to present it. Write up to 500 about the choices you made to create the map.
+Both parts, plus a **mandatory AI-use declaration**, are submitted together in
+one `.html` file. If the declaration is missing from your rendered html you
+can lose up to 10 marks.
 
-- Full Assignment details [coming soon]()
+- Full Assignment details [here](https://theuniversityofliverpool-my.sharepoint.com/:b:/g/personal/pietrost_liverpool_ac_uk/IQCW74t4Ndg8Qp-NWy-aOIfFAbR5Lp4YUeZQfhf_OQVEvZk?e=OVDksJ)
 
 You will submit an `.html` file obtained by rendering your `.qmd` in `R` or `.ipynb` Jupyter Notebook in `Python`.
 
-- If you are doing the assignment in `R`: You can start from this [**.qmd file**]() to render the `html`. Other file formats will not be accepted.
+- If you are doing the assignment in `R`: You can start from this [**.qmd file**](https://theuniversityofliverpool-my.sharepoint.com/:u:/g/personal/pietrost_liverpool_ac_uk/IQCEP3xC0cPeTqFhk394LBgnAXazecIuU8o2Ra2uTy7xdFU?e=5NqmTC) to render the `html`. Other file formats will not be accepted.
 
-- If you are doing the assignment in `Python`: To do so, in your `.ipynb` file, follow these steps: `File –> Save and Export as.. –> HTML`. Prior to this step, the notebook needs to be rendered (i.e. all the cells should be executed). Other file formats will not be accepted. You can start from this [**.ipynb**]()
+- If you are doing the assignment in `Python`: start from this
+  [**.ipynb**](https://theuniversityofliverpool-my.sharepoint.com/:u:/g/personal/pietrost_liverpool_ac_uk/IQApTU-FTDEAT4rk0-hmJzcyAeyyNFZTm-WGTlxXcOtWDXE?e=XThvaV). Before exporting, restart the kernel and run
+  all cells (`Kernel –> Restart Kernel and Run All Cells`), then
+  `File –> Save and Export Notebook As... –> HTML`. Other file formats will not
+  be accepted.
 
 ### Submit
 
-Once completed, you will need to submit the following:
+One html file: a rendered `.qmd` with R code, or a rendered Jupyter notebook
+with Python code, containing your AI-use declaration, Part A and Part B.
 
-**An html version of a .qmd document with R integrated code. OR and html version of jupyter notebook with Python code.**
+### Evaluation
 
-The assignment will be evaluated based on three main pillars, on which you will have to be successful to achieve a good mark:
+**Part A** is marked on how accurately you identify the classification
+scheme, how well you link its strengths and weaknesses to the data and the
+map's message, and how convincingly you justify an alternative.
 
-1.  **Data Processing:** Your proficiency in handling and manipulating data will be a fundamental aspect of the assessment.
+**Part B** is marked on three pillars:
 
-2.  **Map assemblage** This includes your ability to master technologies that allow you to create a compelling map.
+1. **Data processing and code quality:** your proficiency in handling and
+   manipulating data, and writing code a reader can follow — a logical sequence
+   of steps, sensible names, comments explaining why, no dead or duplicated
+   code, and no clutter in the rendered document.
 
-3.  **Design and narrative:** Your success in designing an appealing map with a compelling narrative will play a pivotal role in your overall evaluation.
+2. **Map assemblage:** your ability to master technologies that allow you to
+   create a compelling map.
 
+3. **Design and narrative:** your success in designing an appealing map with a
+   compelling narrative.
+   
+   
 ## Assignment II
 
 - **Title:** Computational Essay
@@ -80,13 +102,13 @@ This course follows the standard marking criteria (the general ones and those re
 
 ## Generative Artificial Intelligence
 
-::: {.callout-warning}
+::: callout-warning
 ## Prohibited use
 
 You are reminded that **inappropriate use of Generative AI tools** (e.g. ChatGPT, GitHub Copilot) in the preparation of this assignment is **prohibited**. Submitting code, analysis, or narrative that **you cannot explain or justify yourself** will be treated as an **Academic Integrity concern** — regardless of whether AI was involved.
 :::
 
-::: {.callout-important}
+::: callout-important
 ## Declaration required
 
 You **must submit a short declaration** with your assignment stating:
@@ -98,7 +120,7 @@ You **must submit a short declaration** with your assignment stating:
 **Undisclosed use discovered later will be treated as an Academic Integrity penalty**, not merely a missing declaration.
 :::
 
-::: {.callout-note}
+::: callout-note
 ## Narrative sections
 
 Narrative sections should be prepared **substantially in your own words**.
@@ -107,60 +129,47 @@ Narrative sections should be prepared **substantially in your own words**.
 - AI proof-reading that **materially changes wording or sentence structure does** need declaring — and **extensive use of it may still incur a penalty even when declared**.
 :::
 
-::: {.callout-tip}
+::: callout-tip
 ## Code
 
 AI coding assistants **may be used for support**, but every part of your submitted code must be **something you can explain and justify in your own words**.
 :::
 
----
+------------------------------------------------------------------------
 
 ### Declaration form
 
 Please complete this declaration and submit it alongside your assignment. Tick all boxes that apply.
 
-::: {.declaration-form}
-
+::::::: declaration-form
 **1. Which AI tool(s) did you use?**
 
-<div class="ai-checklist">
-<label><input type="checkbox"> ChatGPT</label>
-<label><input type="checkbox"> GitHub Copilot</label>
-<label><input type="checkbox"> Claude</label>
-<label><input type="checkbox"> Other AI tool — please specify: <input type="text" class="ai-inline-text" placeholder="tool name"></label>
-<label><input type="checkbox" id="none-used"> I did not use any Generative AI tool in this assignment</label>
-</div>
+::: ai-checklist
+<label><input type="checkbox"> ChatGPT</label> <label><input type="checkbox"> GitHub Copilot</label> <label><input type="checkbox"> Claude</label> <label><input type="checkbox"> Other AI tool — please specify: <input type="text" class="ai-inline-text" placeholder="tool name"></label> <label><input type="checkbox" id="none-used"> I did not use any Generative AI tool in this assignment</label>
+:::
 
 **2. Which parts of the work did you use it for?**
 
-<div class="ai-checklist">
-<label><input type="checkbox"> Narrative / written text</label>
-<label><input type="checkbox"> Code</label>
-<label><input type="checkbox"> Both narrative and code</label>
-</div>
+::: ai-checklist
+<label><input type="checkbox"> Narrative / written text</label> <label><input type="checkbox"> Code</label> <label><input type="checkbox"> Both narrative and code</label>
+:::
 
 **3. How did you use it?**
 
-<div class="ai-checklist">
-<label><input type="checkbox"> Debugging support</label>
-<label><input type="checkbox"> Syntax lookup / reference</label>
-<label><input type="checkbox"> Translation</label>
-<label><input type="checkbox"> Proof-reading</label>
-<label><input type="checkbox"> Idea generation / brainstorming</label>
-<label><input type="checkbox"> Other — please specify: <input type="text" class="ai-inline-text" placeholder="describe use"></label>
-</div>
+::: ai-checklist
+<label><input type="checkbox"> Debugging support</label> <label><input type="checkbox"> Syntax lookup / reference</label> <label><input type="checkbox"> Translation</label> <label><input type="checkbox"> Proof-reading</label> <label><input type="checkbox"> Idea generation / brainstorming</label> <label><input type="checkbox"> Other — please specify: <input type="text" class="ai-inline-text" placeholder="describe use"></label>
+:::
 
 **4. Confirmation**
 
-<div class="ai-checklist">
-<label><input type="checkbox"> I confirm that I can explain and justify every part of the narrative and/or code submitted in this assignment in my own words.</label>
-<label><input type="checkbox"> I understand that undisclosed use of Generative AI discovered after submission will be treated as an Academic Integrity concern, not merely a missing declaration.</label>
-</div>
-
-**Student ID:** _______________________  **Date:** _______________________
-
+::: ai-checklist
+<label><input type="checkbox"> I confirm that I can explain and justify every part of the narrative and/or code submitted in this assignment in my own words.</label> <label><input type="checkbox"> I understand that undisclosed use of Generative AI discovered after submission will be treated as an Academic Integrity concern, not merely a missing declaration.</label>
 :::
 
+**Student ID:** \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_ **Date:** \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
+:::::::
+
+```{=html}
 <style>
 .ai-checklist {
   display: flex;
@@ -196,7 +205,9 @@ Please complete this declaration and submit it alongside your assignment. Tick a
   background: #fafafa;
 }
 </style>
+```
 
+```{=html}
 <script>
 document.addEventListener("DOMContentLoaded", function () {
   var noneBox = document.getElementById("none-used");
@@ -214,3 +225,4 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 });
 </script>
+```

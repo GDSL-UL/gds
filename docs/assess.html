@@ -182,7 +182,7 @@ ul.task-list li input[type="checkbox"] {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./download.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Download data from github</span></a>
+ <span class="menu-text">Download data from GitHub</span></a>
   </div>
 </li>
       </ul>
@@ -473,6 +473,7 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#assignment-i" id="toc-assignment-i" class="nav-link active" data-scroll-target="#assignment-i">Assignment I</a>
   <ul class="collapse">
   <li><a href="#submit" id="toc-submit" class="nav-link" data-scroll-target="#submit">Submit</a></li>
+  <li><a href="#evaluation" id="toc-evaluation" class="nav-link" data-scroll-target="#evaluation">Evaluation</a></li>
   </ul></li>
   <li><a href="#assignment-ii" id="toc-assignment-ii" class="nav-link" data-scroll-target="#assignment-ii">Assignment II</a></li>
   <li><a href="#marking-criteria" id="toc-marking-criteria" class="nav-link" data-scroll-target="#marking-criteria">Marking Criteria</a></li>
@@ -508,32 +509,35 @@ ul.task-list li input[type="checkbox"] {
 <section id="assignment-i" class="level2">
 <h2 class="anchored" data-anchor-id="assignment-i">Assignment I</h2>
 <ul>
-<li><strong>Title:</strong> Programmed Map</li>
+<li><strong>Title:</strong> Programmed Map and Cartographic Critique</li>
 <li><strong>Type:</strong> Coursework</li>
 <li>Due date: 5th November 2026 (week 6)</li>
 <li>40% of the final mark</li>
 <li>Chance to be reassessed</li>
 <li>Electronic submission only</li>
 </ul>
-<p>This assignment will be evaluated on technical data processing, map design abilities (assemblage), and design overall narrative.</p>
-<p>Once you have created your map, you will need to present it. Write up to 500 about the choices you made to create the map.</p>
+<p>This assignment has two parts. <strong>Part A (10% of final grade)</strong> is a short, individual, non-coding critique of the classification scheme of one published map: three maps will be on Canvas and you choose one, writing no more than 300 words. <strong>Part B (30% of final grade)</strong> is the programmed map: you will map population density by region in China, then the population change between 2015 and 2025, and write up to 500 words about the choices you made.</p>
+<p>Both parts, plus a <strong>mandatory AI-use declaration</strong>, are submitted together in one <code>.html</code> file. If the declaration is missing from your rendered html you can lose up to 10 marks.</p>
 <ul>
-<li>Full Assignment details <a href="">coming soon</a></li>
+<li>Full Assignment details <a href="https://theuniversityofliverpool-my.sharepoint.com/:b:/g/personal/pietrost_liverpool_ac_uk/IQCW74t4Ndg8Qp-NWy-aOIfFAbR5Lp4YUeZQfhf_OQVEvZk?e=OVDksJ">here</a></li>
 </ul>
 <p>You will submit an <code>.html</code> file obtained by rendering your <code>.qmd</code> in <code>R</code> or <code>.ipynb</code> Jupyter Notebook in <code>Python</code>.</p>
 <ul>
-<li><p>If you are doing the assignment in <code>R</code>: You can start from this <a href=""><strong>.qmd file</strong></a> to render the <code>html</code>. Other file formats will not be accepted.</p></li>
-<li><p>If you are doing the assignment in <code>Python</code>: To do so, in your <code>.ipynb</code> file, follow these steps: <code>File –&gt; Save and Export as.. –&gt; HTML</code>. Prior to this step, the notebook needs to be rendered (i.e.&nbsp;all the cells should be executed). Other file formats will not be accepted. You can start from this <a href=""><strong>.ipynb</strong></a></p></li>
+<li><p>If you are doing the assignment in <code>R</code>: You can start from this <a href="https://theuniversityofliverpool-my.sharepoint.com/:u:/g/personal/pietrost_liverpool_ac_uk/IQCEP3xC0cPeTqFhk394LBgnAXazecIuU8o2Ra2uTy7xdFU?e=5NqmTC"><strong>.qmd file</strong></a> to render the <code>html</code>. Other file formats will not be accepted.</p></li>
+<li><p>If you are doing the assignment in <code>Python</code>: start from this <a href="https://theuniversityofliverpool-my.sharepoint.com/:u:/g/personal/pietrost_liverpool_ac_uk/IQApTU-FTDEAT4rk0-hmJzcyAeyyNFZTm-WGTlxXcOtWDXE?e=XThvaV"><strong>.ipynb</strong></a>. Before exporting, restart the kernel and run all cells (<code>Kernel –&gt; Restart Kernel and Run All Cells</code>), then <code>File –&gt; Save and Export Notebook As... –&gt; HTML</code>. Other file formats will not be accepted.</p></li>
 </ul>
 <section id="submit" class="level3">
 <h3 class="anchored" data-anchor-id="submit">Submit</h3>
-<p>Once completed, you will need to submit the following:</p>
-<p><strong>An html version of a .qmd document with R integrated code. OR and html version of jupyter notebook with Python code.</strong></p>
-<p>The assignment will be evaluated based on three main pillars, on which you will have to be successful to achieve a good mark:</p>
+<p>One html file: a rendered <code>.qmd</code> with R code, or a rendered Jupyter notebook with Python code, containing your AI-use declaration, Part A and Part B.</p>
+</section>
+<section id="evaluation" class="level3">
+<h3 class="anchored" data-anchor-id="evaluation">Evaluation</h3>
+<p><strong>Part A</strong> is marked on how accurately you identify the classification scheme, how well you link its strengths and weaknesses to the data and the map’s message, and how convincingly you justify an alternative.</p>
+<p><strong>Part B</strong> is marked on three pillars:</p>
 <ol type="1">
-<li><p><strong>Data Processing:</strong> Your proficiency in handling and manipulating data will be a fundamental aspect of the assessment.</p></li>
-<li><p><strong>Map assemblage</strong> This includes your ability to master technologies that allow you to create a compelling map.</p></li>
-<li><p><strong>Design and narrative:</strong> Your success in designing an appealing map with a compelling narrative will play a pivotal role in your overall evaluation.</p></li>
+<li><p><strong>Data processing and code quality:</strong> your proficiency in handling and manipulating data, and writing code a reader can follow — a logical sequence of steps, sensible names, comments explaining why, no dead or duplicated code, and no clutter in the rendered document.</p></li>
+<li><p><strong>Map assemblage:</strong> your ability to master technologies that allow you to create a compelling map.</p></li>
+<li><p><strong>Design and narrative:</strong> your success in designing an appealing map with a compelling narrative.</p></li>
 </ol>
 </section>
 </section>
