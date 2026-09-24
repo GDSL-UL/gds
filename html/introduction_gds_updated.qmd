@@ -162,9 +162,24 @@ And more...
 
 ## Skills
 
-**Hard Skills** - Programming Language - Transparency and Reproducibility - Version control
+::::: columns
+::: {.column width="50%"}
+**Hard Skills**
 
-**Soft Skills** - Communication - Storytelling - Geospatial analytics acumen - Ethical skills
+- Programming language
+- Transparency and reproducibility
+- Version control
+:::
+
+::: {.column width="50%"}
+**Soft Skills**
+
+- Communication
+- Storytelling
+- Geospatial analytics acumen
+- Ethical skills
+:::
+:::::
 
 # Open Science
 
@@ -293,28 +308,83 @@ Due date: 10th December 2026 (week 11)
 
 60% of the final mark
 
-## Generative AI {background-color="#fdf3e3"}
+<br>
 
-You **may** use Generative AI tools (ChatGPT, Copilot, Claude...) for support.
+<mark>Both assignments are **Tier 3** for Generative AI: *exploratory / critical use*</mark>
+
+## Generative AI: both assignments are Tier 3 {background-color="#ffb74d"}
+
+**Tier 3 — Structural scaffold: exploratory / critical use**
 
 ::: fragment
-But **inappropriate use is prohibited** — if you can't explain or justify it yourself, it's an **Academic Integrity concern**.
+Generative AI tools (ChatGPT, Copilot, Claude...) are broadly **allowed and encouraged** for **specific stages** or **tasks** in both assignments.
 :::
 
 ::: fragment
-A **short declaration** is required with every submission: which tool, for which part (narrative/code), and how.
+Engage **actively** with AI: **generate, critique, iterate, refine** — to build your **AI literacy**.
 :::
 
-## Generative AI — what to declare {background-color="#eafaf1"}
+::: fragment
+AI is **not the primary producer** of your work: if you can't explain or justify it yourself, it's an **Academic Integrity concern**.
+:::
+
+## Generative AI — Tier 3 evidence required {background-color="#ffd54f"}
+
+Every submission must include **evidence of how you used AI**, for example:
 
 ::: incremental
-- ✍️ **Narrative**: your own words — AI proof-reading that changes wording/structure must be declared
-- 💻 **Code**: AI support is fine, but you must be able to explain every line
-- 📋 **Undisclosed use found later = penalty**, not just a missing declaration
+- **Summary account** of how AI was used: which tool, for which part (narrative/code), and how
+- **Key AI interactions**: prompts, outputs, and your edits
+- **Critical evaluation** of the AI contributions: what helped, what was wrong or needed changing
+- **Cite or attribute** AI use where appropriate
+:::
+
+## Generative AI — what to declare {background-color="#ffd54f"}
+
+::: incremental
+- **Narrative**: your own words — AI proof-reading that changes wording/structure must be declared
+- **Code**: AI support is fine, but you must be able to explain every line
+- **Undisclosed use found later = penalty**, not just a missing declaration
 :::
 
 ::: fragment
 <mark>Full declaration form: [gdsl-ul.github.io/gds/ai-declaration.html](https://gdsl-ul.github.io/gds/ai-declaration.html)</mark>
+:::
+
+## Do not invent data with AI {.center background-color="#b71c1c"}
+
+## {.center}
+
+<div style="display: flex; justify-content: center; align-items: center; gap: 12px;">
+<img alt="Map 1" data-src="./figs/CHATGPT_AI3.png" style="width: 24%; height: auto;"/>
+<img alt="Map 2" data-src="./figs/uk_rain_sun_average_map_CLAUDE_AI1.png" style="width: 22%; height: auto;"/>
+<img alt="Map 3" data-src="./figs/sun-vs-rain-uk.png" style="width: 25%; height: auto;"/>
+<img alt="Map 4" data-src="./figs/mapAI_CHATGPT.png" style="width: 26%; height: auto;"/>
+</div>
+
+
+## Which map is not AI-generated
+
+::: incremental
+- **Clear question**: a bivariate map comparing total hours of sunshine with total annual rainfall. Black areas have plenty of both.
+- **Named, citable data**: from the Met Office ([Hollis et al.](http://dx.doi.org/10.5285/bbca3267dc7d4219af484976734c9527))
+- **Documented method**: produced in R
+- **Reproducible**: [replication code here](https://github.com/VictimOfMaths/Maps/blob/master/SunVsRain.R)
+- **Credited author**: plot by @VictimOfMaths
+:::
+
+## Critical thinking: questions to ask of any map {background-color="#ffd54f"}
+
+::: incremental
+1.  **Where does the data come from?** Is a source named, and can you find it?
+2.  **What is measured?** Variable, year, units
+3.  **Can you read it?** Is there a legend, and does it match what's on the map?
+4.  **Could you reproduce it?** Is there data and code you can re-run?
+5.  **Does it pass a sanity check?** Does the pattern match what you already know?
+:::
+
+::: fragment
+Put your answers in your **Tier 3 evidence**: what AI produced, and how you checked it.
 :::
 
 ## More Help
@@ -323,7 +393,7 @@ This course is much more about *learning to learn* and **problem solving** rathe
 
 - Learn to ask questions (but don’t expect exact answers all the time!!!)
 - <mark>Help others</mark> as much as you can (the best way to learn is to teach)
-- Search heavily on <mark>Google + Stack Overflow</mark>
+- Search heavily on <mark>Google + Stack Overflow</mark>, and now <mark>AI tools</mark> too (check what they give you, and declare your use)
 
 ## Workflow
 
