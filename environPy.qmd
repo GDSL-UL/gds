@@ -129,7 +129,7 @@ The lab notebooks read data with **relative paths** such as `"data/London/Tables
 
 ### 3. Install the course environment {#install-the-course-environment}
 
-1.  Open the [environment file on GitHub](https://github.com/pietrostefani/gds/blob/main/envs363_563.yml), click **Download raw file** (the download arrow at the top right), and save `envs363_563.yml` in your `envs363_563` folder.
+1.  Open the [environment file on GitHub](https://github.com/GDSL-UL/gds/blob/main/envs363_563.yml), click **Download raw file** (the download arrow at the top right), and save `envs363_563.yml` in your `envs363_563` folder.
 
 2.  Open a terminal:
 

@@ -18,7 +18,7 @@ envs363_563/
 
 GitHub doesn't let you download a single folder directly, so we use [download-directory.github.io](https://download-directory.github.io), a free tool that packages a GitHub folder into a zip file.
 
-1.  On GitHub, open the data folder you need for your lab and copy its address from your browser's address bar. For example, for the London data: <https://github.com/pietrostefani/gds/tree/main/data/London>
+1.  On GitHub, open the data folder you need for your lab and copy its address from your browser's address bar. For example, for the London data: <https://github.com/GDSL-UL/gds/tree/main/data/London>
 
     ![Copying the address of a data folder on GitHub](img/download2.png){width="60%"}
 
