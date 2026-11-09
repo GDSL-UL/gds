@@ -2,7 +2,7 @@
 
 This section is about how we can turn geography into numbers that statistics can understand. At this point, we dive right into the more methodological part of the course, so you can expect the conceptual sections to be more challenging. At the same time, the coding side of each block will start looking more and more familiar because we are starting to repeat concepts. We will introduce less new building blocks and instead rely more on what we have seen, just adding small bits here and there.
 
-Slides can be downloaded ["here"](/html/Week_spatial-weights_slides.pdf)
+[Download the spatial weights slides (PDF)](/html/slides_spatial-weights.pdf)
 
 ## Space, formally
 
