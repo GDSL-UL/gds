@@ -4,7 +4,7 @@ In this section we delve into a few statistical methods designed to characterise
 
 This section is split into a few more subsections than usual, each of them focused on a single concept. Each subsection builds on each other sequentially, so work on them in the order presented here. They are all non-trivial ideas, so focus all your brain power to understand them while tackling each of the sections!
 
-Slides can be downloaded ["here"](/html/Week_ESDA_slides.pdf)
+[Download the ESDA slides (PDF)](/html/slides_esda.pdf)
 
 ## ESDA
 
