@@ -1,0 +1,39 @@
+column,acs_variable,label,concept,note
+total_pop,B01003_001,Estimate > Total,Total Population,Estimate; margin of error (90%) in <column>_moe
+med_income,B19013_001,Estimate > Median household income in the past 12 months (in 2024 inflation-adjusted dollars),Median Household Income in the Past 12 Months (in 2024 Inflation-Adjusted Dollars),Estimate; margin of error (90%) in <column>_moe
+all_ppl_race,B02001_001,Estimate > Total:,Race,Estimate; margin of error (90%) in <column>_moe
+white,B02001_002,Estimate > Total: > White alone,Race,Estimate; margin of error (90%) in <column>_moe
+black,B02001_003,Estimate > Total: > Black or African American alone,Race,Estimate; margin of error (90%) in <column>_moe
+amerindian,B02001_004,Estimate > Total: > American Indian and Alaska Native alone,Race,Estimate; margin of error (90%) in <column>_moe
+asian,B02001_005,Estimate > Total: > Asian alone,Race,Estimate; margin of error (90%) in <column>_moe
+pacific,B02001_006,Estimate > Total: > Native Hawaiian and Other Pacific Islander alone,Race,Estimate; margin of error (90%) in <column>_moe
+other_race,B02001_007,Estimate > Total: > Some Other Race alone,Race,Estimate; margin of error (90%) in <column>_moe
+two_plus_races,B02001_008,Estimate > Total: > Two or More Races:,Race,Estimate; margin of error (90%) in <column>_moe
+all_ppl_hisp,B03002_001,Estimate > Total:,Hispanic or Latino Origin by Race,Estimate; margin of error (90%) in <column>_moe
+hispanic,B03002_012,Estimate > Total: > Hispanic or Latino:,Hispanic or Latino Origin by Race,Estimate; margin of error (90%) in <column>_moe
+pop_25plus,B15003_001,Estimate > Total:,Educational Attainment for the Population 25 Years and Over,Estimate; margin of error (90%) in <column>_moe
+bachelors,B15003_022,Estimate > Total: > Bachelor's degree,Educational Attainment for the Population 25 Years and Over,Estimate; margin of error (90%) in <column>_moe
+masters,B15003_023,Estimate > Total: > Master's degree,Educational Attainment for the Population 25 Years and Over,Estimate; margin of error (90%) in <column>_moe
+professional,B15003_024,Estimate > Total: > Professional school degree,Educational Attainment for the Population 25 Years and Over,Estimate; margin of error (90%) in <column>_moe
+doctorate,B15003_025,Estimate > Total: > Doctorate degree,Educational Attainment for the Population 25 Years and Over,Estimate; margin of error (90%) in <column>_moe
+pop_16plus,B23025_001,Estimate > Total:,Employment Status for the Population 16 Years and Over,Estimate; margin of error (90%) in <column>_moe
+civ_labour_force,B23025_003,Estimate > Total: > In labor force: > Civilian labor force:,Employment Status for the Population 16 Years and Over,Estimate; margin of error (90%) in <column>_moe
+unemployed,B23025_005,Estimate > Total: > In labor force: > Civilian labor force: > Unemployed,Employment Status for the Population 16 Years and Over,Estimate; margin of error (90%) in <column>_moe
+housing_units,B25002_001,Estimate > Total:,Occupancy Status,Estimate; margin of error (90%) in <column>_moe
+occupied_units,B25002_002,Estimate > Total: > Occupied,Occupancy Status,Estimate; margin of error (90%) in <column>_moe
+vacant_units,B25002_003,Estimate > Total: > Vacant,Occupancy Status,Estimate; margin of error (90%) in <column>_moe
+owner_occupied,B25003_002,Estimate > Total: > Owner occupied,Tenure,Estimate; margin of error (90%) in <column>_moe
+renter_occupied,B25003_003,Estimate > Total: > Renter occupied,Tenure,Estimate; margin of error (90%) in <column>_moe
+med_rent,B25064_001,Estimate > Median gross rent,Median Gross Rent (Dollars),Estimate; margin of error (90%) in <column>_moe
+med_home_value,B25077_001,Estimate > Median value (dollars),Median Value (Dollars),Estimate; margin of error (90%) in <column>_moe
+workers_16plus,B08006_001,Estimate > Total:,Sex of Workers by Means of Transportation to Work,Estimate; margin of error (90%) in <column>_moe
+worked_from_home,B08006_017,Estimate > Total: > Worked from home,Sex of Workers by Means of Transportation to Work,Estimate; margin of error (90%) in <column>_moe
+pov_universe,B17001_001,Estimate > Total:,Poverty Status in the Past 12 Months by Sex by Age,Estimate; margin of error (90%) in <column>_moe
+below_poverty,B17001_002,Estimate > Total: > Income in the past 12 months below poverty level:,Poverty Status in the Past 12 Months by Sex by Age,Estimate; margin of error (90%) in <column>_moe
+households_int,B28002_001,Estimate > Total:,Presence and Types of Internet Subscriptions in Household,Estimate; margin of error (90%) in <column>_moe
+no_internet,B28002_013,Estimate > Total: > No Internet access,Presence and Types of Internet Subscriptions in Household,Estimate; margin of error (90%) in <column>_moe
+pop_insurance,B27010_001,Estimate > Total:,Types of Health Insurance Coverage by Age,Estimate; margin of error (90%) in <column>_moe
+uninsured_u19,B27010_017,Estimate > Total: > Under 19 years: > No health insurance coverage,Types of Health Insurance Coverage by Age,Estimate; margin of error (90%) in <column>_moe
+uninsured_19_34,B27010_033,Estimate > Total: > 19 to 34 years: > No health insurance coverage,Types of Health Insurance Coverage by Age,Estimate; margin of error (90%) in <column>_moe
+uninsured_35_64,B27010_050,Estimate > Total: > 35 to 64 years: > No health insurance coverage,Types of Health Insurance Coverage by Age,Estimate; margin of error (90%) in <column>_moe
+uninsured_65plus,B27010_066,Estimate > Total: > 65 years and over: > No health insurance coverage,Types of Health Insurance Coverage by Age,Estimate; margin of error (90%) in <column>_moe
