@@ -104,7 +104,7 @@
     "href": "assess.html#assignment-ii",
     "title": "Assessments",
     "section": "Assignment II",
-    "text": "Assignment II\n\nTitle: Computational Essay\nType: Coursework\nDue date: 10th December 2026 (week 11)\n60% of the final mark\nChance to be reassessed\nElectronic submission only\n\nA 4,000 word computational essay on a geographic data set which they have explored and analysed using the skills and techniques developed during the course. Students will complete an essay which combines both code, data visualisation and prose supported by references in order to demonstrate sound understanding of all learning outcomes.\n\nFull Assignment details coming soon\nSome data about race in csv format if you are not using API\n\nImportant information about data access through the US Census API:\n\nIf you are doing the assignment in R: You can start from this ENVS2526-363-563.2.qmd file to render the html. Other file formats will not be accepted.\nIn Python, you can start from this ENVS2526-363-563.2.ipynb\n\nThere are three kinds of elements in a computational essay:\n\nOrdinary text (in English)\nComputer input (R or Python)\nComputer output\n\nThese three elements all work together to express what’s being communicated.",
+    "text": "Assignment II\n\nTitle: Computational Essay\nType: Coursework\nDue date: 10th December 2026 (week 11)\n60% of the final mark\nChance to be reassessed\nElectronic submission only\n\nA computational essay on Airbnb and neighbourhoods in the San Francisco Bay Area. You take the role of a geographic data scientist exploring “old” (US census) and “new” (Inside Airbnb) forms of spatial data, combining code, data visualisation and prose, supported by references. Maximum 1,000 words of ordinary text, up to five maps or figures and one table; references, code and the AI-use declaration do not count towards the word limit.\n\nPart 1 (everyone): Airbnb prices by ZCTA, set against an AI-generated map made with no input data (Map 1); Airbnb prices combined with one socio-economic variable from the American Community Survey (Map 2); and spatial autocorrelation (Map 3).\nPart 2 (choose one): a geodemographic classification, a regionalisation, or OpenStreetMap points of interest clustered with DBSCAN.\n\nYour essay must open with the completed AI-use declaration from the template, even if you used no AI tools. If it is missing from your rendered html you can lose up to 10 marks.\n\nFull Assignment details here\n\nYou will submit an .html file obtained by rendering your .qmd in R or .ipynb Jupyter Notebook in Python. Use the same language as Assignment I.\n\nIf you are doing the assignment in R: start from this ENVS2627-363-563.2.qmd file to render the html. Other file formats will not be accepted.\nIf you are doing the assignment in Python: start from this ENVS2627-363-563.2.ipynb. Before exporting, restart the kernel and run all cells (Kernel –&gt; Restart Kernel and Run All Cells), then File –&gt; Save and Export Notebook As... –&gt; HTML. Other file formats will not be accepted.\n\n\nData\n\nInside Airbnb: download listings.csv.gz and neighbourhoods.geojson for San Francisco, San Mateo County and Oakland from Inside Airbnb, and report the snapshot dates you used. The templates do this for you. Read the data assumptions before interpreting the data.\nAmerican Community Survey 2020–2024 (5-year), census tracts: retrieve it through the US Census API, using tidycensus in R or pygris in Python. All variables are listed here.\nZCTAs (2020 boundaries): download with tigris::zctas() in R or pygris.zctas() in Python.\n\n\n\n\n\n\n\nImportantCensus API key\n\n\n\nRequest a free key here and click the activation link in the email you receive: the key does not work until it is activated. Store it once, in the Console, never in your .qmd or notebook (it would appear in the html you submit):\n\nR: tidycensus::census_api_key(\"YOUR_KEY\", install = TRUE), then restart R.\nPython: save it as an environment variable called CENSUS_API_KEY.\n\nIf you see an error mentioning &lt;html or invalid char in json text, the API has rejected your key: check it is activated and that you restarted R.\n\n\nNot using the API? A ready-made set of ACS variables for the study area is available in the ACS_bayarea data folder. Read GEOID as text, or you will lose its leading zero.\n\nACS_bayarea_2020_2024_tracts.gpkg: tract boundaries with all variables (use this one if you can)\nACS_bayarea_2020_2024_vars.csv: the same table without geometry\nACS_bayarea_2020_2024_codebook.csv: what each column means\n\nThe column in_study_area flags the tracts covered by the Airbnb files (San Francisco, San Mateo County and the City of Oakland).\nENVS563 students must also source at least two additional datasets on San Francisco or the Bay Area, for example from DataSF, Oakland open data, San Mateo County open data or MTC/ABAG.\n\n\nResources\n\nWhat is a computational essay? (Stephen Wolfram)\nQuarto guide\nbiscale: bivariate mapping in R\n\nThere are three kinds of elements in a computational essay:\n\nOrdinary text (in English)\nComputer input (R or Python)\nComputer output\n\nThese three elements all work together to express what’s being communicated.",
     "crumbs": [
       "Assessments"
     ]
@@ -1724,7 +1724,7 @@
     "href": "esda.html",
     "title": "7 ESDA",
     "section": "",
-    "text": "ESDA\nESDA stands for Exploratory Spatial Data Analysis, and it is a family of techniques to explore and characterise spatial patterns in data. Some of these techniques are explained below.",
+    "text": "ESDA\nIn this section we delve into a few statistical methods designed to characterise spatial patterns of data. How phenomena are distributed over space is at the centre of many important questions. From economic inequality, to the management of disease outbreaks, being able to statistically characterise the spatial pattern is the first step into understanding causes and thinking about solutions in the form of policy.\nThis section is split into a few more subsections than usual, each of them focused on a single concept. Each subsection builds on each other sequentially, so work on them in the order presented here. They are all non-trivial ideas, so focus all your brain power to understand them while tackling each of the sections!\nDownload the ESDA slides (PDF)\nESDA stands for Exploratory Spatial Data Analysis, and it is a family of techniques to explore and characterise spatial patterns in data. Some of these techniques are explained below.",
     "crumbs": [
       "7 ESDA"
     ]
@@ -1764,7 +1764,7 @@
     "href": "esda.html#further-readings",
     "title": "7 ESDA",
     "section": "Further readings",
-    "text": "Further readings\nIf this section was of your interest, there is plenty more you can read and explore. The following are good “next steps” to delve a bit deeper into exploratory spatial data analysis:\n\nSpatial autocorrelation chapters on the GDS book by Rey, Arribas and Wolf.\nSymanzik’s chapter on ESDA in the Handbook of Regional Science Symanzik (2021) introduces the main concepts behind ESDA\nHaining and Li’s chapter in the Handbook of Regional Science Haining and Li (2021) is a good historical perspective of the origins and motivations behind most of global and local measures of spatial autocorrelation.\n\n\n\n\n\nHaining, Robert, and Guangquan Li. 2021. “Spatial Data and Spatial Statistics.” In Handbook of Regional Science, edited by Manfred M. Fischer and Peter Nijkamp, 1961–83. Berlin, Heidelberg: Springer Berlin Heidelberg. https://doi.org/10.1007/978-3-662-60723-7_71.\n\n\nSymanzik, Jürgen. 2021. “Exploratory Spatial Data Analysis.” In Handbook of Regional Science, edited by Manfred M. Fischer and Peter Nijkamp, 1845–61. Berlin, Heidelberg: Springer Berlin Heidelberg. https://doi.org/10.1007/978-3-662-60723-7_76.",
+    "text": "Further readings\nIf this section was of your interest, there is plenty more you can read and explore. The following are good “next steps” to delve a bit deeper into exploratory spatial data analysis:\n\nSpatial autocorrelation chapters on the GDS book by Rey, Arribas and Wolf.\nSymanzik’s chapter on ESDA in the Handbook of Regional Science Symanzik (2021) introduces the main concepts behind ESDA\nHaining and Li’s chapter in the Handbook of Regional Science Haining and Li (2021) is a good historical perspective of the origins and motivations behind most of global and local measures of spatial autocorrelation.\n\n\n\n\n\nHaining, Robert, and Guangquan Li. 2021. “Spatial Data and Spatial Statistics.” In Handbook of Regional Science, edited by Manfred M. Fischer and Peter Nijkamp. Springer Berlin Heidelberg. https://doi.org/10.1007/978-3-662-60723-7_71.\n\n\nSymanzik, Jürgen. 2021. “Exploratory Spatial Data Analysis.” In Handbook of Regional Science, edited by Manfred M. Fischer and Peter Nijkamp. Springer Berlin Heidelberg. https://doi.org/10.1007/978-3-662-60723-7_76.",
     "crumbs": [
       "7 ESDA"
     ]
@@ -2612,6 +2612,60 @@
     "text": "Reproducing this book\nIf you want to render this book yourself, rather than just follow the labs, you need:\n\na recent version of Quarto (it is bundled with recent versions of RStudio);\nR and all the packages from the R set-up;\nthe Python course environment from the Python set-up, activated when you render, so that Quarto can run the Python chapters.",
     "crumbs": [
       "Environment"
+    ]
+  },
+  {
+    "objectID": "esdaDIY.html",
+    "href": "esdaDIY.html",
+    "title": "Do-It-Yourself",
+    "section": "",
+    "text": "Data preparation\nIn this block, the DIY section is more straightforward: we have a few tasks, but they are all around the same dataset. The tasks incorporates all the bits and pieces we have seen on the hands-on section.\nFor this section, we are going to revisit the AHAH dataset we saw in the DIY section of Mapping Vector Data. Please head over to the section to refresh your memory about how to load up the required data. Once you have successfully created the ahah object, move on to Task I.",
+    "crumbs": [
+      "7 ESDA",
+      "Do-It-Yourself"
+    ]
+  },
+  {
+    "objectID": "esdaDIY.html#task-i-get-the-dataset-ready",
+    "href": "esdaDIY.html#task-i-get-the-dataset-ready",
+    "title": "Do-It-Yourself",
+    "section": "Task I: get the dataset ready",
+    "text": "Task I: get the dataset ready\nWith the ahah, complete all the other bits required for the ESDA analysis of spatial autocorrelation:\n\nMake sure your geography does not have any neighbourless polygons\nWhen creating your spatial weights matrix, think of one criterion to build it that you think would fit this variable (e.g. contiguity, distance-based, etc.), and apply it.\nCreate a spatial weights matrix\nStandardise the spatial weights matrix\nCreate the standardised version of the AHAH score\nCreate the spatial lag of the main AHAH score",
+    "crumbs": [
+      "7 ESDA",
+      "Do-It-Yourself"
+    ]
+  },
+  {
+    "objectID": "esdaDIY.html#task-ii-global-spatial-autocorrelation",
+    "href": "esdaDIY.html#task-ii-global-spatial-autocorrelation",
+    "title": "Do-It-Yourself",
+    "section": "Task II: global spatial autocorrelation",
+    "text": "Task II: global spatial autocorrelation\nLet’s move on to the analytics:\n\nVisualise the main AHAH score with a Moran Plot\nCalculate Moran’s I\nWhat conclusions can you reach from the Moran Plot and Moran’s I? What’s the main spatial pattern?",
+    "crumbs": [
+      "7 ESDA",
+      "Do-It-Yourself"
+    ]
+  },
+  {
+    "objectID": "esdaDIY.html#task-iii-local-spatial-autocorrelation",
+    "href": "esdaDIY.html#task-iii-local-spatial-autocorrelation",
+    "title": "Do-It-Yourself",
+    "section": "Task III: local spatial autocorrelation",
+    "text": "Task III: local spatial autocorrelation\nNow that you have a good sense of the overall pattern in the AHAH dataset, let’s move to the local scale:\n\nCalculate LISA statistics for the LSOA areas\nMake a map of significant clusters at the 5% significance level (i.e. setting cutoff at 0.05)\nCan you identify hotspots or coldspots? If so, what do they mean? What about spatial outliers?\n\n\n\n\n\n\n\nWarning\n\n\n\nThe last action is a bit more sophisticated, put all your brain power into it and you’ll achieve it!\n\n\n\nCreate cluster maps for significance levels 1% and 10%; compare them with the one we obtained. What are the main changes? Why?",
+    "crumbs": [
+      "7 ESDA",
+      "Do-It-Yourself"
+    ]
+  },
+  {
+    "objectID": "assess.html#assignment-ii-1",
+    "href": "assess.html#assignment-ii-1",
+    "title": "Assessments",
+    "section": "Assignment II",
+    "text": "Assignment II\n\nTitle: Computational Essay\nType: Coursework\nDue date: 10th December 2026 (week 11)\n60% of the final mark\nChance to be reassessed\nElectronic submission only\n\nA computational essay on Airbnb and neighbourhoods in the San Francisco Bay Area. You take the role of a geographic data scientist exploring “old” (US census) and “new” (Inside Airbnb) forms of spatial data, combining code, data visualisation and prose, supported by references. Maximum 1,000 words of ordinary text, up to five maps or figures and one table; references, code and the AI-use declaration do not count towards the word limit.\n\nPart 1 (everyone): Airbnb prices by ZCTA, set against an AI-generated map made with no input data (Map 1); Airbnb prices combined with one socio-economic variable from the American Community Survey (Map 2); and spatial autocorrelation (Map 3).\nPart 2 (choose one): a geodemographic classification, a regionalisation, or OpenStreetMap points of interest clustered with DBSCAN.\n\nYour essay must open with the completed AI-use declaration from the template, even if you used no AI tools. If it is missing from your rendered html you can lose up to 10 marks.\n\nFull Assignment details here\n\nYou will submit an .html file obtained by rendering your .qmd in R or .ipynb Jupyter Notebook in Python. Use the same language as Assignment I.\n\nIf you are doing the assignment in R: start from this ENVS2627-363-563.2.qmd file to render the html. Other file formats will not be accepted.\nIf you are doing the assignment in Python: start from this ENVS2627-363-563.2.ipynb. Before exporting, restart the kernel and run all cells (Kernel –&gt; Restart Kernel and Run All Cells), then File –&gt; Save and Export Notebook As... –&gt; HTML. Other file formats will not be accepted.\n\n\nData\n\nInside Airbnb: download listings.csv.gz and neighbourhoods.geojson for San Francisco, San Mateo County and Oakland from Inside Airbnb, and report the snapshot dates you used. The templates do this for you. Read the data assumptions before interpreting the data.\nAmerican Community Survey 2020–2024 (5-year), census tracts: retrieve it through the US Census API, using tidycensus in R or pygris in Python. All variables are listed here.\nZCTAs (2020 boundaries): download with tigris::zctas() in R or pygris.zctas() in Python.\n\n\n\n\n\n\n\nImportantCensus API key\n\n\n\nRequest a free key here and click the activation link in the email you receive: the key does not work until it is activated. Store it once, in the Console, never in your .qmd or notebook (it would appear in the html you submit):\n\nR: tidycensus::census_api_key(\"YOUR_KEY\", install = TRUE), then restart R.\nPython: save it as an environment variable called CENSUS_API_KEY.\n\nIf you see an error mentioning &lt;html or invalid char in json text, the API has rejected your key: check it is activated and that you restarted R.\n\n\nNot using the API? A ready-made set of ACS variables for the study area is available in the ACS_bayarea data folder. Read GEOID as text, or you will lose its leading zero.\n\nACS_bayarea_2020_2024_tracts.gpkg: tract boundaries with all variables (use this one if you can)\nACS_bayarea_2020_2024_vars.csv: the same table without geometry\nACS_bayarea_2020_2024_codebook.csv: what each column means\n\nThe column in_study_area flags the tracts covered by the Airbnb files (San Francisco, San Mateo County and the City of Oakland).\nENVS563 students must also source at least two additional datasets on San Francisco or the Bay Area, for example from DataSF, Oakland open data, San Mateo County open data or MTC/ABAG.\n\n\nResources\n\nWhat is a computational essay? (Stephen Wolfram)\nQuarto guide\nbiscale: bivariate mapping in R\n\nThere are three kinds of elements in a computational essay:\n\nOrdinary text (in English)\nComputer input (R or Python)\nComputer output\n\nThese three elements all work together to express what’s being communicated.",
+    "crumbs": [
+      "Assessments"
     ]
   }
 ]

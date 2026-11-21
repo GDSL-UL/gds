@@ -9,16 +9,9 @@
 - Chance to be reassessed
 - Electronic submission only
 
-This assignment has two parts. **Part A (10% of final grade)** is a short, individual,
-non-coding critique of the classification scheme of one published map: three
-maps will be on Canvas and you choose one, writing no more than 300 words.
-**Part B (30% of final grade)** is the programmed map: you will map population density by
-region in China, then the population change between 2015 and 2025, and write
-up to 500 words about the choices you made.
+This assignment has two parts. **Part A (10% of final grade)** is a short, individual, non-coding critique of the classification scheme of one published map: three maps will be on Canvas and you choose one, writing no more than 300 words. **Part B (30% of final grade)** is the programmed map: you will map population density by region in China, then the population change between 2015 and 2025, and write up to 500 words about the choices you made.
 
-Both parts, plus a **mandatory AI-use declaration**, are submitted together in
-one `.html` file. If the declaration is missing from your rendered html you
-can lose up to 10 marks.
+Both parts, plus a **mandatory AI-use declaration**, are submitted together in one `.html` file. If the declaration is missing from your rendered html you can lose up to 10 marks.
 
 - Full Assignment details [here](https://theuniversityofliverpool-my.sharepoint.com/:b:/g/personal/pietrost_liverpool_ac_uk/IQCW74t4Ndg8Qp-NWy-aOIfFAbR5Lp4YUeZQfhf_OQVEvZk?e=OVDksJ)
 
@@ -26,37 +19,24 @@ You will submit an `.html` file obtained by rendering your `.qmd` in `R` or `.ip
 
 - If you are doing the assignment in `R`: You can start from this [**.qmd file**](https://theuniversityofliverpool-my.sharepoint.com/:u:/g/personal/pietrost_liverpool_ac_uk/IQCEP3xC0cPeTqFhk394LBgnAXazecIuU8o2Ra2uTy7xdFU?e=5NqmTC) to render the `html`. Other file formats will not be accepted.
 
-- If you are doing the assignment in `Python`: start from this
-  [**.ipynb**](https://theuniversityofliverpool-my.sharepoint.com/:u:/g/personal/pietrost_liverpool_ac_uk/IQApTU-FTDEAT4rk0-hmJzcyAeyyNFZTm-WGTlxXcOtWDXE?e=XThvaV). Before exporting, restart the kernel and run
-  all cells (`Kernel –> Restart Kernel and Run All Cells`), then
-  `File –> Save and Export Notebook As... –> HTML`. Other file formats will not
-  be accepted.
+- If you are doing the assignment in `Python`: start from this [**.ipynb**](https://theuniversityofliverpool-my.sharepoint.com/:u:/g/personal/pietrost_liverpool_ac_uk/IQApTU-FTDEAT4rk0-hmJzcyAeyyNFZTm-WGTlxXcOtWDXE?e=XThvaV). Before exporting, restart the kernel and run all cells (`Kernel –> Restart Kernel and Run All Cells`), then `File –> Save and Export Notebook As... –> HTML`. Other file formats will not be accepted.
 
 ### Submit
 
-One html file: a rendered `.qmd` with R code, or a rendered Jupyter notebook
-with Python code, containing your AI-use declaration, Part A and Part B.
+One html file: a rendered `.qmd` with R code, or a rendered Jupyter notebook with Python code, containing your AI-use declaration, Part A and Part B.
 
 ### Evaluation
 
-**Part A** is marked on how accurately you identify the classification
-scheme, how well you link its strengths and weaknesses to the data and the
-map's message, and how convincingly you justify an alternative.
+**Part A** is marked on how accurately you identify the classification scheme, how well you link its strengths and weaknesses to the data and the map's message, and how convincingly you justify an alternative.
 
 **Part B** is marked on three pillars:
 
-1. **Data processing and code quality:** your proficiency in handling and
-   manipulating data, and writing code a reader can follow — a logical sequence
-   of steps, sensible names, comments explaining why, no dead or duplicated
-   code, and no clutter in the rendered document.
+1.  **Data processing and code quality:** your proficiency in handling and manipulating data, and writing code a reader can follow — a logical sequence of steps, sensible names, comments explaining why, no dead or duplicated code, and no clutter in the rendered document.
 
-2. **Map assemblage:** your ability to master technologies that allow you to
-   create a compelling map.
+2.  **Map assemblage:** your ability to master technologies that allow you to create a compelling map.
 
-3. **Design and narrative:** your success in designing an appealing map with a
-   compelling narrative.
-   
-   
+3.  **Design and narrative:** your success in designing an appealing map with a compelling narrative.
+
 ## Assignment II
 
 - **Title:** Computational Essay
@@ -66,17 +46,53 @@ map's message, and how convincingly you justify an alternative.
 - Chance to be reassessed
 - Electronic submission only
 
-A 4,000 word computational essay on a geographic data set which they have explored and analysed using the skills and techniques developed during the course. Students will complete an essay which combines both code, data visualisation and prose supported by references in order to demonstrate sound understanding of all learning outcomes.
+A computational essay on Airbnb and neighbourhoods in the **San Francisco Bay Area**. You take the role of a geographic data scientist exploring "old" (US census) and "new" (Inside Airbnb) forms of spatial data, combining code, data visualisation and prose, supported by references. Maximum **1,000 words** of ordinary text, up to **five** maps or figures and **one** table; references, code and the AI-use declaration do not count towards the word limit.
 
-- Full Assignment details [coming soon]()
+- **Part 1** (everyone): Airbnb prices by ZCTA, set against an **AI-generated map made with no input data** (Map 1); Airbnb prices combined with one socio-economic variable from the American Community Survey (Map 2); and spatial autocorrelation (Map 3).
+- **Part 2** (choose one): a geodemographic classification, a regionalisation, or OpenStreetMap points of interest clustered with DBSCAN.
 
-- [Some data about race in csv format if you are not using API]()
+Your essay must open with the completed **AI-use declaration** from the template, even if you used no AI tools. If it is missing from your rendered html you can lose up to 10 marks.
 
-Important information about data access through the US Census API:
+- Full Assignment details [here](https://theuniversityofliverpool-my.sharepoint.com/:b:/r/personal/pietrost_liverpool_ac_uk/_layouts/15/onedrive.aspx?id=%2Fpersonal%2Fpietrost%5Fliverpool%5Fac%5Fuk%2FDocuments%2FENVS363%5F563%5F2026%2FAssignments%2FENVS363%5F563%2E2%5F26%5F27%2Epdf&parent=%2Fpersonal%2Fpietrost%5Fliverpool%5Fac%5Fuk%2FDocuments%2FENVS363%5F563%5F2026%2FAssignments&share=cQo2K0doMho7SbM76Hgkac6DEgUCWJXHVcxy7guCwHZexK4Bxg)
 
-- If you are doing the assignment in `R`: You can start from this [**ENVS2526-363-563.2.qmd file**]() to render the `html`. Other file formats will not be accepted.
+You will submit an `.html` file obtained by rendering your `.qmd` in `R` or `.ipynb` Jupyter Notebook in `Python`. Use the same language as Assignment I.
 
-- In Python, you can start from this [**ENVS2526-363-563.2.ipynb**]()
+- If you are doing the assignment in `R`: start from this [**ENVS2627-363-563.2.qmd file**](https://theuniversityofliverpool-my.sharepoint.com/:u:/r/personal/pietrost_liverpool_ac_uk/_layouts/15/onedrive.aspx?id=%2Fpersonal%2Fpietrost%5Fliverpool%5Fac%5Fuk%2FDocuments%2FENVS363%5F563%5F2026%2FAssignments%2FENVS2627%2D363%2D563%2E2%2Eqmd&parent=%2Fpersonal%2Fpietrost%5Fliverpool%5Fac%5Fuk%2FDocuments%2FENVS363%5F563%5F2026%2FAssignments&share=cQr1cSWqtt%5FhT7qCbhyqIdXWEgUCWe8P0NDqkEkhQMKXMYMp8w) to render the `html`. Other file formats will not be accepted.
+
+- If you are doing the assignment in `Python`: start from this [**ENVS2627-363-563.2.ipynb**](https://theuniversityofliverpool-my.sharepoint.com/:u:/r/personal/pietrost_liverpool_ac_uk/_layouts/15/onedrive.aspx?id=%2Fpersonal%2Fpietrost%5Fliverpool%5Fac%5Fuk%2FDocuments%2FENVS363%5F563%5F2026%2FAssignments%2FENVS2627%2D363%2D563%2E2%2Eipynb&parent=%2Fpersonal%2Fpietrost%5Fliverpool%5Fac%5Fuk%2FDocuments%2FENVS363%5F563%5F2026%2FAssignments&share=cQrxR4yCULNrSr8uR3CPyU2lEgUCOKaVAgUuPZ5x%2DKG2ryiaYA). Before exporting, restart the kernel and run all cells (`Kernel –> Restart Kernel and Run All Cells`), then `File –> Save and Export Notebook As... –> HTML`. Other file formats will not be accepted.
+
+### Data
+
+- **Inside Airbnb:** download `listings.csv.gz` and `neighbourhoods.geojson` for San Francisco, San Mateo County and Oakland from [Inside Airbnb](https://insideairbnb.com/get-the-data/), and report the snapshot dates you used. The templates do this for you. Read the [data assumptions](https://insideairbnb.com/data-assumptions/) before interpreting the data.
+- **American Community Survey 2020–2024 (5-year), census tracts:** retrieve it through the US Census API, using [`tidycensus`](https://walker-data.com/tidycensus/articles/basic-usage.html) in R or [`pygris`](https://walker-data.com/pygris/) in Python. All variables are listed [here](https://api.census.gov/data/2024/acs/acs5/variables.html).
+- **ZCTAs** (2020 boundaries): download with `tigris::zctas()` in R or `pygris.zctas()` in Python.
+
+::: callout-important
+## Census API key
+
+Request a free key [here](https://api.census.gov/data/key_signup.html) and click the activation link in the email you receive: the key does not work until it is activated. Store it once, in the Console, **never in your `.qmd` or notebook** (it would appear in the html you submit):
+
+- R: `tidycensus::census_api_key("YOUR_KEY", install = TRUE)`, then restart R.
+- Python: save it as an environment variable called `CENSUS_API_KEY`.
+
+If you see an error mentioning `<html` or `invalid char in json text`, the API has rejected your key: check it is activated and that you restarted R.
+:::
+
+**Not using the API?** A ready-made set of ACS variables for the study area is available in the [ACS_bayarea data folder](https://github.com/GDSL-UL/gds/tree/main/data/ACS_bayarea). Read `GEOID` as text, or you will lose its leading zero.
+
+- [ACS_bayarea_2020_2024_tracts.gpkg](https://github.com/GDSL-UL/gds/raw/main/data/ACS_bayarea/ACS_bayarea_2020_2024_tracts.gpkg): tract boundaries with all variables (use this one if you can)
+- [ACS_bayarea_2020_2024_vars.csv](https://github.com/GDSL-UL/gds/raw/main/data/ACS_bayarea/ACS_bayarea_2020_2024_vars.csv): the same table without geometry
+- [ACS_bayarea_2020_2024_codebook.csv](https://github.com/GDSL-UL/gds/raw/main/data/ACS_bayarea/ACS_bayarea_2020_2024_codebook.csv): what each column means
+
+The column `in_study_area` flags the tracts covered by the Airbnb files (San Francisco, San Mateo County and the City of Oakland).
+
+**ENVS563** students must also source at least two additional datasets on San Francisco or the Bay Area, for example from [DataSF](https://datasf.org/opendata/), [Oakland open data](https://data.oaklandca.gov/), [San Mateo County open data](https://data.smcgov.org/) or [MTC/ABAG](https://opendata.mtc.ca.gov/).
+
+### Resources
+
+- [What is a computational essay?](https://writings.stephenwolfram.com/2017/11/what-is-a-computational-essay/) (Stephen Wolfram)
+- [Quarto guide](https://quarto.org/docs/guide/)
+- [biscale: bivariate mapping in R](https://cran.r-project.org/web/packages/biscale/vignettes/biscale.html)
 
 **There are three kinds of elements in a computational essay:**
 

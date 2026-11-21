@@ -174,7 +174,7 @@
   </url>
   <url>
     <loc>https://gdsl-ul.github.io/gds/assess.html</loc>
-    <lastmod>2026-09-24T16:50:11.400Z</lastmod>
+    <lastmod>2026-11-21T20:36:53.419Z</lastmod>
   </url>
   <url>
     <loc>https://gdsl-ul.github.io/gds/intro.html</loc>
@@ -267,5 +267,17 @@
   <url>
     <loc>https://gdsl-ul.github.io/gds/environ.html</loc>
     <lastmod>2026-09-22T16:35:13.959Z</lastmod>
+  </url>
+  <url>
+    <loc>https://gdsl-ul.github.io/gds/spatialw.html</loc>
+    <lastmod>2026-11-21T16:30:14.997Z</lastmod>
+  </url>
+  <url>
+    <loc>https://gdsl-ul.github.io/gds/esda.html</loc>
+    <lastmod>2026-11-21T16:30:14.987Z</lastmod>
+  </url>
+  <url>
+    <loc>https://gdsl-ul.github.io/gds/esdaDIY.html</loc>
+    <lastmod>2026-11-21T16:30:14.987Z</lastmod>
   </url>
 </urlset>

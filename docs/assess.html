@@ -475,7 +475,11 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#submit" id="toc-submit" class="nav-link" data-scroll-target="#submit">Submit</a></li>
   <li><a href="#evaluation" id="toc-evaluation" class="nav-link" data-scroll-target="#evaluation">Evaluation</a></li>
   </ul></li>
-  <li><a href="#assignment-ii" id="toc-assignment-ii" class="nav-link" data-scroll-target="#assignment-ii">Assignment II</a></li>
+  <li><a href="#assignment-ii" id="toc-assignment-ii" class="nav-link" data-scroll-target="#assignment-ii">Assignment II</a>
+  <ul class="collapse">
+  <li><a href="#data" id="toc-data" class="nav-link" data-scroll-target="#data">Data</a></li>
+  <li><a href="#resources" id="toc-resources" class="nav-link" data-scroll-target="#resources">Resources</a></li>
+  </ul></li>
   <li><a href="#marking-criteria" id="toc-marking-criteria" class="nav-link" data-scroll-target="#marking-criteria">Marking Criteria</a></li>
   <li><a href="#generative-artificial-intelligence" id="toc-generative-artificial-intelligence" class="nav-link" data-scroll-target="#generative-artificial-intelligence">Generative Artificial Intelligence</a>
   <ul class="collapse">
@@ -551,15 +555,60 @@ ul.task-list li input[type="checkbox"] {
 <li>Chance to be reassessed</li>
 <li>Electronic submission only</li>
 </ul>
-<p>A 4,000 word computational essay on a geographic data set which they have explored and analysed using the skills and techniques developed during the course. Students will complete an essay which combines both code, data visualisation and prose supported by references in order to demonstrate sound understanding of all learning outcomes.</p>
+<p>A computational essay on Airbnb and neighbourhoods in the <strong>San Francisco Bay Area</strong>. You take the role of a geographic data scientist exploring “old” (US census) and “new” (Inside Airbnb) forms of spatial data, combining code, data visualisation and prose, supported by references. Maximum <strong>1,000 words</strong> of ordinary text, up to <strong>five</strong> maps or figures and <strong>one</strong> table; references, code and the AI-use declaration do not count towards the word limit.</p>
 <ul>
-<li><p>Full Assignment details <a href="">coming soon</a></p></li>
-<li><p><a href="">Some data about race in csv format if you are not using API</a></p></li>
+<li><strong>Part 1</strong> (everyone): Airbnb prices by ZCTA, set against an <strong>AI-generated map made with no input data</strong> (Map 1); Airbnb prices combined with one socio-economic variable from the American Community Survey (Map 2); and spatial autocorrelation (Map 3).</li>
+<li><strong>Part 2</strong> (choose one): a geodemographic classification, a regionalisation, or OpenStreetMap points of interest clustered with DBSCAN.</li>
 </ul>
-<p>Important information about data access through the US Census API:</p>
+<p>Your essay must open with the completed <strong>AI-use declaration</strong> from the template, even if you used no AI tools. If it is missing from your rendered html you can lose up to 10 marks.</p>
 <ul>
-<li><p>If you are doing the assignment in <code>R</code>: You can start from this <a href=""><strong>ENVS2526-363-563.2.qmd file</strong></a> to render the <code>html</code>. Other file formats will not be accepted.</p></li>
-<li><p>In Python, you can start from this <a href=""><strong>ENVS2526-363-563.2.ipynb</strong></a></p></li>
+<li>Full Assignment details <a href="https://theuniversityofliverpool-my.sharepoint.com/:b:/r/personal/pietrost_liverpool_ac_uk/_layouts/15/onedrive.aspx?id=%2Fpersonal%2Fpietrost%5Fliverpool%5Fac%5Fuk%2FDocuments%2FENVS363%5F563%5F2026%2FAssignments%2FENVS363%5F563%2E2%5F26%5F27%2Epdf&amp;parent=%2Fpersonal%2Fpietrost%5Fliverpool%5Fac%5Fuk%2FDocuments%2FENVS363%5F563%5F2026%2FAssignments&amp;share=cQo2K0doMho7SbM76Hgkac6DEgUCWJXHVcxy7guCwHZexK4Bxg">here</a></li>
+</ul>
+<p>You will submit an <code>.html</code> file obtained by rendering your <code>.qmd</code> in <code>R</code> or <code>.ipynb</code> Jupyter Notebook in <code>Python</code>. Use the same language as Assignment I.</p>
+<ul>
+<li><p>If you are doing the assignment in <code>R</code>: start from this <a href="https://theuniversityofliverpool-my.sharepoint.com/:u:/r/personal/pietrost_liverpool_ac_uk/_layouts/15/onedrive.aspx?id=%2Fpersonal%2Fpietrost%5Fliverpool%5Fac%5Fuk%2FDocuments%2FENVS363%5F563%5F2026%2FAssignments%2FENVS2627%2D363%2D563%2E2%2Eqmd&amp;parent=%2Fpersonal%2Fpietrost%5Fliverpool%5Fac%5Fuk%2FDocuments%2FENVS363%5F563%5F2026%2FAssignments&amp;share=cQr1cSWqtt%5FhT7qCbhyqIdXWEgUCWe8P0NDqkEkhQMKXMYMp8w"><strong>ENVS2627-363-563.2.qmd file</strong></a> to render the <code>html</code>. Other file formats will not be accepted.</p></li>
+<li><p>If you are doing the assignment in <code>Python</code>: start from this <a href="https://theuniversityofliverpool-my.sharepoint.com/:u:/r/personal/pietrost_liverpool_ac_uk/_layouts/15/onedrive.aspx?id=%2Fpersonal%2Fpietrost%5Fliverpool%5Fac%5Fuk%2FDocuments%2FENVS363%5F563%5F2026%2FAssignments%2FENVS2627%2D363%2D563%2E2%2Eipynb&amp;parent=%2Fpersonal%2Fpietrost%5Fliverpool%5Fac%5Fuk%2FDocuments%2FENVS363%5F563%5F2026%2FAssignments&amp;share=cQrxR4yCULNrSr8uR3CPyU2lEgUCOKaVAgUuPZ5x%2DKG2ryiaYA"><strong>ENVS2627-363-563.2.ipynb</strong></a>. Before exporting, restart the kernel and run all cells (<code>Kernel –&gt; Restart Kernel and Run All Cells</code>), then <code>File –&gt; Save and Export Notebook As... –&gt; HTML</code>. Other file formats will not be accepted.</p></li>
+</ul>
+<section id="data" class="level3">
+<h3 class="anchored" data-anchor-id="data">Data</h3>
+<ul>
+<li><strong>Inside Airbnb:</strong> download <code>listings.csv.gz</code> and <code>neighbourhoods.geojson</code> for San Francisco, San Mateo County and Oakland from <a href="https://insideairbnb.com/get-the-data/">Inside Airbnb</a>, and report the snapshot dates you used. The templates do this for you. Read the <a href="https://insideairbnb.com/data-assumptions/">data assumptions</a> before interpreting the data.</li>
+<li><strong>American Community Survey 2020–2024 (5-year), census tracts:</strong> retrieve it through the US Census API, using <a href="https://walker-data.com/tidycensus/articles/basic-usage.html"><code>tidycensus</code></a> in R or <a href="https://walker-data.com/pygris/"><code>pygris</code></a> in Python. All variables are listed <a href="https://api.census.gov/data/2024/acs/acs5/variables.html">here</a>.</li>
+<li><strong>ZCTAs</strong> (2020 boundaries): download with <code>tigris::zctas()</code> in R or <code>pygris.zctas()</code> in Python.</li>
+</ul>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>Census API key
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Request a free key <a href="https://api.census.gov/data/key_signup.html">here</a> and click the activation link in the email you receive: the key does not work until it is activated. Store it once, in the Console, <strong>never in your <code>.qmd</code> or notebook</strong> (it would appear in the html you submit):</p>
+<ul>
+<li>R: <code>tidycensus::census_api_key("YOUR_KEY", install = TRUE)</code>, then restart R.</li>
+<li>Python: save it as an environment variable called <code>CENSUS_API_KEY</code>.</li>
+</ul>
+<p>If you see an error mentioning <code>&lt;html</code> or <code>invalid char in json text</code>, the API has rejected your key: check it is activated and that you restarted R.</p>
+</div>
+</div>
+<p><strong>Not using the API?</strong> A ready-made set of ACS variables for the study area is available in the <a href="https://github.com/GDSL-UL/gds/tree/main/data/ACS_bayarea">ACS_bayarea data folder</a>. Read <code>GEOID</code> as text, or you will lose its leading zero.</p>
+<ul>
+<li><a href="https://github.com/GDSL-UL/gds/raw/main/data/ACS_bayarea/ACS_bayarea_2020_2024_tracts.gpkg">ACS_bayarea_2020_2024_tracts.gpkg</a>: tract boundaries with all variables (use this one if you can)</li>
+<li><a href="https://github.com/GDSL-UL/gds/raw/main/data/ACS_bayarea/ACS_bayarea_2020_2024_vars.csv">ACS_bayarea_2020_2024_vars.csv</a>: the same table without geometry</li>
+<li><a href="https://github.com/GDSL-UL/gds/raw/main/data/ACS_bayarea/ACS_bayarea_2020_2024_codebook.csv">ACS_bayarea_2020_2024_codebook.csv</a>: what each column means</li>
+</ul>
+<p>The column <code>in_study_area</code> flags the tracts covered by the Airbnb files (San Francisco, San Mateo County and the City of Oakland).</p>
+<p><strong>ENVS563</strong> students must also source at least two additional datasets on San Francisco or the Bay Area, for example from <a href="https://datasf.org/opendata/">DataSF</a>, <a href="https://data.oaklandca.gov/">Oakland open data</a>, <a href="https://data.smcgov.org/">San Mateo County open data</a> or <a href="https://opendata.mtc.ca.gov/">MTC/ABAG</a>.</p>
+</section>
+<section id="resources" class="level3">
+<h3 class="anchored" data-anchor-id="resources">Resources</h3>
+<ul>
+<li><a href="https://writings.stephenwolfram.com/2017/11/what-is-a-computational-essay/">What is a computational essay?</a> (Stephen Wolfram)</li>
+<li><a href="https://quarto.org/docs/guide/">Quarto guide</a></li>
+<li><a href="https://cran.r-project.org/web/packages/biscale/vignettes/biscale.html">biscale: bivariate mapping in R</a></li>
 </ul>
 <p><strong>There are three kinds of elements in a computational essay:</strong></p>
 <ol type="1">
@@ -568,6 +617,7 @@ ul.task-list li input[type="checkbox"] {
 <li><p>Computer output</p></li>
 </ol>
 <p>These three elements all work together to express what’s being communicated.</p>
+</section>
 </section>
 <section id="marking-criteria" class="level2">
 <h2 class="anchored" data-anchor-id="marking-criteria">Marking Criteria</h2>
