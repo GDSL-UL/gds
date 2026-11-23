@@ -8,4 +8,4 @@ Although there exist many techniques to statistically group observations in a da
 
 In the case of analysing spatial data, there is a subset of methods that are of particular interest for many common cases in Geographic Data Science. These are the so-called regionalisation techniques. Regionalisation methods can take also many forms and faces but, at their core, they all involve statistical clustering of observations with the additional constraint that observations need to be geographical neighbors to be in the same category. Because of this, rather than category, we will use the term area for each observation and region for each category, hence regionalisation, the construction of regions from smaller areas.
 
-Slides can be downloaded ["here"](/html/Week_Cluster_slides.pdf)
+[Download the clustering slides (PDF)](/html/slides_clustering.pdf)
